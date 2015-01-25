@@ -7,7 +7,12 @@
 //
 
 #import "AppDelegate.h"
-
+#import <TencentOpenAPI/TencentOAuth.h>
+#import "SubjectVC.h"
+#import "MainFunVC.h"
+#import "RootViewController.h"
+#import "ToolUtils.h"
+#import "MediaPlayVC.h"
 @interface AppDelegate ()
 
 @end
@@ -16,7 +21,23 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
+    RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+    [_window setRootViewController:_rootVC];
+
+//    if (![ToolUtils getFirstUse])
+//    {
+//        SubjectVC* _rootVC = (SubjectVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"Subject"];
+//        [_window setRootViewController:_rootVC];
+//
+//    } else {
+//        MainFunVC* _rootVC = (MainFunVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"MainFun"];
+//        [_window setRootViewController:_rootVC];
+//
+//    }
+    [_window makeKeyAndVisible];
     return YES;
 }
 
@@ -42,4 +63,11 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    return [TencentOAuth HandleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [TencentOAuth HandleOpenURL:url];
+}
 @end
