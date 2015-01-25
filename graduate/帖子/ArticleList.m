@@ -33,6 +33,10 @@
     [cell.textLabel setText:[dataArray objectAtIndex:indexPath.row]];
     return cell;
 }
+- (IBAction)returnToMain:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

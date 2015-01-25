@@ -1,5 +1,5 @@
 //
-//  BaseFuncVC.h
+//  ButtonGroup.h
 //  graduate
 //
 //  Created by luck-mac on 15/1/25.
@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MediaPlayController.h"
-@interface BaseFuncVC : UIViewController
+
+@interface ButtonGroup : UIView
 {
-    CGFloat keyboardHeight;
+    NSArray* buttonArray;
+    NSInteger selectedIndex;
 }
-- (void)loadMusic;
+-(void)loadButton:(NSArray*)array;
 
 @end

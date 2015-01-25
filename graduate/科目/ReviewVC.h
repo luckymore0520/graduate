@@ -1,5 +1,5 @@
 //
-//  BaseFuncVC.h
+//  ReviewVC.h
 //  graduate
 //
 //  Created by luck-mac on 15/1/25.
@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MediaPlayController.h"
-@interface BaseFuncVC : UIViewController
-{
-    CGFloat keyboardHeight;
-}
-- (void)loadMusic;
 
+@interface ReviewVC : UIViewController
+@property (nonatomic,strong)NSArray* dataArray;
 @end

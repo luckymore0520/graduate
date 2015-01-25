@@ -64,7 +64,13 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="精华列表" id="v3o-dd-NS2"/>
+                    <navigationItem key="navigationItem" title="精华列表" id="v3o-dd-NS2">
+                        <barButtonItem key="leftBarButtonItem" title="返回主界面" id="25r-X4-ao3">
+                            <connections>
+                                <action selector="returnToMain:" destination="1Gp-vG-aV4" id="4GY-8P-bZ9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Ic5-og-yxt" id="ZmB-y2-6DK"/>
                         <segue destination="ZOw-nm-HiM" kind="push" identifier="detail" id="GRd-tC-KXj"/>

@@ -17,13 +17,44 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerForKeyboardNotifications];
     // Do any additional setup after loading the view.
 }
+
+- (void) registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+}
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height;
+    ///keyboardWasShown = YES;
+}
+- (void) keyboardWasHidden:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    
+    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyboardWasHidden keyBoard:%f", keyboardSize.height);
+    // keyboardWasShown = NO;
+    keyboardHeight = keyboardSize.height;
+    
+}
+
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self loadMusic];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
