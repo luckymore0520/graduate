@@ -410,6 +410,13 @@
 			path = MJPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		7D4E06151A752EED001709DB /* 其他 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "其他";
+			sourceTree = "<group>";
+		};
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +445,7 @@
 		7D6A51891A69610600355923 /* graduate */ = {
 			isa = PBXGroup;
 			children = (
+				7D4E06151A752EED001709DB /* 其他 */,
 				7D4E058D1A74C6BD001709DB /* Tools */,
 				7D4E05891A74C610001709DB /* 科目 */,
 				7DBD86821A72847300205576 /* 帖子 */,
