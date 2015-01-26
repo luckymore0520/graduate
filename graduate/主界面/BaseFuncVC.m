@@ -9,7 +9,6 @@
 #import "BaseFuncVC.h"
 
 @interface BaseFuncVC ()
-@property (weak, nonatomic) IBOutlet UIButton *musicBt;
 
 @end
 

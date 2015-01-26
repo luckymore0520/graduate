@@ -83,6 +83,7 @@
         case UIGestureRecognizerStateEnded:
         {
             CGPoint nowPoint = [gesture locationInView:self.view];
+            NSLog(@"%lf",nowPoint.y);
             CGFloat boundary = (self.view.frame.origin.y + (self.view.frame.size.height / 2));
             if (self.isPushMode){//下から上にスワイプして進むモード
                 if (boundary > nowPoint.y) {//現在の指の位置が上半分
@@ -92,6 +93,7 @@
                     [self cancelInteractiveTransition];
                 }
             } else {//上から下にスワイプして戻るモード
+                
                 if (boundary < nowPoint.y) {//現在の指の位置が上半分
                     [self finishInteractiveTransition];
                     

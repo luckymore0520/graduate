@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MAOFlipTransition.h"
 
 @class MAOFlipViewController;
 
@@ -19,4 +20,5 @@
 
 @interface MAOFlipViewController : UIViewController
 @property (nonatomic, weak) id<MAOFlipViewControllerDelegate> delegate;
+@property (nonatomic)NSInteger flipState;
 @end

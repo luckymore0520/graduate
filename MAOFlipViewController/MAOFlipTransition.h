@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MAOFlipInteraction.h"
+#define FLIPUPANDDOWN 1
+#define FLIPRIGHTANDRIGHT 2
 @interface MAOFlipTransition : NSObject<UIViewControllerAnimatedTransitioning>
 @property (nonatomic, assign) BOOL presenting;
+@property (nonatomic,weak ) MAOFlipInteraction* interaction;
+@property (nonatomic)NSInteger flipMode;
 @end

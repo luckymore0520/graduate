@@ -29,7 +29,7 @@
     self.noteLabel = noteLabel;
     
     
-    maskBt = [[UIButton alloc]initWithFrame:self.frame];
+    maskBt = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     [self addSubview:maskBt];
     [maskBt setHidden:YES];
     [maskBt addTarget:self action:@selector(resignAll) forControlEvents:UIControlEventTouchUpInside];
@@ -55,28 +55,31 @@
 }
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    [self.myDelegate handleKeyBoard];
-    CGFloat height_off = 100 ;
-    CGRect frame = textView.frame;
-    if (
-        [[UIScreen mainScreen] bounds].size.height >= 568.0f && [[UIScreen mainScreen] bounds].size.height < 1024.0f
-        ){
-        height_off = 200;
+    if (textView==self.noteView) {
+        [self.myDelegate handleKeyBoard];
+        CGFloat height_off = 100 ;
+        CGRect frame = textView.frame;
+        if (
+            [[UIScreen mainScreen] bounds].size.height >= 568.0f && [[UIScreen mainScreen] bounds].size.height < 1024.0f
+            ){
+            height_off = 200;
+        }
+        int offset = frame.origin.y + height_off - (self.frame.size.height - 240);//键盘高度216
+        NSLog(@"offset is %d",offset);
+        NSTimeInterval animationDuration = 0.30f;
+        [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
+        [UIView setAnimationDuration:animationDuration];
+        float width = self.frame.size.width;
+        float height = self.frame.size.height;
+        if(offset > 0)
+        {
+            CGRect rect = CGRectMake(self.frame.origin.x, -offset,width,height);
+            self.frame = rect;
+        }
+        [UIView commitAnimations];
+        [maskBt setHidden:NO];
     }
-    int offset = frame.origin.y + height_off - (self.frame.size.height - 240);//键盘高度216
-    NSLog(@"offset is %d",offset);
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    float width = self.frame.size.width;
-    float height = self.frame.size.height;
-    if(offset > 0)
-    {
-        CGRect rect = CGRectMake(0.0f, -offset,width,height);
-        self.frame = rect;
-    }
-    [UIView commitAnimations];
-    [maskBt setHidden:NO];
+   
     return YES;
 }
 
@@ -84,7 +87,7 @@
 {
     float width = self.frame.size.width;
     float height = self.frame.size.height;
-    CGRect rect = CGRectMake(0.0f,0,width,height);
+    CGRect rect = CGRectMake(self.frame.origin.x,0,width,height);
     self.frame = rect;
     [self.noteView resignFirstResponder];
     [maskBt setHidden:YES];

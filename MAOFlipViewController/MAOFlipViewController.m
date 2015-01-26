@@ -7,8 +7,6 @@
 //
 
 #import "MAOFlipViewController.h"
-#import "MAOFlipInteraction.h"
-#import "MAOFlipTransition.h"
 
 @interface MAOFlipViewController ()<FlipInteactionDelegate, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
 @property (nonatomic) UINavigationController *flipNavigationController;
@@ -37,6 +35,7 @@
         [self.view addSubview:self.flipNavigationController.view];
         
         [self.flipNavigationController didMoveToParentViewController:self];
+        
     }
 }
 
@@ -73,8 +72,8 @@
 - (void)completePopInteraction
 {
     //インタラクション対象のviewを設定する
-    UIViewController *c = [self.flipNavigationController.viewControllers lastObject];
-    [self.flipInteraction setView:c.view];
+//    UIViewController *c = [self.flipNavigationController.viewControllers lastObject];
+//    [self.flipInteraction setView:c.view];
 }
 
 #pragma mark - UINavigationControllerDelegate
@@ -92,9 +91,15 @@
                                                   toViewController:(UIViewController *)toVC
 {
     self.flipTransition = [[MAOFlipTransition alloc]init];
+    self.flipTransition.flipMode = self.flipState;
     if (operation == UINavigationControllerOperationPush) {
+        UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
+        if (c) {
+            [self.flipInteraction setView:c.view];
+        }
         self.flipTransition.presenting = YES;
     }else{
+        self.flipTransition.interaction = self.flipInteraction;
         self.flipTransition.presenting = NO;
     }
     return self.flipTransition;

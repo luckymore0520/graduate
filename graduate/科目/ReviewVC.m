@@ -67,10 +67,14 @@
 
 
 -(void)pageChange:(UIPageControl *)sender{
-    if (self.pageControll.currentPage<self.pageControll.numberOfPages) {
-        self.pageControll.currentPage = self.pageControll.currentPage+1;
+    NSInteger currentPage = self.pageControll.currentPage;
+    currentPage++;
+    if (currentPage<self.pageControll.numberOfPages) {
+        self.pageControll.currentPage = currentPage;
         CGFloat offset= self.pageControll.currentPage*self.view.frame.size.width;
         [self.scrollView setContentOffset:CGPointMake(offset, 0) animated:YES];
+    } else {
+        [self performSegueWithIdentifier:@"complete" sender:nil];
     }
    
 }

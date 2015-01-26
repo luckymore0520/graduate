@@ -20,6 +20,7 @@
     self.childrenVCs = [NSArray arrayWithObjects:@"MainFun",@"Subject",@"Other", nil];
     // Do any additional setup after loading the view, typically from a nib.
     self.flipViewController = [[MAOFlipViewController alloc]init];
+    self.flipViewController.flipState  = FLIPUPANDDOWN;
     self.flipViewController.delegate = self;
     [self addChildViewController:self.flipViewController];
     self.flipViewController.view.frame = self.view.frame;

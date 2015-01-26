@@ -8,6 +8,7 @@
 
 #import "SubjectVC.h"
 #import "ToolUtils.h"
+#import "YZSwipeBetweenViewController.h"
 @interface SubjectVC ()<UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIView *editView;
 @property (weak, nonatomic) IBOutlet UIButton *keyboardBt;
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *editTextView;
 @property (weak, nonatomic) IBOutlet UIView *testView;
 @property (nonatomic,weak  )UIButton* selectedBt;
+@property (nonatomic,strong)YZSwipeBetweenViewController* traceRoot;
 @end
 
 @implementation SubjectVC
@@ -71,6 +73,7 @@
 - (IBAction)resignAll:(id)sender {
     [self.keyboardBt setHidden:YES];
     [self.editTextView resignFirstResponder];
+    [self.editView setHidden:YES];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
@@ -85,7 +88,7 @@
     
 //    [self.editView setFrame:frame];
 //    [self.view addSubview:self.editView];
-    
+    [self.editView setHidden:NO];
     [self.editTextView becomeFirstResponder];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
@@ -108,7 +111,12 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+- (IBAction)goToMyTraces:(id)sender {
+    self.traceRoot = [YZSwipeBetweenViewController new];
+    [self presentViewController:self.traceRoot animated:YES completion:^{
+        
+    }];
 }
 
 /*

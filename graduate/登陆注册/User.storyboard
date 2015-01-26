@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbK-gD-N1b">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbK-gD-N1b">
                                 <rect key="frame" x="120" y="126" width="54" height="30"/>
                                 <state key="normal" title="QQ登录">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -116,19 +116,19 @@
                                 <exclude reference="gDl-KV-MBx"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Oec-ob-gtn"/>
                                 <exclude reference="iDS-Az-McG"/>
                                 <exclude reference="wAn-pJ-sOf"/>
                                 <exclude reference="zo0-de-9c6"/>
                                 <exclude reference="5yp-1s-EWC"/>
                                 <exclude reference="Ut2-Mw-ho2"/>
                                 <exclude reference="XeE-TW-yFU"/>
+                                <exclude reference="VoD-AB-dYb"/>
+                                <exclude reference="tlR-RL-9Rq"/>
                                 <exclude reference="XMY-AY-Wla"/>
                                 <exclude reference="jaU-AK-pEd"/>
                                 <exclude reference="kwy-N9-7z1"/>
                                 <exclude reference="tYD-Pa-bU4"/>
-                                <exclude reference="VoD-AB-dYb"/>
-                                <exclude reference="tlR-RL-9Rq"/>
+                                <exclude reference="Oec-ob-gtn"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -140,19 +140,19 @@
                                 <include reference="gDl-KV-MBx"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Oec-ob-gtn"/>
                                 <include reference="iDS-Az-McG"/>
                                 <include reference="wAn-pJ-sOf"/>
                                 <include reference="zo0-de-9c6"/>
                                 <include reference="5yp-1s-EWC"/>
                                 <include reference="Ut2-Mw-ho2"/>
                                 <include reference="XeE-TW-yFU"/>
+                                <include reference="VoD-AB-dYb"/>
+                                <include reference="tlR-RL-9Rq"/>
                                 <include reference="XMY-AY-Wla"/>
                                 <include reference="jaU-AK-pEd"/>
                                 <include reference="kwy-N9-7z1"/>
                                 <include reference="tYD-Pa-bU4"/>
-                                <include reference="VoD-AB-dYb"/>
-                                <include reference="tlR-RL-9Rq"/>
+                                <include reference="Oec-ob-gtn"/>
                             </mask>
                         </variation>
                     </view>
@@ -171,6 +171,7 @@
                         <viewControllerLayoutGuide type="bottom" id="gT8-sH-eZc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OQz-sc-TjK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lld-pv-VIB">
@@ -248,6 +249,7 @@
                         <viewControllerLayoutGuide type="bottom" id="eLc-YL-wIE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XBM-ej-Zuf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHB-1X-DAZ">
@@ -318,12 +320,12 @@
                                 <exclude reference="Sdh-XS-7ft"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Lg5-cw-63N"/>
-                                <exclude reference="SGi-tu-9Zx"/>
                                 <exclude reference="32V-UK-wmI"/>
                                 <exclude reference="Inu-8B-Lrv"/>
                                 <exclude reference="VZa-q5-fcN"/>
                                 <exclude reference="gJz-7S-fUQ"/>
+                                <exclude reference="Lg5-cw-63N"/>
+                                <exclude reference="SGi-tu-9Zx"/>
                                 <exclude reference="ilD-dc-wiI"/>
                                 <exclude reference="rio-QC-qbR"/>
                                 <exclude reference="FhR-Ya-FSN"/>
@@ -339,12 +341,12 @@
                                 <include reference="Sdh-XS-7ft"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Lg5-cw-63N"/>
-                                <include reference="SGi-tu-9Zx"/>
                                 <include reference="32V-UK-wmI"/>
                                 <include reference="Inu-8B-Lrv"/>
                                 <include reference="VZa-q5-fcN"/>
                                 <include reference="gJz-7S-fUQ"/>
+                                <include reference="Lg5-cw-63N"/>
+                                <include reference="SGi-tu-9Zx"/>
                                 <include reference="ilD-dc-wiI"/>
                                 <include reference="rio-QC-qbR"/>
                                 <include reference="FhR-Ya-FSN"/>
@@ -367,6 +369,7 @@
                         <viewControllerLayoutGuide type="bottom" id="qM2-DB-9Ol"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tFP-Px-nuD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="设置密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mAg-JV-osp">

@@ -48,6 +48,11 @@
 		7D4E05EC1A74EF7B001709DB /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E05E21A74EF7B001709DB /* MJPhotoView.m */; };
 		7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06101A751593001709DB /* MyQuestionVC.m */; };
 		7D4E06141A7524C2001709DB /* ReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06131A7524C2001709DB /* ReviewVC.m */; };
+		7D4E06181A75E9DA001709DB /* RecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06171A75E9DA001709DB /* RecordVC.m */; };
+		7D4E061B1A75EDEC001709DB /* ReviewQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */; };
+		7D4E061F1A75F1DC001709DB /* MyTraceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E061D1A75F1DC001709DB /* MyTraceVC.m */; };
+		7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06261A76068A001709DB /* YZSwipeBetweenViewController.m */; };
+		7D4E062A1A760834001709DB /* TraceRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06291A760834001709DB /* TraceRootVC.m */; };
 		7D6A518D1A69610600355923 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518C1A69610600355923 /* main.m */; };
 		7D6A51901A69610600355923 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518F1A69610600355923 /* AppDelegate.m */; };
 		7D6A51981A69610600355923 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51971A69610600355923 /* Images.xcassets */; };
@@ -65,7 +70,6 @@
 		7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53B81A6B5BDA00355923 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */; };
 		7D6A53C01A6B5C5B00355923 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6A53BF1A6B5C5B00355923 /* UIKit.framework */; };
-		7D6A53C31A6B62A800355923 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53C21A6B62A800355923 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7DBD86661A7259DB00205576 /* SubjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBD86651A7259DB00205576 /* SubjectVC.m */; };
 		7DBD86691A725EDB00205576 /* MainFunVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DBD86681A725EDB00205576 /* MainFunVC.m */; };
 		7DBD866D1A72636D00205576 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DBD866C1A72636D00205576 /* MediaPlayer.framework */; };
@@ -184,6 +188,16 @@
 		7D4E06101A751593001709DB /* MyQuestionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyQuestionVC.m; path = "科目/MyQuestionVC.m"; sourceTree = "<group>"; };
 		7D4E06121A7524C2001709DB /* ReviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviewVC.h; path = "科目/ReviewVC.h"; sourceTree = "<group>"; };
 		7D4E06131A7524C2001709DB /* ReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviewVC.m; path = "科目/ReviewVC.m"; sourceTree = "<group>"; };
+		7D4E06161A75E9DA001709DB /* RecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordVC.h; path = "科目/RecordVC.h"; sourceTree = "<group>"; };
+		7D4E06171A75E9DA001709DB /* RecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecordVC.m; path = "科目/RecordVC.m"; sourceTree = "<group>"; };
+		7D4E06191A75EDEC001709DB /* ReviewQuestionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviewQuestionVC.h; path = "科目/ReviewQuestionVC.h"; sourceTree = "<group>"; };
+		7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviewQuestionVC.m; path = "科目/ReviewQuestionVC.m"; sourceTree = "<group>"; };
+		7D4E061C1A75F1DC001709DB /* MyTraceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTraceVC.h; path = "主界面/MyTraceVC.h"; sourceTree = "<group>"; };
+		7D4E061D1A75F1DC001709DB /* MyTraceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTraceVC.m; path = "主界面/MyTraceVC.m"; sourceTree = "<group>"; };
+		7D4E06251A76068A001709DB /* YZSwipeBetweenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSwipeBetweenViewController.h; sourceTree = "<group>"; };
+		7D4E06261A76068A001709DB /* YZSwipeBetweenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YZSwipeBetweenViewController.m; sourceTree = "<group>"; };
+		7D4E06281A760834001709DB /* TraceRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TraceRootVC.h; path = "主界面/TraceRootVC.h"; sourceTree = "<group>"; };
+		7D4E06291A760834001709DB /* TraceRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TraceRootVC.m; path = "主界面/TraceRootVC.m"; sourceTree = "<group>"; };
 		7D6A51871A69610600355923 /* graduate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = graduate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6A518B1A69610600355923 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D6A518C1A69610600355923 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -209,8 +223,6 @@
 		7D6A53BC1A6B5BEE00355923 /* ToolUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolUtils.h; sourceTree = "<group>"; };
 		7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolUtils.m; sourceTree = "<group>"; };
 		7D6A53BF1A6B5C5B00355923 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		7D6A53C11A6B62A800355923 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../MobileNJU_2.5/Frame/JSONKit.h; sourceTree = "<group>"; };
-		7D6A53C21A6B62A800355923 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../MobileNJU_2.5/Frame/JSONKit.m; sourceTree = "<group>"; };
 		7DBD86641A7259DB00205576 /* SubjectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubjectVC.h; path = "主界面/SubjectVC.h"; sourceTree = "<group>"; };
 		7DBD86651A7259DB00205576 /* SubjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubjectVC.m; path = "主界面/SubjectVC.m"; sourceTree = "<group>"; };
 		7DBD86671A725EDB00205576 /* MainFunVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainFunVC.h; path = "主界面/MainFunVC.h"; sourceTree = "<group>"; };
@@ -310,12 +322,16 @@
 				7D4E058B1A74C636001709DB /* SetSubjectVC.m */,
 				7D4E05911A74D869001709DB /* RecommandVC.h */,
 				7D4E05921A74D869001709DB /* RecommandVC.m */,
+				7D4E06101A751593001709DB /* MyQuestionVC.m */,
 				7D4E05971A74DCB2001709DB /* QuestionView.h */,
 				7D4E05981A74DCB2001709DB /* QuestionView.m */,
 				7D4E060F1A751593001709DB /* MyQuestionVC.h */,
-				7D4E06101A751593001709DB /* MyQuestionVC.m */,
 				7D4E06121A7524C2001709DB /* ReviewVC.h */,
 				7D4E06131A7524C2001709DB /* ReviewVC.m */,
+				7D4E06161A75E9DA001709DB /* RecordVC.h */,
+				7D4E06171A75E9DA001709DB /* RecordVC.m */,
+				7D4E06191A75EDEC001709DB /* ReviewQuestionVC.h */,
+				7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */,
 			);
 			name = "科目";
 			sourceTree = "<group>";
@@ -417,6 +433,15 @@
 			name = "其他";
 			sourceTree = "<group>";
 		};
+		7D4E06241A760672001709DB /* YZSwipeBetweenViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7D4E06251A76068A001709DB /* YZSwipeBetweenViewController.h */,
+				7D4E06261A76068A001709DB /* YZSwipeBetweenViewController.m */,
+			);
+			name = YZSwipeBetweenViewController;
+			sourceTree = "<group>";
+		};
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
@@ -489,11 +514,10 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7D4E06241A760672001709DB /* YZSwipeBetweenViewController */,
 				7D4E05CE1A74EF7B001709DB /* PhotoBrowser */,
 				7D4E059C1A74EF71001709DB /* SDWebImage */,
 				7D4E056E1A748EFB001709DB /* MAOFlipViewController */,
-				7D6A53C11A6B62A800355923 /* JSONKit.h */,
-				7D6A53C21A6B62A800355923 /* JSONKit.m */,
 				7D6A53BB1A6B5BEE00355923 /* ToolUtils */,
 				7D6A53B61A6B5BDA00355923 /* GTMBase64 */,
 			);
@@ -523,6 +547,10 @@
 			isa = PBXGroup;
 			children = (
 				7DBD867A1A72789600205576 /* Func.storyboard */,
+				7D4E06281A760834001709DB /* TraceRootVC.h */,
+				7D4E06291A760834001709DB /* TraceRootVC.m */,
+				7D4E05831A74AD99001709DB /* BaseFuncVC.h */,
+				7D4E057E1A749CE4001709DB /* MediaPlayController.h */,
 				7D4E05861A74B1DF001709DB /* OtherFuncVCViewController.h */,
 				7D4E05871A74B1DF001709DB /* OtherFuncVCViewController.m */,
 				7D4E057B1A748F3C001709DB /* RootViewController.h */,
@@ -533,10 +561,10 @@
 				7DBD86681A725EDB00205576 /* MainFunVC.m */,
 				7DBD86711A7264E900205576 /* MediaPlayVC.h */,
 				7DBD86721A7264E900205576 /* MediaPlayVC.m */,
-				7D4E057E1A749CE4001709DB /* MediaPlayController.h */,
 				7D4E057F1A749CE4001709DB /* MediaPlayController.m */,
-				7D4E05831A74AD99001709DB /* BaseFuncVC.h */,
 				7D4E05841A74AD99001709DB /* BaseFuncVC.m */,
+				7D4E061C1A75F1DC001709DB /* MyTraceVC.h */,
+				7D4E061D1A75F1DC001709DB /* MyTraceVC.m */,
 			);
 			name = "主界面";
 			sourceTree = "<group>";
@@ -743,21 +771,25 @@
 				7D4E05CB1A74EF71001709DB /* UIImageView+HighlightedWebCache.m in Sources */,
 				7D4E057D1A748F3C001709DB /* RootViewController.m in Sources */,
 				7D4E057A1A748EFB001709DB /* MAOPanGestureRecognizer.m in Sources */,
+				7D4E06181A75E9DA001709DB /* RecordVC.m in Sources */,
+				7D4E062A1A760834001709DB /* TraceRootVC.m in Sources */,
+				7D4E061F1A75F1DC001709DB /* MyTraceVC.m in Sources */,
 				7D4E05C21A74EF71001709DB /* SDWebImageDecoder.m in Sources */,
 				7D4E05C51A74EF71001709DB /* SDWebImageManager.m in Sources */,
 				7DBD86871A7285FE00205576 /* ArticleList.m in Sources */,
 				7D4E05EA1A74EF7B001709DB /* MJPhotoProgressView.m in Sources */,
 				7DBD86731A7264E900205576 /* MediaPlayVC.m in Sources */,
 				7D4E05901A74C73A001709DB /* ButtonGroup.m in Sources */,
-				7D6A53C31A6B62A800355923 /* JSONKit.m in Sources */,
 				7D4E05C41A74EF71001709DB /* SDWebImageDownloaderOperation.m in Sources */,
 				7DD888F41A6ACB4700D198DD /* LoginVC.m in Sources */,
+				7D4E061B1A75EDEC001709DB /* ReviewQuestionVC.m in Sources */,
 				7D4E05771A748EFB001709DB /* MAOFlipInteraction.m in Sources */,
 				7D6A518D1A69610600355923 /* main.m in Sources */,
 				7D4E05851A74AD99001709DB /* BaseFuncVC.m in Sources */,
 				7D4E05E91A74EF7B001709DB /* MJPhotoLoadingView.m in Sources */,
 				7D4E05931A74D869001709DB /* RecommandVC.m in Sources */,
 				7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */,
+				7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */,
 				7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */,
 				7D4E05C71A74EF71001709DB /* UIButton+WebCache.m in Sources */,
 				7D4E05801A749CE4001709DB /* MediaPlayController.m in Sources */,

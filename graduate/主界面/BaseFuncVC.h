@@ -12,6 +12,8 @@
 {
     CGFloat keyboardHeight;
 }
+@property (weak, nonatomic) IBOutlet UIButton *musicBt;
+
 - (void)loadMusic;
 
 @end
