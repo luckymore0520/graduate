@@ -33,7 +33,7 @@
 //    RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
 //    [_window setRootViewController:_rootVC];
 
-    OtherViewController* _otherVC = (OtherViewController*) [myStoryBoard instantiateViewControllerWithIdentifier:@"Other"];
+    OtherViewController* _otherVC = (OtherViewController*) [myStoryBoard instantiateViewControllerWithIdentifier:@"ChatCenter"];
     [_window setRootViewController:_otherVC];
     
 //    if (![ToolUtils getFirstUse])

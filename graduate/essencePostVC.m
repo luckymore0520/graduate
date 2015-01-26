@@ -6,18 +6,15 @@
 //  Copyright (c) 2015 nju.excalibur. All rights reserved.
 //
 
-#import "essencePostVC.h"
-#import "essencePostCell.h"
-#import "toggleCell.h"
+#import "EssencePostVC.h"
+#import "EssencePostCell.h"
+#import "ToggleCell.h"
 
-@interface essencePostVC ()
-
-@property NSMutableArray *titleArray;
-@property NSMutableArray *detailArray;
+@interface EssencePostVC ()
 
 @end
 
-@implementation essencePostVC
+@implementation EssencePostVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,16 +53,15 @@
     
     // Configure the cell...
     if (indexPath.section == 0) {
-        toggleCell *cell = [tableView dequeueReusableCellWithIdentifier:toggleCellId forIndexPath:indexPath];
+        ToggleCell *cell = [tableView dequeueReusableCellWithIdentifier:toggleCellId forIndexPath:indexPath];
         return cell;
     }else{
     
-        essencePostCell *cell = [tableView dequeueReusableCellWithIdentifier:essencePostCellId forIndexPath:indexPath];
+        EssencePostCell *cell = [tableView dequeueReusableCellWithIdentifier:essencePostCellId forIndexPath:indexPath];
         cell.postTitle.text = @"2016年考研精品视频";
         cell.postAuthor.text = @"来自王小丫的分享";
         cell.postTime.text = @"23:59";
         
-        NSLog(@"Current time is %@", cell.postTime.text);
         return cell;
     }
 

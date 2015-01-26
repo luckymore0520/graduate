@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface essencePostCell : UITableViewCell
+@interface EssencePostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *postTitle;
 @property (weak, nonatomic) IBOutlet UILabel *postAuthor;
 @property (weak, nonatomic) IBOutlet UILabel *postTime;

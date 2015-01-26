@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface essencePostVC : UITableViewController
+@interface EssencePostVC : UITableViewController
 
 @end

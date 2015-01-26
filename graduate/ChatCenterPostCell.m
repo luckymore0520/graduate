@@ -1,14 +1,14 @@
 //
-//  toggleCell.m
+//  ChatCenterPostCell.m
 //  graduate
 //
 //  Created by Sylar on 26/1/15.
 //  Copyright (c) 2015 nju.excalibur. All rights reserved.
 //
 
-#import "ToggleCell.h"
+#import "ChatCenterPostCell.h"
 
-@implementation ToggleCell
+@implementation ChatCenterPostCell
 
 - (void)awakeFromNib {
     // Initialization code

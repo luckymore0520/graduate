@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface toggleCell : UITableViewCell
+@interface ToggleCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *materialButton;
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
 @property (weak, nonatomic) IBOutlet UIButton *quizButton;

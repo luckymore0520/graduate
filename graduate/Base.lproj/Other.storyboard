@@ -2,18 +2,19 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--精华-->
         <scene sceneID="rrq-2w-Z5k">
             <objects>
-                <tableViewController id="jgV-Mi-bVD" customClass="essencePostVC" sceneMemberID="viewController">
+                <tableViewController id="jgV-Mi-bVD" customClass="EssencePostVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" id="ceC-BF-D8y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Toggle Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Toggle Cell" rowHeight="90" id="tCc-xN-QFC" customClass="toggleCell">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Toggle Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Toggle Cell" rowHeight="90" id="tCc-xN-QFC" customClass="ToggleCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tCc-xN-QFC" id="vsk-b1-emW">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -57,24 +58,24 @@
                                     <outlet property="searchField" destination="OXy-kt-pDk" id="9o6-rz-Xd3"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Essence Post Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Essence Post Cell" rowHeight="90" id="fYe-TO-I2c" customClass="essencePostCell">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="Essence Post Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Essence Post Cell" rowHeight="90" id="fYe-TO-I2c" customClass="EssencePostCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fYe-TO-I2c" id="bIj-Yc-on4">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0w-DR-DHR">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="来自王小丫的分享" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0w-DR-DHR">
                                             <rect key="frame" x="8" y="64" width="227" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ev9-15-aji">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="23:59" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ev9-15-aji">
                                             <rect key="frame" x="257" y="15" width="55" height="28"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Mw-qE-dpa">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2016年考研精品视频" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Mw-qE-dpa">
                                             <rect key="frame" x="8" y="9" width="347" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -103,20 +104,73 @@
             </objects>
             <point key="canvasLocation" x="711" y="410"/>
         </scene>
-        <!--Table View Controller-->
+        <!--广场-->
         <scene sceneID="tuI-Dy-9RS">
             <objects>
-                <tableViewController id="8ux-ws-hwd" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uOi-Uy-lhe">
+                <tableViewController id="8ux-ws-hwd" customClass="ChatCenterVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="114" sectionHeaderHeight="22" sectionFooterHeight="22" id="uOi-Uy-lhe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="FvE-zI-9Z9">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Chat Center Post Cell" rowHeight="114" id="FvE-zI-9Z9" customClass="ChatCenterPostCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FvE-zI-9Z9" id="MiH-bw-iAi">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="昵称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pbs-Zl-1td">
+                                            <rect key="frame" x="66" y="1" width="34" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="男" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ij3-pJ-5c9">
+                                            <rect key="frame" x="124" y="1" width="17" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="评论数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOw-gw-mjw">
+                                            <rect key="frame" x="256" y="1" width="51" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="30分钟前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vog-eX-afB">
+                                            <rect key="frame" x="62" y="24" width="71" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZGD-Sh-6Hk">
+                                            <rect key="frame" x="62" y="47" width="104" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="正文" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsq-bv-Ncl">
+                                            <rect key="frame" x="8" y="76" width="299" height="32"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="qqicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="qdf-Br-mX2">
+                                            <rect key="frame" x="8" y="1" width="50" height="44"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="qdf-Br-mX2" firstAttribute="leading" secondItem="MiH-bw-iAi" secondAttribute="leadingMargin" constant="-120" id="pfc-pX-5QC"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="postAltasImageView" destination="qdf-Br-mX2" id="85G-8X-C7d"/>
+                                    <outlet property="postContextLabel" destination="bsq-bv-Ncl" id="U2V-uw-zVE"/>
+                                    <outlet property="postGenderLabel" destination="Ij3-pJ-5c9" id="aw5-go-m4Y"/>
+                                    <outlet property="postIntervalLabel" destination="vog-eX-afB" id="5rL-0j-gP0"/>
+                                    <outlet property="postNickNameLabel" destination="Pbs-Zl-1td" id="QPC-1K-8GI"/>
+                                    <outlet property="postRepliedLabel" destination="hOw-gw-mjw" id="vJA-yo-OAd"/>
+                                    <outlet property="postTitleLabel" destination="ZGD-Sh-6Hk" id="9xE-8P-NHi"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -124,10 +178,14 @@
                             <outlet property="delegate" destination="8ux-ws-hwd" id="gA1-0R-teS"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="广场" id="OmV-Hh-6LI">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="qvl-Wc-71o"/>
+                        <barButtonItem key="rightBarButtonItem" title="新消息" id="Cdv-Uf-bZG"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoc-lG-C1y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076.2666666666667" y="420.31999999999994"/>
+            <point key="canvasLocation" x="1608" y="414"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fsS-p4-5IL">
@@ -147,7 +205,28 @@
             </objects>
             <point key="canvasLocation" x="278.39999999999998" y="437.36000000000001"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Tn-N5-NLZ">
+            <objects>
+                <navigationController storyboardIdentifier="ChatCenter" automaticallyAdjustsScrollViewInsets="NO" id="kUV-nB-BPb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f62-0g-P1w">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8ux-ws-hwd" kind="relationship" relationship="rootViewController" id="JaV-hg-NLz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v9B-WB-xIG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1076" y="420"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="qqicon.png" width="36" height="39"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

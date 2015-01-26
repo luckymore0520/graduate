@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 nju.excalibur. All rights reserved.
 //
 
-#import "essencePostCell.h"
+#import "EssencePostCell.h"
 
-@implementation essencePostCell
+@implementation EssencePostCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

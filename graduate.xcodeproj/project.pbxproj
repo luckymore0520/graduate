@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C3C684E1A764386003CE148 /* SquareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C684D1A764386003CE148 /* SquareViewController.m */; };
-		2C3C68511A765B13003CE148 /* essencePostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C68501A765B13003CE148 /* essencePostCell.m */; };
-		2C3C68541A7663BC003CE148 /* toggleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C68531A7663BC003CE148 /* toggleCell.m */; };
+		2C3C684E1A764386003CE148 /* ChatCenterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C684D1A764386003CE148 /* ChatCenterVC.m */; };
+		2C3C68511A765B13003CE148 /* EssencePostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C68501A765B13003CE148 /* EssencePostCell.m */; };
+		2C3C68541A7663BC003CE148 /* ToggleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C3C68531A7663BC003CE148 /* ToggleCell.m */; };
+		2CBA88FF1A76743900215385 /* ChatCenterPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CBA88FE1A76743900215385 /* ChatCenterPostCell.m */; };
 		2CF75CF31A75D9FA00128F63 /* OtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF75CF21A75D9FA00128F63 /* OtherViewController.m */; };
-		2CF75CF61A75DD1100128F63 /* essencePostVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF75CF51A75DD1100128F63 /* essencePostVC.m */; };
+		2CF75CF61A75DD1100128F63 /* EssencePostVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF75CF51A75DD1100128F63 /* EssencePostVC.m */; };
 		2CF75CF91A75E66700128F63 /* Other.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CF75CF71A75E66700128F63 /* Other.storyboard */; };
 		7D4E05771A748EFB001709DB /* MAOFlipInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E05701A748EFB001709DB /* MAOFlipInteraction.m */; };
 		7D4E05781A748EFB001709DB /* MAOFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E05721A748EFB001709DB /* MAOFlipTransition.m */; };
@@ -109,16 +110,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2C3C684C1A764386003CE148 /* SquareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareViewController.h; sourceTree = "<group>"; };
-		2C3C684D1A764386003CE148 /* SquareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareViewController.m; sourceTree = "<group>"; };
-		2C3C684F1A765B13003CE148 /* essencePostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = essencePostCell.h; sourceTree = "<group>"; };
-		2C3C68501A765B13003CE148 /* essencePostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = essencePostCell.m; sourceTree = "<group>"; };
-		2C3C68521A7663BC003CE148 /* toggleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toggleCell.h; sourceTree = "<group>"; };
-		2C3C68531A7663BC003CE148 /* toggleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = toggleCell.m; sourceTree = "<group>"; };
+		2C3C684C1A764386003CE148 /* ChatCenterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCenterVC.h; sourceTree = "<group>"; };
+		2C3C684D1A764386003CE148 /* ChatCenterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCenterVC.m; sourceTree = "<group>"; };
+		2C3C684F1A765B13003CE148 /* EssencePostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EssencePostCell.h; sourceTree = "<group>"; };
+		2C3C68501A765B13003CE148 /* EssencePostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EssencePostCell.m; sourceTree = "<group>"; };
+		2C3C68521A7663BC003CE148 /* ToggleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleCell.h; sourceTree = "<group>"; };
+		2C3C68531A7663BC003CE148 /* ToggleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToggleCell.m; sourceTree = "<group>"; };
+		2CBA88FD1A76743900215385 /* ChatCenterPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCenterPostCell.h; sourceTree = "<group>"; };
+		2CBA88FE1A76743900215385 /* ChatCenterPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCenterPostCell.m; sourceTree = "<group>"; };
 		2CF75CF11A75D9FA00128F63 /* OtherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherViewController.h; sourceTree = "<group>"; };
 		2CF75CF21A75D9FA00128F63 /* OtherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherViewController.m; sourceTree = "<group>"; };
-		2CF75CF41A75DD1100128F63 /* essencePostVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = essencePostVC.h; sourceTree = "<group>"; };
-		2CF75CF51A75DD1100128F63 /* essencePostVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = essencePostVC.m; sourceTree = "<group>"; };
+		2CF75CF41A75DD1100128F63 /* EssencePostVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EssencePostVC.h; sourceTree = "<group>"; };
+		2CF75CF51A75DD1100128F63 /* EssencePostVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EssencePostVC.m; sourceTree = "<group>"; };
 		2CF75CF81A75E66700128F63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Other.storyboard; sourceTree = "<group>"; };
 		7D4E056F1A748EFB001709DB /* MAOFlipInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAOFlipInteraction.h; sourceTree = "<group>"; };
 		7D4E05701A748EFB001709DB /* MAOFlipInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAOFlipInteraction.m; sourceTree = "<group>"; };
@@ -428,16 +431,18 @@
 			isa = PBXGroup;
 			children = (
 				2CF75CF71A75E66700128F63 /* Other.storyboard */,
-				2C3C68521A7663BC003CE148 /* toggleCell.h */,
-				2C3C68531A7663BC003CE148 /* toggleCell.m */,
+				2CBA88FD1A76743900215385 /* ChatCenterPostCell.h */,
+				2CBA88FE1A76743900215385 /* ChatCenterPostCell.m */,
+				2C3C68521A7663BC003CE148 /* ToggleCell.h */,
+				2C3C68531A7663BC003CE148 /* ToggleCell.m */,
 				2CF75CF11A75D9FA00128F63 /* OtherViewController.h */,
 				2CF75CF21A75D9FA00128F63 /* OtherViewController.m */,
-				2CF75CF41A75DD1100128F63 /* essencePostVC.h */,
-				2CF75CF51A75DD1100128F63 /* essencePostVC.m */,
-				2C3C684C1A764386003CE148 /* SquareViewController.h */,
-				2C3C684D1A764386003CE148 /* SquareViewController.m */,
-				2C3C684F1A765B13003CE148 /* essencePostCell.h */,
-				2C3C68501A765B13003CE148 /* essencePostCell.m */,
+				2CF75CF41A75DD1100128F63 /* EssencePostVC.h */,
+				2CF75CF51A75DD1100128F63 /* EssencePostVC.m */,
+				2C3C684C1A764386003CE148 /* ChatCenterVC.h */,
+				2C3C684D1A764386003CE148 /* ChatCenterVC.m */,
+				2C3C684F1A765B13003CE148 /* EssencePostCell.h */,
+				2C3C68501A765B13003CE148 /* EssencePostCell.m */,
 			);
 			name = "其他";
 			sourceTree = "<group>";
@@ -745,13 +750,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D4E058C1A74C636001709DB /* SetSubjectVC.m in Sources */,
-				2C3C684E1A764386003CE148 /* SquareViewController.m in Sources */,
+				2C3C684E1A764386003CE148 /* ChatCenterVC.m in Sources */,
 				7D4E05C61A74EF71001709DB /* SDWebImagePrefetcher.m in Sources */,
 				7D4E05CD1A74EF71001709DB /* UIView+WebCacheOperation.m in Sources */,
 				7D4E05BE1A74EF71001709DB /* MKAnnotationView+WebCache.m in Sources */,
 				7DBD86691A725EDB00205576 /* MainFunVC.m in Sources */,
 				7D4E05E51A74EF7B001709DB /* MBProgressHUD.m in Sources */,
-				2C3C68541A7663BC003CE148 /* toggleCell.m in Sources */,
+				2C3C68541A7663BC003CE148 /* ToggleCell.m in Sources */,
 				7D4E05E31A74EF7B001709DB /* MBProgressHUD+Add.m in Sources */,
 				7DBD867E1A727E6F00205576 /* SetPasswordViewController.m in Sources */,
 				7D4E05C91A74EF71001709DB /* UIImage+MultiFormat.m in Sources */,
@@ -762,6 +767,7 @@
 				7D4E05781A748EFB001709DB /* MAOFlipTransition.m in Sources */,
 				7D4E05BF1A74EF71001709DB /* NSData+ImageContentType.m in Sources */,
 				7D4E05C81A74EF71001709DB /* UIImage+GIF.m in Sources */,
+				2CBA88FF1A76743900215385 /* ChatCenterPostCell.m in Sources */,
 				7D6A51901A69610600355923 /* AppDelegate.m in Sources */,
 				7D4E05C31A74EF71001709DB /* SDWebImageDownloader.m in Sources */,
 				7D4E05C11A74EF71001709DB /* SDWebImageCompat.m in Sources */,
@@ -772,7 +778,7 @@
 				7D4E05C21A74EF71001709DB /* SDWebImageDecoder.m in Sources */,
 				7D4E05C51A74EF71001709DB /* SDWebImageManager.m in Sources */,
 				7DBD86871A7285FE00205576 /* ArticleList.m in Sources */,
-				2CF75CF61A75DD1100128F63 /* essencePostVC.m in Sources */,
+				2CF75CF61A75DD1100128F63 /* EssencePostVC.m in Sources */,
 				7D4E05EA1A74EF7B001709DB /* MJPhotoProgressView.m in Sources */,
 				7DBD86731A7264E900205576 /* MediaPlayVC.m in Sources */,
 				7D4E05901A74C73A001709DB /* ButtonGroup.m in Sources */,
@@ -793,7 +799,7 @@
 				7D4E05991A74DCB2001709DB /* QuestionView.m in Sources */,
 				7D4E05C01A74EF71001709DB /* SDImageCache.m in Sources */,
 				7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */,
-				2C3C68511A765B13003CE148 /* essencePostCell.m in Sources */,
+				2C3C68511A765B13003CE148 /* EssencePostCell.m in Sources */,
 				7DBD868E1A72869B00205576 /* ArticleDetailVC.m in Sources */,
 				7DBD86661A7259DB00205576 /* SubjectVC.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,
