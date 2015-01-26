@@ -1,23 +1,18 @@
 //
-//  essencePostViewController.m
+//  SquareViewController.m
 //  graduate
 //
 //  Created by Sylar on 26/1/15.
 //  Copyright (c) 2015 nju.excalibur. All rights reserved.
 //
 
-#import "essencePostVC.h"
-#import "essencePostCell.h"
-#import "toggleCell.h"
+#import "SquareViewController.h"
 
-@interface essencePostVC ()
-
-@property NSMutableArray *titleArray;
-@property NSMutableArray *detailArray;
+@interface SquareViewController ()
 
 @end
 
-@implementation essencePostVC
+@implementation SquareViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,7 +22,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,40 +32,26 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 2;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return (section == 0)?1:5;
+    return 0;
 }
 
-#pragma mark - Acquire Post Data
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *essencePostCellId = @"Essence Post Cell";
-    static NSString *toggleCellId = @"Toggle Cell";
-    
-    //UITableViewCell *cell;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
     // Configure the cell...
-    if (indexPath.section == 0) {
-        toggleCell *cell = [tableView dequeueReusableCellWithIdentifier:toggleCellId forIndexPath:indexPath];
-        return cell;
-    }else{
     
-        essencePostCell *cell = [tableView dequeueReusableCellWithIdentifier:essencePostCellId forIndexPath:indexPath];
-        cell.postTitle.text = @"2016年考研精品视频";
-        cell.postAuthor.text = @"来自王小丫的分享";
-        cell.postTime.text = @"23:59";
-        
-        NSLog(@"Current time is %@", cell.postTime.text);
-        return cell;
-    }
-
+    return cell;
 }
-
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
