@@ -11,6 +11,7 @@
 #import "SubjectVC.h"
 #import "MainFunVC.h"
 #import "RootViewController.h"
+#import "OtherViewController.h"
 #import "ToolUtils.h"
 #import "MediaPlayVC.h"
 @interface AppDelegate ()
@@ -21,12 +22,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+    #warning Change Storyboard for dev test
+    
+//    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+    
+    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Other" bundle:nil];
+    
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
-    RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    [_window setRootViewController:_rootVC];
+//    RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+//    [_window setRootViewController:_rootVC];
 
+    OtherViewController* _otherVC = (OtherViewController*) [myStoryBoard instantiateViewControllerWithIdentifier:@"Other"];
+    [_window setRootViewController:_otherVC];
+    
 //    if (![ToolUtils getFirstUse])
 //    {
 //        SubjectVC* _rootVC = (SubjectVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"Subject"];
