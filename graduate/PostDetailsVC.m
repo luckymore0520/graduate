@@ -1,20 +1,20 @@
 //
-//  SquareViewController.m
+//  PostDetailsVC.m
 //  graduate
 //
-//  Created by Sylar on 26/1/15.
+//  Created by Sylar on 27/1/15.
 //  Copyright (c) 2015 nju.excalibur. All rights reserved.
 //
 
-#import "ChatCenterVC.h"
-#import "ChatCenterPostCell.h"
 #import "PostDetailsVC.h"
+#import "PostDetailsPostCell.h"
+#import "PostDetailsReplyCell.h"
 
-@interface ChatCenterVC ()
+@interface PostDetailsVC ()
 
 @end
 
-@implementation ChatCenterVC
+@implementation PostDetailsVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,8 +24,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,21 +35,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return (section == 0)?1:3;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ChatCenterPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Chat Center Post Cell" forIndexPath:indexPath];
     
-     //Configure the cell...
-    
-    return cell;
+    NSLog(@"Works");
+    if(indexPath.section == 0){
+        PostDetailsPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Post Cell" forIndexPath:indexPath];
+        return cell;
+    }else{
+        PostDetailsReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Reply Cell" forIndexPath:indexPath];
+        return cell;
+    }
+
+    // Configure the cell...
+
 }
 
 
@@ -89,18 +94,14 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    ChatCenterPostCell *cell = sender;
-    PostDetailsVC *vc = [segue destinationViewController];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    
 }
-
+*/
 
 @end
