@@ -1064,7 +1064,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g40-5v-oHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2322" y="-736.5"/>
+            <point key="canvasLocation" x="2385" y="-759.75"/>
         </scene>
         <!--今日推荐-->
         <scene sceneID="tsC-nl-ZgL">
@@ -2039,28 +2039,91 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oic-iB-MJH">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="播放">
+                                <state key="normal" title="精华">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="controlMusic:" destination="tDp-dd-JJk" eventType="touchUpInside" id="ywq-7h-Vks"/>
-                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SpP-6M-fLa">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="广场">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tC-KM-kGi">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="vip">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bds-QU-xWN">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="打印">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZK-CF-yyD">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="备份">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jse-wB-49l">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="个人中心">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JZ-xQ-KUs">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="联系管理员">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95686274510000002" green="0.96470588239999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="oic-iB-MJH" firstAttribute="top" secondItem="jfH-hQ-Tot" secondAttribute="bottom" constant="8" symbolic="YES" id="2Qn-j3-BwT"/>
-                            <constraint firstItem="oic-iB-MJH" firstAttribute="centerX" secondItem="jfH-hQ-Tot" secondAttribute="centerX" id="7WA-Yy-ZsP"/>
+                            <constraint firstItem="3JZ-xQ-KUs" firstAttribute="top" secondItem="0tC-KM-kGi" secondAttribute="bottom" constant="22" id="05z-M0-uct"/>
+                            <constraint firstItem="oic-iB-MJH" firstAttribute="centerX" secondItem="jfH-hQ-Tot" secondAttribute="centerX" id="5fx-Em-xWI"/>
+                            <constraint firstItem="bds-QU-xWN" firstAttribute="leading" secondItem="0tC-KM-kGi" secondAttribute="leading" id="CPS-Nr-lrE"/>
+                            <constraint firstItem="bds-QU-xWN" firstAttribute="top" secondItem="SpP-6M-fLa" secondAttribute="bottom" constant="23" id="EEb-jP-5p7"/>
+                            <constraint firstItem="oic-iB-MJH" firstAttribute="leading" secondItem="SpP-6M-fLa" secondAttribute="leading" id="GK2-qo-y9L"/>
+                            <constraint firstItem="0tC-KM-kGi" firstAttribute="top" secondItem="zZK-CF-yyD" secondAttribute="bottom" constant="19" id="O7A-XO-hBb"/>
+                            <constraint firstItem="Jse-wB-49l" firstAttribute="top" secondItem="bds-QU-xWN" secondAttribute="bottom" constant="20" id="OZK-fT-smu"/>
+                            <constraint firstItem="zZK-CF-yyD" firstAttribute="top" secondItem="oic-iB-MJH" secondAttribute="bottom" constant="20" id="guF-dG-Zzc"/>
                             <constraint firstAttribute="centerY" secondItem="jfH-hQ-Tot" secondAttribute="centerY" id="i2E-sr-E0R"/>
+                            <constraint firstItem="zZK-CF-yyD" firstAttribute="leading" secondItem="bds-QU-xWN" secondAttribute="leading" id="lhh-jR-UXo"/>
                             <constraint firstAttribute="centerX" secondItem="jfH-hQ-Tot" secondAttribute="centerX" id="mP3-Jy-pgG"/>
+                            <constraint firstItem="oic-iB-MJH" firstAttribute="top" secondItem="jfH-hQ-Tot" secondAttribute="bottom" constant="8" symbolic="YES" id="npR-4G-yoV"/>
+                            <constraint firstItem="Jse-wB-49l" firstAttribute="centerX" secondItem="0tC-KM-kGi" secondAttribute="centerX" id="q8n-fU-XCE"/>
+                            <constraint firstItem="SpP-6M-fLa" firstAttribute="top" secondItem="jfH-hQ-Tot" secondAttribute="bottom" constant="31" id="qte-W8-bMP"/>
+                            <constraint firstItem="3JZ-xQ-KUs" firstAttribute="centerX" secondItem="Jse-wB-49l" secondAttribute="centerX" id="sbf-Pa-sCk"/>
+                            <constraint firstItem="SpP-6M-fLa" firstAttribute="leading" secondItem="zZK-CF-yyD" secondAttribute="leading" id="xKA-LI-Qfs"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="oic-iB-MJH"/>
+                                <exclude reference="SpP-6M-fLa"/>
+                                <exclude reference="0tC-KM-kGi"/>
+                                <exclude reference="bds-QU-xWN"/>
+                                <exclude reference="zZK-CF-yyD"/>
+                                <exclude reference="Jse-wB-49l"/>
+                                <exclude reference="3JZ-xQ-KUs"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="2Qn-j3-BwT"/>
-                                <exclude reference="7WA-Yy-ZsP"/>
+                                <exclude reference="O7A-XO-hBb"/>
+                                <exclude reference="05z-M0-uct"/>
+                                <exclude reference="sbf-Pa-sCk"/>
+                                <exclude reference="OZK-fT-smu"/>
+                                <exclude reference="q8n-fU-XCE"/>
+                                <exclude reference="qte-W8-bMP"/>
+                                <exclude reference="xKA-LI-Qfs"/>
+                                <exclude reference="CPS-Nr-lrE"/>
+                                <exclude reference="EEb-jP-5p7"/>
+                                <exclude reference="5fx-Em-xWI"/>
+                                <exclude reference="GK2-qo-y9L"/>
+                                <exclude reference="npR-4G-yoV"/>
+                                <exclude reference="guF-dG-Zzc"/>
+                                <exclude reference="lhh-jR-UXo"/>
                                 <exclude reference="i2E-sr-E0R"/>
                                 <exclude reference="mP3-Jy-pgG"/>
                             </mask>
@@ -2068,19 +2131,34 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="oic-iB-MJH"/>
+                                <include reference="SpP-6M-fLa"/>
+                                <include reference="0tC-KM-kGi"/>
+                                <include reference="bds-QU-xWN"/>
+                                <include reference="zZK-CF-yyD"/>
+                                <include reference="Jse-wB-49l"/>
+                                <include reference="3JZ-xQ-KUs"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="2Qn-j3-BwT"/>
-                                <include reference="7WA-Yy-ZsP"/>
+                                <include reference="O7A-XO-hBb"/>
+                                <include reference="05z-M0-uct"/>
+                                <include reference="sbf-Pa-sCk"/>
+                                <include reference="OZK-fT-smu"/>
+                                <include reference="q8n-fU-XCE"/>
+                                <include reference="qte-W8-bMP"/>
+                                <include reference="xKA-LI-Qfs"/>
+                                <include reference="CPS-Nr-lrE"/>
+                                <include reference="EEb-jP-5p7"/>
+                                <include reference="5fx-Em-xWI"/>
+                                <include reference="GK2-qo-y9L"/>
+                                <include reference="npR-4G-yoV"/>
+                                <include reference="guF-dG-Zzc"/>
+                                <include reference="lhh-jR-UXo"/>
                                 <include reference="i2E-sr-E0R"/>
                                 <include reference="mP3-Jy-pgG"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Second" id="QnE-R4-N2V"/>
-                    <connections>
-                        <outlet property="musicBt" destination="oic-iB-MJH" id="rvL-6B-7LT"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PDX-aG-agw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2102,7 +2180,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLK-Qd-IuR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3226.5" y="-759.75"/>
+            <point key="canvasLocation" x="3232.5" y="-759.75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="seP-9a-aER">

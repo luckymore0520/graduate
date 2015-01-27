@@ -23,6 +23,8 @@
     [self initQuestions];
     // Do any additional setup after loading the view.
 }
+
+
 - (IBAction)showNext:(id)sender {
     QuestionView* currentView = [self.questionViews objectAtIndex:self.currentIndex];
     if (self.currentIndex<self.questionViews.count-1) {
