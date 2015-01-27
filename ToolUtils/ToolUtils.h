@@ -37,4 +37,8 @@
 //已使用天数
 + (NSNumber*)getCurrentDay;
 + (void) setCurrentDay:(NSNumber*) currentDay;
+
+//我的科目
++ (void)setMySubjects:(NSDictionary*)subjects;
++ (NSDictionary*)getMySubjects;
 @end

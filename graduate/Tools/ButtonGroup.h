@@ -13,6 +13,7 @@
     NSArray* buttonArray;
     NSInteger selectedIndex;
 }
--(void)loadButton:(NSArray*)array;
 
+-(void)loadButton:(NSArray*)array;
+-(NSString*)selectedSubject;
 @end

@@ -27,7 +27,6 @@
     self.flipViewController.view.frame = self.view.frame;
     [self.view addSubview:self.flipViewController.view];
     [self.flipViewController didMoveToParentViewController:self];
-
 }
 
 
@@ -37,7 +36,6 @@
 }
 
 #pragma mark - MAOFlipViewControllerDelegate
-
 - (UIViewController*)flipViewController:(MAOFlipViewController *)flipViewController contentIndex:(NSUInteger)contentIndex
 {
     //新規作成

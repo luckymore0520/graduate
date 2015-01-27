@@ -30,6 +30,7 @@
 }
 
 
+#warning 该方法用于加载需要复习的问题，问题来源于dataArray，由前一个Controller给出
 - (void)loadQuestions
 {
     self.dataArray = [NSArray arrayWithObjects:@"1",@"2",@"3", nil];
@@ -56,14 +57,15 @@
 
 }
 
+
+
+#pragma mark scrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView==self.scrollView) {
         int index=scrollView.contentOffset.x/scrollView.frame.size.width;
         self.pageControll.currentPage=index;
     }
 }
-
-
 
 
 -(void)pageChange:(UIPageControl *)sender{
@@ -79,15 +81,24 @@
    
 }
 
+
+
+#pragma mark ButtonAction
+//已掌握
 - (IBAction)hasKnownAction:(id)sender {
     [self pageChange:nil];
+#warning 此处需要调用已掌握的接口
 }
+
+//未掌握
 - (IBAction)notKnowAction:(id)sender {
     [self pageChange:nil];
+#warning 此处需要调用未掌握的接口
+
 }
 
 
-
+#pragma mark QuestionViewDelegate
 - (void)handleKeyBoard
 {
     CGPoint point = self.scrollView.contentOffset;

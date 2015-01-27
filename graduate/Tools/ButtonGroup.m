@@ -39,4 +39,11 @@
     selectedIndex = selectedButton.tag;
     
 }
+
+-(NSString*)selectedSubject
+{
+    UIButton* button = [buttonArray objectAtIndex:selectedIndex];
+    return button.titleLabel.text;
+}
+
 @end

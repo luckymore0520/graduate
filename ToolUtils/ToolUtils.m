@@ -189,4 +189,17 @@
     
 
 }
+
+
++ (void)setMySubjects:(NSDictionary*)subjects
+{
+    [[NSUserDefaults standardUserDefaults]setObject:subjects forKey:@"mySubjects"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
++ (NSDictionary*)getMySubjects
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"mySubjects"];
+}
 @end
