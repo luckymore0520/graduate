@@ -294,7 +294,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHV-hO-P0R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1686" y="-736.5"/>
+            <point key="canvasLocation" x="1548" y="-822.75"/>
         </scene>
         <!--我的足迹-->
         <scene sceneID="fdX-9f-4eX">
@@ -578,6 +578,9 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="我的足迹" id="YTD-IG-2oL"/>
+                    <connections>
+                        <segue destination="wcC-GW-sUu" kind="show" identifier="showMyQuestion" id="Kyi-yM-JLQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GPn-S3-BeH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2583,6 +2586,6 @@
         <image name="3" width="341" height="239"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sAN-aj-kOj"/>
+        <segue reference="Kyi-yM-JLQ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,5 +13,4 @@
 @interface MAOFlipTransition : NSObject<UIViewControllerAnimatedTransitioning>
 @property (nonatomic, assign) BOOL presenting;
 @property (nonatomic,weak ) MAOFlipInteraction* interaction;
-@property (nonatomic)NSInteger flipMode;
 @end

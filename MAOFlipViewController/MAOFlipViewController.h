@@ -21,4 +21,6 @@
 @interface MAOFlipViewController : UIViewController
 @property (nonatomic, weak) id<MAOFlipViewControllerDelegate> delegate;
 @property (nonatomic)NSInteger flipState;
+@property (nonatomic) UINavigationController *flipNavigationController;
+- (void)interactionPushBeganAtPoint:(CGPoint)point;
 @end

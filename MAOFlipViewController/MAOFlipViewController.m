@@ -7,9 +7,8 @@
 //
 
 #import "MAOFlipViewController.h"
-
+#import "ToolUtils.h"
 @interface MAOFlipViewController ()<FlipInteactionDelegate, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
-@property (nonatomic) UINavigationController *flipNavigationController;
 @property (nonatomic) MAOFlipInteraction *flipInteraction;
 @property (nonatomic) MAOFlipTransition *flipTransition;
 @end
@@ -38,6 +37,40 @@
         
     }
 }
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (![ToolUtils getFirstUse]) {
+        UIViewController *c = [self nextViewController];
+        if (!c) {
+            return;
+        }
+        [self.flipInteraction setView:c.view];//インタラクション対象viewの設定。遷移先のview
+        [self.flipNavigationController pushViewController:c animated:NO];
+    }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    if (![ToolUtils getFirstUse]) {
+        UIViewController* c = [self.delegate flipViewController:self contentIndex:1];
+        UIView *sourceSnapshot = [c.view snapshotViewAfterScreenUpdates:YES];
+        [sourceSnapshot setFrame:self.flipNavigationController.view.frame];
+        [self.flipNavigationController.view addSubview:sourceSnapshot];
+        [self.flipNavigationController popViewControllerAnimated:NO];
+        [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            sourceSnapshot.transform = CGAffineTransformMakeTranslation(0, sourceSnapshot.frame.size.height);
+            
+        } completion:^(BOOL finished) {
+            [sourceSnapshot removeFromSuperview];
+        }];
+        [ToolUtils setFirstUse:@"NO"];
+    }
+   
+}
+
 
 #pragma mark - FlipInteractionDelegate
 //画面遷移開始
@@ -91,7 +124,6 @@
                                                   toViewController:(UIViewController *)toVC
 {
     self.flipTransition = [[MAOFlipTransition alloc]init];
-    self.flipTransition.flipMode = self.flipState;
     if (operation == UINavigationControllerOperationPush) {
         UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
         if (c) {

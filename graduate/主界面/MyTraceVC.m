@@ -93,12 +93,6 @@
         
     }
 
-//    if ( kind == UICollectionElementKindSectionFooter ) {
-//           UICollectionReusableView * footerview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionFooter withReuseIdentifier : @ "myFooter" forIndexPath : indexPath ] ;
-//
-//            reusableview = footerview;
-//        }
-    
     return reusableview;
 }
 

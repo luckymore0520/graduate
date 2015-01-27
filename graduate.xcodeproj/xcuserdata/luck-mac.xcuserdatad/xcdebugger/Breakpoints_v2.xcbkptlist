@@ -554,23 +554,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443942244.228"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443942244.228"
+            timestampString = "444020994.96864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -586,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443942244.228"
+            timestampString = "444020994.96864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -602,11 +586,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443942244.228"
+            timestampString = "444020994.96864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -618,11 +602,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443848093.310364"
+            timestampString = "444020994.96864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -634,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443942244.228"
+            timestampString = "444022149.196738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "-flipViewController:contentIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -650,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/RootViewController.m"
-            timestampString = "443942244.228"
+            timestampString = "444022149.196738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "-numberOfFlipViewControllerContents"
             landmarkType = "5">
          </BreakpointContent>
@@ -794,11 +778,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "-startEdit:"
             landmarkType = "5">
          </BreakpointContent>
@@ -810,11 +794,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "-startEdit:"
             landmarkType = "5">
          </BreakpointContent>
@@ -826,11 +810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "-startEdit:"
             landmarkType = "5">
          </BreakpointContent>
@@ -842,11 +826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "-startEdit:"
             landmarkType = "5">
          </BreakpointContent>
@@ -858,11 +842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "-btLongPress:"
             landmarkType = "5">
          </BreakpointContent>
@@ -874,11 +858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "-btLongPress:"
             landmarkType = "5">
          </BreakpointContent>
@@ -890,11 +874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "-resignAll:"
             landmarkType = "5">
          </BreakpointContent>
@@ -906,11 +890,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "-resignAll:"
             landmarkType = "5">
          </BreakpointContent>
@@ -922,11 +906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
-            timestampString = "443946399.796192"
+            timestampString = "444021803.129549"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "-startEdit:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1050,11 +1034,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MAOFlipViewController/MAOFlipViewController.m"
-            timestampString = "443934094.198784"
+            timestampString = "444027778.466754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "-interactionPushBeganAtPoint:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1066,11 +1050,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MAOFlipViewController/MAOFlipViewController.m"
-            timestampString = "443934094.198784"
+            timestampString = "444027778.466754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "-interactionPopBeganAtPoint:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1082,11 +1066,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MAOFlipViewController/MAOFlipTransition.m"
-            timestampString = "443942244.228"
+            timestampString = "444022036.429886"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "-animateTransition:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1434,11 +1418,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/MainFunVC.m"
-            timestampString = "444018663.07955"
+            timestampString = "444020994.96864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -1568,6 +1552,150 @@
             startingLineNumber = "27"
             endingLineNumber = "27"
             landmarkName = "-addIntoDataSource:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "-navigationController:animationControllerForOperation:fromViewController:toViewController:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "-navigationController:animationControllerForOperation:fromViewController:toViewController:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "-navigationController:animationControllerForOperation:fromViewController:toViewController:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-navigationController:interactionControllerForAnimationController:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-interactionPopBeganAtPoint:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/SubjectVC.m"
+            timestampString = "444021803.129549"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-viewDidAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "-navigationController:interactionControllerForAnimationController:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444027778.466754"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "-interactionPushBeganAtPoint:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MAOFlipViewController/MAOFlipViewController.m"
+            timestampString = "444022081.631742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -50,7 +50,6 @@
     
     
     if (self.presenting) {
-        if (self.flipMode==FLIPUPANDDOWN) {
             __block CGRect toRect = toViewController.view.frame;
             CGFloat originY = toRect.origin.y;
             toRect.origin.y += toRect.size.height;
@@ -66,31 +65,10 @@
             } completion:^(BOOL finished) {
                 [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
             }];
-
-        } else {
-            __block CGRect toRect = toViewController.view.frame;
-            CGFloat originX = toRect.origin.x;
-            toRect.origin.x += toRect.size.width;
-            toViewController.view.frame = toRect;
-            
-            [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-                CGRect fromRect = fromViewController.view.frame;
-                fromRect.origin.x -= fromRect.size.width;
-                fromViewController.view.frame = fromRect;
-                
-                toRect.origin.x = originX;
-                toViewController.view.frame = toRect;
-            } completion:^(BOOL finished) {
-                [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-            }];
-        }
-       
-
     }
     else {
         [self.interaction setView:[transitionContext containerView]];
 //        [[transitionContext containerView] insertSubview:toViewController.view belowSubview:fromViewController.view];
-        if (self.flipMode==FLIPUPANDDOWN) {
             __block CGRect toRect = toViewController.view.frame;
             CGFloat originY = toRect.origin.y;
             toRect.origin.y -= toRect.size.height;
@@ -107,23 +85,6 @@
                 [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
             }];
  
-        } else {
-            __block CGRect toRect = toViewController.view.frame;
-            CGFloat originX = toRect.origin.x;
-            toRect.origin.x += toRect.size.width;
-            toViewController.view.frame = toRect;
-            
-            [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-                CGRect fromRect = fromViewController.view.frame;
-                fromRect.origin.x -= fromRect.size.width;
-                fromViewController.view.frame = fromRect;
-                
-                toRect.origin.x = originX;
-                toViewController.view.frame = toRect;
-            } completion:^(BOOL finished) {
-                [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-            }];
-        }
     }
     //    [transitionContext completeTransition:YES];
 

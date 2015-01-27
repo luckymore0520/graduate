@@ -29,6 +29,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    
+    
+    
 #warning 此处调用获取主页信息的接口，并下载音乐
 //
 //    CoreDataHelper* helper = [CoreDataHelper getInstance];

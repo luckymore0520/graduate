@@ -30,6 +30,15 @@
     // Do any additional setup after loading the view.
     
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+//    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+
+
 - (IBAction)buttonTouchDown:(UIButton *)sender {
      [self performSelector:@selector(btLongPress:) withObject:sender afterDelay:1.0];
 }
@@ -43,7 +52,6 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(btLongPress:)
                                                object:sender];
-    
 
 }
 

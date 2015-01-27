@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "ToolUtils.h"
 #import "MAOFlipViewController.h"
 @interface RootViewController ()<MAOFlipViewControllerDelegate>
 @property(nonatomic,strong) NSArray* childrenVCs;
@@ -26,7 +27,9 @@
     self.flipViewController.view.frame = self.view.frame;
     [self.view addSubview:self.flipViewController.view];
     [self.flipViewController didMoveToParentViewController:self];
+
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
