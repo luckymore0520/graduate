@@ -26,12 +26,15 @@
 + (NSDictionary*) getSubAccount;
 
 
-
+//第三方登陆唯一标识
 + (NSString*)getIdentify;
 + (void)setIdentify:(NSString*)openId;
 
-
+//是否第一次使用，若第一次使用 返回的应该为nil
 + (NSString*)getFirstUse;
 + (void)setFirstUse:(NSString*)firstUse;
 
+//已使用天数
++ (NSNumber*)getCurrentDay;
++ (void) setCurrentDay:(NSNumber*) currentDay;
 @end

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <TencentOpenAPI/TencentOAuth.h>
-#import "ToolUtils.h"
-@interface LoginVC : UIViewController<TencentSessionDelegate>
+#import "BaseFuncVC.h"
+@interface LoginVC : BaseFuncVC<TencentSessionDelegate>
 {
     TencentOAuth* _tencentOAuth;
     NSMutableArray* permissions;
     
 }
+- (void) initTencent;
 @end

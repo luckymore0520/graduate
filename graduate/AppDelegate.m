@@ -24,19 +24,8 @@
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
-    RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+   RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
     [_window setRootViewController:_rootVC];
-
-//    if (![ToolUtils getFirstUse])
-//    {
-//        SubjectVC* _rootVC = (SubjectVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"Subject"];
-//        [_window setRootViewController:_rootVC];
-//
-//    } else {
-//        MainFunVC* _rootVC = (MainFunVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"MainFun"];
-//        [_window setRootViewController:_rootVC];
-//
-//    }
     [_window makeKeyAndVisible];
     return YES;
 }

@@ -7,8 +7,16 @@
 //
 
 #import "SetPasswordViewController.h"
-#import "MainFunVC.h"
+#import "RootViewController.h"
+#import "ButtonGroup.h"
 @interface SetPasswordViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *setPasswordField;
+@property (weak, nonatomic) IBOutlet UITextField *comfirmPasswordField;
+@property (weak, nonatomic) IBOutlet UITextField *nickField;
+@property (weak, nonatomic) IBOutlet UIButton *completeButton;
+@property (weak, nonatomic) IBOutlet UIButton *maleButton;
+@property (weak, nonatomic) IBOutlet UIButton *femaleButton;
+@property (weak, nonatomic) IBOutlet ButtonGroup *setBtGroup;
 
 @end
 
@@ -16,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.textFields = [NSArray arrayWithObjects:_setPasswordField,_comfirmPasswordField,_nickField, nil];
+    self.keyButtons = [NSArray arrayWithObjects:_maleButton,_femaleButton,_completeButton, nil];
+    [self.setBtGroup loadButton:[NSArray arrayWithObjects:_maleButton,_femaleButton ,nil]];
     // Do any additional setup after loading the view.
 }
 
@@ -23,16 +34,24 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 - (IBAction)complete:(id)sender {
-    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
-    
-    
-    MainFunVC* _rootVC = (MainFunVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"MainFun"];
-    [self.navigationController presentViewController:_rootVC animated:YES completion:^{
-        [self.navigationController popToRootViewControllerAnimated:NO];
-        [self.view.window setRootViewController:_rootVC];
-        [self.view.window makeKeyAndVisible];
-    }];
+    if (_setPasswordField.text.length==0) {
+        [ToolUtils showMessage:@"密码不能为空"];
+    } else if (![_setPasswordField.text isEqualToString:_comfirmPasswordField.text])
+    {
+        [ToolUtils showMessage:@"两次密码不一致"];
+    } else if ([_nickField.text length]==0)
+    {
+        [ToolUtils showMessage:@"昵称不能为空"];
+    } else {
+#warning 此处调用注册并登陆的接口返回相应登录信息
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+        RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+        [self.navigationController presentViewController:_rootVC animated:YES completion:^{
+        }]; 
+    }
 }
 /*
 #pragma mark - Navigation

@@ -20,6 +20,13 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    for (UITextField* field in self.textFields) {
+        field.delegate = self;
+    }
+}
 - (void) registerForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
@@ -37,6 +44,7 @@
     keyboardHeight = keyboardSize.height;
     ///keyboardWasShown = YES;
 }
+
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
@@ -51,10 +59,11 @@
 
 
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
+
+
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -97,6 +106,79 @@
             break;
     }
 }
+
+
+
+#pragma mark -textFieldDelegate
+//开始编辑
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    
+    CGRect frame = textField.bounds;
+    int offset = frame.origin.y +440 - (self.view.frame.size.height - 268);//键盘高度216
+    NSLog(@"offset is %d",offset);
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    float width = self.view.frame.size.width;
+    float height = self.view.frame.size.height;
+    if(offset > 0)
+    {
+        CGRect rect = CGRectMake(0.0f, -offset,width,height);
+        self.view.frame = rect;
+    }
+    [UIView commitAnimations];
+    [self addMaskBt];
+    
+       return YES;
+}
+
+
+//增加遮罩按钮，点击键盘弹回
+- (void)addMaskBt
+{
+    if (self.maskBt) {
+        [self.maskBt removeFromSuperview];
+    }
+    self.maskBt = [[UIButton alloc]initWithFrame:self.view.frame];
+    [self.view addSubview:self.maskBt];
+    [self.maskBt addTarget:self action:@selector(resignAll) forControlEvents:UIControlEventTouchUpInside];
+    for (UITextField* textField in self.textFields) {
+        [self.view bringSubviewToFront:textField];
+    }
+    for (UIButton* button in self.keyButtons) {
+        [self.view bringSubviewToFront:button];
+    }
+}
+
+- (void)resignAll
+{
+    for (UITextField* textField in self.textFields) {
+        [textField resignFirstResponder];
+    }
+    [self animationReturn];
+}
+- (void)animationReturn
+{
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    CGRect rect = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+    self.view.frame = rect;
+    [UIView commitAnimations];
+    [self.maskBt removeFromSuperview];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self animationReturn];
+    
+    [textField resignFirstResponder];
+
+    return YES;
+
+}
+
 
 /*
 #pragma mark - Navigation

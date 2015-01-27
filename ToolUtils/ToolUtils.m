@@ -171,4 +171,22 @@
 {
     return [[NSUserDefaults standardUserDefaults]objectForKey:@"subAccount"];
 }
+
++ (NSNumber*)getCurrentDay
+{
+    
+    NSNumber* current = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDay"];
+//    NSDate* today = [NSDate date];
+//    NSDate* currentDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDate"];
+    return current;
+
+}
++ (void) setCurrentDay:(NSNumber*) currentDay
+{
+    [[NSUserDefaults standardUserDefaults]setObject:currentDay forKey:@"currentDay"];
+//    [[NSUserDefaults standardUserDefaults]setObject:[NSDate date] forKey:@"currentDate"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+
+}
 @end

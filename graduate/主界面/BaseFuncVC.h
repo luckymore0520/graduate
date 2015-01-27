@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "MediaPlayController.h"
-@interface BaseFuncVC : UIViewController
+#import "ToolUtils.h"
+
+@interface BaseFuncVC : UIViewController<UITextFieldDelegate>
 {
     CGFloat keyboardHeight;
 }
 @property (weak, nonatomic) IBOutlet UIButton *musicBt;
-
+@property (nonatomic,strong)UIButton* maskBt;
+@property (nonatomic,strong)NSArray* textFields;
+@property (nonatomic,strong)NSArray* keyButtons;
 - (void)loadMusic;
-
+- (void)animationReturn;
 @end
