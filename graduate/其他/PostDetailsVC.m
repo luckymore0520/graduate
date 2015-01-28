@@ -43,10 +43,7 @@
     return (section == 0)?1:3;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"Works");
     if(indexPath.section == 0){
         PostDetailsPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Post Cell" forIndexPath:indexPath];
         return cell;

@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ic5-og-yxt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ic5-og-yxt">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="article" id="21B-Fh-6IN">
@@ -41,28 +41,6 @@
                             <constraint firstItem="Ic5-og-yxt" firstAttribute="top" secondItem="bw7-2h-yyA" secondAttribute="bottom" constant="8" symbolic="YES" id="FQw-7w-TBt"/>
                             <constraint firstItem="Ic5-og-yxt" firstAttribute="leading" secondItem="2cL-RA-PlQ" secondAttribute="leading" id="gLw-VI-DUO"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="Ic5-og-yxt"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="7Mf-vu-nj9"/>
-                                <exclude reference="8Tu-y8-rsc"/>
-                                <exclude reference="FQw-7w-TBt"/>
-                                <exclude reference="gLw-VI-DUO"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="Ic5-og-yxt"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="7Mf-vu-nj9"/>
-                                <include reference="8Tu-y8-rsc"/>
-                                <include reference="FQw-7w-TBt"/>
-                                <include reference="gLw-VI-DUO"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="精华列表" id="v3o-dd-NS2">
                         <barButtonItem key="leftBarButtonItem" title="返回主界面" id="25r-X4-ao3">
@@ -73,12 +51,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Ic5-og-yxt" id="ZmB-y2-6DK"/>
-                        <segue destination="ZOw-nm-HiM" kind="push" identifier="detail" id="GRd-tC-KXj"/>
+                        <segue destination="ZOw-nm-HiM" kind="show" identifier="detail" id="GRd-tC-KXj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQB-kH-jtv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1173" y="48"/>
+            <point key="canvasLocation" x="1173" y="47.999999999999993"/>
         </scene>
         <!--精华详情-->
         <scene sceneID="GmL-n8-s6D">
@@ -108,7 +86,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rL-8P-ct1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1843.5" y="36"/>
+            <point key="canvasLocation" x="1843.4999999999998" y="35.999999999999993"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="osW-rs-iG1">
@@ -126,7 +104,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rzV-Iu-jCV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="246" y="36"/>
+            <point key="canvasLocation" x="245.99999999999997" y="35.999999999999993"/>
         </scene>
     </scenes>
 </document>
