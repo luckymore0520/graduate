@@ -11,7 +11,7 @@
 #import "SubjectVC.h"
 #import "MainFunVC.h"
 #import "RootViewController.h"
-#import "OtherViewController.h"
+#import "MainFeatureVC.h"
 #import "ToolUtils.h"
 #import "MediaPlayVC.h"
 @interface AppDelegate ()
@@ -33,8 +33,9 @@
 //    RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
 //    [_window setRootViewController:_rootVC];
 
-    OtherViewController* _otherVC = (OtherViewController*) [myStoryBoard instantiateViewControllerWithIdentifier:@"ChatCenter"];
-    [_window setRootViewController:_otherVC];
+    MainFeatureVC *_mainFeatureVC = (MainFeatureVC*) [myStoryBoard instantiateViewControllerWithIdentifier:@"mainFeature"];
+    
+    [_window setRootViewController:_mainFeatureVC];
     
 //    if (![ToolUtils getFirstUse])
 //    {
