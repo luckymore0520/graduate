@@ -9,7 +9,11 @@
 #import "MediaPlayVC.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "LoginVC.h"
-@interface MediaPlayVC ()
+#import "MGetWelcome.h"
+#import "MReturn.h"
+
+
+@interface MediaPlayVC ()<ApiDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mediaView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (nonatomic,strong)MPMoviePlayerController* moviePlayer;
@@ -23,6 +27,9 @@
     UIStoryboard *userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
     self.rootVC = (UINavigationController*)[userSB instantiateViewControllerWithIdentifier:@"login"];
     // Do any additional setup after loading the view.
+    
+    MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
+    [getWelcome load:self];
 }
 
 
@@ -58,6 +65,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dispos:(NSDictionary*) data functionName:(NSString*)names
+{
+    if ([names isEqualToString:@"MGetWelcomePage"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        NSLog(@"%@",ret.msg_);
+    }
+    
+}
+- (void)showError:(NSError*) error functionName:(NSString*)names
+{
+    [ToolUtils showMessage:error.description];
+}
+- (void) showAlert:(NSString*) alert
+{
+    [ToolUtils showMessage:alert];
+}
 /*
 #pragma mark - Navigation
 

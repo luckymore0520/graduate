@@ -8,6 +8,5 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
-@interface MainFunVC : BaseFuncVC
-
+@interface MainFunVC : BaseFuncVC 
 @end

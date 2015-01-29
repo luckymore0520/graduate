@@ -8,6 +8,11 @@
 
 #import "LoginVC.h"
 #import "RootViewController.h"
+#import "MLogin.h"
+#import "MUser.h"
+#import "MImgUpload.h"
+#import "MUpdateUserInfo.h"
+#import "MReturn.h"
 
 @interface LoginVC ()
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
@@ -29,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isThirdParty = NO;
     self.textFields = [NSArray arrayWithObjects:_passwordField,_usernameField,nil];
     self.keyButtons = [NSArray arrayWithObjects:_loginBt, nil];
       // Do any additional setup after loading the view.
@@ -59,6 +65,7 @@
 //初始化腾讯第三方登陆
 - (void) initTencent
 {
+
     _tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"222222" andDelegate:self];
 }
 
@@ -76,11 +83,14 @@
     {
         [ToolUtils showMessage:@"密码不得为空"];
     } else {
-        [self gotoMainMenu];
-
+        MLogin* login = [[MLogin alloc]init];
+        NSString* password = [ToolUtils md5:_passwordField.text];
+        if ([ToolUtils checkTel:_usernameField.text showAlert:NO]) {
+            [login load:self phone:_usernameField.text account:nil password:password qqAcount:nil wxAccount:nil wbAccount:nil];
+        } else {
+            [login load:self phone:nil account:_usernameField.text password:password qqAcount:nil wxAccount:nil wbAccount:nil];
+        }
     }
-#warning 此处调用登录接口
-    
     
 }
 - (IBAction)register:(id)sender {
@@ -91,7 +101,41 @@
     [self performSegueWithIdentifier:@"register" sender:@"forget"];
 }
 
+#pragma mark -ApiDelegate
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MLogin"]) {
+        MUser* user = [MUser objectWithKeyValues:data];
+        [ToolUtils setUserInfomation:user.keyValues];
+        if (!isThirdParty) {
+            [self gotoMainMenu];
+        }
+//        [self gotoMainMenu];
+    } else if ([names isEqualToString:@"MImgUpload"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        NSLog(@"%@",ret.msg_);
+        if (ret.code_.integerValue==1) {
+            NSDictionary* userinfo = [ToolUtils getUserInfo];
+            MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
+            NSString* nickname  =[[userinfo objectForKey:@"nickname"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [updateUserInfo load:self nickname:nickname headImg:ret.msg_ sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+        } else {
+            [self gotoMainMenu];
+        }
+        
+    } else if ([names isEqualToString:@"Download"])
+    {
+        NSData* img = [data objectForKey:@"img"];
+        MImgUpload* upLoad = [[MImgUpload alloc]init];
+        [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
+        
+    } else if ([names isEqualToString:@"MUpdateUserInfo"])
+    {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
 
+        [self gotoMainMenu];
+    }
+}
 
 
 #pragma mark -QQ登陆
@@ -103,8 +147,7 @@
 
 - (void)tencentDidLogin
 {
-    NSLog(@"Success");
-    NSLog(@"%@",[_tencentOAuth openId]);
+    NSLog(@"Success");      NSLog(@"%@",[_tencentOAuth openId]);
     NSLog(@"%@",[_tencentOAuth accessToken]);
     [ToolUtils setIdentify:[_tencentOAuth openId]];
     if ([_tencentOAuth getUserInfo]) {
@@ -119,8 +162,17 @@
     NSDictionary* userInfo =response.jsonResponse;
     NSLog(@"%@",[userInfo objectForKey:@"nickname"]) ;
     [ToolUtils setUserInfo:userInfo];
-    [self gotoMainMenu];
-#warning 此处需要根据openId和用户信息进行注册
+    MLogin* login = [[MLogin alloc]init];
+    [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
+    if (userInfo) {
+        NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId =[userInfo objectForKey:@"figureurl_qq_1"];
+        [api downloadImg:self imgUrl:[userInfo objectForKey:@"figureurl_qq_1"]];
+        isThirdParty = YES;
+    }
+    
+
 }
 
 - (void)tencentDidNotLogin:(BOOL)cancelled

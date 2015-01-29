@@ -31,15 +31,25 @@
     
 }
 
+- (void)setSelectedIndex:(NSInteger)index
+{
+    [self touchButton:[buttonArray objectAtIndex:index]];
+}
+
 - (void)touchButton:(UIButton*)selectedButton
 {
-    
-    [[buttonArray objectAtIndex:selectedIndex]setSelected:NO];
-    [selectedButton setSelected:YES];
-    selectedIndex = selectedButton.tag;
+    if (selectedButton.tag!= selectedIndex) {
+        [[buttonArray objectAtIndex:selectedIndex]setSelected:NO];
+        [selectedButton setSelected:YES];
+        selectedIndex = selectedButton.tag;
+    }
     
 }
 
+-(NSInteger)selectedIndex
+{
+    return selectedIndex;
+}
 -(NSString*)selectedSubject
 {
     UIButton* button = [buttonArray objectAtIndex:selectedIndex];

@@ -9,7 +9,11 @@
 #import "SetPasswordViewController.h"
 #import "RootViewController.h"
 #import "ButtonGroup.h"
+#import "MPasswdChange.h"
+#import "MUser.h"
+#import "MReturn.h"
 @interface SetPasswordViewController ()
+@property (nonatomic,strong) MUser* user;
 @property (weak, nonatomic) IBOutlet UITextField *setPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField *comfirmPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField *nickField;
@@ -25,13 +29,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.textFields = [NSArray arrayWithObjects:_setPasswordField,_comfirmPasswordField,_nickField, nil];
-    self.keyButtons = [NSArray arrayWithObjects:_maleButton,_femaleButton,_completeButton, nil];
+//    self.keyButtons = [NSArray arrayWithObjects:_completeButton,_maleButton,_femaleButton, nil];
     [self.setBtGroup loadButton:[NSArray arrayWithObjects:_maleButton,_femaleButton ,nil]];
+    
+    NSDictionary* dic = [ToolUtils getUserInfomation];
+    if (dic) {
+        self.user = [MUser objectWithKeyValues:dic];
+        [self.nickField setText:_user.nickname_];
+        [self.setBtGroup setSelectedIndex:self.user.sex_.integerValue];
+    }
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 
@@ -46,11 +58,25 @@
     {
         [ToolUtils showMessage:@"昵称不能为空"];
     } else {
-#warning 此处调用注册并登陆的接口返回相应登录信息
-        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
-        RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-        [self.navigationController presentViewController:_rootVC animated:YES completion:^{
-        }]; 
+        MPasswdChange* pc = [[MPasswdChange alloc]init];
+        NSString* password = [ToolUtils md5:self.setPasswordField.text];
+        [pc load:self password:password nickname:_nickField.text sex:[_setBtGroup selectedIndex]];
+    }
+}
+
+#pragma mark -APiDelegate
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MPasswdChange"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue==1) {
+            UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+            RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+            [self.navigationController presentViewController:_rootVC animated:YES completion:^{
+            }];
+        } else {
+            [ToolUtils showMessage:ret.msg_];
+        }
     }
 }
 /*

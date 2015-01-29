@@ -7,6 +7,10 @@
 //
 
 #import "CodeVC.h"
+#import "MRegister.h"
+#import "MGetMobileVerify.h"
+#import "MUser.h"
+#import "MReturn.h"
 
 @interface CodeVC ()
 @property (weak, nonatomic) IBOutlet UITextField *codeField;
@@ -38,9 +42,9 @@
 - (IBAction)repeat:(id)sender {
     [self startTime];
     if ([self.timeBt.text isEqualToString:@"重发"]) {
-        [ToolUtils showMessage:@"验证码已发送"];
+        MGetMobileVerify* verify = [[MGetMobileVerify alloc]init];
+        [verify load:self phone:self.phoneNum];
     }
-#warning 此处调用重发验证码的接口
 
 }
 
@@ -48,11 +52,30 @@
     if (_codeField.text.length==0) {
         [ToolUtils showMessage:@"验证码不能为空"];
     }
-#warning 此处调用验证验证码的接口
     else {
-         [self performSegueWithIdentifier:@"setDetail" sender:nil];
+        MRegister* reg = [[MRegister alloc]init];
+        [reg load:self phone:self.phoneNum code:self.codeField.text];
+//         [self performSegueWithIdentifier:@"setDetail" sender:nil];
     }
    
+}
+
+#pragma mark -ApiDelegate
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MGetMobileVerify"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_==0) {
+            [ToolUtils showMessage:@"验证码已重新发送"];
+        } else {
+            [ToolUtils showMessage:@"验证码发送失败，请重试"];
+        }
+    } else if ([names isEqualToString:@"MRegister"])
+    {
+        MUser* user = [MUser objectWithKeyValues:data];
+        [ToolUtils setUserInfomation:user.keyValues];
+        [self performSegueWithIdentifier:@"setDetail" sender:nil];
+    }
 }
 
 //计时器

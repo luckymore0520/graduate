@@ -113,9 +113,14 @@
 //开始编辑
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    
-    CGRect frame = textField.bounds;
-    int offset = frame.origin.y +440 - (self.view.frame.size.height - 268);//键盘高度216
+    CGRect frame;
+    if (_keyButtons.count>0) {
+        UIButton* button = [_keyButtons firstObject];
+        frame= button.frame;
+    } else {
+        frame = textField.frame;
+    }
+    int offset = frame.origin.y - (self.view.frame.size.height - 280);//键盘高度216
     NSLog(@"offset is %d",offset);
     NSTimeInterval animationDuration = 0.30f;
     [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
@@ -179,6 +184,21 @@
 
 }
 
+
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    
+}
+
+- (void)showAlert:(NSString *)alert
+{
+    [ToolUtils showMessage:alert];
+}
+
+- (void)showError:(NSError *)error functionName:(NSString *)names
+{
+    [ToolUtils showMessage:[error description]];
+}
 
 /*
 #pragma mark - Navigation

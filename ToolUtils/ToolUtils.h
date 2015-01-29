@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "UIImageView+WebCache.h"
+#define PICURL @"114.215.196.179:8080/gsdownload.do?id="
 @interface ToolUtils : NSObject
 @property (nonatomic , strong) NSMutableArray *tagArray;
 + (instancetype) sharedToolUtils;
 + (UIImage*)imageWithImageSimple:(UIImage*)image scaledToSize:(CGSize)newSize;
-+ (BOOL)checkTel:(NSString *)str;
++ (BOOL)checkTel:(NSString *)str showAlert:(BOOL)show;
 + (BOOL)checkEmail:(NSString *)email;
 + (void)showMessage:(NSString *)message;
 + (BOOL)checkTextRange:(NSString *)text min:(NSInteger)min max:(NSInteger)max;
@@ -24,6 +26,12 @@
 
 + (void) setSubAccount:(NSDictionary*)subAccount;
 + (NSDictionary*) getSubAccount;
+
+
+
++ (NSURL *)getImageUrlWtihString:(NSString *)urlString;
++ (NSURL *)getImageUrlWtihString:(NSString *)urlString width:(CGFloat)width height:(CGFloat)height;
+
 
 
 //第三方登陆唯一标识
@@ -41,4 +49,25 @@
 //我的科目
 + (void)setMySubjects:(NSDictionary*)subjects;
 + (NSDictionary*)getMySubjects;
+
+//登陆凭证
++(NSString*)getVerify;
++(void)setVerify:(NSString*)verify;
+
+//用户id
++(NSString*)getUserid;
++(void)setUserId:(NSString*)userid;
+
+//设备id
++(NSString*)getDeviceId;
++(void)setDeviceId:(NSString*)deviceid;
+
+//用户信息
++(NSDictionary*)getUserInfomation;
++(void)setUserInfomation:(NSDictionary*)userInfo;
+
+
++ (NSString *)md5:(NSString *)str;
+
+
 @end

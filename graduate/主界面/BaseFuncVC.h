@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MediaPlayController.h"
 #import "ToolUtils.h"
-
-@interface BaseFuncVC : UIViewController<UITextFieldDelegate>
+#import "ApiHelper.h"
+@interface BaseFuncVC : UIViewController<UITextFieldDelegate,ApiDelegate>
 {
     CGFloat keyboardHeight;
 }

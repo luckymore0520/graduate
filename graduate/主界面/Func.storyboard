@@ -2008,6 +2008,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="gAz-Et-x4z"/>
                     <connections>
+                        <outlet property="SongAndSingerLabel" destination="jlh-va-azc" id="rCK-HQ-5Vp"/>
                         <outlet property="musicBt" destination="B18-d8-0rz" id="nc1-hL-AXZ"/>
                         <outlet property="myDayLabel" destination="TcU-uF-A4j" id="b45-Y1-3j5"/>
                         <outlet property="recommandBt" destination="i2l-aA-e2Z" id="Y25-zt-dTy"/>

@@ -7,6 +7,7 @@
 //
 
 #import "ToolUtils.h"
+#import <CommonCrypto/CommonDigest.h> 
 
 @implementation ToolUtils
 
@@ -19,6 +20,8 @@
     });
     return _sharedInstance;
 }
+
+
 
 + (UIImage*)imageWithImageSimple:(UIImage*)image scaledToSize:(CGSize)newSize
 {
@@ -40,15 +43,38 @@
 }
 
 
-+ (BOOL)checkTel:(NSString *)str
+
++ (NSURL *)getImageUrlWtihString:(NSString *)urlString
+{
+    if (urlString == nil || [urlString isEqualToString:@""]) {
+        return [NSURL URLWithString:@""];
+    }
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PICURL,urlString]];
+}
+
++ (NSURL *)getImageUrlWtihString:(NSString *)urlString width:(CGFloat)width height:(CGFloat)height
+{
+    if (urlString == nil || [urlString isEqualToString:@""]) {
+        return [NSURL URLWithString:@""];
+    }
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@&w=%.0f&h=%.0f",PICURL,urlString , width , height]];
+}
+
+
+
++ (BOOL)checkTel:(NSString *)str showAlert:(BOOL)show
 
 {
     
     if ([str length] == 0) {
-        
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"请输入正确的电话号码", nil) message:NSLocalizedString(@"电话号码不能为空", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        
-        [alert show];
+        if (show) {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"请输入正确的电话号码", nil) message:NSLocalizedString(@"电话号码不能为空", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            
+            [alert show];
+        }
+      
         
         return NO;
         
@@ -67,10 +93,12 @@
     BOOL isMatch = [pred evaluateWithObject:str];
     
     if (!isMatch) {
-        
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入正确的电话号码" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        
-        [alert show];
+        if (show) {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入正确的电话号码" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            
+            [alert show];
+        }
+       
         
         return NO;
         
@@ -202,4 +230,77 @@
 {
     return [[NSUserDefaults standardUserDefaults]objectForKey:@"mySubjects"];
 }
+
+
+//登陆凭证
++(NSString*)getVerify
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"verify"];
+}
+
+
++(void)setVerify:(NSString*)verify;
+{
+    [[NSUserDefaults standardUserDefaults]setObject:verify forKey:@"verify"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
+
+//用户id
++(NSString*)getUserid
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"userid"];
+}
+
+
++(void)setUserId:(NSString*)userid;
+{
+    [[NSUserDefaults standardUserDefaults]setObject:userid forKey:@"userid"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
+//设备id
++(NSString*)getDeviceId
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceid"];
+}
+
+
++(void)setDeviceId:(NSString*)deviceid
+{
+    [[NSUserDefaults standardUserDefaults]setObject:deviceid forKey:@"deviceid"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
++(NSDictionary*)getUserInfomation
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfomation"];
+
+}
++(void)setUserInfomation:(NSDictionary*)userInfo
+{
+    [self setUserId:[userInfo objectForKey:@"id_"]];
+    [self setVerify:[userInfo objectForKey:@"verify_"]];
+    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfomation"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
++ (NSString *)md5:(NSString *)str
+{
+    const char *cStr = [str UTF8String];
+    unsigned char result[16];
+    CC_MD5(cStr, strlen(cStr), result); // This is the md5 call
+    return [NSString stringWithFormat:
+            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ]; 
+}
+
+
 @end

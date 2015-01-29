@@ -11,6 +11,7 @@
 #import "BaseFuncVC.h"
 @interface LoginVC : BaseFuncVC<TencentSessionDelegate>
 {
+    BOOL isThirdParty;
     TencentOAuth* _tencentOAuth;
     NSMutableArray* permissions;
     

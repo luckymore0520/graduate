@@ -9,8 +9,14 @@
 #import "MainFunVC.h"
 #import "ArticleDetailVC.h"
 #import "Trace.h"
+
 #import "Trace+TraceHandle.h"
+
+
+#import "MIndex.h"
+#import "MMain.h"
 @interface MainFunVC ()
+@property (nonatomic,strong)MMain* main;
 //鸡汤
 @property (weak, nonatomic) IBOutlet UILabel *sentenceLabel;
 //推荐
@@ -20,6 +26,7 @@
 //还剩多少天
 @property (weak, nonatomic) IBOutlet UILabel *remainDayLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *SongAndSingerLabel;
 
 //播放按钮在父类中控制
 
@@ -33,7 +40,7 @@
     
     
     
-    
+    [[[MIndex alloc]init]load:self date:nil];
     
 #warning 此处调用获取主页信息的接口，并下载音乐
 //
@@ -77,8 +84,28 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
+#pragma mark -Apidelegate
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MIndex"]) {
+        _main = [MMain objectWithKeyValues:data];
+        [_sentenceLabel setText:_main.content_];
+        [_myDayLabel setText: [NSString stringWithFormat:@"我的%d天",_main.days_.integerValue]];
+        [_remainDayLabel setText:[NSString stringWithFormat:@"还剩%d天",_main.daysLeft_.integerValue]];
+        
+        MMusic* music = [_main.music_ firstObject];
+        NSURL* musicUrl = [ToolUtils getImageUrlWtihString:music.file_];
+        
+        [_SongAndSingerLabel setText:[NSString stringWithFormat:@"%@-%@",music.title_,music.singer_]];
+        
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId = [NSString stringWithFormat:@"%@.mp3",music.title_];
+        [api downloadImg:self imgUrl:musicUrl.absoluteString];
+    } else if ([names isEqualToString:@"Download"])
+    {
+        
+    }
+}
 
 #pragma mark ButtonAction
 //前往推荐帖子详情

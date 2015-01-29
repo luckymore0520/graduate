@@ -8,6 +8,8 @@
 
 #import "RegistVC.h"
 #import "CodeVC.h"
+#import "MReturn.h"
+#import "MGetMobileVerify.h"
 @interface RegistVC ()
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *nextBt;
@@ -31,13 +33,29 @@
 
 #pragma mark ButtonAction
 - (IBAction)nextStep:(id)sender {
-    if ([ToolUtils checkTel:self.phoneTextfield.text]) {
-        [self performSegueWithIdentifier:@"code" sender:self.phoneTextfield.text];
+    
+    if ([ToolUtils checkTel:self.phoneTextfield.text showAlert:YES]) {
+        MGetMobileVerify* verify = [[MGetMobileVerify alloc]init];
+        [verify load:self phone:self.phoneTextfield.text];
     }
-#warning 此处调用发送验证码的接口
+//    
+//    if ([ToolUtils checkTel:self.phoneTextfield.text]) {
+//        [self performSegueWithIdentifier:@"code" sender:self.phoneTextfield.text];
+//    }
 }
 
-
+#pragma mark -apiDelegate
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MGetMobileVerify"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if ([ret.code_ integerValue]==1) {
+            [self performSegueWithIdentifier:@"code" sender:self.phoneTextfield.text];
+        } else {
+            [ToolUtils showMessage:@"验证码发送失败，请重试"];
+        }
+    }
+}
 
 #pragma mark - Navigation
 
