@@ -144,12 +144,12 @@
         <scene sceneID="tuI-Dy-9RS">
             <objects>
                 <tableViewController id="8ux-ws-hwd" customClass="ChatCenterVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="114" sectionHeaderHeight="22" sectionFooterHeight="22" id="uOi-Uy-lhe">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="99" sectionHeaderHeight="22" sectionFooterHeight="22" id="uOi-Uy-lhe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Chat Center Post Cell" rowHeight="114" id="FvE-zI-9Z9" customClass="ChatCenterPostCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Chat Center Post Cell" rowHeight="99" id="FvE-zI-9Z9" customClass="ChatCenterPostCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FvE-zI-9Z9" id="MiH-bw-iAi">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -184,28 +184,28 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="qqicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="qdf-Br-mX2">
+                                            <rect key="frame" x="8" y="1" width="50" height="44"/>
+                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="正文" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsq-bv-Ncl">
-                                            <rect key="frame" x="8" y="76" width="299" height="32"/>
+                                            <rect key="frame" x="8" y="71" width="299" height="32"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="qqicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="qdf-Br-mX2">
-                                            <rect key="frame" x="8" y="1" width="50" height="44"/>
-                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="qdf-Br-mX2" firstAttribute="leading" secondItem="MiH-bw-iAi" secondAttribute="leadingMargin" constant="-120" id="pfc-pX-5QC"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="postAltasImageView" destination="qdf-Br-mX2" id="85G-8X-C7d"/>
-                                    <outlet property="postContextLabel" destination="bsq-bv-Ncl" id="U2V-uw-zVE"/>
-                                    <outlet property="postGenderLabel" destination="Ij3-pJ-5c9" id="aw5-go-m4Y"/>
-                                    <outlet property="postIntervalLabel" destination="vog-eX-afB" id="5rL-0j-gP0"/>
-                                    <outlet property="postNickNameLabel" destination="Pbs-Zl-1td" id="QPC-1K-8GI"/>
-                                    <outlet property="postRepliedLabel" destination="hOw-gw-mjw" id="vJA-yo-OAd"/>
-                                    <outlet property="postTitleLabel" destination="ZGD-Sh-6Hk" id="9xE-8P-NHi"/>
+                                    <outlet property="postAltasImageView" destination="qdf-Br-mX2" id="5hO-ly-HoR"/>
+                                    <outlet property="postContextLabel" destination="bsq-bv-Ncl" id="T0o-ZD-uXE"/>
+                                    <outlet property="postGenderLabel" destination="Ij3-pJ-5c9" id="UeY-MF-OSJ"/>
+                                    <outlet property="postIntervalLabel" destination="vog-eX-afB" id="tFb-7x-c81"/>
+                                    <outlet property="postNickNameLabel" destination="Pbs-Zl-1td" id="D1Q-YW-yck"/>
+                                    <outlet property="postRepliedLabel" destination="hOw-gw-mjw" id="Z9M-yB-qcH"/>
+                                    <outlet property="postTitleLabel" destination="ZGD-Sh-6Hk" id="8Qz-Eh-bxS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -215,23 +215,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="广场" id="OmV-Hh-6LI">
-<<<<<<< HEAD
-                        <barButtonItem key="leftBarButtonItem" title="返回" id="qvl-Wc-71o"/>
-                        <barButtonItem key="rightBarButtonItem" title="新消息" id="Cdv-Uf-bZG"/>
-=======
                         <barButtonItem key="rightBarButtonItem" title="新消息" id="Cdv-Uf-bZG">
                             <connections>
                                 <segue destination="O99-mn-bvd" kind="push" id="65L-VB-Dwh"/>
                             </connections>
                         </barButtonItem>
->>>>>>> dev
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoc-lG-C1y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
-            <point key="canvasLocation" x="1608" y="414"/>
-=======
             <point key="canvasLocation" x="1200" y="388"/>
         </scene>
         <!--广场帖子详情-->
@@ -435,7 +428,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gfm-PP-hhR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1629" y="388"/>
->>>>>>> dev
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5zL-ld-EQ4">
@@ -456,20 +448,6 @@
         <!--主功能页2-->
         <scene sceneID="RZn-Dy-Dmu">
             <objects>
-<<<<<<< HEAD
-                <navigationController storyboardIdentifier="ChatCenter" automaticallyAdjustsScrollViewInsets="NO" id="kUV-nB-BPb" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f62-0g-P1w">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="8ux-ws-hwd" kind="relationship" relationship="rootViewController" id="JaV-hg-NLz"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="v9B-WB-xIG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-=======
                 <viewController id="PuL-1A-E45" customClass="MainFeatureVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UNh-NK-2OH"/>
@@ -576,12 +554,9 @@
                     <navigationItem key="navigationItem" title="主功能页2" id="KVL-s9-BZO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I5y-ab-tup" userLabel="First Responder" sceneMemberID="firstResponder"/>
->>>>>>> dev
             </objects>
             <point key="canvasLocation" x="884" y="-298"/>
         </scene>
-<<<<<<< HEAD
-=======
         <!--Navigation Controller-->
         <scene sceneID="049-7x-nea">
             <objects>
@@ -597,7 +572,6 @@
             </objects>
             <point key="canvasLocation" x="2913" y="394"/>
         </scene>
->>>>>>> dev
     </scenes>
     <resources>
         <image name="qqicon.png" width="36" height="39"/>

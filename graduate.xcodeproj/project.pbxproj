@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D2431F61A7B782C00C00F64 /* Other.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D2431F41A7B782C00C00F64 /* Other.storyboard */; };
+		7D24320C1A7B785500C00F64 /* ChatCenterPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2431F91A7B785500C00F64 /* ChatCenterPostCell.m */; };
+		7D24320D1A7B785500C00F64 /* EssencePostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2431FB1A7B785500C00F64 /* EssencePostCell.m */; };
+		7D24320E1A7B785500C00F64 /* PostDetailsPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2431FD1A7B785500C00F64 /* PostDetailsPostCell.m */; };
+		7D24320F1A7B785500C00F64 /* ToggleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2431FF1A7B785500C00F64 /* ToggleCell.m */; };
+		7D2432101A7B785500C00F64 /* ChatCenterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432011A7B785500C00F64 /* ChatCenterVC.m */; };
+		7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432031A7B785500C00F64 /* essencePostVC.m */; };
+		7D2432121A7B785500C00F64 /* MainFeatureVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432051A7B785500C00F64 /* MainFeatureVC.m */; };
+		7D2432131A7B785500C00F64 /* OtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432071A7B785500C00F64 /* OtherViewController.m */; };
+		7D2432141A7B785500C00F64 /* PostDetailsReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432091A7B785500C00F64 /* PostDetailsReplyCell.m */; };
+		7D2432151A7B785500C00F64 /* PostDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D24320B1A7B785500C00F64 /* PostDetailsVC.m */; };
 		7D4E05771A748EFB001709DB /* MAOFlipInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E05701A748EFB001709DB /* MAOFlipInteraction.m */; };
 		7D4E05781A748EFB001709DB /* MAOFlipTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E05721A748EFB001709DB /* MAOFlipTransition.m */; };
 		7D4E05791A748EFB001709DB /* MAOFlipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E05741A748EFB001709DB /* MAOFlipViewController.m */; };
@@ -148,6 +159,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7D2431F51A7B782C00C00F64 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Other.storyboard; sourceTree = "<group>"; };
+		7D2431F81A7B785500C00F64 /* ChatCenterPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatCenterPostCell.h; sourceTree = "<group>"; };
+		7D2431F91A7B785500C00F64 /* ChatCenterPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatCenterPostCell.m; sourceTree = "<group>"; };
+		7D2431FA1A7B785500C00F64 /* EssencePostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EssencePostCell.h; sourceTree = "<group>"; };
+		7D2431FB1A7B785500C00F64 /* EssencePostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EssencePostCell.m; sourceTree = "<group>"; };
+		7D2431FC1A7B785500C00F64 /* PostDetailsPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostDetailsPostCell.h; sourceTree = "<group>"; };
+		7D2431FD1A7B785500C00F64 /* PostDetailsPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostDetailsPostCell.m; sourceTree = "<group>"; };
+		7D2431FE1A7B785500C00F64 /* ToggleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToggleCell.h; sourceTree = "<group>"; };
+		7D2431FF1A7B785500C00F64 /* ToggleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToggleCell.m; sourceTree = "<group>"; };
+		7D2432001A7B785500C00F64 /* ChatCenterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatCenterVC.h; path = "其他/ChatCenterVC.h"; sourceTree = "<group>"; };
+		7D2432011A7B785500C00F64 /* ChatCenterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatCenterVC.m; path = "其他/ChatCenterVC.m"; sourceTree = "<group>"; };
+		7D2432021A7B785500C00F64 /* essencePostVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = essencePostVC.h; path = "其他/essencePostVC.h"; sourceTree = "<group>"; };
+		7D2432031A7B785500C00F64 /* essencePostVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = essencePostVC.m; path = "其他/essencePostVC.m"; sourceTree = "<group>"; };
+		7D2432041A7B785500C00F64 /* MainFeatureVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainFeatureVC.h; path = "其他/MainFeatureVC.h"; sourceTree = "<group>"; };
+		7D2432051A7B785500C00F64 /* MainFeatureVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainFeatureVC.m; path = "其他/MainFeatureVC.m"; sourceTree = "<group>"; };
+		7D2432061A7B785500C00F64 /* OtherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtherViewController.h; path = "其他/OtherViewController.h"; sourceTree = "<group>"; };
+		7D2432071A7B785500C00F64 /* OtherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OtherViewController.m; path = "其他/OtherViewController.m"; sourceTree = "<group>"; };
+		7D2432081A7B785500C00F64 /* PostDetailsReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostDetailsReplyCell.h; path = "其他/PostDetailsReplyCell.h"; sourceTree = "<group>"; };
+		7D2432091A7B785500C00F64 /* PostDetailsReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostDetailsReplyCell.m; path = "其他/PostDetailsReplyCell.m"; sourceTree = "<group>"; };
+		7D24320A1A7B785500C00F64 /* PostDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostDetailsVC.h; path = "其他/PostDetailsVC.h"; sourceTree = "<group>"; };
+		7D24320B1A7B785500C00F64 /* PostDetailsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostDetailsVC.m; path = "其他/PostDetailsVC.m"; sourceTree = "<group>"; };
 		7D4E056F1A748EFB001709DB /* MAOFlipInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAOFlipInteraction.h; sourceTree = "<group>"; };
 		7D4E05701A748EFB001709DB /* MAOFlipInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAOFlipInteraction.m; sourceTree = "<group>"; };
 		7D4E05711A748EFB001709DB /* MAOFlipTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAOFlipTransition.h; sourceTree = "<group>"; };
@@ -421,6 +453,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D2431F71A7B785500C00F64 /* CellsInOthers */ = {
+			isa = PBXGroup;
+			children = (
+				7D2431F81A7B785500C00F64 /* ChatCenterPostCell.h */,
+				7D2431F91A7B785500C00F64 /* ChatCenterPostCell.m */,
+				7D2431FA1A7B785500C00F64 /* EssencePostCell.h */,
+				7D2431FB1A7B785500C00F64 /* EssencePostCell.m */,
+				7D2431FC1A7B785500C00F64 /* PostDetailsPostCell.h */,
+				7D2431FD1A7B785500C00F64 /* PostDetailsPostCell.m */,
+				7D2431FE1A7B785500C00F64 /* ToggleCell.h */,
+				7D2431FF1A7B785500C00F64 /* ToggleCell.m */,
+			);
+			name = CellsInOthers;
+			path = "其他/CellsInOthers";
+			sourceTree = "<group>";
+		};
 		7D4E056E1A748EFB001709DB /* MAOFlipViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +598,20 @@
 		7D4E06151A752EED001709DB /* 其他 */ = {
 			isa = PBXGroup;
 			children = (
+				7D2431F71A7B785500C00F64 /* CellsInOthers */,
+				7D2432001A7B785500C00F64 /* ChatCenterVC.h */,
+				7D2432011A7B785500C00F64 /* ChatCenterVC.m */,
+				7D2432021A7B785500C00F64 /* essencePostVC.h */,
+				7D2432031A7B785500C00F64 /* essencePostVC.m */,
+				7D2432041A7B785500C00F64 /* MainFeatureVC.h */,
+				7D2432051A7B785500C00F64 /* MainFeatureVC.m */,
+				7D2432061A7B785500C00F64 /* OtherViewController.h */,
+				7D2432071A7B785500C00F64 /* OtherViewController.m */,
+				7D2432081A7B785500C00F64 /* PostDetailsReplyCell.h */,
+				7D2432091A7B785500C00F64 /* PostDetailsReplyCell.m */,
+				7D24320A1A7B785500C00F64 /* PostDetailsVC.h */,
+				7D24320B1A7B785500C00F64 /* PostDetailsVC.m */,
+				7D2431F41A7B782C00C00F64 /* Other.storyboard */,
 			);
 			name = "其他";
 			sourceTree = "<group>";
@@ -975,6 +1037,7 @@
 				7DBD86841A7284AF00205576 /* Articles.storyboard in Resources */,
 				7D4E05E41A74EF7B001709DB /* MBProgressHUD.bundle in Resources */,
 				7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				7D2431F61A7B782C00C00F64 /* Other.storyboard in Resources */,
 				7D6A519B1A69610600355923 /* LaunchScreen.xib in Resources */,
 				7D4E05E71A74EF7B001709DB /* MJPhotoBrowser.bundle in Resources */,
 				7DF5C7061A6BAF0400D1F543 /* CCPSDKBundle.bundle in Resources */,
@@ -1005,6 +1068,8 @@
 				7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */,
 				7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */,
 				7D4E06361A767B46001709DB /* GraduateModel.xcdatamodeld in Sources */,
+				7D2432151A7B785500C00F64 /* PostDetailsVC.m in Sources */,
+				7D24320E1A7B785500C00F64 /* PostDetailsPostCell.m in Sources */,
 				7DBD86691A725EDB00205576 /* MainFunVC.m in Sources */,
 				7DA994CD1A79F5C900A879CF /* BaseModel.m in Sources */,
 				7D4E05E51A74EF7B001709DB /* MBProgressHUD.m in Sources */,
@@ -1012,6 +1077,7 @@
 				7DA994BE1A7878FE00A879CF /* MJIvar.m in Sources */,
 				7DBD867E1A727E6F00205576 /* SetPasswordViewController.m in Sources */,
 				7DA994E61A7A15E000A879CF /* MImgUpload.m in Sources */,
+				7D2432101A7B785500C00F64 /* ChatCenterVC.m in Sources */,
 				7D4E05C91A74EF71001709DB /* UIImage+MultiFormat.m in Sources */,
 				7DDA294B1A7B2144003F77C3 /* AFURLConnectionOperation.m in Sources */,
 				7D4E05E61A74EF7B001709DB /* MJPhoto.m in Sources */,
@@ -1023,6 +1089,7 @@
 				7DDA294A1A7B2144003F77C3 /* AFSecurityPolicy.m in Sources */,
 				7D4E062D1A766658001709DB /* RegistVC.m in Sources */,
 				7DA994F21A7A2AA800A879CF /* MMusic.m in Sources */,
+				7D2432141A7B785500C00F64 /* PostDetailsReplyCell.m in Sources */,
 				7D4E05781A748EFB001709DB /* MAOFlipTransition.m in Sources */,
 				7D4E05BF1A74EF71001709DB /* NSData+ImageContentType.m in Sources */,
 				7DA994E91A7A165C00A879CF /* MUpdateUserInfo.m in Sources */,
@@ -1036,6 +1103,7 @@
 				7DA994E01A7A097900A879CF /* MPasswdChange.m in Sources */,
 				7DDA29471A7B2144003F77C3 /* AFHTTPRequestOperationManager.m in Sources */,
 				7D4E05791A748EFB001709DB /* MAOFlipViewController.m in Sources */,
+				7D24320F1A7B785500C00F64 /* ToggleCell.m in Sources */,
 				7DDA29571A7B660B003F77C3 /* MIndexPost.m in Sources */,
 				7D4E05CB1A74EF71001709DB /* UIImageView+HighlightedWebCache.m in Sources */,
 				7D4E057D1A748F3C001709DB /* RootViewController.m in Sources */,
@@ -1046,6 +1114,7 @@
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
 				7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */,
 				7DA994C21A7878FE00A879CF /* MJTypeEncoding.m in Sources */,
+				7D24320C1A7B785500C00F64 /* ChatCenterPostCell.m in Sources */,
 				7D4E062A1A760834001709DB /* TraceRootVC.m in Sources */,
 				7DA994C91A79EE5400A879CF /* ApiHelper.m in Sources */,
 				7DA994C51A7878FE00A879CF /* NSObject+MJMember.m in Sources */,
@@ -1053,9 +1122,11 @@
 				7D4E05C21A74EF71001709DB /* SDWebImageDecoder.m in Sources */,
 				7D4E05C51A74EF71001709DB /* SDWebImageManager.m in Sources */,
 				7DBD86871A7285FE00205576 /* ArticleList.m in Sources */,
+				7D24320D1A7B785500C00F64 /* EssencePostCell.m in Sources */,
 				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
 				7D4E05EA1A74EF7B001709DB /* MJPhotoProgressView.m in Sources */,
+				7D2432131A7B785500C00F64 /* OtherViewController.m in Sources */,
 				7DBD86731A7264E900205576 /* MediaPlayVC.m in Sources */,
 				7D4E05901A74C73A001709DB /* ButtonGroup.m in Sources */,
 				7DA994D41A79F8E500A879CF /* MGetWelcome.m in Sources */,
@@ -1082,6 +1153,7 @@
 				7DA994C31A7878FE00A879CF /* NSObject+MJCoding.m in Sources */,
 				7D4E05EB1A74EF7B001709DB /* MJPhotoToolbar.m in Sources */,
 				7D4E05991A74DCB2001709DB /* QuestionView.m in Sources */,
+				7D2432121A7B785500C00F64 /* MainFeatureVC.m in Sources */,
 				7DDA29491A7B2144003F77C3 /* AFNetworkReachabilityManager.m in Sources */,
 				7D4E05C01A74EF71001709DB /* SDImageCache.m in Sources */,
 				7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */,
@@ -1092,6 +1164,7 @@
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,
 				7D4E05CA1A74EF71001709DB /* UIImage+WebP.m in Sources */,
+				7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1114,6 +1187,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		7D2431F41A7B782C00C00F64 /* Other.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D2431F51A7B782C00C00F64 /* Base */,
+			);
+			name = Other.storyboard;
+			sourceTree = "<group>";
+		};
 		7D6A51991A69610600355923 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
