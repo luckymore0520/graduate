@@ -56,8 +56,8 @@
 - (void)initSubject
 {
     NSDictionary* subjects =[ToolUtils getMySubjects];
+    
 }
-
 
 - (IBAction)buttonTouchDown:(UIButton *)sender {
      [self performSelector:@selector(btLongPress:) withObject:sender afterDelay:1.0];
@@ -81,19 +81,11 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
-        
     }];
 }
 
-
-
 - (IBAction)startEdit:(id)sender {
     CGRect frame = self.editView.frame;
-    
-    //    [self.editView removeFromSuperview];
-    
-    //    [self.editView setFrame:frame];
-    //    [self.view addSubview:self.editView];
     [self.editView setHidden:NO];
     [self.editTextView becomeFirstResponder];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -133,18 +125,18 @@
 
 - (void)btLongPress:(UIButton*)button
 {
-    self.selectedBt = button;
-    UIActionSheet*  sheet;
-    if (button==_englishBt) {
-        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"英语一",@"英语二",@"英语三", nil];
-    } else if (button==_mathBt)
-    {
-        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"数学一",@"数学二",@"数学三", nil];
-    } else if (button== _majorBt)
-    {
-        
-    }
-    [sheet showInView:self.view];
+//    self.selectedBt = button;
+//    UIActionSheet*  sheet;
+//    if (button==_englishBt) {
+//        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"英语一",@"英语二",@"英语三", nil];
+//    } else if (button==_mathBt)
+//    {
+//        sheet = [[UIActionSheet alloc] initWithTitle:@"选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"数学一",@"数学二",@"数学三", nil];
+//    } else if (button== _majorBt)
+//    {
+//        
+//    }
+//    [sheet showInView:self.view];
 }
 
 
