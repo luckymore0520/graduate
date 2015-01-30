@@ -69,7 +69,7 @@
         }
         
         NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
-        NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@",myDay]];
+        NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@ and userid=%@",myDay,[ToolUtils getUserid]]];
         if (array.count==0) {
             [_imgView setImage:[UIImage imageNamed:@"首页1.png"]];
             [[[MIndex alloc]init]load:self date:nil];
@@ -131,8 +131,7 @@
         _main = [MMain objectWithKeyValues:data];
         [self initView];
         NSString* myDay = [NSString stringWithFormat:@"%d",_main.days_.integerValue];
-        NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@",myDay]];
-       
+        NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@ and userid=%@",myDay,[ToolUtils getUserid]]];
         [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_main.img_] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             NSLog(@"下图完成");
         }];
@@ -165,7 +164,7 @@
     NSError* error;
     CoreDataHelper* helper = [CoreDataHelper getInstance];
     NSString* day = [NSString stringWithFormat:@"%d",_main.days_.integerValue];
-    NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@",day]];
+    NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@ and userid=%@",day,[ToolUtils getUserid]]];
     if (array.count==0) {
         NSString *defaultPath=[[NSBundle mainBundle] pathForResource:@"泡沫" ofType:@"mp3"];
         [_SongAndSingerLabel setText:[NSString stringWithFormat:@"泡沫-邓紫棋"]];
@@ -178,6 +177,7 @@
         trace.myday = [NSString
                         stringWithFormat:@"%d",_main.days_.integerValue];
         trace.remainday = _main.daysLeft_;
+        trace.user  = [ToolUtils getUserid];
         trace.singer = music.singer_;
         BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
         if (!isSaveSuccess) {
@@ -189,7 +189,6 @@
             [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
         }
     } else {
-        
         Trace* traceOfToday = [array firstObject];
         traceOfToday.songUrl = url;
         BOOL isSaveSuccess=[helper.managedObjectContext save:&error];

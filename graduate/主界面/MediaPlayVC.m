@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *mediaView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (nonatomic,strong)MPMoviePlayerController* moviePlayer;
-@property (nonatomic,strong)UINavigationController* rootVC;
+@property (nonatomic,strong)LoginVC* rootVC;
 @end
 
 @implementation MediaPlayVC
@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIStoryboard *userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
-    self.rootVC = (UINavigationController*)[userSB instantiateViewControllerWithIdentifier:@"login"];
+    self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
     // Do any additional setup after loading the view.
     
     MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
@@ -34,8 +34,8 @@
 
 
 - (IBAction)goToLogin:(id)sender {
-        [self presentViewController:self.rootVC animated:YES completion:^{
-        }];
+    [self.navigationController pushViewController:self.rootVC animated:YES];
+        
 }
 
 - (void) viewDidAppear:(BOOL)animated

@@ -14,7 +14,7 @@
 @required
 - (void)dispos:(NSDictionary*) data functionName:(NSString*)names;
 - (void)showError:(NSError*) error functionName:(NSString*)names;
-- (void) showAlert:(NSString*) alert;
+- (void) showAlert:(NSString*) alert functionName:(NSString*)names;
 
 @end
 

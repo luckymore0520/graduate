@@ -50,6 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self initSubject];
+    
 }
 
 
@@ -107,10 +108,10 @@
 
 
 - (IBAction)setSubject:(id)sender {
-//    if ([ToolUtils getMySubjects]) {
-//        [ToolUtils showMessage:@"科目已设置"];
-//        return;
-//    }
+    if ([ToolUtils getMySubjects]) {
+        [ToolUtils showMessage:@"科目已设置"];
+        return;
+    }
     [self performSegueWithIdentifier:@"setSubject" sender:nil];
 }
 

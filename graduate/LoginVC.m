@@ -13,7 +13,8 @@
 #import "MImgUpload.h"
 #import "MUpdateUserInfo.h"
 #import "MReturn.h"
-
+#import "WBHttpRequest+WeiboUser.h"
+#import "AppDelegate.h"
 @interface LoginVC ()
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginBt;
@@ -37,6 +38,7 @@
     isThirdParty = NO;
     self.textFields = [NSArray arrayWithObjects:_passwordField,_usernameField,nil];
     self.keyButtons = [NSArray arrayWithObjects:_loginBt, nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(handleWeiboLogin) name:@"weiboLogin" object:nil];
     
       // Do any additional setup after loading the view.
 }
@@ -56,6 +58,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)handleWeiboLogin
+{
+    MLogin* login = [[MLogin alloc]init];
+    
+    
+    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
+}
 //前往主界面
 - (void)gotoMainMenu
 {
@@ -82,6 +92,16 @@
 - (IBAction)login:(id)sender {
     permissions = [[NSMutableArray alloc]initWithObjects:kOPEN_PERMISSION_GET_USER_INFO,kOPEN_PERMISSION_GET_INFO,   nil];
     [_tencentOAuth authorize:permissions inSafari:NO];
+}
+- (IBAction)weiboLogin:(id)sender {
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = KREDIRECTURL;
+    request.scope = @"all";
+    request.userInfo = @{@"SSO_From": @"LoginVC",
+                         @"Other_Info_1": [NSNumber numberWithInt:123],
+                         @"Other_Info_2": @[@"obj1", @"obj2"],
+                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+    [WeiboSDK sendRequest:request];
 }
 
 - (IBAction)normalLogin:(id)sender {

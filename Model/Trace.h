@@ -12,6 +12,7 @@
 
 @interface Trace : NSManagedObject
 
+@property (nonatomic, retain) NSString * content;
 @property (nonatomic, retain) NSString * myday;
 @property (nonatomic, retain) NSString * note;
 @property (nonatomic, retain) NSString * pictureUrl;
@@ -19,6 +20,6 @@
 @property (nonatomic, retain) NSString * singer;
 @property (nonatomic, retain) NSString * songName;
 @property (nonatomic, retain) NSString * songUrl;
-@property (nonatomic, retain) NSString * content;
+@property (nonatomic, retain) NSString * user;
 
 @end

@@ -50,6 +50,8 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:BASEURL parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",operation.request.URL.absoluteString);
+        
         [self handleData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -69,7 +71,7 @@
     [dictionary setObject:method forKey:@"methodno"];
     if ([ToolUtils getVerify]) {
         [dictionary setObject:[ToolUtils getVerify] forKey:@"verify"];
-    }
+         }
     if ([ToolUtils getDeviceId]) {
         [dictionary setObject:[ToolUtils getDeviceId] forKey:@"deviceid"];
         
@@ -114,10 +116,10 @@
             if ([resultDict objectForKey:@"data"]) {
                 [_delegate dispos:[resultDict objectForKey:@"data"] functionName:_name];
             } else {
-                [_delegate showAlert:@"网络请求错误，请重试"];
+                [_delegate showAlert:@"网络请求错误，请重试" functionName:_name];
             }
         } else {
-            [_delegate showAlert:[resultDict objectForKey:@"errorMsg"]];
+            [_delegate showAlert:[resultDict objectForKey:@"errorMsg"] functionName:_name];
         }
     }
 }

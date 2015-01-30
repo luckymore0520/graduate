@@ -11,6 +11,7 @@
 
 @implementation Trace
 
+@dynamic content;
 @dynamic myday;
 @dynamic note;
 @dynamic pictureUrl;
@@ -18,6 +19,6 @@
 @dynamic singer;
 @dynamic songName;
 @dynamic songUrl;
-@dynamic content;
+@dynamic user;
 
 @end

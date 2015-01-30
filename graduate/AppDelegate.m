@@ -16,7 +16,7 @@
 #import "RootViewController.h"
 #import "ToolUtils.h"
 #import "MediaPlayVC.h"
-@interface AppDelegate ()
+@interface AppDelegate ()<WeiboSDKDelegate>
 
 @end
 
@@ -29,8 +29,13 @@
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
 //   RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    [_window setRootViewController:_rootVC];
+    UINavigationController* unv = [[UINavigationController alloc]initWithRootViewController:_rootVC];
+    [unv setNavigationBarHidden:YES];
+    [_window setRootViewController:unv];
     [_window makeKeyAndVisible];
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:WEIBOAPPKEY];
+  
     return YES;
 }
 
@@ -147,10 +152,41 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    return [TencentOAuth HandleOpenURL:url];
+
+    NSLog(@"source application:%@",url.absoluteString);
+    if ([sourceApplication isEqualToString:@"com.tencent.mqq"]) {
+        return [TencentOAuth HandleOpenURL:url];
+
+    } else if ([sourceApplication isEqualToString:@"com.sina.weibo"]){
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }
+    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
     return [TencentOAuth HandleOpenURL:url];
+}
+
+
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    if ([response isKindOfClass:WBAuthorizeResponse.class])
+    {
+        NSString *title = NSLocalizedString(@"认证结果", nil);
+        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                                              otherButtonTitles:nil];
+        NSString* weiboToken = [(WBAuthorizeResponse *)response accessToken];
+    
+        NSString* weiboId = [(WBAuthorizeResponse *)response userID];
+        [ToolUtils setIdentify:weiboId];
+        [ToolUtils setUserInfo:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"weiboLogin" object:nil];
+//        [alert show];
+    }
+
 }
 @end

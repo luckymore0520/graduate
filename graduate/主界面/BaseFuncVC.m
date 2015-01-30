@@ -189,8 +189,9 @@
     
 }
 
-- (void)showAlert:(NSString *)alert
+- (void)showAlert:(NSString *)alert functionName:(NSString *)names
 {
+    NSLog(@"%@",names);
     [ToolUtils showMessage:alert];
 }
 

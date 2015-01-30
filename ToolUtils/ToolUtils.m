@@ -289,10 +289,14 @@
 }
 +(void)setUserInfomation:(NSDictionary*)userInfo
 {
-    [self setUserId:[userInfo objectForKey:@"id_"]];
-    [self setVerify:[userInfo objectForKey:@"verify_"]];
-    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfomation"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[userInfo objectForKey:@"id_"] forKey:@"userid"];
+    [defaults setObject:[userInfo objectForKey:@"verify_"] forKey:@"verify"];
+    [defaults setObject:[userInfo objectForKey:@"startDay_"] forKey:@"currentDay"];
+    [defaults setObject:userInfo forKey:@"userInfomation"];
+//    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfomation"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+    [defaults synchronize];
 }
 
 
