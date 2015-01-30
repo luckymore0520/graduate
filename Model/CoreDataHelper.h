@@ -17,8 +17,7 @@
 
 @end
 @protocol DataHandleDelegate <NSObject>
-- (BOOL) addIntoDataSource:(id)sender;
-- (NSArray*) query:(id)sender;
-- (BOOL) update:(id)sender;
-- (BOOL) del:(id)sender;
++ (NSArray*) query:(id)sender;
++ (BOOL) update:(id)sender;
++ (BOOL) del:(id)sender;
 @end

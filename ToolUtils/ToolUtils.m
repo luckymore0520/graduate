@@ -211,13 +211,20 @@
 }
 + (void) setCurrentDay:(NSNumber*) currentDay
 {
-    [[NSUserDefaults standardUserDefaults]setObject:currentDay forKey:@"currentDay"];
+    NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:currentDay forKey:@"currentDay"];
 //    [[NSUserDefaults standardUserDefaults]setObject:[NSDate date] forKey:@"currentDate"];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    
-
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
+    [defaults setObject:destDateString forKey:@"currentDate"];
+    [defaults synchronize];
 }
 
++ (NSString *)getCurrentDate
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDate"];
+}
 
 + (void)setMySubjects:(NSDictionary*)subjects
 {
@@ -287,6 +294,20 @@
     [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfomation"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
+
+
++(BOOL)getHasLogin
+{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:@"hasLogin"];
+
+}
++(void)setHasLogin:(BOOL)hasLogin
+{
+    [[NSUserDefaults standardUserDefaults]setBool :hasLogin forKey:@"hasLogin"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+
+}
+
 
 + (NSString *)md5:(NSString *)str
 {

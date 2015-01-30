@@ -74,7 +74,6 @@
 		7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53B81A6B5BDA00355923 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */; };
 		7D6A53C01A6B5C5B00355923 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6A53BF1A6B5C5B00355923 /* UIKit.framework */; };
-		7DA994771A772F4500A879CF /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994761A772F4500A879CF /* Trace.m */; };
 		7DA994BD1A7878FE00A879CF /* MJArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994AB1A7878FE00A879CF /* MJArgument.m */; };
 		7DA994BE1A7878FE00A879CF /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994AE1A7878FE00A879CF /* MJIvar.m */; };
 		7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994B01A7878FE00A879CF /* MJMember.m */; };
@@ -129,7 +128,10 @@
 		7DDA294C1A7B2144003F77C3 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29411A7B2144003F77C3 /* AFURLRequestSerialization.m */; };
 		7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29431A7B2144003F77C3 /* AFURLResponseSerialization.m */; };
 		7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29451A7B2144003F77C3 /* AFURLSessionManager.m */; };
-		7DDA29501A7B35AD003F77C3 /* 泡沫.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */; };
+		7DDA29541A7B4D77003F77C3 /* 泡沫.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */; };
+		7DDA29571A7B660B003F77C3 /* MIndexPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29561A7B660B003F77C3 /* MIndexPost.m */; };
+		7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29591A7B66EA003F77C3 /* MPost.m */; };
+		7DDA295D1A7B6E07003F77C3 /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA295C1A7B6E07003F77C3 /* Trace.m */; };
 		7DF5C7061A6BAF0400D1F543 /* CCPSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7DF5C7031A6BAF0400D1F543 /* CCPSDKBundle.bundle */; };
 		7DF5C7071A6BAF0400D1F543 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7051A6BAF0400D1F543 /* libccpapisdk.a */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
@@ -269,8 +271,6 @@
 		7D6A53BC1A6B5BEE00355923 /* ToolUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolUtils.h; sourceTree = "<group>"; };
 		7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolUtils.m; sourceTree = "<group>"; };
 		7D6A53BF1A6B5C5B00355923 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		7DA994751A772F4500A879CF /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trace.h; path = ../Model/Trace.h; sourceTree = "<group>"; };
-		7DA994761A772F4500A879CF /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trace.m; path = ../Model/Trace.m; sourceTree = "<group>"; };
 		7DA994AA1A7878FE00A879CF /* MJArgument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJArgument.h; sourceTree = "<group>"; };
 		7DA994AB1A7878FE00A879CF /* MJArgument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJArgument.m; sourceTree = "<group>"; };
 		7DA994AC1A7878FE00A879CF /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
@@ -367,6 +367,12 @@
 		7DDA29441A7B2144003F77C3 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		7DDA29451A7B2144003F77C3 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "泡沫.mp3"; sourceTree = "<group>"; };
+		7DDA29551A7B660B003F77C3 /* MIndexPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndexPost.h; path = Frame/ApiTools/MIndexPost.h; sourceTree = "<group>"; };
+		7DDA29561A7B660B003F77C3 /* MIndexPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndexPost.m; path = Frame/ApiTools/MIndexPost.m; sourceTree = "<group>"; };
+		7DDA29581A7B66EA003F77C3 /* MPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPost.h; path = Frame/Model/MPost.h; sourceTree = "<group>"; };
+		7DDA29591A7B66EA003F77C3 /* MPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPost.m; path = Frame/Model/MPost.m; sourceTree = "<group>"; };
+		7DDA295B1A7B6E07003F77C3 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trace.h; path = Model/Trace.h; sourceTree = SOURCE_ROOT; };
+		7DDA295C1A7B6E07003F77C3 /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trace.m; path = Model/Trace.m; sourceTree = SOURCE_ROOT; };
 		7DF5C7011A6BAF0400D1F543 /* CCPCallEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPCallEvent.h; sourceTree = "<group>"; };
 		7DF5C7021A6BAF0400D1F543 /* CCPCallService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPCallService.h; sourceTree = "<group>"; };
 		7DF5C7031A6BAF0400D1F543 /* CCPSDKBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CCPSDKBundle.bundle; sourceTree = "<group>"; };
@@ -561,9 +567,9 @@
 			isa = PBXGroup;
 			children = (
 				7D4E063E1A767D9C001709DB /* CoreDataHelper.h */,
-				7DA994751A772F4500A879CF /* Trace.h */,
-				7DA994761A772F4500A879CF /* Trace.m */,
 				7D4E063F1A767D9C001709DB /* CoreDataHelper.m */,
+				7DDA295B1A7B6E07003F77C3 /* Trace.h */,
+				7DDA295C1A7B6E07003F77C3 /* Trace.m */,
 				7D4E06411A7680DF001709DB /* Trace+TraceHandle.h */,
 				7D4E06421A7680DF001709DB /* Trace+TraceHandle.m */,
 			);
@@ -726,6 +732,8 @@
 				7DA994CF1A79F64100A879CF /* MReturn.m */,
 				7DA994DB1A7A040A00A879CF /* MUser.h */,
 				7DA994DC1A7A040A00A879CF /* MUser.m */,
+				7DDA29581A7B66EA003F77C3 /* MPost.h */,
+				7DDA29591A7B66EA003F77C3 /* MPost.m */,
 			);
 			name = InterfaceModel;
 			sourceTree = "<group>";
@@ -749,6 +757,8 @@
 				7DA994E81A7A165C00A879CF /* MUpdateUserInfo.m */,
 				7DA994EA1A7A29C500A879CF /* MIndex.h */,
 				7DA994EB1A7A29C500A879CF /* MIndex.m */,
+				7DDA29551A7B660B003F77C3 /* MIndexPost.h */,
+				7DDA29561A7B660B003F77C3 /* MIndexPost.m */,
 			);
 			name = ApiTools;
 			sourceTree = "<group>";
@@ -759,11 +769,11 @@
 				7D4E05831A74AD99001709DB /* BaseFuncVC.h */,
 				7D4E05841A74AD99001709DB /* BaseFuncVC.m */,
 				7DBD867A1A72789600205576 /* Func.storyboard */,
+				7DBD86671A725EDB00205576 /* MainFunVC.h */,
 				7DBD86681A725EDB00205576 /* MainFunVC.m */,
 				7D4E057E1A749CE4001709DB /* MediaPlayController.h */,
 				7D4E057F1A749CE4001709DB /* MediaPlayController.m */,
 				7DBD86711A7264E900205576 /* MediaPlayVC.h */,
-				7DBD86671A725EDB00205576 /* MainFunVC.h */,
 				7DBD86721A7264E900205576 /* MediaPlayVC.m */,
 				7D4E061C1A75F1DC001709DB /* MyTraceVC.h */,
 				7D4E061D1A75F1DC001709DB /* MyTraceVC.m */,
@@ -960,10 +970,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DDA29541A7B4D77003F77C3 /* 泡沫.mp3 in Resources */,
 				7DBD86751A72690700205576 /* myVideo.m4v in Resources */,
 				7DBD86841A7284AF00205576 /* Articles.storyboard in Resources */,
 				7D4E05E41A74EF7B001709DB /* MBProgressHUD.bundle in Resources */,
-				7DDA29501A7B35AD003F77C3 /* 泡沫.mp3 in Resources */,
 				7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				7D6A519B1A69610600355923 /* LaunchScreen.xib in Resources */,
 				7D4E05E71A74EF7B001709DB /* MJPhotoBrowser.bundle in Resources */,
@@ -1026,6 +1036,7 @@
 				7DA994E01A7A097900A879CF /* MPasswdChange.m in Sources */,
 				7DDA29471A7B2144003F77C3 /* AFHTTPRequestOperationManager.m in Sources */,
 				7D4E05791A748EFB001709DB /* MAOFlipViewController.m in Sources */,
+				7DDA29571A7B660B003F77C3 /* MIndexPost.m in Sources */,
 				7D4E05CB1A74EF71001709DB /* UIImageView+HighlightedWebCache.m in Sources */,
 				7D4E057D1A748F3C001709DB /* RootViewController.m in Sources */,
 				7D4E057A1A748EFB001709DB /* MAOPanGestureRecognizer.m in Sources */,
@@ -1042,6 +1053,7 @@
 				7D4E05C21A74EF71001709DB /* SDWebImageDecoder.m in Sources */,
 				7D4E05C51A74EF71001709DB /* SDWebImageManager.m in Sources */,
 				7DBD86871A7285FE00205576 /* ArticleList.m in Sources */,
+				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
 				7D4E05EA1A74EF7B001709DB /* MJPhotoProgressView.m in Sources */,
 				7DBD86731A7264E900205576 /* MediaPlayVC.m in Sources */,
@@ -1061,6 +1073,7 @@
 				7D4E05E91A74EF7B001709DB /* MJPhotoLoadingView.m in Sources */,
 				7D4E05931A74D869001709DB /* RecommandVC.m in Sources */,
 				7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */,
+				7DDA295D1A7B6E07003F77C3 /* Trace.m in Sources */,
 				7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */,
 				7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */,
 				7D4E05C71A74EF71001709DB /* UIButton+WebCache.m in Sources */,
@@ -1074,7 +1087,6 @@
 				7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */,
 				7DBD868E1A72869B00205576 /* ArticleDetailVC.m in Sources */,
 				7DBD86661A7259DB00205576 /* SubjectVC.m in Sources */,
-				7DA994771A772F4500A879CF /* Trace.m in Sources */,
 				7DA994EF1A7A2A6100A879CF /* MMain.m in Sources */,
 				7DA994E31A7A0D8B00A879CF /* MLogin.m in Sources */,
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,

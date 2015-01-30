@@ -10,15 +10,10 @@
 
 @implementation Trace (TraceHandle)
 
-- (BOOL) addIntoDataSource:(id)sender
++ (BOOL) addIntoDataSource:(id)sender
 {
     CoreDataHelper* helper = [CoreDataHelper getInstance];
     Trace* trace=(Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
-    trace.date = self.date;
-    trace.songName = self.songName;
-    trace.songUrl = self.songUrl;
-    trace.pictureUrl = self.pictureUrl;
-    trace.note = self.note;
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
@@ -29,7 +24,7 @@
     return isSaveSuccess;
 }
 
-- (NSArray*) query:(id)sender
++ (NSArray*) query:(id)sender
 {
     CoreDataHelper* helper = [CoreDataHelper getInstance];
     NSFetchRequest* request=[[NSFetchRequest alloc] init];
@@ -40,8 +35,9 @@
     //    [request setSortDescriptors:sortDescriptions];
     //    [sortDescriptions release];
     //    [sortDescriptor release];
-    request.predicate=sender;
-
+    if (sender) {
+//        [request setPredicate:sender];
+    }
     NSError* error=nil;
     NSMutableArray* mutableFetchResult=[[helper.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     if (mutableFetchResult==nil) {
@@ -49,15 +45,15 @@
     }
     NSLog(@"The count of entry: %i",[mutableFetchResult count]);
     for (Trace* trace in mutableFetchResult) {
-        NSLog(@"date:%@----songName:%@------songUrl:%@",trace.date.description,trace.songName,trace.songName);
+        NSLog(@"date:%d----songName:%@------songUrl:%@",trace.myday.integerValue,trace.songName,trace.songUrl);
     }
     return mutableFetchResult;
 }
-- (BOOL) update:(id)sender
++ (BOOL) update:(id)sender
 {
     return YES;
 }
-- (BOOL) del:(id)sender
++ (BOOL) del:(id)sender
 {
     return YES;
 }

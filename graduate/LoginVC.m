@@ -37,6 +37,7 @@
     isThirdParty = NO;
     self.textFields = [NSArray arrayWithObjects:_passwordField,_usernameField,nil];
     self.keyButtons = [NSArray arrayWithObjects:_loginBt, nil];
+    
       // Do any additional setup after loading the view.
 }
 
@@ -44,6 +45,9 @@
 {
     [super viewDidAppear:animated];
     [self initTencent];
+    if ([ToolUtils getHasLogin]) {
+        [self gotoMainMenu];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,6 +66,7 @@
     [nav setNavigationBarHidden:YES];
     [self.navigationController presentViewController:nav animated:YES completion:^{
     }];
+    [ToolUtils setHasLogin:YES];
 }
 
 

@@ -34,6 +34,7 @@
         [self.view addSubview:self.flipNavigationController.view];
         [self.flipNavigationController didMoveToParentViewController:self];
         
+        
     }
 }
 
@@ -54,6 +55,8 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     if (![ToolUtils getFirstUse]) {
+        [ToolUtils setFirstUse:@"NO"];
+        [ToolUtils setCurrentDay:[NSNumber numberWithInt:1]];
         UIViewController* c = [self.delegate flipViewController:self contentIndex:1];
         UIView *sourceSnapshot = [c.view snapshotViewAfterScreenUpdates:YES];
         [sourceSnapshot setFrame:self.flipNavigationController.view.frame];
@@ -61,11 +64,9 @@
         [self.flipNavigationController popViewControllerAnimated:NO];
         [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
             sourceSnapshot.transform = CGAffineTransformMakeTranslation(0, sourceSnapshot.frame.size.height);
-            
         } completion:^(BOOL finished) {
             [sourceSnapshot removeFromSuperview];
         }];
-        [ToolUtils setFirstUse:@"NO"];
     }
    
 }

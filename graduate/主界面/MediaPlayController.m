@@ -25,7 +25,6 @@ MediaPlayController* mediaPlayController = nil;
 
 -(void)prepareToPlayWithUrl:(NSURL*)url
 {
-    
     //2.创建播放器（注意：一个AVAudioPlayer只能播放一个url）
     self.audioplayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:Nil];
     //3.缓冲

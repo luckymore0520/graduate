@@ -28,10 +28,13 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+        
+        return [documentsDirectoryURL URLByAppendingPathComponent:response.suggestedFilename];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:_fileId];   // 保存文件的名称
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         NSLog(@"File downloaded to: %@", filePath);
-        [delegate dispos:[NSDictionary dictionaryWithObjectsAndKeys:filePath,@"path", nil] functionName:@"download"];
+        [delegate dispos:[NSDictionary dictionaryWithObjectsAndKeys:filePath,@"path",response.suggestedFilename,@"filename", nil] functionName:@"download"];
     }];
     [downloadTask resume];
     return self;
@@ -142,7 +145,7 @@
     
 //    UIImage *img = [UIImage imageWithContentsOfFile:filePath];
     if (filePath) {
-        return [NSData dataWithContentsOfURL:[NSURL URLWithString:filePath]];
+        return [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:filePath]];
     }
     return nil;
 }
