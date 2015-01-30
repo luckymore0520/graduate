@@ -797,9 +797,6 @@
                                                 <include reference="W1G-3U-aGZ"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <segue destination="UjW-dg-al3" kind="presentation" modalTransitionStyle="coverVertical" id="FwH-16-X4K"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIx-2C-ble">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -886,6 +883,7 @@
                                 </state>
                                 <connections>
                                     <action selector="resignAll:" destination="v78-ex-8Nh" eventType="touchUpInside" id="E6m-yD-enb"/>
+                                    <segue destination="uPy-nb-zaz" kind="show" identifier="setSubject" id="ToW-iF-19F"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xqW-cm-GZ7">
@@ -1058,13 +1056,11 @@
                         <outlet property="nickNameLabel" destination="G1K-zA-bpg" id="VfJ-Ff-qyg"/>
                         <outlet property="politicBt" destination="FMr-c0-5i5" id="G1d-QB-fT9"/>
                         <outlet property="testView" destination="HfV-Hl-FHk" id="OM0-9n-dN6"/>
-                        <segue destination="dwa-6K-SsM" kind="presentation" identifier="setSubject" modalTransitionStyle="coverVertical" id="6xN-28-toj"/>
-                        <segue destination="8p9-Ji-t9s" kind="presentation" identifier="myQuestion" modalTransitionStyle="coverVertical" id="cwC-IG-01Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g40-5v-oHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2385" y="-759.75"/>
+            <point key="canvasLocation" x="2439" y="-1091.25"/>
         </scene>
         <!--今日推荐-->
         <scene sceneID="tsC-nl-ZgL">
@@ -1160,7 +1156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZU8-vB-zbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="783" y="-93"/>
+            <point key="canvasLocation" x="1156.5" y="-87"/>
         </scene>
         <!--错题集-->
         <scene sceneID="Cmq-ZZ-gAj">
@@ -1361,12 +1357,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nab-jq-Vst" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2920.5" y="-87"/>
+            <point key="canvasLocation" x="3237" y="-414"/>
         </scene>
         <!--设置科目-->
         <scene sceneID="9Ll-Fu-WRI">
             <objects>
-                <viewController id="uPy-nb-zaz" customClass="SetSubjectVC" sceneMemberID="viewController">
+                <viewController restorationIdentifier="setSubject" storyboardIdentifier="setSubject" id="uPy-nb-zaz" customClass="SetSubjectVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ca0-vc-EBk"/>
                         <viewControllerLayoutGuide type="bottom" id="4ba-zx-vsL"/>
@@ -1774,6 +1770,7 @@
                         <outlet property="englishGroup" destination="PLG-lf-uIM" id="XwV-Cq-RSM"/>
                         <outlet property="major1Field" destination="Ck8-om-iqw" id="eIb-fK-YlT"/>
                         <outlet property="major2Field" destination="g4U-gw-KOo" id="G9X-KO-Ak1"/>
+                        <outlet property="major2Label" destination="PI1-TM-6uy" id="EBg-yx-ywE"/>
                         <outlet property="math1Bt" destination="ffR-eL-L6R" id="eg7-14-EPJ"/>
                         <outlet property="math2Bt" destination="mrJ-SW-40G" id="Jna-6N-ktv"/>
                         <outlet property="math3Bt" destination="v5k-Bl-JMY" id="SKL-2q-k9t"/>
@@ -1783,7 +1780,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zcP-Ge-b2Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4144.5" y="-759.75"/>
+            <point key="canvasLocation" x="3237" y="-1091.25"/>
         </scene>
         <!--Media PlayVC-->
         <scene sceneID="SCk-yA-wY7">
@@ -1982,14 +1979,14 @@
                                 <exclude reference="UiE-BI-vUn"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="CCJ-AC-Zzm"/>
-                                <exclude reference="hhf-4C-thX"/>
-                                <exclude reference="pwX-h6-ihE"/>
-                                <exclude reference="Gog-qj-fL6"/>
-                                <exclude reference="Wod-Qh-KMF"/>
-                                <exclude reference="f4M-mu-Ock"/>
-                                <exclude reference="kSB-L7-e4r"/>
+                                <exclude reference="1gy-3Y-Qzc"/>
+                                <exclude reference="S2d-mv-W8T"/>
+                                <exclude reference="SGO-M2-eiU"/>
                                 <exclude reference="4nG-Cb-KH6"/>
+                                <exclude reference="kSB-L7-e4r"/>
+                                <exclude reference="eZo-Xa-h91"/>
+                                <exclude reference="PFY-18-phX"/>
+                                <exclude reference="vXc-1B-jmW"/>
                                 <exclude reference="1Me-01-kTc"/>
                                 <exclude reference="9DP-vV-Sf9"/>
                                 <exclude reference="Wek-bB-fZY"/>
@@ -1998,12 +1995,12 @@
                                 <exclude reference="jnl-ZM-qua"/>
                                 <exclude reference="kfs-mi-YOF"/>
                                 <exclude reference="lWg-ch-5MW"/>
-                                <exclude reference="1gy-3Y-Qzc"/>
-                                <exclude reference="eZo-Xa-h91"/>
-                                <exclude reference="PFY-18-phX"/>
-                                <exclude reference="vXc-1B-jmW"/>
-                                <exclude reference="S2d-mv-W8T"/>
-                                <exclude reference="SGO-M2-eiU"/>
+                                <exclude reference="CCJ-AC-Zzm"/>
+                                <exclude reference="hhf-4C-thX"/>
+                                <exclude reference="pwX-h6-ihE"/>
+                                <exclude reference="Gog-qj-fL6"/>
+                                <exclude reference="Wod-Qh-KMF"/>
+                                <exclude reference="f4M-mu-Ock"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2018,14 +2015,14 @@
                                 <include reference="UiE-BI-vUn"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="CCJ-AC-Zzm"/>
-                                <include reference="hhf-4C-thX"/>
-                                <include reference="pwX-h6-ihE"/>
-                                <include reference="Gog-qj-fL6"/>
-                                <include reference="Wod-Qh-KMF"/>
-                                <include reference="f4M-mu-Ock"/>
-                                <include reference="kSB-L7-e4r"/>
+                                <include reference="1gy-3Y-Qzc"/>
+                                <include reference="S2d-mv-W8T"/>
+                                <include reference="SGO-M2-eiU"/>
                                 <include reference="4nG-Cb-KH6"/>
+                                <include reference="kSB-L7-e4r"/>
+                                <include reference="eZo-Xa-h91"/>
+                                <include reference="PFY-18-phX"/>
+                                <include reference="vXc-1B-jmW"/>
                                 <include reference="1Me-01-kTc"/>
                                 <include reference="9DP-vV-Sf9"/>
                                 <include reference="Wek-bB-fZY"/>
@@ -2034,12 +2031,12 @@
                                 <include reference="jnl-ZM-qua"/>
                                 <include reference="kfs-mi-YOF"/>
                                 <include reference="lWg-ch-5MW"/>
-                                <include reference="1gy-3Y-Qzc"/>
-                                <include reference="eZo-Xa-h91"/>
-                                <include reference="PFY-18-phX"/>
-                                <include reference="vXc-1B-jmW"/>
-                                <include reference="S2d-mv-W8T"/>
-                                <include reference="SGO-M2-eiU"/>
+                                <include reference="CCJ-AC-Zzm"/>
+                                <include reference="hhf-4C-thX"/>
+                                <include reference="pwX-h6-ihE"/>
+                                <include reference="Gog-qj-fL6"/>
+                                <include reference="Wod-Qh-KMF"/>
+                                <include reference="f4M-mu-Ock"/>
                             </mask>
                         </variation>
                     </view>
@@ -2205,24 +2202,6 @@
             <point key="canvasLocation" x="438" y="-2141.25"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="hkH-kF-YvF">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dwa-6K-SsM" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="djG-hk-C7d">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="uPy-nb-zaz" kind="relationship" relationship="rootViewController" id="to1-y3-dzF"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TLK-Qd-IuR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3232.5" y="-759.75"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="seP-9a-aER">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UjW-dg-al3" sceneMemberID="viewController">
@@ -2239,24 +2218,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Vf-aq-Kxu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-16.5" y="-93"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="lFe-Vj-t7x">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8p9-Ji-t9s" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qmr-LV-DeQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="1yb-E5-xne" kind="relationship" relationship="rootViewController" id="rXz-Er-pLM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Guw-Ph-ZMI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1854" y="-93"/>
         </scene>
         <!--复习-->
         <scene sceneID="hdg-5h-nfW">
@@ -2358,7 +2319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbs-sM-dfe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3754.5" y="-87"/>
+            <point key="canvasLocation" x="4237.5" y="-87"/>
         </scene>
         <!--错题浏览-->
         <scene sceneID="8Db-mY-83c">
@@ -2678,6 +2639,6 @@
         <image name="3" width="341" height="239"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Kyi-yM-JLQ"/>
+        <segue reference="FMx-nM-4tm"/>
     </inferredMetricsTieBreakers>
 </document>

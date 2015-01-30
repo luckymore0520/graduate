@@ -8,7 +8,7 @@
 
 #import "SetSubjectVC.h"
 #import "ButtonGroup.h"
-@interface SetSubjectVC ()<UITextFieldDelegate>
+@interface SetSubjectVC ()<UITextFieldDelegate,ButtonGroupDelegate>
 @property (weak, nonatomic) IBOutlet ButtonGroup *englishGroup;
 @property (weak, nonatomic) IBOutlet UIButton *Eng2Bt;
 @property (weak, nonatomic) IBOutlet UIButton *Eng1Bt;
@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *major2Field;
 @property (weak, nonatomic) IBOutlet ButtonGroup *mathGroup;
 @property (weak, nonatomic) IBOutlet UIButton *completeButton;
+@property (weak, nonatomic) IBOutlet UILabel *major2Label;
 
 @end
 
@@ -32,6 +33,8 @@
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_major1Field,_major2Field, nil];
     self.keyButtons = [NSArray arrayWithObjects:_completeButton, nil];
+    [_major2Label setHidden:YES];
+    [_major2Field setHidden:YES];
     // Do any additional setup after loading the view.
 }
 
@@ -40,6 +43,9 @@
 {
     NSArray* mathGroupBts = [NSArray arrayWithObjects:_math1Bt,_math2Bt,_math3Bt ,nil];
     [_mathGroup loadButton:mathGroupBts];
+    _mathGroup.canbeNull = YES;
+    _mathGroup.name = @"Math";
+    _mathGroup.delegate = self;
     
     NSArray* englishGroupBts = [NSArray arrayWithObjects:_Eng1Bt,_Eng2Bt,_Eng3Bt, nil];
     [_englishGroup loadButton:englishGroupBts];
@@ -57,23 +63,42 @@
 
 #pragma mark ButtonAction
 - (IBAction)goBack:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-    }];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (IBAction)complete:(id)sender {
-    if (_major1Field.text.length==0||_major1Field.text.length==0) {
-        [ToolUtils showMessage:@"请填写专业课"];
-        return;
+    if ([_mathGroup selectedIndex]==-1) {
+        if (_major1Field.text.length==0&&_major1Field.text.length==0) {
+            [ToolUtils showMessage:@"请填写两门专业课"];
+            return;
+        }
+    } else {
+        if (_major1Field.text.length==0||_major1Field.text.length==0) {
+            [ToolUtils showMessage:@"请填写至少一门专业课"];
+            return;
+        }
     }
     NSDictionary* subjects = [NSDictionary dictionaryWithObjectsAndKeys:[_englishGroup selectedSubject],@"English",[_mathGroup selectedSubject],@"Math",[NSArray arrayWithObjects:_major1Field.text,_major2Field.text, nil],@"Major", nil];
     [ToolUtils setMySubjects:subjects];
 #warning 此处调用设置科目的接口
-    [self dismissViewControllerAnimated:YES completion:^{
-    }];
+    [self.navigationController popViewControllerAnimated:YES];
+
 }
 
+- (void)selectIndex:(NSInteger)index name:(NSString *)buttonName
+{
+    if ([buttonName isEqualToString:@"Math"]) {
+        if (index==-1) {
+            [_major2Field setHidden:NO];
+            [_major2Label setHidden:NO];
+        } else {
+            [_major2Field setHidden:YES];
+            [_major2Label setHidden:YES];
+        }
+    }
+    
+}
 
 
 /*

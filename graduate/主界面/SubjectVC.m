@@ -47,6 +47,17 @@
 #warning 此处需要获取用户昵称、今日日记以及各个科目的学习进度，科目封面
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self initSubject];
+}
+
+
+- (void)initSubject
+{
+    NSDictionary* subjects =[ToolUtils getMySubjects];
+}
+
 
 - (IBAction)buttonTouchDown:(UIButton *)sender {
      [self performSelector:@selector(btLongPress:) withObject:sender afterDelay:1.0];
@@ -94,6 +105,8 @@
     
     
 }
+
+
 - (IBAction)save:(id)sender {
     
     
@@ -102,10 +115,10 @@
 
 
 - (IBAction)setSubject:(id)sender {
-    if ([ToolUtils getMySubjects]) {
-        [ToolUtils showMessage:@"科目已设置"];
-        return;
-    }
+//    if ([ToolUtils getMySubjects]) {
+//        [ToolUtils showMessage:@"科目已设置"];
+//        return;
+//    }
     [self performSegueWithIdentifier:@"setSubject" sender:nil];
 }
 

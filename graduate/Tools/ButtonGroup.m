@@ -28,6 +28,7 @@
     }
     [[array objectAtIndex:0]setSelected:YES];
     selectedIndex = 0;
+    self.canbeNull = NO;
     
 }
 
@@ -39,11 +40,16 @@
 - (void)touchButton:(UIButton*)selectedButton
 {
     if (selectedButton.tag!= selectedIndex) {
-        [[buttonArray objectAtIndex:selectedIndex]setSelected:NO];
+        if (selectedIndex!=-1) {
+            [[buttonArray objectAtIndex:selectedIndex]setSelected:NO];
+        }
         [selectedButton setSelected:YES];
         selectedIndex = selectedButton.tag;
+    } else if (self.canbeNull){
+        [selectedButton setSelected:NO];
+        selectedIndex = -1;
     }
-    
+    [_delegate selectIndex:selectedIndex name:_name];
 }
 
 -(NSInteger)selectedIndex
@@ -52,8 +58,12 @@
 }
 -(NSString*)selectedSubject
 {
-    UIButton* button = [buttonArray objectAtIndex:selectedIndex];
-    return button.titleLabel.text;
+    if (selectedIndex==-1)
+        return @"未选择";
+    else {
+        UIButton* button = [buttonArray objectAtIndex:selectedIndex];
+        return button.titleLabel.text;
+    }
 }
 
 @end

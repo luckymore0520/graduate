@@ -8,6 +8,9 @@
 
 #import "MAOFlipViewController.h"
 #import "ToolUtils.h"
+#import "SubjectVC.h"
+#import "MainFunVC.h"
+#import "OtherFuncVCViewController.h"
 @interface MAOFlipViewController ()<FlipInteactionDelegate, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
 @property (nonatomic) MAOFlipInteraction *flipInteraction;
 @property (nonatomic) MAOFlipTransition *flipTransition;
@@ -20,7 +23,6 @@
     [super viewDidLoad];
     UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
     if (c) {
-        
         //ジェスチャーイベント設定
         self.flipInteraction = MAOFlipInteraction.new;
         self.flipInteraction.delegate = self;
@@ -28,13 +30,10 @@
         self.flipNavigationController = [[UINavigationController alloc]initWithRootViewController:c];
         self.flipNavigationController.delegate = self;
         [self.flipNavigationController.navigationBar setHidden:YES];
-        
         [self addChildViewController:self.flipNavigationController];
         self.flipNavigationController.view.frame = self.view.frame;
         [self.view addSubview:self.flipNavigationController.view];
         [self.flipNavigationController didMoveToParentViewController:self];
-        
-        
     }
 }
 
@@ -117,24 +116,36 @@
     return self.flipInteraction;
 }
 
+
+
 - (id <UIViewControllerAnimatedTransitioning>)navigationController:
 (UINavigationController *)navigationController
                                    animationControllerForOperation:(UINavigationControllerOperation)operation
                                                 fromViewController:(UIViewController *)fromVC
                                                   toViewController:(UIViewController *)toVC
 {
-    self.flipTransition = [[MAOFlipTransition alloc]init];
-    if (operation == UINavigationControllerOperationPush) {
-        UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
-        if (c) {
-            [self.flipInteraction setView:c.view];
+    [navigationController setNavigationBarHidden:[self isMainPage:toVC]];
+    if ([self isMainPage:toVC]&&[self isMainPage:fromVC]) {
+        self.flipTransition = [[MAOFlipTransition alloc]init];
+        if (operation == UINavigationControllerOperationPush) {
+            UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
+            if (c) {
+                [self.flipInteraction setView:c.view];
+            }
+            self.flipTransition.presenting = YES;
+        }else{
+            self.flipTransition.interaction = self.flipInteraction;
+            self.flipTransition.presenting = NO;
         }
-        self.flipTransition.presenting = YES;
-    }else{
-        self.flipTransition.interaction = self.flipInteraction;
-        self.flipTransition.presenting = NO;
+        return self.flipTransition;
     }
-    return self.flipTransition;
+    return nil;
+   
+}
+
+- (BOOL)isMainPage:(UIViewController*)toVC
+{
+    return [toVC class]==[MainFunVC class]||[toVC class]==[SubjectVC class]||[toVC class]==[OtherFuncVCViewController class];
 }
 
 @end
