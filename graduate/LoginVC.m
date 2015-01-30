@@ -55,9 +55,12 @@
 //前往主界面
 - (void)gotoMainMenu
 {
+    
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    [self.navigationController presentViewController:_rootVC animated:YES completion:^{
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:_rootVC];
+    [nav setNavigationBarHidden:YES];
+    [self.navigationController presentViewController:nav animated:YES completion:^{
     }];
 }
 
@@ -83,6 +86,7 @@
     {
         [ToolUtils showMessage:@"密码不得为空"];
     } else {
+        isThirdParty = NO;
         MLogin* login = [[MLogin alloc]init];
         NSString* password = [ToolUtils md5:_passwordField.text];
         if ([ToolUtils checkTel:_usernameField.text showAlert:NO]) {
@@ -123,16 +127,16 @@
             [self gotoMainMenu];
         }
         
-    } else if ([names isEqualToString:@"Download"])
+    } else if ([names isEqualToString:@"download"])
     {
-        NSData* img = [data objectForKey:@"img"];
+        
+        NSURL* url = [data objectForKey:@"path"];
+        NSData* img = [NSData dataWithContentsOfURL:url];
         MImgUpload* upLoad = [[MImgUpload alloc]init];
         [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
-        
     } else if ([names isEqualToString:@"MUpdateUserInfo"])
     {
         MReturn* ret = [MReturn objectWithKeyValues:data];
-
         [self gotoMainMenu];
     }
 }
@@ -168,7 +172,7 @@
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId =[userInfo objectForKey:@"figureurl_qq_1"];
-        [api downloadImg:self imgUrl:[userInfo objectForKey:@"figureurl_qq_1"]];
+        [api download:self url:[userInfo objectForKey:@"figureurl_qq_1"]];
         isThirdParty = YES;
     }
     

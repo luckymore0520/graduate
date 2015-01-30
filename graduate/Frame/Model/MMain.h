@@ -11,7 +11,7 @@
 
 @interface MMain : BaseModel
 
-@property (retain,nonatomic) NSMutableArray *music_;
+@property (strong,nonatomic) NSMutableArray *music_;
 @property (copy,nonatomic) NSString *content_;
 @property (copy,nonatomic) NSString *img_;
 @property (retain,nonatomic) NSNumber *days_;

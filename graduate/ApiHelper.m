@@ -8,6 +8,9 @@
 
 #import "ApiHelper.h"
 #import "GTMBase64.h"
+#import "AFHTTPRequestOperationManager.h"
+#import "AFURLRequestSerialization.h"
+#import "AFURLSessionManager.h"
 @implementation ApiHelper
 
 - (instancetype)init
@@ -16,24 +19,21 @@
     _page = -1;
     return self;
 }
-- (ApiHelper *)downloadImg:(id<ApiDelegate>)delegate imgUrl:(NSString *)imgUrl
+- (ApiHelper *)download:(id<ApiDelegate>)delegate url:(NSString *)url
 {
-    _delegate = delegate;
-    _name = @"Download";
-    myData = [NSMutableData dataWithData:    [self loadData:self.fileId]];
-    if (myData) {
-        [_delegate dispos:[NSDictionary
-                           dictionaryWithObjectsAndKeys:myData,@"img", nil] functionName:_name];
-    } else {
-        NSURL* url = [NSURL URLWithString:imgUrl];
-        NSURLRequest* request = [NSURLRequest requestWithURL:url
-                                 
-                                                 cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                 
-                                             timeoutInterval:60.0];
-        [NSURLConnection connectionWithRequest:request delegate:self];
-
-    }
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        NSLog(@"File downloaded to: %@", filePath);
+        [delegate dispos:[NSDictionary dictionaryWithObjectsAndKeys:filePath,@"path", nil] functionName:@"download"];
+    }];
+    [downloadTask resume];
     return self;
 }
 
@@ -43,12 +43,46 @@
     _delegate = delegate;
     _name = method;
     _params = params;
-    NSURL* url = [self generateUrl:params method:method];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
-    [NSURLConnection connectionWithRequest:request delegate:self];
+    NSDictionary* dictionary = [self generateParams:params method:method];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:BASEURL parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self handleData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
     return self;
 }
 
+
+- (NSDictionary*)generateParams:(NSDictionary*)initDic method:(NSString*)method
+{
+    NSMutableDictionary* dictionary;
+    if (initDic) {
+       dictionary = [[NSMutableDictionary alloc]initWithDictionary:initDic];
+    } else {
+        dictionary = [[NSMutableDictionary alloc]init];
+    }
+    [dictionary setObject:method forKey:@"methodno"];
+    if ([ToolUtils getVerify]) {
+        [dictionary setObject:[ToolUtils getVerify] forKey:@"verify"];
+    }
+    if ([ToolUtils getDeviceId]) {
+        [dictionary setObject:[ToolUtils getDeviceId] forKey:@"deviceid"];
+        
+    }
+    if ([ToolUtils getUserid]){
+        [dictionary setObject:[ToolUtils getUserid] forKey:@"userid"];
+    }
+    
+    if (_page>=0) {
+        [dictionary setObject:[NSString stringWithFormat:@"%d",_page] forKey:@"page"];
+    }
+    if (_pageCount>0) {
+        [dictionary setObject:[NSString stringWithFormat:@"%d",_pageCount] forKey:@"limit"];
+    }
+    return dictionary;
+}
 
 //调用接口post 方法名 参数 代理
 - (ApiHelper *)post:(NSString *)method params:(NSDictionary *)params delegate:(id<ApiDelegate>)delegate
@@ -56,107 +90,35 @@
     _delegate = delegate;
     _name = method;
     _params = params;
-    NSURL* url = [self generatePostUrl:method];
-    NSMutableString* postStr = [[NSMutableString alloc]init];
-    for (NSString* key in params.keyEnumerator) {
-        [postStr appendFormat:@"%@=%@&",key,[params objectForKey:key]];
-    }
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
-    [request setHTTPMethod:@"POST"];
-    NSData* postData = [postStr dataUsingEncoding:NSUTF8StringEncoding];
-    [request setHTTPBody:postData];
-    [NSURLConnection connectionWithRequest:request delegate:self];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:BASEURL parameters:[self generateParams:params method:@"MImgUpload"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self handleData:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     return self;
 }
 
 
-//生成getUrl
--(NSURL*) generateUrl:(NSDictionary*)params method:(NSString*) method;
+- (void) handleData:(id)responseObject
 {
-    
-    NSMutableString* urlStr = [[NSMutableString alloc]initWithString:BASEURL];
-    [urlStr appendFormat:@"%@=%@&",@"methodno",method];
-//    
-//    if ([DataHelper strByName:@"appid"]) {
-//        [urlStr appendFormat:@"%@=%@&",@"appid",[DataHelper strByName:@"appid"]];
-//    }
-    
-    
-    if ([ToolUtils getVerify]) {
-        [urlStr appendFormat:@"%@=%@&",@"verify",[ToolUtils getVerify]];
+    NSError* error = [[NSError alloc]init];
+    NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:&error];
+    if (resultDict) {
+        if ([[resultDict objectForKey:@"errorCode"]integerValue]==0) {
+            if ([resultDict objectForKey:@"data"]) {
+                [_delegate dispos:[resultDict objectForKey:@"data"] functionName:_name];
+            } else {
+                [_delegate showAlert:@"网络请求错误，请重试"];
+            }
+        } else {
+            [_delegate showAlert:[resultDict objectForKey:@"errorMsg"]];
+        }
     }
-    if ([ToolUtils getDeviceId]) {
-        [urlStr appendFormat:@"%@=%@&",@"deviceid",[ToolUtils getDeviceId]];
-        
-    }
-    if ([ToolUtils getUserid]){
-        [urlStr appendFormat:@"%@=%@&",@"userid",[ToolUtils getUserid]];
-    }
-    
-    if (_page>=0) {
-        [urlStr appendFormat:@"%@=%d&",@"page",_page];
-        
-    }
-    if (_pageCount>0) {
-        [urlStr appendFormat:@"%@=%d&",@"limit",_pageCount];
-    }
-    for (NSString* key in params.keyEnumerator) {
-        [urlStr appendFormat:@"%@=%@&",key,[[params objectForKey:key]stringByReplacingOccurrencesOfString:@" " withString:@""]];
-    }
-    NSLog(@"%@",urlStr);
-    return [NSURL URLWithString:urlStr];
-    
 }
 
-//生成post Url
--(NSURL*) generatePostUrl:(NSString*) method;
-{
-    
-    NSMutableString* urlStr = [[NSMutableString alloc]initWithString:BASEURL];
-    [urlStr appendFormat:@"%@=%@&",@"methodno",method];
-    
-    if ([ToolUtils getVerify]) {
-        [urlStr appendFormat:@"%@=%@&",@"verify",[ToolUtils getVerify]];
-    }
-    if ([ToolUtils getDeviceId]) {
-        [urlStr appendFormat:@"%@=%@&",@"deviceid",[ToolUtils getDeviceId]];
-        
-    }
-    if ([ToolUtils getUserid]){
-        [urlStr appendFormat:@"%@=%@&",@"userid",[ToolUtils getUserid]];
-    }
-    if (_page>=0) {
-        [urlStr appendFormat:@"%@=%d&",@"page",_page];
-        
-    }
-    if (_pageCount>0) {
-        [urlStr appendFormat:@"%@=%d&",@"limit",_pageCount];
-    }
-    NSLog(@"%@",urlStr);
-    return [NSURL URLWithString:urlStr];
-}
-
-
-
-
-
-- (ApiHelper *)load:(id<ApiDelegate>)delegate img:(UIImage *)img name:(NSString *)fileName
-{
-    
-    _delegate = delegate;
-    _name = @"MImgUpload";
-    NSURL* url = [self generateUrl:[NSDictionary dictionaryWithObjectsAndKeys:fileName,@"filename", nil] method:@"MImgUpload"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
-    [request setHTTPMethod:@"POST"];
-    NSData* originData =  UIImagePNGRepresentation(img);
-    NSData* encodeData = [GTMBase64 encodeData:originData];
-    NSString* encodeResult = [[NSString alloc] initWithData:encodeData encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",encodeResult);
-    NSString* postStr = [NSString stringWithFormat:@"img=%@",encodeResult];
-    [request setHTTPBody:[postStr dataUsingEncoding:NSUTF8StringEncoding]];
-    [NSURLConnection connectionWithRequest:request delegate:self];
-    return self;
-}
 
 - (ApiHelper*)setPage:(NSInteger)page limit:(NSInteger) limit
 {
@@ -165,63 +127,6 @@
     return self;
 }
 
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    if (!data) {
-        [_delegate showAlert:@"网络请求错误，请重试"];
-        return;
-    }
-    
-    if(myData==nil) {
-        myData = [[NSMutableData alloc] initWithCapacity:2048];
-    }
-    [myData appendData:data];
-    
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection*)theConnection {
-    if ([_name isEqualToString:@"Download"]) {
-        [self save:myData name:self.fileId];
-        [_delegate dispos:[NSDictionary
-                           dictionaryWithObjectsAndKeys:myData,@"img", nil] functionName:_name];
-    } else {
-        NSError* error = [[NSError alloc]init];
-        NSString* str = [[NSString alloc] initWithData:myData  encoding:NSUTF8StringEncoding];
-        _content = str;
-        NSData* result = [_content dataUsingEncoding:NSUTF8StringEncoding];
-        if (!result) {
-            [_delegate showAlert:@"网络请求错误，请重试"];
-            return;
-        }
-        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&error];
-        if (resultDict) {
-            _content = nil;
-            if ([[resultDict objectForKey:@"errorCode"]integerValue]==0) {
-                if ([resultDict objectForKey:@"data"]) {
-                    [_delegate dispos:[resultDict objectForKey:@"data"] functionName:_name];
-                } else {
-                    [_delegate showAlert:@"网络请求错误，请重试"];
-                }
-            } else {
-                [_delegate showAlert:[resultDict objectForKey:@"errorMsg"]];
-            }
-        }
-
-    }
-}
-
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    
-    NSLog(@"response");
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [_delegate showError:error functionName:_name];
-}
 
 - (void)save:(NSData*) data name:(NSString*)fileName;
 {

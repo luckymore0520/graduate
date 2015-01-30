@@ -9,5 +9,5 @@
 #import "ApiHelper.h"
 
 @interface MImgUpload : ApiHelper
-
+- (ApiHelper *)load:(id<ApiDelegate>)delegate img:(UIImage *)img name:(NSString *)fileName;
 @end

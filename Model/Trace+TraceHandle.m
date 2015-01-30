@@ -14,19 +14,11 @@
 {
     CoreDataHelper* helper = [CoreDataHelper getInstance];
     Trace* trace=(Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
-//    @property (nonatomic, retain) NSDate * date;
-//    @property (nonatomic, retain) NSString * songName;
-//    @property (nonatomic, retain) NSString * songUrl;
-//    @property (nonatomic, retain) NSString * pictureUrl;
-//    @property (nonatomic, retain) NSString * note;
-    
     trace.date = self.date;
     trace.songName = self.songName;
     trace.songUrl = self.songUrl;
     trace.pictureUrl = self.pictureUrl;
     trace.note = self.note;
-    
-    
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {

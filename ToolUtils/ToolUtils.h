@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
-#define PICURL @"114.215.196.179:8080/gsdownload.do?id="
+#define PICURL @"http://114.215.196.179:8080/gs/download.do?id="
 @interface ToolUtils : NSObject
 @property (nonatomic , strong) NSMutableArray *tagArray;
 + (instancetype) sharedToolUtils;

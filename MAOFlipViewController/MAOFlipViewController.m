@@ -32,7 +32,6 @@
         [self addChildViewController:self.flipNavigationController];
         self.flipNavigationController.view.frame = self.view.frame;
         [self.view addSubview:self.flipNavigationController.view];
-        
         [self.flipNavigationController didMoveToParentViewController:self];
         
     }

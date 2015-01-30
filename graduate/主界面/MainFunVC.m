@@ -67,16 +67,9 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self loadMusic];
-}
-
 //该方法用于根据接口获取的数据更新界面
 - (void)initView
 {
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,16 +87,16 @@
         [_remainDayLabel setText:[NSString stringWithFormat:@"还剩%d天",_main.daysLeft_.integerValue]];
         
         MMusic* music = [_main.music_ firstObject];
-        NSURL* musicUrl = [ToolUtils getImageUrlWtihString:music.file_];
-        
-        [_SongAndSingerLabel setText:[NSString stringWithFormat:@"%@-%@",music.title_,music.singer_]];
-        
+        [_SongAndSingerLabel setText:[NSString stringWithFormat:@"%@-%@",music.title_,music.singer_]];        
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId = [NSString stringWithFormat:@"%@.mp3",music.title_];
-        [api downloadImg:self imgUrl:musicUrl.absoluteString];
-    } else if ([names isEqualToString:@"Download"])
+        [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
+    } else if ([names isEqualToString:@"download"])
     {
-        
+        NSURL* url = [data objectForKey:@"path"];
+        if (url) {
+            [self loadMusic:url];
+        }
     }
 }
 

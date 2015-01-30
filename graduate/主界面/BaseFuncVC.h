@@ -18,6 +18,6 @@
 @property (nonatomic,strong)UIButton* maskBt;
 @property (nonatomic,strong)NSArray* textFields;
 @property (nonatomic,strong)NSArray* keyButtons;
-- (void)loadMusic;
+- (void)loadMusic:(NSURL*)path;
 - (void)animationReturn;
 @end

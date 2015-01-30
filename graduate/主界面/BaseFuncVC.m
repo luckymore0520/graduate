@@ -68,15 +68,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)loadMusic
+
+- (void)loadMusic:(NSURL*)path
 {
+    
     MediaPlayController* controller = [MediaPlayController getInstance];
     if (controller.state!=PLAY) {
-        NSString *thePath=[[NSBundle mainBundle] pathForResource:@"平凡之路" ofType:@"mp3"];
-        NSLog(@"%@",thePath);
-        NSURL *theurl=[NSURL fileURLWithPath:thePath];
-        [controller prepareToPlayWithUrl:theurl];
-        [self.musicBt setTitle:@"从头开始" forState:UIControlStateNormal];
+        [controller prepareToPlayWithUrl:path];
+        [controller play];
+        [self.musicBt setTitle:@"暂停" forState:UIControlStateNormal];
         [self.musicBt setTag:controller.state];
     } else {
         [self.musicBt setTitle:@"停止" forState:UIControlStateNormal];
@@ -99,7 +99,6 @@
             break;
         case SHOULDSTOP:
             [[MediaPlayController getInstance]stop];
-            [self loadMusic];
             
             break;
         default:
