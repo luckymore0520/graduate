@@ -15,6 +15,7 @@
 #import "MainFunVC.h"
 #import "RootViewController.h"
 #import "ToolUtils.h"
+#import "QuestionBook.h"
 #import "MediaPlayVC.h"
 @interface AppDelegate ()<WeiboSDKDelegate>
 
@@ -35,7 +36,10 @@
     [_window makeKeyAndVisible];
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:WEIBOAPPKEY];
-  
+    [[QuestionBook getInstance]loadAllData];
+//    
+//    [ToolUtils setUserId:@"dc785099-a88d-11e4-9812-ac853dac2305"];
+//    [ToolUtils setVerify:@"0314a86c-16f6-4978-88f4-c6b47f52ba14"];
     return YES;
 }
 
@@ -174,13 +178,13 @@
     {
         NSString *title = NSLocalizedString(@"认证结果", nil);
         NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
-                                              otherButtonTitles:nil];
-        NSString* weiboToken = [(WBAuthorizeResponse *)response accessToken];
-    
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+//                                                        message:message
+//                                                       delegate:nil
+//                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+//                                              otherButtonTitles:nil];
+//        NSString* weiboToken = [(WBAuthorizeResponse *)response accessToken];
+//    
         NSString* weiboId = [(WBAuthorizeResponse *)response userID];
         [ToolUtils setIdentify:weiboId];
         [ToolUtils setUserInfo:nil];

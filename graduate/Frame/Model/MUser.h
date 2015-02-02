@@ -31,4 +31,14 @@
 
 @property (retain,nonatomic) NSNumber *startDay_;
 
+@property (copy,nonatomic) NSString *subjectEng_;
+
+@property (copy,nonatomic) NSString *subjectPolity_;
+
+@property (copy,nonatomic) NSString *subjectMath_;
+
+@property (copy,nonatomic) NSString *subjectMajor1_;
+
+@property (copy,nonatomic) NSString *subjectMajor2_;
+
 @end

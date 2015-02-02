@@ -36,6 +36,17 @@
 {
     [self touchButton:[buttonArray objectAtIndex:index]];
 }
+- (void)setSelectContent:(NSString*)content
+{
+    for (int i = 0 ; i < buttonArray.count; i++) {
+        UIButton* button = [buttonArray objectAtIndex:i];
+        if ([button.titleLabel.text isEqualToString:content]) {
+            [self setSelectedIndex:i];
+            return;
+        }
+    }
+    [self setSelectedIndex:buttonArray.count-1];
+}
 
 - (void)touchButton:(UIButton*)selectedButton
 {
@@ -59,7 +70,7 @@
 -(NSString*)selectedSubject
 {
     if (selectedIndex==-1)
-        return @"未选择";
+        return @"";
     else {
         UIButton* button = [buttonArray objectAtIndex:selectedIndex];
         return button.titleLabel.text;

@@ -14,7 +14,7 @@
 @property(strong,nonatomic,readonly)NSManagedObjectContext* managedObjectContext;
 @property(strong,nonatomic,readonly)NSPersistentStoreCoordinator* persistentStoreCoordinator;
 +(CoreDataHelper *)getInstance;
-
++ (NSArray*) query:(id)sender tableName:(NSString*)tableName;
 @end
 @protocol DataHandleDelegate <NSObject>
 + (NSArray*) query:(id)sender;

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
+#import "MAOFlipViewController.h"
 @interface SubjectVC : BaseFuncVC
-
+@property (nonatomic,assign)MAOFlipViewController* parentVC;
 @end

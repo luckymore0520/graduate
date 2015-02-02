@@ -13,7 +13,7 @@
 @interface Trace : NSManagedObject
 
 @property (nonatomic, retain) NSString * content;
-@property (nonatomic, retain) NSString * myday;
+@property (nonatomic, retain) NSString * myDay;
 @property (nonatomic, retain) NSString * note;
 @property (nonatomic, retain) NSString * pictureUrl;
 @property (nonatomic, retain) NSNumber * remainday;

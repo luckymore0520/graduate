@@ -32,8 +32,6 @@ CoreDataHelper* coreDataHelper = nil;
     if (_managedObjectModel!=nil) {
         return _managedObjectModel;
     }
-//    NSURL* modelURL=[[NSBundle mainBundle] URLForResource:@"GraduateModel" withExtension:@"momd"];
-//        _managedObjectModel=[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     _managedObjectModel=[NSManagedObjectModel mergedModelFromBundles:nil] ;
     for (NSEntityDescription *desc in _managedObjectModel.entities)
     {
@@ -80,8 +78,30 @@ CoreDataHelper* coreDataHelper = nil;
     }
     return _persistentStoreCoordinator;
 }
-//-(NSURL *)applicationDocumentsDirectory
-//{
-//    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-//}
+
+
++ (NSArray*) query:(id)sender tableName:(NSString*)tableName
+{
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    NSFetchRequest* request=[[NSFetchRequest alloc] init];
+    NSEntityDescription* trace=[NSEntityDescription entityForName:tableName inManagedObjectContext:helper.managedObjectContext];
+    [request setEntity:trace];
+    if (sender) {
+        [request setPredicate:sender];
+    }
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                        initWithKey:@"myDay" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor,nil];
+    [request setSortDescriptors:sortDescriptors];
+    NSError* error=nil;
+    NSMutableArray* mutableFetchResult=[[helper.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+   
+    if (mutableFetchResult==nil) {
+        NSLog(@"Error:%@",error);
+    }
+    NSLog(@"The count of entry: %i",[mutableFetchResult count]);
+    return mutableFetchResult;
+}
+
+
 @end

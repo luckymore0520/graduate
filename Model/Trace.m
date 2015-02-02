@@ -12,7 +12,7 @@
 @implementation Trace
 
 @dynamic content;
-@dynamic myday;
+@dynamic myDay;
 @dynamic note;
 @dynamic pictureUrl;
 @dynamic remainday;

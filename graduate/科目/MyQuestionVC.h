@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MyQuestionVC : UIViewController
-
+#import "BaseFuncVC.h"
+@interface MyQuestionVC : BaseFuncVC
+@property (nonatomic,strong)NSArray* myQuestions;
+@property (nonatomic)NSInteger type;
 @end

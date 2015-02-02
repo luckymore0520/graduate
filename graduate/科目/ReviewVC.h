@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ReviewVC : UIViewController
-@property (nonatomic,strong)NSArray* dataArray;
+#import "BaseFuncVC.h"
+@interface ReviewVC : BaseFuncVC
+@property (nonatomic,strong)NSArray* questionList;
 @end

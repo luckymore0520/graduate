@@ -34,7 +34,7 @@
 //        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:_fileId];   // 保存文件的名称
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         NSLog(@"File downloaded to: %@", filePath);
-        [delegate dispos:[NSDictionary dictionaryWithObjectsAndKeys:filePath,@"path",response.suggestedFilename,@"filename", nil] functionName:@"download"];
+        [delegate dispos:[NSDictionary dictionaryWithObjectsAndKeys:filePath,@"path",response.suggestedFilename,@"filename",_fileId,@"fileid", nil] functionName:@"download"];
     }];
     [downloadTask resume];
     return self;
@@ -98,7 +98,8 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:BASEURL parameters:[self generateParams:params method:@"MImgUpload"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:BASEURL parameters:[self generateParams:params method:method] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",operation.request.URL.absoluteString);
         [self handleData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -133,24 +134,6 @@
 }
 
 
-- (void)save:(NSData*) data name:(NSString*)fileName;
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:fileName];   // 保存文件的名称
-    [data writeToFile: filePath    atomically:YES];
-}
-
-- (NSData*) loadData:(NSString*)fileName;
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:fileName];   // 保存文件的名称
-    
-//    UIImage *img = [UIImage imageWithContentsOfFile:filePath];
-    if (filePath) {
-        return [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:filePath]];
-    }
-    return nil;
-}
 
 @end
 

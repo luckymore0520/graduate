@@ -18,4 +18,5 @@
 @property (nonatomic, weak) id<FlipInteactionDelegate> delegate;
 @property (nonatomic) UIView *view;
 @property (nonatomic) BOOL isPushMode;
+- (void)handlePan:(UIPanGestureRecognizer *)gesture;
 @end

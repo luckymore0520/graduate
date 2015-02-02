@@ -74,6 +74,10 @@
 
 
 + (NSString *)md5:(NSString *)str;
++ (void)save:(NSData*) data name:(NSString*)fileName;;
+
++ (NSData*) loadData:(NSString*)fileName;
+
 
 
 

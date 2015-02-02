@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "MediaPlayController.h"
 #import "ToolUtils.h"
 #import "ApiHelper.h"
@@ -20,4 +19,6 @@
 @property (nonatomic,strong)NSArray* keyButtons;
 - (void)loadMusic:(NSURL*)path;
 - (void)animationReturn;
+@property (nonatomic,strong)MediaPlayController* controller;
+@property (nonatomic,strong)NSURL* musicUrl;
 @end

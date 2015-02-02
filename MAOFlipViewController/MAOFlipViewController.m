@@ -82,6 +82,13 @@
     [self.flipInteraction setView:c.view];//インタラクション対象viewの設定。遷移先のview
     [self.flipNavigationController pushViewController:c animated:YES];
 }
+
+- (void)pushViewController:(UIViewController*)controller
+{
+    [self.flipInteraction setView:controller.view];
+    [self.flipNavigationController pushViewController:controller animated:NO];
+}
+
 - (void)interactionPopBeganAtPoint:(CGPoint)point
 {
     [self.flipNavigationController popViewControllerAnimated:YES];
@@ -124,11 +131,17 @@
                                                 fromViewController:(UIViewController *)fromVC
                                                   toViewController:(UIViewController *)toVC
 {
+    
+    
+    if ([toVC class]==[SubjectVC class]) {
+        ((SubjectVC*)toVC).parentVC =  self;
+    }
     [navigationController setNavigationBarHidden:[self isMainPage:toVC]];
     if ([self isMainPage:toVC]&&[self isMainPage:fromVC]) {
         self.flipTransition = [[MAOFlipTransition alloc]init];
         if (operation == UINavigationControllerOperationPush) {
             UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
+//            UIViewController* c  = toVC;
             if (c) {
                 [self.flipInteraction setView:c.view];
             }
@@ -139,6 +152,8 @@
         }
         return self.flipTransition;
     }
+    
+    
     return nil;
    
 }

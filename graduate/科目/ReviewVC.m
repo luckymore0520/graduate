@@ -7,7 +7,9 @@
 //
 
 #import "ReviewVC.h"
+#import "Question.h"
 #import "QuestionView.h"
+#import "QuestionBook.h"
 @interface ReviewVC ()<UIScrollViewDelegate,QuestionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControll;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -18,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.scrollView.delegate = self;
     self.scrollView.pagingEnabled=YES;
     [self loadQuestions];
     // Do any additional setup after loading the view.
@@ -33,23 +34,29 @@
 #warning 该方法用于加载需要复习的问题，问题来源于dataArray，由前一个Controller给出
 - (void)loadQuestions
 {
-    self.dataArray = [NSArray arrayWithObjects:@"1",@"2",@"3", nil];
-    NSInteger pageCount = [self.dataArray count];
-    [self.scrollView setPagingEnabled:YES];
-    self.pageControll.currentPage = 0;
-    self.pageControll.numberOfPages = pageCount;
-    CGSize pageScrollViewSize = self.view.frame.size;
-    self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * self.dataArray.count, 0);
     self.questionViews = [[NSMutableArray alloc]init];
-    for (int i = 0 ; i < self.dataArray.count; i++) {
+    
+    self.pageControll.numberOfPages = self.questionList.count;
+    CGSize pageScrollViewSize = self.view.frame.size;
+    self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width, 0);
+    self.questionViews = [[NSMutableArray alloc]init];
+    for (int i = 0 ; i < self.questionList.count; i++) {
         CGRect frame;
         frame.origin.x = self.view.frame.size.width * i;
         frame.origin.y = 0;
         frame.size = self.view.frame.size;
         QuestionView* view = [[QuestionView alloc]initWithFrame:frame];
+        
+        
+        MQuestion* question = [self.questionList objectAtIndex:i];
+        if (question.isRecommend_.integerValue!=0) {
+            view.img =  [UIImage imageWithData:[ToolUtils loadData:question.id_]];
+        }
+        
+        view.myQuestion = question;
+//        view.myQuestion = [QuestionBook ];
         view.myDelegate = self;
         [view setBackgroundColor:[UIColor whiteColor]];
-        [view initLayout];
         [self.scrollView addSubview:view];
         [self.questionViews addObject:view];
     }
@@ -59,13 +66,6 @@
 
 
 
-#pragma mark scrollViewDelegate
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView==self.scrollView) {
-        int index=scrollView.contentOffset.x/scrollView.frame.size.width;
-        self.pageControll.currentPage=index;
-    }
-}
 
 
 -(void)pageChange:(UIPageControl *)sender{
@@ -104,6 +104,12 @@
     CGPoint point = self.scrollView.contentOffset;
     point.y = 0 ;
     self.scrollView.contentOffset = point;
+}
+
+
+- (void)adaptToHeight:(CGFloat)height
+{
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, height);
 }
 
 /*

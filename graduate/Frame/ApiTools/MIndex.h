@@ -9,5 +9,5 @@
 #import "ApiHelper.h"
 
 @interface MIndex : ApiHelper
-- (ApiHelper *)load:(id<ApiDelegate>)delegate date:(NSString *)date;
+- (ApiHelper *)load:(id<ApiDelegate>)delegate date:(NSString *)date type:(NSInteger)type days:(NSInteger)days;
 @end

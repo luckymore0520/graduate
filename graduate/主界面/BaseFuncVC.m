@@ -31,7 +31,7 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void) keyboardWasShown:(NSNotification *) notif
@@ -39,7 +39,6 @@
     NSDictionary *info = [notif userInfo];
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
-    
     NSLog(@"keyBoard:%f", keyboardSize.height);  //216
     keyboardHeight = keyboardSize.height;
     ///keyboardWasShown = YES;
@@ -71,8 +70,9 @@
 
 - (void)loadMusic:(NSURL*)path
 {
-    
+    self.musicUrl = path;
     MediaPlayController* controller = [MediaPlayController getInstance];
+    _controller = controller;
     if (controller.state!=PLAY) {
         [controller prepareToPlayWithUrl:path];
         [controller play];
@@ -99,7 +99,9 @@
             break;
         case SHOULDSTOP:
             [[MediaPlayController getInstance]stop];
-            
+            [_musicBt setTitle:@"开始" forState:UIControlStateNormal];
+            [self loadMusic:self.musicUrl];
+            [_musicBt setTag:READY];
             break;
         default:
             break;

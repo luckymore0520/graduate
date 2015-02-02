@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface RecommandVC : UIViewController
+#import "BaseFuncVC.h"
+@interface RecommandVC : BaseFuncVC
 @property(nonatomic,strong)NSArray* questionList;
 @end

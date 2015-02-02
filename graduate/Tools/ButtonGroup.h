@@ -25,6 +25,6 @@
 -(NSString*)selectedSubject;
 - (void)setSelectedIndex:(NSInteger)index;
 -(NSInteger)selectedIndex;
-
+- (void)setSelectContent:(NSString*)content;
 @end
 

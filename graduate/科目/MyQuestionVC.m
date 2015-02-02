@@ -7,7 +7,11 @@
 //
 
 #import "MyQuestionVC.h"
-
+#import "QuestionBook.h"
+#import "QuestionCell.h"
+#import "QuestionHeaderView.h"
+#import "UIImageView+WebCache.h"
+#import "ReviewVC.h"
 @interface MyQuestionVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @end
@@ -16,15 +20,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.myQuestions = [[QuestionBook getInstance]getQuestionOfType:self.type];
 }
+
+
+
 - (IBAction)back:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)reviewModelAction:(id)sender {
-    [self performSegueWithIdentifier:@"detail" sender:nil];
+    [self performSegueWithIdentifier:@"reviewMyQuestion" sender:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,49 +39,63 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 5;
+    NSMutableArray* arr = [[self.myQuestions objectAtIndex:section]objectForKey:@"array"];
+    return arr.count;
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 6;
+    return self.myQuestions.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString * CellIdentifier = @"picture";
-    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+    if (question.is_recommand.integerValue==0) {
+        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img]];
+    } else {
+        [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+    }
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     return CGSizeMake(75, 75);
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"reviewMyQuestions" sender:nil];
+    
+    [self performSegueWithIdentifier:@"showDetail" sender:nil];
+ 
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     
-    UICollectionReusableView * reusableview = nil ;
+    QuestionHeaderView * reusableview = nil ;
 
     if ( kind == UICollectionElementKindSectionHeader ) {
        reusableview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "HeaderView" forIndexPath : indexPath ] ;
-        }
-    
-//    if ( kind == UICollectionElementKindSectionFooter ) {
-//        UICollectionReusableView * footerview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionFooter withReuseIdentifier : @ "FooterView" forIndexPath : indexPath ] ;
-//        
-//        reusableview = footerview;
-//    }
-    
+        Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:0];
+        [reusableview.dateLabel setText:[NSString stringWithFormat:@"%@ 第%@天",question.create_time,question.myDay]];
+    }
     return reusableview;
 }
 #pragma mark - Navigation
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"reviewMyQuestion"]) {
+        ReviewVC* reviewVC = [segue destinationViewController];
+//        reviewVC.questionList = self.myQuestions;
+        reviewVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+    }
+}
 
 
 @end

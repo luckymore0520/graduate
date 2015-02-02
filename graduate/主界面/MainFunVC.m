@@ -8,15 +8,16 @@
 
 #import "MainFunVC.h"
 #import "ArticleDetailVC.h"
+#import "CoreDataHelper.h"
 #import "Trace.h"
 
-#import "Trace+TraceHandle.h"
 
 
 #import "MIndex.h"
 #import "MMain.h"
 #import "MIndexPost.h"
 #import "MPost.h"
+#import "MMainList.h"
 @interface MainFunVC ()
 
 
@@ -35,7 +36,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *SongAndSingerLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backImgView;
-
+@property (nonatomic,strong)NSMutableArray* mainList;
 //播放按钮在父类中控制
 
 @end
@@ -49,16 +50,11 @@
 -  (void)viewWillAppear:(BOOL)animated
 {
     if ([ToolUtils getFirstUse]&&_main==nil) {
-        
+        //判断是否过了一天
         NSString* lastDate = [ToolUtils getCurrentDate];
-        
-        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        
-        
         NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
-        
         if (![lastDate isEqualToString:destDateString]) {
             NSDate *now= [dateFormatter dateFromString:destDateString];
             NSDate *last = [dateFormatter dateFromString:lastDate];
@@ -69,45 +65,50 @@
         }
         
         NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
-        NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@ and userid=%@",myDay,[ToolUtils getUserid]]];
+        NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
         if (array.count==0) {
             [_imgView setImage:[UIImage imageNamed:@"首页1.png"]];
-            [[[MIndex alloc]init]load:self date:nil];
         } else {
             Trace* trace = [array firstObject];
             _main = [[MMain alloc]init];
             _main.content_ = trace.content;
-            _main.days_ = [NSNumber numberWithInteger:trace.myday.integerValue];
+            _main.days_ = [NSNumber numberWithInteger:trace.myDay.integerValue];
             _main.daysLeft_ = trace.remainday;
             MMusic* music = [[MMusic alloc]init];
             music.title_ = trace.songName;
             music.singer_ = trace.singer;
             music.file_ = trace.songUrl;
-            
             _main.music_ = [[NSMutableArray alloc]initWithObjects:music, nil];
             [self initView];
             [self setMusic:trace];
             [_imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] placeholderImage:[UIImage imageNamed:@"首页1.png"]];
         }
+        [[[MIndex alloc]init]load:self date:nil type:1 days:0];
         MIndexPost* post = [[MIndexPost alloc]init];
         [post load:self date:nil];
     }
+
 }
 
 //判断改天音乐是否有下载
 - (void) setMusic:(Trace*)traceOfToday
 {
-    if (traceOfToday.songUrl) {
+    
+    if (traceOfToday.songUrl&&[ToolUtils getCurrentDay].intValue==traceOfToday.myDay.intValue) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         [_SongAndSingerLabel setText:[NSString stringWithFormat:@"%@-%@",traceOfToday.songName,traceOfToday.singer]];
+        
         [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:traceOfToday.songUrl]];
-    } else {
-        NSString *thePath=[[NSBundle mainBundle] pathForResource:@"泡沫" ofType:@"mp3"];
-        [_SongAndSingerLabel setText:[NSString stringWithFormat:@"泡沫-邓紫棋"]];
-        [self loadMusic:[NSURL fileURLWithPath:thePath]];
+        
+    } else if (!traceOfToday.songUrl){
+        if ([ToolUtils getCurrentDay].intValue==traceOfToday.myDay.intValue) {
+            NSString *thePath=[[NSBundle mainBundle] pathForResource:@"泡沫" ofType:@"mp3"];
+            [_SongAndSingerLabel setText:[NSString stringWithFormat:@"泡沫-邓紫棋"]];
+            [self loadMusic:[NSURL fileURLWithPath:thePath]];
+        }
         MMusic* music = [_main.music_ firstObject];
         ApiHelper* api = [[ApiHelper alloc]init];
-        api.fileId = [NSString stringWithFormat:@"%@.mp3",music.title_];
+        api.fileId = music.title_;
         [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
     }
 }
@@ -128,26 +129,32 @@
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MIndex"]) {
-        _main = [MMain objectWithKeyValues:data];
+        MMainList* mainList = [MMainList objectWithKeyValues:data];
+        _main = [mainList.index_ firstObject];
         [self initView];
-        NSString* myDay = [NSString stringWithFormat:@"%d",_main.days_.integerValue];
-        NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@ and userid=%@",myDay,[ToolUtils getUserid]]];
-        [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_main.img_] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            NSLog(@"下图完成");
-        }];
-        //若CoreData里有该条数据，检验是否下载音乐，未下载播放默认音乐并下载
-        if (array.count!=0) {
-            Trace* traceOfToday = [array firstObject];
-            [self setMusic:traceOfToday];
-        } else {
-            [self saveDay:_main musicUrl:nil];
+        [ToolUtils setCurrentDay:_main.days_];
+        _mainList = mainList.index_;
+        for (MMain* main in mainList.index_) {
+            NSString* myDay = [NSString stringWithFormat:@"%d",main.days_.integerValue];
+            NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
+            [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.img_] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                NSLog(@"下图完成");
+            }];
+            //若CoreData里有该条数据，检验是否下载音乐，未下载播放默认音乐并下载
+            if (array.count!=0) {
+                Trace* traceOfToday = [array firstObject];
+                [self setMusic:traceOfToday];
+            } else {
+                [self saveDay:main musicUrl:nil];
+            }
+
         }
     } else if ([names isEqualToString:@"download"])
     {
-        
+
         NSURL* url = [data objectForKey:@"path"];
         if (url) {
-            [self saveDay:_main musicUrl:[data objectForKey:@"filename"]];
+            [self saveMusic:[data objectForKey:@"fileid"] musicUrl:[data objectForKey:@"filename"]];
         }
     } else if ([names isEqualToString:@"MIndexPost"])
     {
@@ -157,48 +164,54 @@
 }
 
 
-
+- (void)saveMusic:(NSString*)musicTitle musicUrl:(NSString*)musicUrl
+{
+    NSError* error;
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"songName=%@",musicTitle] tableName:@"Trace"];
+    for (Trace* trace in array) {
+        trace.songUrl = musicUrl;
+        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+        if (!isSaveSuccess) {
+            NSLog(@"Error:%@",error);
+        }else{
+            NSLog(@"Save successful! Music:%@",musicTitle);
+        }
+    }
+}
 
 - (void)saveDay:(MMain*)myDay musicUrl:(NSString*)url
 {
     NSError* error;
     CoreDataHelper* helper = [CoreDataHelper getInstance];
-    NSString* day = [NSString stringWithFormat:@"%d",_main.days_.integerValue];
-    NSArray* array = [Trace query:[NSPredicate predicateWithFormat:@"myday=%@ and userid=%@",day,[ToolUtils getUserid]]];
-    if (array.count==0) {
+    if (myDay==_main) {
         NSString *defaultPath=[[NSBundle mainBundle] pathForResource:@"泡沫" ofType:@"mp3"];
         [_SongAndSingerLabel setText:[NSString stringWithFormat:@"泡沫-邓紫棋"]];
         [self loadMusic:[NSURL fileURLWithPath:defaultPath]];
-        MMusic* music = [_main.music_ firstObject];
-        Trace* trace=(Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
-        trace.songName = music.title_;
-        trace.pictureUrl =_main.img_;
-        trace.content = _main.content_;
-        trace.myday = [NSString
-                        stringWithFormat:@"%d",_main.days_.integerValue];
-        trace.remainday = _main.daysLeft_;
-        trace.user  = [ToolUtils getUserid];
-        trace.singer = music.singer_;
-        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful!");
-            ApiHelper* api = [[ApiHelper alloc]init];
-            api.fileId = [NSString stringWithFormat:@"%@.mp3",music.title_];
-            [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
-        }
-    } else {
-        Trace* traceOfToday = [array firstObject];
-        traceOfToday.songUrl = url;
-        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful!");
-        }
+    }
+    MMusic* music = [myDay.music_ firstObject];
+    Trace* trace=(Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
+    trace.songName = music.title_;
+    trace.pictureUrl =myDay.img_;
+    trace.content = myDay.content_;
+    trace.myDay = [NSString
+                        stringWithFormat:@"%d",myDay.days_.integerValue];
+    trace.remainday = myDay.daysLeft_;
+    trace.user  = [ToolUtils getUserid];
+    trace.singer = music.singer_;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+    }else{
+        NSLog(@"Save successful!");
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId = music.title_;
+        [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
     }
 }
+
+
+
 
 
 

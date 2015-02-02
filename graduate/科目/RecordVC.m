@@ -25,9 +25,9 @@
 }
 
 - (IBAction)returnToMain:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-
-    }];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
 }
 
 /*
