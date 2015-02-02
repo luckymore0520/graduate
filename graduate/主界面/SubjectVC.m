@@ -266,6 +266,8 @@
     NSIndexPath *cellIndexPath = [self.tableview indexPathForCell:cell];
     Subject* subject = [_subjects objectAtIndex:cellIndexPath.row];
     
+    
+    
     switch (subject.type) {
         case 1:
             [self performSegueWithIdentifier:@"english" sender:subject];

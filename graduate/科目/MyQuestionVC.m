@@ -12,7 +12,9 @@
 #import "QuestionHeaderView.h"
 #import "UIImageView+WebCache.h"
 #import "ReviewVC.h"
+#import "RecordVC.h"
 @interface MyQuestionVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@property (weak, nonatomic) IBOutlet UICollectionView *photoView;
 
 @end
 
@@ -20,9 +22,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.myQuestions = [[QuestionBook getInstance]getQuestionOfType:self.type];
+   
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.myQuestions =
+    [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
+    [self.myQuestions sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString* a = [obj1 objectForKey:@"day"];
+        NSString* b = [obj2 objectForKey:@"day"];
+        return  [b compare:a];
+    }];
+    [self.photoView reloadData];
+}
 
 
 - (IBAction)back:(id)sender {
@@ -94,6 +107,12 @@
         ReviewVC* reviewVC = [segue destinationViewController];
 //        reviewVC.questionList = self.myQuestions;
         reviewVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+    } else if ([segue.identifier isEqual:@"showDetail"])
+    {
+        RecordVC* recordVC = [segue destinationViewController];
+        recordVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+        
+
     }
 }
 

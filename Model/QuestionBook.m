@@ -24,6 +24,17 @@ QuestionBook* questionBook = nil;
     return questionBook;
 }
 
+- (NSMutableArray*)removeEmptyQuestions:(NSMutableArray*)questions
+{
+    NSMutableArray* validQuestions = [[NSMutableArray alloc]init];
+    for (Question* question in questions) {
+        if (question.img.length!=0) {
+            [validQuestions addObject:question];
+        }
+    }
+    return validQuestions;
+}
+
 - (void)loadAllData
 {
     _englishBook =
@@ -33,50 +44,59 @@ QuestionBook* questionBook = nil;
     _politicBook =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=2 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
+    
+    
     _mathBook =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=3 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
 
+    
     
     _major1Book =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=4 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
 
     
+    
     _major2Book =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=5 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
-    _allQuestions = [NSMutableArray arrayWithObjects:_englishBook,_politicBook,_mathBook,_major1Book,_major2Book, nil];
     
+    _allQuestions = [NSMutableArray arrayWithObjects:[self removeEmptyQuestions:_englishBook],[self removeEmptyQuestions:_politicBook],[self removeEmptyQuestions:_mathBook],[self removeEmptyQuestions:_major1Book],[self removeEmptyQuestions:_major2Book], nil];
+
 }
 
 - (Question*)insertQuestionFromRecommand:(MQuestion*)currentQuestion
 {
     NSArray* result = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"questionid=%@",currentQuestion.id_] tableName:@"Question"];
+    Question* question;
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
     if (result.count==0) {
-        CoreDataHelper* helper = [CoreDataHelper getInstance];
-        Question* question = (Question*)[NSEntityDescription insertNewObjectForEntityForName:@"Question" inManagedObjectContext:helper.managedObjectContext];
-        question.questionid = currentQuestion.id_;
-        question.userid = [ToolUtils getUserid];
-        question.img = currentQuestion.img_;
-        question.remark = currentQuestion.remark_;
-        question.type = currentQuestion.type_;
-        question.subject = currentQuestion.subject_;
-        question.is_highlight = currentQuestion.isHighlight_;
-        question.is_recommand = currentQuestion.isRecommend_;
-        question.isUpload = [NSNumber numberWithBool:NO];
-        question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
-        question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
-        NSError* error;
-        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-            return nil;
-        }else{
-            NSLog(@"Save successful! questionid:%@",question.questionid);
-            [[_allQuestions objectAtIndex:(currentQuestion.type_.intValue-1)]addObject:question];
-            return question;;
-        }
+        question = (Question*)[NSEntityDescription insertNewObjectForEntityForName:@"Question" inManagedObjectContext:helper.managedObjectContext];
+    } else {
+        question = [result firstObject];
     }
-    return [result firstObject];
+    question.questionid = currentQuestion.id_;
+    question.userid = [ToolUtils getUserid];
+    question.img = currentQuestion.img_;
+    question.remark = currentQuestion.remark_;
+    question.type = currentQuestion.type_;
+    question.subject = currentQuestion.subject_;
+    question.is_highlight = currentQuestion.isHighlight_;
+    question.is_recommand = currentQuestion.isRecommend_;
+    question.isUpload = [NSNumber numberWithBool:NO];
+    question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
+    question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
+    NSError* error;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+        return nil;
+    }else{
+        NSLog(@"Save successful! questionid:%@",question.questionid);
+        [[_allQuestions objectAtIndex:(currentQuestion.type_.intValue-1)]addObject:question];
+        return question;;
+    }
+
+    return question;
 }
 
 
@@ -93,10 +113,10 @@ QuestionBook* questionBook = nil;
     mquestion.isHighlight_ = question.is_highlight;
     mquestion.isRecommend_ = question.is_recommand;
     mquestion.createTime_ = question.create_time;
-    
     return mquestion;
-
 }
+
+
 
 - (NSArray *)getQuestionOfDayAndType:(NSString *)day type:(NSInteger)type
 {
@@ -110,7 +130,7 @@ QuestionBook* questionBook = nil;
     return resultQuestion;
 }
 
-- (NSArray*)getMQuestionsOfType:(NSInteger)type
+- (NSMutableArray*)getMQuestionsOfType:(NSInteger)type
 {
     NSMutableArray* mutableArray = [[NSMutableArray alloc]init];
     for (Question* question in [_allQuestions objectAtIndex:type-1]) {
@@ -155,9 +175,6 @@ QuestionBook* questionBook = nil;
         _subjects = [NSMutableArray arrayWithObjects:politic, nil];
     } else {
         QuestionBook* book = [QuestionBook getInstance];
-        //        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        //        NSString *today = [dateFormatter stringFromDate:[NSDate date]];
         NSString* today = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
         
         self.subjects = [[NSMutableArray alloc]init];
@@ -212,4 +229,28 @@ QuestionBook* questionBook = nil;
 {
     [[_allQuestions objectAtIndex:(question.type.integerValue-1)]addObject:question];
 }
+
+- (Question*)getQuestionByMQuestion:(MQuestion*)mquestion
+{
+    NSArray* questionlist = [_allQuestions objectAtIndex:mquestion.type_.integerValue-1];
+    for (Question* question in questionlist) {
+        if ([question.questionid isEqualToString:mquestion.id_]) {
+            return question;
+        }
+    }
+    return nil;
+}
+
+- (void)save
+{
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    NSError* error;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+    }else{
+        NSLog(@"Save successful!");
+    }
+}
+
 @end

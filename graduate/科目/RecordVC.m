@@ -8,7 +8,7 @@
 
 #import "RecordVC.h"
 
-@interface RecordVC ()
+@interface RecordVC ()<UIScrollViewDelegate>
 
 @end
 
@@ -16,7 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.canEdit = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self initQuestions];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,10 +29,39 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+
 - (IBAction)returnToMain:(id)sender {
     
     [self.navigationController popToRootViewControllerAnimated:YES];
     
+}
+- (IBAction)delete:(id)sender {
+    
+    MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
+    QuestionBook* book = [QuestionBook getInstance];
+    Question* question = [book getQuestionByMQuestion:currentQuestion];
+    if (question.is_recommand.integerValue==1) {
+        [ToolUtils deleteFile:question.questionid];
+    }
+    
+    
+    question.img = @"";
+    [book save];
+
+    NSInteger nextPage = (self.currentPage+1==self.questionList.count)?self.currentPage-1:self.currentPage;
+    
+    [self.questionList removeObject:currentQuestion];
+    
+    [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
+    
+    
+    
+    [self loadQuestions];
+    if (nextPage>=0) {
+        [self.scrollView setContentOffset:CGPointMake(nextPage*self.view.frame.size.width, 0) animated:YES];
+    }
 }
 
 /*

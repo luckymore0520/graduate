@@ -23,8 +23,10 @@
 - (Question*)insertQuestionFromRecommand:(MQuestion*)currentQuestion;
 - (NSArray*)getQuestionOfDayAndType:(NSString*)day type:(NSInteger)type;
 - (NSArray*)getQuestionOfType:(NSInteger)type;
-- (NSArray*)getMQuestionsOfType:(NSInteger)type;
+- (NSMutableArray*)getMQuestionsOfType:(NSInteger)type;
 - (NSArray*)getMySubjects;
 - (void)insertNewQuestion:(Question*)question;
 - (MQuestion*)changeFromMQuestion:(Question*)question;
+- (Question*)getQuestionByMQuestion:(MQuestion*)mquestion;
+- (void)save;
 @end

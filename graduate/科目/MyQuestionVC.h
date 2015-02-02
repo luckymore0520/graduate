@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
 @interface MyQuestionVC : BaseFuncVC
-@property (nonatomic,strong)NSArray* myQuestions;
+@property (nonatomic,strong)NSMutableArray* myQuestions;
 @property (nonatomic)NSInteger type;
 @end

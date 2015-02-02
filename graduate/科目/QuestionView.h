@@ -9,25 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "MQuestion.h"
 #import "UIImageView+WebCache.h"
-@protocol QuestionViewDelegate <NSObject>
+#import "MJPhotoView.h"
 
-@required
-- (void)handleKeyBoard;
-- (void)adaptToHeight:(CGFloat)height textView:(UITextView*)noteView;
-@end
-@interface QuestionView : UIView<UITextViewDelegate>
-{
-    UIButton* maskBt;
-}
+@interface QuestionView : MJPhotoView
+
 @property (nonatomic,strong)UIImage* img;
 @property (nonatomic,strong) MQuestion* myQuestion;
-@property (strong, nonatomic)  UIImageView *imageView;
-@property (strong, nonatomic)  UITextView *noteView;
-@property (strong, nonatomic)  UILabel *noteLabel;
-@property (nonatomic)   id<QuestionViewDelegate> myDelegate;
-@property (nonatomic,strong)NSString* editable;
-- (CGFloat)getMyHeight;
-- (void)initLayout;
-
 @end
 

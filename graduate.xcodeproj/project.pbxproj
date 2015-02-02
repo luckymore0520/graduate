@@ -199,6 +199,7 @@
 		7DDA29541A7B4D77003F77C3 /* 泡沫.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */; };
 		7DDA29571A7B660B003F77C3 /* MIndexPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29561A7B660B003F77C3 /* MIndexPost.m */; };
 		7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29591A7B66EA003F77C3 /* MPost.m */; };
+		7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
@@ -551,6 +552,8 @@
 		7DDA29561A7B660B003F77C3 /* MIndexPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndexPost.m; path = Frame/ApiTools/MIndexPost.m; sourceTree = "<group>"; };
 		7DDA29581A7B66EA003F77C3 /* MPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPost.h; path = Frame/Model/MPost.h; sourceTree = "<group>"; };
 		7DDA29591A7B66EA003F77C3 /* MPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPost.m; path = Frame/Model/MPost.m; sourceTree = "<group>"; };
+		7DE7ACDD1A7FB09700D23449 /* QCSlideSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCSlideSwitchView.h; sourceTree = "<group>"; };
+		7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCSlideSwitchView.m; sourceTree = "<group>"; };
 		7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1012,6 +1015,7 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7DE7ACDC1A7FB08600D23449 /* QCSlide */,
 				7D2432C41A7E453F00C00F64 /* SWCell */,
 				7D2432541A7DD16400C00F64 /* SCCaptureCamera */,
 				7D2432161A7B9A2300C00F64 /* libWeiboSDK */,
@@ -1252,6 +1256,15 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		7DE7ACDC1A7FB08600D23449 /* QCSlide */ = {
+			isa = PBXGroup;
+			children = (
+				7DE7ACDD1A7FB09700D23449 /* QCSlideSwitchView.h */,
+				7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */,
+			);
+			name = QCSlide;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1470,6 +1483,7 @@
 				7DBD86731A7264E900205576 /* MediaPlayVC.m in Sources */,
 				7D4E05901A74C73A001709DB /* ButtonGroup.m in Sources */,
 				7D2432441A7CC42100C00F64 /* QuestionBook.m in Sources */,
+				7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */,
 				7DA994D41A79F8E500A879CF /* MGetWelcome.m in Sources */,
 				7D4E05C41A74EF71001709DB /* SDWebImageDownloaderOperation.m in Sources */,
 				7D4E06401A767D9C001709DB /* CoreDataHelper.m in Sources */,

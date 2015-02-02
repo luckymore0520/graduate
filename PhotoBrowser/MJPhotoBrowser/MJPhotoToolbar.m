@@ -93,7 +93,7 @@
     _indexLabel.text = [NSString stringWithFormat:@"%d / %d", _currentPhotoIndex + 1, _photos.count];
     
     MJPhoto *photo = _photos[_currentPhotoIndex];
-    [_textView setText:photo.description];
+    [_textView setText:photo.desc];
     // 按钮
     _saveImageBtn.enabled = photo.image != nil && !photo.save;
 }

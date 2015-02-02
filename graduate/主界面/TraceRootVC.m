@@ -17,16 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSMutableArray* cvs = [[NSMutableArray alloc]init];
-    for (int i = 0 ; i < 10; i++ )
-    {
-        MyTraceVC* vc =[self.storyboard instantiateViewControllerWithIdentifier:@"trace"];
-        UINavigationController* unvc = [[UINavigationController alloc]initWithRootViewController:vc];
-        //        [unvc setNavigationBarHidden:YES];
-        [cvs addObject:unvc];
-    }
-    self.viewControllers = cvs;
-    [self reloadViewControllers];
+    
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -40,11 +33,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)backToMain:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-}
+
+
+
 
 /*
 #pragma mark - Navigation

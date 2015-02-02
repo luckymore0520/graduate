@@ -9,7 +9,7 @@
 @interface MJPhoto : NSObject
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) UIImage *image; // 完整的图片
-@property (nonatomic, strong) NSString *description; // 描述
+@property (nonatomic, strong) NSString *desc; // 描述
 
 @property (nonatomic, strong) UIImageView *srcImageView; // 来源view
 @property (nonatomic, strong, readonly) UIImage *placeholder;

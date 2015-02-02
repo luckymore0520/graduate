@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface RecordVC : UIViewController
+#import "RecommandVC.h"
+@interface RecordVC : RecommandVC
 
 @end

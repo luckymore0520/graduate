@@ -6,8 +6,10 @@
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 
-#import "YZSwipeBetweenViewController.h"
+#import "BaseFuncVC.h"
 
-@interface TraceRootVC : YZSwipeBetweenViewController
-
+@interface TraceRootVC : BaseFuncVC
+{
+    
+}
 @end

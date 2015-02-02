@@ -7,19 +7,9 @@
 //
 
 #import "RecommandVC.h"
-#import "QuestionView.h"
-#import "MQuestion.h"
-#import "Question.h"
-#import "CoreDataHelper.h"
-#import "QuestionBook.h"
-#import "MReturn.h"
-#import "MUploadQues.h"
-@interface RecommandVC ()<QuestionViewDelegate,UIScrollViewDelegate>
-@property (nonatomic,strong)NSMutableArray* questionViews;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic)NSInteger currentIndex;
-@property (nonatomic,strong)Question* recommandQuestion;
-@property (nonatomic,strong)UIView* bottomContainerView;
+
+@interface RecommandVC ()
+
 
 @end
 
@@ -27,15 +17,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initQuestions];
-    self.scrollView.delegate = self;
     [self.scrollView setPagingEnabled:YES];
-    
-    
+    self.scrollView.delegate = self;
+    self.bottomHeight = 0;
+    self.canEdit = NO;
     // Do any additional setup after loading the view.
 }
 
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (self.questionList) {
+        [self initQuestions];
+    } else {
+        [[[MQuestionRecommand alloc]init]load:self];
+    }
+}
 
 #pragma mark -ButtonAction
 - (IBAction)back:(id)sender {
@@ -45,7 +46,7 @@
 }
 
 - (IBAction)save:(id)sender {
-    MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentIndex];
+    MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
     self.recommandQuestion = [[QuestionBook getInstance] insertQuestionFromRecommand:currentQuestion];
     if (self.recommandQuestion) {
         [ToolUtils showMessage:@"收藏成功"];
@@ -55,6 +56,7 @@
         }
     }
 }
+
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
@@ -72,21 +74,27 @@
             }
         }
         NSLog(@"%@",ret.msg_);
+    } else if ([names isEqualToString:@"MQuesRecommend"])
+    {
+        MQuestionList* questionList = [MQuestionList objectWithKeyValues:data];
+        self.questionList = questionList.list_;
+        [self initQuestions];
     }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
+
 
 -(void)initQuestions
 {
     self.questionViews = [[NSMutableArray alloc]init];
-
-    
     CGSize pageScrollViewSize = self.view.frame.size;
     self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * self.questionList.count, 0);
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     self.questionViews = [[NSMutableArray alloc]init];
     for (int i = 0 ; i < self.questionList.count; i++) {
         CGRect frame;
@@ -95,10 +103,17 @@
         frame.size = self.view.frame.size;
         QuestionView* view = [[QuestionView alloc]initWithFrame:frame];
         view.myQuestion = [self.questionList objectAtIndex:i];
-        view.myDelegate = self;
-        view.editable = @"NO";
-        [view setBackgroundColor:[UIColor whiteColor]];
-        [self.scrollView addSubview:view];
+        view.photoViewDelegate = self;
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        MQuestion* question = [self.questionList objectAtIndex:i];
+        NSString *imageUrl = [ToolUtils getImageUrlWtihString:question.img_ width:640 height:0].absoluteString;
+        NSString *url = [imageUrl stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+                NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)url, NULL, NULL,  kCFStringEncodingUTF8 ));
+        photo.url = [NSURL URLWithString:encodedString]; // 图片路径
+        photo.desc = question.remark_;
+        photo.index = i;
+        view.photo = photo;
+        [view setBackgroundColor:[UIColor blackColor]];
         [self.questionViews addObject:view];
     }
 }
@@ -107,52 +122,27 @@
 #pragma mark -scrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView==self.scrollView) {
-        int index=scrollView.contentOffset.x/scrollView.frame.size.width;
-        self.currentIndex = index;
+        int index= round(scrollView.contentOffset.x/scrollView.frame.size.width);
+        if (self.currentPage!=index) {
+            self.currentPage = index;
+            MQuestion* question = [self.questionList objectAtIndex:index];
+            [self addBottomView:question.remark_ showAll:NO];
+        }
     }
 }
 
 
-
-#pragma mark -QuestionView Delegate
-- (void)handleKeyBoard
+- (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
 {
-    self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x, 0);
-}
-
-- (void)adaptToHeight:(CGFloat)height textView:(UITextView *)noteView
-{
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width*self.questionList.count, height);
-    
-    
-    if (self.bottomContainerView) {
-        [self.bottomContainerView removeFromSuperview];
+    [self.scrollView addSubview:photoView];
+    self.scrollView.contentSize = CGSizeMake(self.questionList.count*self.view.frame.size.width, 0);
+    if (photoView.photo.index==0) {
+        MQuestion* question = ((QuestionView*)photoView).myQuestion;
+        [self addBottomView:question.remark_ showAll:NO];
     }
     
-    CGRect screenFrame = [[UIScreen mainScreen] bounds];
-
-    CGRect frame = CGRectMake(0, screenFrame.size.height - noteView.frame.size.height-50, screenFrame.size.width, noteView.frame.size.height+50);
-    
-    
-    
-    self.bottomContainerView = [[UIView alloc]initWithFrame:frame];
-    [self.bottomContainerView setBackgroundColor:[UIColor blackColor]];
-    [self.bottomContainerView setAlpha:0.5];
-    [noteView setBackgroundColor:[UIColor clearColor]];
-    [noteView setEditable:NO];
-    [noteView setTextColor:[UIColor whiteColor]];
-    [self.bottomContainerView addSubview:noteView];
-
-    [self.view addSubview:self.bottomContainerView];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 @end

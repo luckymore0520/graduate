@@ -77,7 +77,7 @@
 + (void)save:(NSData*) data name:(NSString*)fileName;;
 
 + (NSData*) loadData:(NSString*)fileName;
-
++(BOOL)deleteFile:(NSString*) fileName ;
 
 
 

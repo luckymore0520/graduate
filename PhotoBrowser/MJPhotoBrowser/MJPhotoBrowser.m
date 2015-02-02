@@ -88,6 +88,8 @@
     frame.size.width += (2 * kPadding);
 	_photoScrollView = [[UIScrollView alloc] initWithFrame:frame];
 	_photoScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    
 	_photoScrollView.pagingEnabled = YES;
 	_photoScrollView.delegate = self;
 	_photoScrollView.showsHorizontalScrollIndicator = NO;
@@ -109,8 +111,8 @@
     
     for (int i = 0; i<_photos.count; i++) {
         MJPhoto *photo = _photos[i];
-        photo.index = i;
-        photo.firstShow = i == _currentPhotoIndex;
+//        photo.index = i;
+        photo.firstShow = (i == _currentPhotoIndex);
     }
 }
 
@@ -257,6 +259,8 @@
 {
     _currentPhotoIndex = _photoScrollView.contentOffset.x / _photoScrollView.frame.size.width;
     _toolbar.currentPhotoIndex = _currentPhotoIndex;
+    
+    [self.delegate photoBrowser:self didChangedToPageAtIndex:_currentPhotoIndex];
 }
 
 #pragma mark - UIScrollView Delegate

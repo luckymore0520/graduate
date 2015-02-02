@@ -15,7 +15,7 @@
 @interface MJPhotoView ()
 {
     BOOL _doubleTap;
-    UIImageView *_imageView;
+    BOOL originHeight;
     MJPhotoLoadingView *_photoLoadingView;
 }
 @end
@@ -41,7 +41,7 @@
 		self.showsVerticalScrollIndicator = NO;
 		self.decelerationRate = UIScrollViewDecelerationRateFast;
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
+        self.backgroundColor = [UIColor blackColor];
         // 监听点击
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
         singleTap.delaysTouchesBegan = YES;
@@ -68,7 +68,6 @@
     if (_photo.firstShow) { // 首次显示
         _imageView.image = _photo.placeholder; // 占位图片
         _photo.srcImageView.image = nil;
-        
         // 不是gif，就马上开始下载
         if (![_photo.url.absoluteString hasSuffix:@"gif"]) {
             __unsafe_unretained MJPhotoView *photoView = self;
@@ -89,7 +88,7 @@
     }
 
     // 调整frame参数
-    [self adjustFrame];
+//    [self adjustFrame];
 }
 
 #pragma mark 开始加载图片
@@ -98,6 +97,7 @@
     if (_photo.image) {
         self.scrollEnabled = YES;
         _imageView.image = _photo.image;
+        [self photoDidFinishLoadWithImage:_photo.image];
     } else {
         self.scrollEnabled = NO;
         // 直接显示进度条
@@ -112,7 +112,6 @@
             }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
-
         }];
         
     }
@@ -125,10 +124,7 @@
         self.scrollEnabled = YES;
         _photo.image = image;
         [_photoLoadingView removeFromSuperview];
-        
-        if ([self.photoViewDelegate respondsToSelector:@selector(photoViewImageFinishLoad:)]) {
-            [self.photoViewDelegate photoViewImageFinishLoad:self];
-        }
+      
     } else {
         [self addSubview:_photoLoadingView];
         [_photoLoadingView showFailure];
@@ -166,11 +162,11 @@
     
     CGRect imageFrame = CGRectMake(0, 0, boundsWidth, imageHeight * boundsWidth / imageWidth);
     // 内容尺寸
-    self.contentSize = CGSizeMake(0, imageFrame.size.height);
-    
+    self.contentSize = CGSizeMake(0, imageFrame.size.height+200);
+    originHeight = imageFrame.size.height;
     // y值
     if (imageFrame.size.height < boundsHeight) {
-        imageFrame.origin.y = floorf((boundsHeight - imageFrame.size.height) / 2.0);
+        imageFrame.origin.y = floorf((boundsHeight - imageFrame.size.height-44) / 2.0);
 	} else {
         imageFrame.origin.y = 0;
 	}
@@ -189,6 +185,11 @@
     } else {
         _imageView.frame = imageFrame;
     }
+    
+    
+    if ([self.photoViewDelegate respondsToSelector:@selector(photoViewImageFinishLoad:)]) {
+        [self.photoViewDelegate photoViewImageFinishLoad:self];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -197,20 +198,35 @@
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    NSLog(@"%lf",self.zoomScale);
     CGRect imageViewFrame = _imageView.frame;
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     if (imageViewFrame.size.height > screenBounds.size.height) {
         imageViewFrame.origin.y = 0.0f;
+        self.contentSize = CGSizeMake(imageViewFrame.size.width, imageViewFrame.size.height+200*2*self.zoomScale);
     } else {
-        imageViewFrame.origin.y = (screenBounds.size.height - imageViewFrame.size.height) / 2.0;
+        imageViewFrame.origin.y = (screenBounds.size.height - imageViewFrame.size.height-44-20) / 2.0;
+        
+        self.contentSize = CGSizeMake(screenBounds.size.width, screenBounds.size.height+200);
     }
     _imageView.frame = imageViewFrame;
+    
+}
+
+- (void)lazyButtontouchDown
+{
+    [self.photoViewDelegate photoViewSingleTap:self];
 }
 
 #pragma mark - 手势处理
 - (void)handleSingleTap:(UITapGestureRecognizer *)tap {
     _doubleTap = NO;
-    [self performSelector:@selector(hide) withObject:nil afterDelay:0.2];
+    if (self.zoomScale==self.minimumZoomScale) {
+        [self performSelector:@selector(lazyButtontouchDown) withObject:nil afterDelay:0.5];
+
+    }
+    
+//    [self performSelector:@selector(hide) withObject:nil afterDelay:0.2];
 }
 - (void)hide
 {
@@ -259,6 +275,9 @@
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)tap {
     _doubleTap = YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(lazyButtontouchDown)
+                                               object:nil];
     
     CGPoint touchPoint = [tap locationInView:self];
 	if (self.zoomScale == self.maximumZoomScale) {
@@ -268,9 +287,6 @@
 	}
 }
 
-- (void)dealloc
-{
-    // 取消请求
-    [_imageView setImageWithURL:[NSURL URLWithString:@"file:///abc"]];
-}
+
+
 @end
