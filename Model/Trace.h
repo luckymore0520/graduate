@@ -2,7 +2,7 @@
 //  Trace.h
 //  graduate
 //
-//  Created by luck-mac on 15/1/30.
+//  Created by luck-mac on 15/2/3.
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 
@@ -21,5 +21,8 @@
 @property (nonatomic, retain) NSString * songName;
 @property (nonatomic, retain) NSString * songUrl;
 @property (nonatomic, retain) NSString * user;
+@property (nonatomic, retain) NSString * date;
+@property (nonatomic, retain) NSString * pictureUrlForTrace;
+@property (nonatomic, retain) NSString * pictureUrlForSubject;
 
 @end

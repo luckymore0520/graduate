@@ -46,4 +46,5 @@
 
 @property (retain,nonatomic) NSNumber *memoizedSize;
 
+@property (retain,nonatomic)NSNumber* orientation;
 @end

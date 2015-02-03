@@ -22,6 +22,7 @@
     [super viewDidLoad];
     self.textFields = [NSArray arrayWithObjects:_phoneTextfield, nil];
     self.keyButtons = [NSArray arrayWithObjects:_nextBt, nil];
+    [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.
 }
 

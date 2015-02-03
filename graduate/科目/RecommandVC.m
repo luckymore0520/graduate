@@ -21,6 +21,7 @@
     self.scrollView.delegate = self;
     self.bottomHeight = 0;
     self.canEdit = NO;
+    [self setTitle:@"今日推荐"];
     // Do any additional setup after loading the view.
 }
 
@@ -104,6 +105,7 @@
         QuestionView* view = [[QuestionView alloc]initWithFrame:frame];
         view.myQuestion = [self.questionList objectAtIndex:i];
         view.photoViewDelegate = self;
+        view.orientation = view.myQuestion.orientation;
         MJPhoto *photo = [[MJPhoto alloc] init];
         MQuestion* question = [self.questionList objectAtIndex:i];
         if (question.isRecommend_.integerValue==1) {

@@ -21,6 +21,8 @@
 }
 - (ApiHelper *)download:(id<ApiDelegate>)delegate url:(NSString *)url
 {
+    
+    NSLog(@"歌曲下载%@",url);
     if (![ToolUtils connectedToNetWork]&&![ToolUtils ignoreNetwork]) {
         return nil;
     }

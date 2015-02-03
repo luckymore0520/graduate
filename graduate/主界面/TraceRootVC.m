@@ -9,9 +9,12 @@
 #import "TraceRootVC.h"
 #import "MyTraceVC.h"
 #import "QCSlideSwitchView.h"
+#import "CoreDataHelper.h"
 @interface TraceRootVC ()<QCSlideSwitchViewDelegate>
 @property (weak, nonatomic) IBOutlet QCSlideSwitchView *slideSwitchView;
 @property (nonatomic,strong)NSMutableArray* traceVCs;
+@property (nonatomic,strong)NSMutableArray* traceList;
+@property (nonatomic,strong)NSMutableArray* questionList;
 @end
 
 @implementation TraceRootVC
@@ -25,6 +28,10 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
+    
+
+    
+    
     self.title = @"滑动切换视图";
     self.slideSwitchView.tabItemNormalColor = [QCSlideSwitchView colorFromHexRGB:@"868686"];
     self.slideSwitchView.tabItemSelectedColor = [QCSlideSwitchView colorFromHexRGB:@"bb0b15"];
@@ -35,15 +42,37 @@
     
     _traceVCs = [[NSMutableArray alloc]init];
     
-    for (int i = 0 ; i < 100; i++) {
-        MyTraceVC* trace = [self.storyboard instantiateViewControllerWithIdentifier:@"trace_wide"];
-        [_traceVCs addObject:trace];
-        trace.title = [NSString stringWithFormat:@"第%i天",i];
+    _traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@",[ToolUtils getUserid]] tableName:@"Trace"]];
+
+    
+    
+//    NSMutableArray* futureDays = [[NSMutableArray alloc]init];
+//    
+//    for (Trace* trace in _traceList) {
+//        if (trace.myDay.integerValue>[ToolUtils getCurrentDay].integerValue) {
+//            [futureDays addObject:trace];
+//        }
+//    }
+//    [_traceList removeObjectsInArray:futureDays];
+    
+    
+    [self.traceList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString* a = ((Trace*)obj1).myDay;
+        NSString* b = ((Trace*)obj2).myDay;
+        return  b.integerValue<a.integerValue;
+    }];
+    
+    for (Trace* trace in self.traceList) {
+        MyTraceVC* traceVC = [self.storyboard instantiateViewControllerWithIdentifier:@"trace_wide"];
+        traceVC.shoudUpdate = self.shoudUpdate;
+        traceVC.trace = trace;
+        [_traceVCs addObject:traceVC];
+        traceVC.title = [NSString stringWithFormat:@"第%i天",trace.myDay.integerValue];
     }
     
+    
+    
     [self.slideSwitchView buildUI];
-    
-    
 }
 
 

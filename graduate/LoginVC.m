@@ -39,7 +39,7 @@
     self.textFields = [NSArray arrayWithObjects:_passwordField,_usernameField,nil];
     self.keyButtons = [NSArray arrayWithObjects:_loginBt, nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(handleWeiboLogin) name:@"weiboLogin" object:nil];
-    
+    [self.navigationController setNavigationBarHidden:YES];
       // Do any additional setup after loading the view.
 }
 

@@ -120,9 +120,29 @@
 #pragma mark 加载完毕
 - (void)photoDidFinishLoadWithImage:(UIImage *)image
 {
+    
+    
     if (image) {
+        switch (self.orientation.integerValue) {
+            case 1:
+                self.img = image;
+                break;
+            case 2:
+                self.img = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationLeft];
+                
+                break;
+            case 3:
+                self.img  = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationDown];
+                break;
+            case 4:
+                self.img  = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:UIImageOrientationRight];
+                break;
+            default:
+                break;
+        }
+        self.imageView.image = self.img;
         self.scrollEnabled = YES;
-        _photo.image = image;
+        _photo.image = self.img;
         [_photoLoadingView removeFromSuperview];
       
     } else {
@@ -136,9 +156,11 @@
 #pragma mark 调整frame
 - (void)adjustFrame
 {
-	if (_imageView.image == nil) return;
     
-    // 基本尺寸参数
+    
+    
+	if (_imageView.image == nil) return;
+        // 基本尺寸参数
     CGSize boundsSize = self.bounds.size;
     CGFloat boundsWidth = boundsSize.width;
     CGFloat boundsHeight = boundsSize.height;

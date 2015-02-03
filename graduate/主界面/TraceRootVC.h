@@ -9,7 +9,5 @@
 #import "BaseFuncVC.h"
 
 @interface TraceRootVC : BaseFuncVC
-{
-    
-}
+@property (nonatomic)BOOL shoudUpdate;
 @end

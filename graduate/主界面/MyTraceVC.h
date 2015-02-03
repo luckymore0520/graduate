@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
+#import "Trace.h"
 @interface MyTraceVC : BaseFuncVC
-
+@property (nonatomic,strong)Trace* trace;
+@property (nonatomic)BOOL shoudUpdate;
 @end

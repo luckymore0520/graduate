@@ -19,7 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.canEdit = YES;
+    self.title = @"我的错题";
 }
+
 
 - (void)viewDidAppear:(BOOL)animated
 {

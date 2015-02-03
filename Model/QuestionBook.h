@@ -30,5 +30,6 @@
 - (void)insertNewQuestion:(Question*)question;
 - (MQuestion*)changeFromMQuestion:(Question*)question;
 - (Question*)getQuestionByMQuestion:(MQuestion*)mquestion;
+- (NSArray*)getQuestionByDay:(NSString*)day;
 - (void)save;
 @end

@@ -187,7 +187,6 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		
 		taskInProgress = NO;
 		rotationTransform = CGAffineTransformIdentity;
-		
 		[self setupLabels];
 		[self updateIndicators];
 		[self registerForKVO];

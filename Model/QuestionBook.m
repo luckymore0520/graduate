@@ -74,6 +74,7 @@ QuestionBook* questionBook = nil;
     } else {
         question = [result firstObject];
     }
+    question.orientation = [NSNumber numberWithInt:1];
     question.questionid = currentQuestion.id_;
     question.userid = [ToolUtils getUserid];
     question.img = currentQuestion.img_;
@@ -108,6 +109,8 @@ QuestionBook* questionBook = nil;
     } else {
         question = [result firstObject];
     }
+
+    question.orientation = currentQuestion.orientation==nil?[NSNumber numberWithInt:1]:currentQuestion.orientation;
     question.questionid = currentQuestion.id_;
     question.userid = [ToolUtils getUserid];
     question.img = currentQuestion.img_;
@@ -138,6 +141,7 @@ QuestionBook* questionBook = nil;
 - (MQuestion*)changeFromMQuestion:(Question*)question
 {
     MQuestion* mquestion = [[MQuestion alloc]init];
+    mquestion.orientation = question.orientation;
     mquestion.id_ = question.questionid;
     mquestion.userid_ = question.userid;
     mquestion.img_ = question.img;
@@ -193,6 +197,33 @@ QuestionBook* questionBook = nil;
             NSDictionary* dictionary = [NSDictionary dictionaryWithObjectsAndKeys:question.myDay,@"day",questionOfDay,@"array", nil];
             [resultArr addObject:dictionary];
         }
+    }
+    return resultArr;
+}
+
+- (NSArray*)getQuestionByDay:(NSString*)day
+{
+    NSArray* questionOfDay = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and userid=%@",day,[ToolUtils getUserid]] tableName:@"Question"];
+    
+    NSMutableArray* resultArr = [[NSMutableArray alloc]init];
+    
+    for (Question* question in questionOfDay) {
+        BOOL has=NO;
+        for (NSDictionary* dic in resultArr) {
+            if ([[dic objectForKey:@"subject"]isEqualToString:question.subject]) {
+                [[dic objectForKey:@"array"]addObject:question];
+                has = YES;
+                break;
+            }
+        }
+        if (!has) {
+            NSMutableArray* questionOfDay = [[NSMutableArray alloc]init];
+            [questionOfDay addObject:question];
+            NSDictionary* dictionary = [NSDictionary dictionaryWithObjectsAndKeys:question.subject,@"subject",questionOfDay,@"array", nil];
+            [resultArr addObject:dictionary];
+        }
+        
+        
     }
     return resultArr;
 }

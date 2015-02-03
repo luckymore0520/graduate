@@ -25,5 +25,5 @@
 @dynamic review_time;
 @dynamic myDay;
 @dynamic thumb_img;
-
+@dynamic orientation;
 @end

@@ -20,7 +20,6 @@
 		7D2432151A7B785500C00F64 /* PostDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D24320B1A7B785500C00F64 /* PostDetailsVC.m */; };
 		7D2432221A7B9A2300C00F64 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2432171A7B9A2300C00F64 /* libWeiboSDK.a */; };
 		7D2432231A7B9A2400C00F64 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D24321F1A7B9A2300C00F64 /* WeiboSDK.bundle */; };
-		7D2432261A7BB8BC00C00F64 /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432251A7BB8BC00C00F64 /* Trace.m */; };
 		7D2432291A7C764200C00F64 /* MMainList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432281A7C764200C00F64 /* MMainList.m */; };
 		7D24322C1A7C982800C00F64 /* MQuestionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D24322B1A7C982800C00F64 /* MQuestionList.m */; };
 		7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D24322E1A7C984E00C00F64 /* MQuestion.m */; };
@@ -130,6 +129,9 @@
 		7D5DBB111A8082680078B99C /* MQuesList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB101A8082680078B99C /* MQuesList.m */; };
 		7D5DBB141A80836A0078B99C /* MQuesCountStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB131A80836A0078B99C /* MQuesCountStatus.m */; };
 		7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB161A8084A80078B99C /* MQuestionCount.m */; };
+		7D5DBB1A1A80B4350078B99C /* TraceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB191A80B4350078B99C /* TraceHeaderView.m */; };
+		7D5DBB1D1A80C2B00078B99C /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB1C1A80C2B00078B99C /* Trace.m */; };
+		7D5DBB211A8103890078B99C /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */; };
 		7D6A518D1A69610600355923 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518C1A69610600355923 /* main.m */; };
 		7D6A51901A69610600355923 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518F1A69610600355923 /* AppDelegate.m */; };
 		7D6A51981A69610600355923 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51971A69610600355923 /* Images.xcassets */; };
@@ -251,8 +253,6 @@
 		7D24321F1A7B9A2300C00F64 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
 		7D2432201A7B9A2300C00F64 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
 		7D2432211A7B9A2300C00F64 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
-		7D2432241A7BB8BC00C00F64 /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trace.h; path = Model/Trace.h; sourceTree = SOURCE_ROOT; };
-		7D2432251A7BB8BC00C00F64 /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trace.m; path = Model/Trace.m; sourceTree = SOURCE_ROOT; };
 		7D2432271A7C764200C00F64 /* MMainList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMainList.h; path = Frame/Model/MMainList.h; sourceTree = "<group>"; };
 		7D2432281A7C764200C00F64 /* MMainList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMainList.m; path = Frame/Model/MMainList.m; sourceTree = "<group>"; };
 		7D24322A1A7C982800C00F64 /* MQuestionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuestionList.h; path = Frame/Model/MQuestionList.h; sourceTree = "<group>"; };
@@ -442,6 +442,12 @@
 		7D5DBB131A80836A0078B99C /* MQuesCountStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuesCountStatus.m; path = "主界面/MQuesCountStatus.m"; sourceTree = "<group>"; };
 		7D5DBB151A8084A80078B99C /* MQuestionCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuestionCount.h; path = Frame/Model/MQuestionCount.h; sourceTree = "<group>"; };
 		7D5DBB161A8084A80078B99C /* MQuestionCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuestionCount.m; path = Frame/Model/MQuestionCount.m; sourceTree = "<group>"; };
+		7D5DBB181A80B4350078B99C /* TraceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TraceHeaderView.h; path = "主界面/TraceHeaderView.h"; sourceTree = "<group>"; };
+		7D5DBB191A80B4350078B99C /* TraceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TraceHeaderView.m; path = "主界面/TraceHeaderView.m"; sourceTree = "<group>"; };
+		7D5DBB1B1A80C2B00078B99C /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trace.h; path = Model/Trace.h; sourceTree = SOURCE_ROOT; };
+		7D5DBB1C1A80C2B00078B99C /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trace.m; path = Model/Trace.m; sourceTree = SOURCE_ROOT; };
+		7D5DBB1F1A8103890078B99C /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		7D6A51871A69610600355923 /* graduate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = graduate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6A518B1A69610600355923 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D6A518C1A69610600355923 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -794,9 +800,9 @@
 			children = (
 				7D2432D71A7E4A2300C00F64 /* ModifySubjectVC.h */,
 				7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */,
+				7D2432511A7D116300C00F64 /* QuestionCell.h */,
 				7D4E060F1A751593001709DB /* MyQuestionVC.h */,
 				7D4E06101A751593001709DB /* MyQuestionVC.m */,
-				7D2432511A7D116300C00F64 /* QuestionCell.h */,
 				7D2432521A7D116300C00F64 /* QuestionCell.m */,
 				7D24324E1A7D113300C00F64 /* QuestionHeaderView.h */,
 				7D24324F1A7D113300C00F64 /* QuestionHeaderView.m */,
@@ -944,16 +950,26 @@
 			children = (
 				7D4E063E1A767D9C001709DB /* CoreDataHelper.h */,
 				7D2432431A7CC42100C00F64 /* QuestionBook.m */,
-				7D2432241A7BB8BC00C00F64 /* Trace.h */,
-				7D2432251A7BB8BC00C00F64 /* Trace.m */,
 				7D4E063F1A767D9C001709DB /* CoreDataHelper.m */,
 				7D2432421A7CC42100C00F64 /* QuestionBook.h */,
 				7D2432481A7CE59100C00F64 /* Subject.h */,
+				7D5DBB1B1A80C2B00078B99C /* Trace.h */,
+				7D5DBB1C1A80C2B00078B99C /* Trace.m */,
 				7D24324B1A7D06F000C00F64 /* Question.h */,
 				7D24324C1A7D06F000C00F64 /* Question.m */,
 				7D2432491A7CE59100C00F64 /* Subject.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		7D5DBB1E1A8103890078B99C /* PlaceHolderTextView */ = {
+			isa = PBXGroup;
+			children = (
+				7D5DBB1F1A8103890078B99C /* UIPlaceHolderTextView.h */,
+				7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */,
+			);
+			name = PlaceHolderTextView;
+			path = ../../git/MobileNJU/MobileNJU/ThirdParty/PlaceHolderTextView;
 			sourceTree = "<group>";
 		};
 		7D6A517E1A69610600355923 = {
@@ -1030,6 +1046,7 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7D5DBB1E1A8103890078B99C /* PlaceHolderTextView */,
 				7D5DBB061A8075B80078B99C /* Reachability.h */,
 				7D5DBB071A8075B80078B99C /* Reachability.m */,
 				7DE7ACDC1A7FB08600D23449 /* QCSlide */,
@@ -1184,10 +1201,12 @@
 				7D4E061D1A75F1DC001709DB /* MyTraceVC.m */,
 				7D4E05861A74B1DF001709DB /* OtherFuncVCViewController.h */,
 				7D4E05871A74B1DF001709DB /* OtherFuncVCViewController.m */,
-				7D4E057B1A748F3C001709DB /* RootViewController.h */,
 				7D4E057C1A748F3C001709DB /* RootViewController.m */,
+				7D4E057B1A748F3C001709DB /* RootViewController.h */,
 				7D4E06281A760834001709DB /* TraceRootVC.h */,
 				7D4E06291A760834001709DB /* TraceRootVC.m */,
+				7D5DBB181A80B4350078B99C /* TraceHeaderView.h */,
+				7D5DBB191A80B4350078B99C /* TraceHeaderView.m */,
 			);
 			name = "主界面";
 			sourceTree = "<group>";
@@ -1452,6 +1471,7 @@
 				7DDA294B1A7B2144003F77C3 /* AFURLConnectionOperation.m in Sources */,
 				7D4E05E61A74EF7B001709DB /* MJPhoto.m in Sources */,
 				7D4E06141A7524C2001709DB /* ReviewVC.m in Sources */,
+				7D5DBB1D1A80C2B00078B99C /* Trace.m in Sources */,
 				7D4E05E81A74EF7B001709DB /* MJPhotoBrowser.m in Sources */,
 				7DA994C11A7878FE00A879CF /* MJType.m in Sources */,
 				7D4E05881A74B1DF001709DB /* OtherFuncVCViewController.m in Sources */,
@@ -1489,7 +1509,6 @@
 				7D4E06181A75E9DA001709DB /* RecordVC.m in Sources */,
 				7DA994C01A7878FE00A879CF /* MJMethod.m in Sources */,
 				7D5DBB081A8075B80078B99C /* Reachability.m in Sources */,
-				7D2432261A7BB8BC00C00F64 /* Trace.m in Sources */,
 				7DA994EC1A7A29C500A879CF /* MIndex.m in Sources */,
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
 				7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */,
@@ -1550,6 +1569,7 @@
 				7D4E05C01A74EF71001709DB /* SDImageCache.m in Sources */,
 				7D5DBB0B1A8077A10078B99C /* MQuesDelete.m in Sources */,
 				7D2432D31A7E453F00C00F64 /* SWLongPressGestureRecognizer.m in Sources */,
+				7D5DBB1A1A80B4350078B99C /* TraceHeaderView.m in Sources */,
 				7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */,
 				7DBD868E1A72869B00205576 /* ArticleDetailVC.m in Sources */,
 				7DBD86661A7259DB00205576 /* SubjectVC.m in Sources */,
@@ -1559,6 +1579,7 @@
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,
 				7D4E05CA1A74EF71001709DB /* UIImage+WebP.m in Sources */,
+				7D5DBB211A8103890078B99C /* UIPlaceHolderTextView.m in Sources */,
 				7D24324D1A7D06F000C00F64 /* Question.m in Sources */,
 				7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */,
 				7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */,

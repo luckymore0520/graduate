@@ -30,6 +30,7 @@ MediaPlayController* mediaPlayController = nil;
     //3.缓冲
     [self.audioplayer prepareToPlay];
     mediaPlayController.state = READY;
+    self.url = url;
     //4.播放
 }
 

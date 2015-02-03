@@ -18,7 +18,7 @@
 +(MediaPlayController *)getInstance;
 @property(nonatomic,strong)AVAudioPlayer *audioplayer;
 @property (nonatomic)NSInteger state;
-
+@property (nonatomic,strong)NSURL* url;
 -(void)prepareToPlayWithUrl:(NSURL*)url;
 - (void)play;
 - (void) pause;

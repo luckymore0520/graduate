@@ -8,6 +8,7 @@
         <attribute name="is_recommand" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="isUpload" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="myDay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orientation" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="questionid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="review_time" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -18,9 +19,12 @@
     </entity>
     <entity name="Trace" representedClassName="Trace" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="myDay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pictureUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pictureUrlForSubject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pictureUrlForTrace" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remainday" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="singer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="songName" optional="YES" attributeType="String" syncable="YES"/>
@@ -28,7 +32,7 @@
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Question" positionX="-63" positionY="54" width="128" height="253"/>
-        <element name="Trace" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="Question" positionX="-63" positionY="54" width="128" height="270"/>
+        <element name="Trace" positionX="-63" positionY="-18" width="128" height="225"/>
     </elements>
 </model>

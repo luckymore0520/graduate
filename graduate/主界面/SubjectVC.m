@@ -23,6 +23,10 @@
 #import "TraceRootVC.h"
 #import "MQuesCountStatus.h"
 #import "MQuestionCount.h"
+#import "MUser.h"
+#import "CoreDataHelper.h"
+#import "Trace.h"
+#import "UIPlaceHolderTextView.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
@@ -30,12 +34,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *dailyNoteLabel;
 
 //编辑日记的视图
-@property (weak, nonatomic) IBOutlet UIView *editView;
-@property (weak, nonatomic) IBOutlet UITextView *editTextView;
+@property (strong, nonatomic)  UIView *editView;
+@property (strong, nonatomic)  UIPlaceHolderTextView *editTextView;
 
 //键盘消失按钮
 @property (weak, nonatomic) IBOutlet UIButton *keyboardBt;
 
+@property (weak, nonatomic) IBOutlet UIImageView *headView;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundViw;
 
 //选中的按钮（四个科目）
 @property (nonatomic,weak  )UIButton* selectedBt;
@@ -47,6 +53,9 @@
 @property (nonatomic,strong)NSMutableArray* subjects;
 
 @property (nonatomic,copy)UIPanGestureRecognizer* recognizor;
+@property (weak, nonatomic) IBOutlet UILabel *cardLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalNewLabel;
 @property (nonatomic)BOOL isPresenting;
 @end
 
@@ -55,18 +64,47 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.editView removeFromSuperview];
-#warning 此处需要获取用户昵称、今日日记以及各个科目的学习进度，科目封面
+    self.headView.layer.cornerRadius = 45;
+    [self.headView setClipsToBounds:YES];
 }
+    
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     if ([ToolUtils getFirstUse]) {
         [[[MQuestionRecommand alloc]init]load:self];
         [self initSubject];
-
+        MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+        [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:180 height:180] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+        }];
+        
+        NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
+        if (array.count>0) {
+            Trace* trace = [array firstObject];
+            [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:nil];
+            [self.dailyNoteLabel setText:trace.note];
+//            [self.dailyNoteLabel setTextAlignment:UITextAlignmentCenter];
+        }
+        [self.nickNameLabel setText:user.nickname_];
+        
     }
 }
 
+
+- (void)calculateTotal
+{
+    int total = 0;
+    int totalNew = 0;
+    for (Subject* subject in self.subjects) {
+        total+=subject.total;
+        totalNew+=subject.newAdd;
+    }
+    [self.totalLabel setText:[NSString stringWithFormat:@"累计题目%d",total]];
+    [self.totalNewLabel setText:[NSString stringWithFormat:@"新增错题%d",totalNew]];
+    
+}
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MQuesRecommend"]) {
@@ -110,6 +148,7 @@
                     break;
             }
         }
+        [self calculateTotal];
         [self.tableview reloadData];
     }
 }
@@ -119,7 +158,7 @@
     self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects] ];
     [self.tableview reloadData];
     [[[MQuesCountStatus alloc]init]load:self];
-    
+    [self calculateTotal];
 }
 
 
@@ -138,25 +177,11 @@
 
 
 - (IBAction)startEdit:(id)sender {
-    CGRect frame = self.editView.frame;
-    [self.editView setHidden:NO];
-    [self.editTextView becomeFirstResponder];
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-    } completion:^(BOOL finished) {
-        [self.keyboardBt setHidden:NO];
-    }];
-    
+    [self editRemark];
     
 }
 
 
-- (IBAction)save:(id)sender {
-    
-    
-    
-}
 
 
 - (IBAction)setSubject:(id)sender {
@@ -173,6 +198,13 @@
 
 - (IBAction)goToMyTraces:(id)sender {
     TraceRootVC* root = [self.storyboard instantiateViewControllerWithIdentifier:@"traceRoot"];
+    BOOL shoudUpdate = NO;
+    for (Subject* subject in self.subjects) {
+        if (subject.shoudUpdate) {
+            shoudUpdate = YES;
+        }
+    }
+    root.shoudUpdate = shoudUpdate;
     [self.navigationController pushViewController:root animated:YES];
 }
 - (IBAction)takePhoto:(id)sender {
@@ -200,6 +232,7 @@
         Subject* subject = (Subject*)sender;
         modify.type = subject.type;
         modify.subject = subject.name;
+        
     }
 }
 
@@ -335,6 +368,70 @@
     return YES;
 }
 
+
+- (void)editRemark
+{
+    if (!_editView) {
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        _editView = [[UIView alloc]initWithFrame:frame];
+        [self.view addSubview:_editView];
+        
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 160);
+        
+        _editTextView = [[UIPlaceHolderTextView alloc]initWithFrame:textFrame];
+        [_editTextView setPlaceholder:@"日记不能超过46个字"];
+        [_editTextView setText:self.dailyNoteLabel.text];
+        [_editView addSubview:_editTextView];
+        
+        
+        
+        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
+        [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
+        [_editView addSubview:cancelButton];
+        
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
+        [saveButton addTarget:self action:@selector(saveRemark) forControlEvents:UIControlEventTouchUpInside];
+        [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+        [saveButton.titleLabel setTextColor:[UIColor blueColor]];
+        
+        [_editView addSubview:saveButton];
+    }
+    
+    [self.editTextView becomeFirstResponder];
+    CGRect frame = _editView.frame;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+    } completion:^(BOOL finished) {
+        //        [self.keyboardBt setHidden:NO];
+    }];
+    
+}
+
+-(void)cancelEdit
+{
+    [self.editTextView resignFirstResponder];
+}
+
+-(void)saveRemark
+{
+    [self.editTextView resignFirstResponder];
+    [self.dailyNoteLabel setText:self.editTextView.text];
+}
+
+
+- (void) keyboardWasHidden:(NSNotification *) notif
+{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
 
 
 @end

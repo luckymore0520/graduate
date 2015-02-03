@@ -2,7 +2,7 @@
 //  Trace.m
 //  graduate
 //
-//  Created by luck-mac on 15/1/30.
+//  Created by luck-mac on 15/2/3.
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 
@@ -20,5 +20,8 @@
 @dynamic songName;
 @dynamic songUrl;
 @dynamic user;
+@dynamic date;
+@dynamic pictureUrlForTrace;
+@dynamic pictureUrlForSubject;
 
 @end

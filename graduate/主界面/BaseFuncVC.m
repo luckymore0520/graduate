@@ -73,6 +73,11 @@
     self.musicUrl = path;
     MediaPlayController* controller = [MediaPlayController getInstance];
     _controller = controller;
+    if ([controller.url.absoluteString isEqualToString:path.absoluteString]) {
+        [self.musicBt setTitle:@"暂停" forState:UIControlStateNormal];
+        [self.musicBt setTag:controller.state];
+        return;
+    }
     if (controller.state!=PLAY) {
         [controller prepareToPlayWithUrl:path];
         [controller play];

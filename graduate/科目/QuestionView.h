@@ -13,7 +13,7 @@
 
 @interface QuestionView : MJPhotoView
 
-@property (nonatomic,strong)UIImage* img;
 @property (nonatomic,strong) MQuestion* myQuestion;
+- (void)rotate;
 @end
 

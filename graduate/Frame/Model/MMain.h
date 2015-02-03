@@ -14,6 +14,9 @@
 @property (strong,nonatomic) NSMutableArray *music_;
 @property (copy,nonatomic) NSString *content_;
 @property (copy,nonatomic) NSString *img_;
+@property (copy,nonatomic) NSString *imgZj_;
+@property (copy,nonatomic) NSString *imgGn_;
+
 @property (retain,nonatomic) NSNumber *days_;
 @property (retain,nonatomic) NSNumber *daysLeft_;
 @end

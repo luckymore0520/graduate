@@ -5,6 +5,7 @@
 //  Created by Stephen Zhuang on 14-3-19.
 //  Copyright (c) 2014年 ryan. All rights reserved.
 //
+#define SC_DEVICE_SIZE      [[UIScreen mainScreen] bounds].size
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

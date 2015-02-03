@@ -26,4 +26,5 @@
 @property (nonatomic, retain) NSNumber * review_time;
 @property (nonatomic, retain) NSString * myDay;
 @property (nonatomic,retain)NSString *thumb_img;
+@property (nonatomic,retain)NSNumber *orientation;
 @end

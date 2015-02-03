@@ -8,7 +8,6 @@
 
 
 
-#define SC_DEVICE_SIZE      [[UIScreen mainScreen] bounds].size
 #import "ReviewVC.h"
 @interface ReviewVC ()
 
@@ -22,6 +21,7 @@
     self.bottomHeight = 60.0;
     self.canEdit = YES;
     [self.scrollView setBackgroundColor:[UIColor blackColor]];
+    [self setTitle:@"复习"];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
 }
@@ -53,6 +53,7 @@
         QuestionView* view = [[QuestionView alloc]initWithFrame:frame];
         view.myQuestion = [self.questionList objectAtIndex:i];
         view.photoViewDelegate = self;
+        view.orientation = view.myQuestion.orientation;
         MJPhoto *photo = [[MJPhoto alloc] init];
         MQuestion* question = [self.questionList objectAtIndex:i];
         if (question.isRecommend_.integerValue==1) {
@@ -214,6 +215,9 @@
     Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
     question.is_highlight = question.is_highlight.boolValue?[NSNumber numberWithBool:NO]:[NSNumber numberWithBool:YES];
     [book save];
+    
+    QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
+    [view rotate];
 }
 
 

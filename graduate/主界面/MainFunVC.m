@@ -38,7 +38,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *backImgView;
 @property (nonatomic,strong)NSMutableArray* mainList;
 //播放按钮在父类中控制
-
 @end
 
 @implementation MainFunVC
@@ -118,6 +117,9 @@
     [_sentenceLabel setText:_main.content_];
     [_myDayLabel setText: [NSString stringWithFormat:@"我的%d天",_main.days_.integerValue]];
     [_remainDayLabel setText:[NSString stringWithFormat:@"还剩%d天",_main.daysLeft_.integerValue]];
+    [self.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_main.img_] placeholderImage:[UIImage imageNamed:@"首页1.png"]];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,8 +139,14 @@
         for (MMain* main in mainList.index_) {
             NSString* myDay = [NSString stringWithFormat:@"%d",main.days_.integerValue];
             NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
-            [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.img_] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                NSLog(@"下图完成");
+            [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.img_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                NSLog(@"下图完成 首页图");
+            }];
+            [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.imgGn_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                NSLog(@"下图完成 功能图");
+            }];
+            [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.imgZj_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                NSLog(@"下图完成 足迹图");
             }];
             //若CoreData里有该条数据，检验是否下载音乐，未下载播放默认音乐并下载
             if (array.count!=0) {
@@ -197,6 +205,8 @@
     trace.myDay = [NSString
                         stringWithFormat:@"%d",myDay.days_.integerValue];
     trace.remainday = myDay.daysLeft_;
+    trace.pictureUrlForSubject = myDay.imgGn_;
+    trace.pictureUrlForTrace = myDay.imgZj_;
     trace.user  = [ToolUtils getUserid];
     trace.singer = music.singer_;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
@@ -206,13 +216,13 @@
         NSLog(@"Save successful!");
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId = music.title_;
+//        if (_isDownloading) {
+//            return;
+//        }
         [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
+//        _isDownloading = YES;
     }
 }
-
-
-
-
 
 
 

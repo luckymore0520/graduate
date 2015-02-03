@@ -229,6 +229,7 @@
     question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue];
     question.create_time = [ToolUtils getCurrentDate];
     question.remark = self.markLabel.text;
+    question.orientation = [NSNumber numberWithInt:1];
     self.question = question;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
