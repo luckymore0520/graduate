@@ -248,7 +248,7 @@
     if ([names isEqualToString:@"MImgUpload"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
-//            self.question.img = ret.msg_;
+            self.question.img = ret.msg_;
             [[[MUploadQues alloc]init]load:self question:self.question];
         }
     } else if ([names isEqualToString:@"MUploadQues"])

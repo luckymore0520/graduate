@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+
 #define PICURL @"http://114.215.196.179:8080/gs/download.do?id="
 @interface ToolUtils : NSObject
 @property (nonatomic , strong) NSMutableArray *tagArray;
@@ -79,6 +80,7 @@
 + (NSData*) loadData:(NSString*)fileName;
 +(BOOL)deleteFile:(NSString*) fileName ;
 
-
-
++(BOOL)connectedToNetWork;
++(BOOL)ignoreNetwork;
++(void)setIgnoreNetwork:(BOOL)ignore;
 @end

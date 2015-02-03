@@ -104,8 +104,8 @@
         [_photoLoadingView showLoading];
         [self addSubview:_photoLoadingView];
         
-        __unsafe_unretained MJPhotoView *photoView = self;
-        __unsafe_unretained MJPhotoLoadingView *loading = _photoLoadingView;
+        __weak MJPhotoView *photoView = self;
+        __weak MJPhotoLoadingView *loading = _photoLoadingView;
         [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             if (receivedSize > kMinProgress) {
                 loading.progress = (float)receivedSize/expectedSize;

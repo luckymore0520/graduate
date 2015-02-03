@@ -64,6 +64,40 @@ QuestionBook* questionBook = nil;
 
 }
 
+- (Question*)insertQuestionFromServer:(MQuestion*)currentQuestion day:(NSInteger)day
+{
+    NSArray* result = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"questionid=%@",currentQuestion.id_] tableName:@"Question"];
+    Question* question;
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    if (result.count==0) {
+        question = (Question*)[NSEntityDescription insertNewObjectForEntityForName:@"Question" inManagedObjectContext:helper.managedObjectContext];
+    } else {
+        question = [result firstObject];
+    }
+    question.questionid = currentQuestion.id_;
+    question.userid = [ToolUtils getUserid];
+    question.img = currentQuestion.img_;
+    question.remark = currentQuestion.remark_;
+    question.type = currentQuestion.type_;
+    question.subject = currentQuestion.subject_;
+    question.is_highlight = currentQuestion.isHighlight_;
+    question.is_recommand = 0;
+    question.isUpload = [NSNumber numberWithBool:YES];
+    question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
+    question.myDay = [NSString stringWithFormat:@"%d",day];
+    NSError* error;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+        return nil;
+    }else{
+        NSLog(@"Save successful! questionid:%@",question.questionid);
+        [[_allQuestions objectAtIndex:(currentQuestion.type_.intValue-1)]addObject:question];
+        return question;;
+    }
+    return question;
+}
+
 - (Question*)insertQuestionFromRecommand:(MQuestion*)currentQuestion
 {
     NSArray* result = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"questionid=%@",currentQuestion.id_] tableName:@"Question"];
@@ -229,6 +263,7 @@ QuestionBook* questionBook = nil;
 {
     [[_allQuestions objectAtIndex:(question.type.integerValue-1)]addObject:question];
 }
+
 
 - (Question*)getQuestionByMQuestion:(MQuestion*)mquestion
 {

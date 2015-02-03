@@ -25,7 +25,6 @@
 		7D24322C1A7C982800C00F64 /* MQuestionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D24322B1A7C982800C00F64 /* MQuestionList.m */; };
 		7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D24322E1A7C984E00C00F64 /* MQuestion.m */; };
 		7D2432321A7C991200C00F64 /* MQuestionRecommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432311A7C991200C00F64 /* MQuestionRecommand.m */; };
-		7D2432351A7CB19B00C00F64 /* MUpdateSubject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432341A7CB19B00C00F64 /* MUpdateSubject.m */; };
 		7D24323B1A7CB88200C00F64 /* GraduateModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432391A7CB88200C00F64 /* GraduateModel.xcdatamodeld */; };
 		7D2432441A7CC42100C00F64 /* QuestionBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432431A7CC42100C00F64 /* QuestionBook.m */; };
 		7D2432471A7CD8E900C00F64 /* SubjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432461A7CD8E900C00F64 /* SubjectCell.m */; };
@@ -125,6 +124,12 @@
 		7D4E062D1A766658001709DB /* RegistVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E062C1A766658001709DB /* RegistVC.m */; };
 		7D4E06301A76678A001709DB /* CodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E062F1A76678A001709DB /* CodeVC.m */; };
 		7D4E06401A767D9C001709DB /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E063F1A767D9C001709DB /* CoreDataHelper.m */; };
+		7D5DBB081A8075B80078B99C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB071A8075B80078B99C /* Reachability.m */; };
+		7D5DBB0B1A8077A10078B99C /* MQuesDelete.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB0A1A8077A10078B99C /* MQuesDelete.m */; };
+		7D5DBB0E1A8080FF0078B99C /* MUpdateSubject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB0D1A8080FF0078B99C /* MUpdateSubject.m */; };
+		7D5DBB111A8082680078B99C /* MQuesList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB101A8082680078B99C /* MQuesList.m */; };
+		7D5DBB141A80836A0078B99C /* MQuesCountStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB131A80836A0078B99C /* MQuesCountStatus.m */; };
+		7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB161A8084A80078B99C /* MQuestionCount.m */; };
 		7D6A518D1A69610600355923 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518C1A69610600355923 /* main.m */; };
 		7D6A51901A69610600355923 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518F1A69610600355923 /* AppDelegate.m */; };
 		7D6A51981A69610600355923 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51971A69610600355923 /* Images.xcassets */; };
@@ -256,8 +261,6 @@
 		7D24322E1A7C984E00C00F64 /* MQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuestion.m; path = Frame/Model/MQuestion.m; sourceTree = "<group>"; };
 		7D2432301A7C991200C00F64 /* MQuestionRecommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuestionRecommand.h; path = Frame/ApiTools/MQuestionRecommand.h; sourceTree = "<group>"; };
 		7D2432311A7C991200C00F64 /* MQuestionRecommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuestionRecommand.m; path = Frame/ApiTools/MQuestionRecommand.m; sourceTree = "<group>"; };
-		7D2432331A7CB19B00C00F64 /* MUpdateSubject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUpdateSubject.h; path = Frame/ApiTools/MUpdateSubject.h; sourceTree = "<group>"; };
-		7D2432341A7CB19B00C00F64 /* MUpdateSubject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUpdateSubject.m; path = Frame/ApiTools/MUpdateSubject.m; sourceTree = "<group>"; };
 		7D24323A1A7CB88200C00F64 /* GraduateModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GraduateModel.xcdatamodel; sourceTree = "<group>"; };
 		7D2432421A7CC42100C00F64 /* QuestionBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionBook.h; path = Model/QuestionBook.h; sourceTree = SOURCE_ROOT; };
 		7D2432431A7CC42100C00F64 /* QuestionBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionBook.m; path = Model/QuestionBook.m; sourceTree = SOURCE_ROOT; };
@@ -427,6 +430,18 @@
 		7D4E062F1A76678A001709DB /* CodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodeVC.m; path = "登陆注册/CodeVC.m"; sourceTree = "<group>"; };
 		7D4E063E1A767D9C001709DB /* CoreDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataHelper.h; path = Model/CoreDataHelper.h; sourceTree = SOURCE_ROOT; };
 		7D4E063F1A767D9C001709DB /* CoreDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataHelper.m; path = Model/CoreDataHelper.m; sourceTree = SOURCE_ROOT; };
+		7D5DBB061A8075B80078B99C /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		7D5DBB071A8075B80078B99C /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		7D5DBB091A8077A10078B99C /* MQuesDelete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuesDelete.h; path = Frame/ApiTools/MQuesDelete.h; sourceTree = "<group>"; };
+		7D5DBB0A1A8077A10078B99C /* MQuesDelete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuesDelete.m; path = Frame/ApiTools/MQuesDelete.m; sourceTree = "<group>"; };
+		7D5DBB0C1A8080FF0078B99C /* MUpdateSubject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUpdateSubject.h; path = Frame/ApiTools/MUpdateSubject.h; sourceTree = "<group>"; };
+		7D5DBB0D1A8080FF0078B99C /* MUpdateSubject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUpdateSubject.m; path = Frame/ApiTools/MUpdateSubject.m; sourceTree = "<group>"; };
+		7D5DBB0F1A8082680078B99C /* MQuesList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuesList.h; path = Frame/ApiTools/MQuesList.h; sourceTree = "<group>"; };
+		7D5DBB101A8082680078B99C /* MQuesList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuesList.m; path = Frame/ApiTools/MQuesList.m; sourceTree = "<group>"; };
+		7D5DBB121A80836A0078B99C /* MQuesCountStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuesCountStatus.h; path = "主界面/MQuesCountStatus.h"; sourceTree = "<group>"; };
+		7D5DBB131A80836A0078B99C /* MQuesCountStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuesCountStatus.m; path = "主界面/MQuesCountStatus.m"; sourceTree = "<group>"; };
+		7D5DBB151A8084A80078B99C /* MQuestionCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MQuestionCount.h; path = Frame/Model/MQuestionCount.h; sourceTree = "<group>"; };
+		7D5DBB161A8084A80078B99C /* MQuestionCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MQuestionCount.m; path = Frame/Model/MQuestionCount.m; sourceTree = "<group>"; };
 		7D6A51871A69610600355923 /* graduate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = graduate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6A518B1A69610600355923 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D6A518C1A69610600355923 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -968,10 +983,10 @@
 		7D6A51891A69610600355923 /* graduate */ = {
 			isa = PBXGroup;
 			children = (
+				7D4E058D1A74C6BD001709DB /* Tools */,
 				7DA994C61A79EDF700A879CF /* Frame */,
 				7D4E06371A767CA2001709DB /* Model */,
 				7D4E06151A752EED001709DB /* 其他 */,
-				7D4E058D1A74C6BD001709DB /* Tools */,
 				7D4E05891A74C610001709DB /* 科目 */,
 				7DBD86821A72847300205576 /* 帖子 */,
 				7DBD86771A72747900205576 /* 登陆注册 */,
@@ -1015,6 +1030,8 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7D5DBB061A8075B80078B99C /* Reachability.h */,
+				7D5DBB071A8075B80078B99C /* Reachability.m */,
 				7DE7ACDC1A7FB08600D23449 /* QCSlide */,
 				7D2432C41A7E453F00C00F64 /* SWCell */,
 				7D2432541A7DD16400C00F64 /* SCCaptureCamera */,
@@ -1108,6 +1125,8 @@
 				7D24322D1A7C984E00C00F64 /* MQuestion.h */,
 				7D24322E1A7C984E00C00F64 /* MQuestion.m */,
 				7D24322B1A7C982800C00F64 /* MQuestionList.m */,
+				7D5DBB151A8084A80078B99C /* MQuestionCount.h */,
+				7D5DBB161A8084A80078B99C /* MQuestionCount.m */,
 			);
 			name = InterfaceModel;
 			sourceTree = "<group>";
@@ -1135,10 +1154,16 @@
 				7DDA29561A7B660B003F77C3 /* MIndexPost.m */,
 				7D2432301A7C991200C00F64 /* MQuestionRecommand.h */,
 				7D2432311A7C991200C00F64 /* MQuestionRecommand.m */,
-				7D2432331A7CB19B00C00F64 /* MUpdateSubject.h */,
-				7D2432341A7CB19B00C00F64 /* MUpdateSubject.m */,
 				7D2432C11A7E181A00C00F64 /* MUploadQues.h */,
 				7D2432C21A7E181A00C00F64 /* MUploadQues.m */,
+				7D5DBB091A8077A10078B99C /* MQuesDelete.h */,
+				7D5DBB0A1A8077A10078B99C /* MQuesDelete.m */,
+				7D5DBB0C1A8080FF0078B99C /* MUpdateSubject.h */,
+				7D5DBB0D1A8080FF0078B99C /* MUpdateSubject.m */,
+				7D5DBB0F1A8082680078B99C /* MQuesList.h */,
+				7D5DBB101A8082680078B99C /* MQuesList.m */,
+				7D5DBB121A80836A0078B99C /* MQuesCountStatus.h */,
+				7D5DBB131A80836A0078B99C /* MQuesCountStatus.m */,
 			);
 			name = ApiTools;
 			sourceTree = "<group>";
@@ -1411,6 +1436,7 @@
 				7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */,
 				7D24322C1A7C982800C00F64 /* MQuestionList.m in Sources */,
 				7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */,
+				7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */,
 				7D2432C01A7DD18F00C00F64 /* SVProgressHUD.m in Sources */,
 				7D2432151A7B785500C00F64 /* PostDetailsVC.m in Sources */,
 				7D24320E1A7B785500C00F64 /* PostDetailsPostCell.m in Sources */,
@@ -1447,8 +1473,10 @@
 				7DA994D01A79F64100A879CF /* MReturn.m in Sources */,
 				7DA994C41A7878FE00A879CF /* NSObject+MJKeyValue.m in Sources */,
 				7D4E05C11A74EF71001709DB /* SDWebImageCompat.m in Sources */,
+				7D5DBB141A80836A0078B99C /* MQuesCountStatus.m in Sources */,
 				7DA994E01A7A097900A879CF /* MPasswdChange.m in Sources */,
 				7D2432B61A7DD18F00C00F64 /* SCSlider.m in Sources */,
+				7D5DBB111A8082680078B99C /* MQuesList.m in Sources */,
 				7DDA29471A7B2144003F77C3 /* AFHTTPRequestOperationManager.m in Sources */,
 				7D4E05791A748EFB001709DB /* MAOFlipViewController.m in Sources */,
 				7D24320F1A7B785500C00F64 /* ToggleCell.m in Sources */,
@@ -1460,6 +1488,7 @@
 				7D4E057A1A748EFB001709DB /* MAOPanGestureRecognizer.m in Sources */,
 				7D4E06181A75E9DA001709DB /* RecordVC.m in Sources */,
 				7DA994C01A7878FE00A879CF /* MJMethod.m in Sources */,
+				7D5DBB081A8075B80078B99C /* Reachability.m in Sources */,
 				7D2432261A7BB8BC00C00F64 /* Trace.m in Sources */,
 				7DA994EC1A7A29C500A879CF /* MIndex.m in Sources */,
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
@@ -1505,7 +1534,6 @@
 				7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */,
 				7D2432D21A7E453F00C00F64 /* SWCellScrollView.m in Sources */,
 				7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */,
-				7D2432351A7CB19B00C00F64 /* MUpdateSubject.m in Sources */,
 				7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */,
 				7D2432291A7C764200C00F64 /* MMainList.m in Sources */,
 				7D4E05C71A74EF71001709DB /* UIButton+WebCache.m in Sources */,
@@ -1520,11 +1548,13 @@
 				7DDA29491A7B2144003F77C3 /* AFNetworkReachabilityManager.m in Sources */,
 				7D2432C31A7E181A00C00F64 /* MUploadQues.m in Sources */,
 				7D4E05C01A74EF71001709DB /* SDImageCache.m in Sources */,
+				7D5DBB0B1A8077A10078B99C /* MQuesDelete.m in Sources */,
 				7D2432D31A7E453F00C00F64 /* SWLongPressGestureRecognizer.m in Sources */,
 				7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */,
 				7DBD868E1A72869B00205576 /* ArticleDetailVC.m in Sources */,
 				7DBD86661A7259DB00205576 /* SubjectVC.m in Sources */,
 				7DA994EF1A7A2A6100A879CF /* MMain.m in Sources */,
+				7D5DBB0E1A8080FF0078B99C /* MUpdateSubject.m in Sources */,
 				7DA994E31A7A0D8B00A879CF /* MLogin.m in Sources */,
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import "ToolUtils.h"
 #import <CommonCrypto/CommonDigest.h> 
-
+#import "Reachability.h"
 @implementation ToolUtils
 
 + (instancetype) sharedToolUtils
@@ -383,4 +383,52 @@
         }
     }
 }
+
+
+
+//检查当前网络连接是否正常
++(BOOL)connectedToNetWork
+{
+    if ([[Reachability reachabilityForInternetConnection]isReachableViaWiFi]) {
+        NSLog(@"连接wifi");
+        return YES;
+    }
+    return NO;
+}
+
++(BOOL)ignoreNetwork
+{
+    return [[NSUserDefaults standardUserDefaults]boolForKey:@"ignore"];
+}
++(void)setIgnoreNetwork:(BOOL)ignore
+{
+    [[NSUserDefaults standardUserDefaults]setBool:ignore forKey:@"ignore"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+////检查网络连接类型
+//-(void)checkNetworktype:(id)sender{
+//    NSString *connectionKind;
+//    if ([self connectedToNetWork]) {
+//        hostReach = [Reachability reachabilityWithHostName:@"www.google.com"];
+//        switch ([hostReach currentReachabilityStatus]) {
+//            case NotReachable:
+//                connectionKind = @"没有网络链接";
+//                break;
+//            case ReachableViaWiFi:
+//                connectionKind = @"当前使用的网络类型是WIFI";
+//                break;
+//            case ReachableVia3G:
+//                connectionKind = @"当前使用的网络链接类型是WWAN（3G）";
+//                break;
+//            case ReachableVia2G:
+//                connectionKind = @"当前使用的网络链接类型是WWAN（2G）";
+//                break;
+//            default:
+//                break;
+//        }
+//    }else {
+//        connectionKind = @"没有网络链接";
+//    }
+//}
 @end

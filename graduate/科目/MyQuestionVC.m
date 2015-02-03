@@ -13,20 +13,16 @@
 #import "UIImageView+WebCache.h"
 #import "ReviewVC.h"
 #import "RecordVC.h"
+#import "MQuesList.h"
 @interface MyQuestionVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *photoView;
-
+@property (nonatomic) NSInteger day;
 @end
 
 @implementation MyQuestionVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
     [self.myQuestions sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -34,9 +30,67 @@
         NSString* b = [obj2 objectForKey:@"day"];
         return  [b compare:a];
     }];
-    [self.photoView reloadData];
+//    [self.photoView reloadData];
+
+    
+    if (self.shoudUpdate) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSInteger currentDay = [ToolUtils getCurrentDay].integerValue;
+        NSTimeInterval secondsPerDay1 = 24*60*60;
+        NSDate* now = [NSDate date];
+        self.day = currentDay;
+        NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
+        [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
+    }
+
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+}
+
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    
+    if ([names isEqualToString:@"MQuesList"]) {
+        BOOL hasInsert = NO;
+        QuestionBook* book = [QuestionBook getInstance];
+        MQuestionList* list = [MQuestionList objectWithKeyValues:data];
+        for (MQuestion* question in list.list_) {
+            BOOL has = NO;
+            for (Question* localQuestion in [book.allQuestions objectAtIndex:self.type-1]) {
+                if ([localQuestion.questionid isEqualToString:question.id_]) {
+                    has = YES;
+                    break;
+                }
+            }
+            if (!has) {
+//                [book insertQuestionFromRecommand:question];
+                [book insertQuestionFromServer:question day:self.day];
+                hasInsert=YES;
+            }
+        }
+        if ((hasInsert||list.list_.count==0)&&self.day>0) {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            NSInteger currentDay = [ToolUtils getCurrentDay].integerValue;
+            NSTimeInterval secondsPerDay1 = 24*60*60;
+            NSDate* now = [NSDate date];
+            self.day--;
+            NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
+            [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
+        } else {
+            
+            self.myQuestions =
+            [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
+            [self.photoView reloadData];
+        }
+        
+        
+    }
+}
 
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -68,7 +122,7 @@
     QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
     if (question.is_recommand.integerValue==0) {
-        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img]];
+        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150]];
     } else {
         [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
     }
@@ -111,8 +165,6 @@
     {
         RecordVC* recordVC = [segue destinationViewController];
         recordVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
-        
-
     }
 }
 

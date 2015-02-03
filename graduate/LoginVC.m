@@ -158,7 +158,9 @@
         NSURL* url = [data objectForKey:@"path"];
         NSData* img = [NSData dataWithContentsOfURL:url];
         MImgUpload* upLoad = [[MImgUpload alloc]init];
+        [ToolUtils setIgnoreNetwork:YES];
         [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
+        [ToolUtils setIgnoreNetwork:NO];
     } else if ([names isEqualToString:@"MUpdateUserInfo"])
     {
         MReturn* ret = [MReturn objectWithKeyValues:data];
@@ -197,7 +199,9 @@
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId =[userInfo objectForKey:@"figureurl_qq_1"];
+        [ToolUtils setIgnoreNetwork:YES];
         [api download:self url:[userInfo objectForKey:@"figureurl_qq_1"]];
+        [ToolUtils setIgnoreNetwork:NO];
         isThirdParty = YES;
     }
     

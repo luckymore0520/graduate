@@ -21,6 +21,9 @@
 }
 - (ApiHelper *)download:(id<ApiDelegate>)delegate url:(NSString *)url
 {
+    if (![ToolUtils connectedToNetWork]&&![ToolUtils ignoreNetwork]) {
+        return nil;
+    }
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
@@ -28,7 +31,6 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        
         return [documentsDirectoryURL URLByAppendingPathComponent:response.suggestedFilename];
 //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
 //        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:_fileId];   // 保存文件的名称
@@ -43,6 +45,7 @@
 //调用接口 get 方法名 参数 代理
 - (ApiHelper*)load:(NSString *)method params:(NSDictionary *)params delegate:(id<ApiDelegate>)delegate
 {
+    
     _delegate = delegate;
     _name = method;
     _params = params;
@@ -92,6 +95,7 @@
 //调用接口post 方法名 参数 代理
 - (ApiHelper *)post:(NSString *)method params:(NSDictionary *)params delegate:(id<ApiDelegate>)delegate
 {
+    
     _delegate = delegate;
     _name = method;
     _params = params;

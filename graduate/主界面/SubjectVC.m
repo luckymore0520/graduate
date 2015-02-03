@@ -8,7 +8,6 @@
 
 #import "SubjectVC.h"
 #import "ToolUtils.h"
-#import "YZSwipeBetweenViewController.h"
 #import "MQuestionRecommand.h"
 #import "RecommandVC.h"
 #import "QuestionBook.h"
@@ -21,6 +20,9 @@
 #import "MyQuestionVC.h"
 #import "ModifySubjectVC.h"
 #import "PostViewController.h"
+#import "TraceRootVC.h"
+#import "MQuesCountStatus.h"
+#import "MQuestionCount.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
@@ -39,7 +41,6 @@
 @property (nonatomic,weak  )UIButton* selectedBt;
 
 @property (nonatomic,strong)NSArray* recommandList;
-@property (nonatomic,strong)YZSwipeBetweenViewController* traceRoot;
 @property (nonatomic,strong)NSMutableArray* imgViewList;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
@@ -62,7 +63,7 @@
     if ([ToolUtils getFirstUse]) {
         [[[MQuestionRecommand alloc]init]load:self];
         [self initSubject];
-        
+
     }
 }
 
@@ -80,6 +81,36 @@
             }];
             [_imgViewList addObject:newImage];
         }
+    } else if ([names isEqualToString:@"MQuesCountStatus"])
+    {
+        MQuestionCount* count = [MQuestionCount objectWithKeyValues:data];
+        for (Subject* subject in self.subjects) {
+            switch (subject.type) {
+                case 1:
+                    subject.shoudUpdate = subject.total < count.engCount_.integerValue;
+                    subject.total = subject.total>count.engCount_.integerValue?subject.total:count.engCount_.integerValue;
+                    break;
+                case 2:
+                    subject.shoudUpdate = subject.total < count.polityCount_.integerValue;
+                    subject.total = subject.total>count.polityCount_.integerValue?subject.total:count.polityCount_.integerValue;
+                    break;
+                case 3:
+                    subject.shoudUpdate = subject.total < count.mathCount_.integerValue;
+                    subject.total = subject.total>count.mathCount_.integerValue?subject.total:count.mathCount_.integerValue;
+                    break;
+                case 4:
+                    subject.shoudUpdate = subject.total < count.major1Count_.integerValue;
+                    subject.total = subject.total>count.major1Count_.integerValue?subject.total:count.major1Count_.integerValue;
+                    break;
+                case 5:
+                    subject.shoudUpdate = subject.total < count.major2Count_.integerValue;
+                    subject.total = subject.total>count.major2Count_.integerValue?subject.total:count.major2Count_.integerValue;
+                    break;
+                default:
+                    break;
+            }
+        }
+        [self.tableview reloadData];
     }
 }
 
@@ -87,6 +118,8 @@
 {
     self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects] ];
     [self.tableview reloadData];
+    [[[MQuesCountStatus alloc]init]load:self];
+    
 }
 
 
@@ -139,10 +172,8 @@
 }
 
 - (IBAction)goToMyTraces:(id)sender {
-    self.traceRoot = [YZSwipeBetweenViewController new];
-    [self presentViewController:self.traceRoot animated:YES completion:^{
-        
-    }];
+    TraceRootVC* root = [self.storyboard instantiateViewControllerWithIdentifier:@"traceRoot"];
+    [self.navigationController pushViewController:root animated:YES];
 }
 - (IBAction)takePhoto:(id)sender {
     SCNavigationController *nav = [[SCNavigationController alloc] init];
@@ -157,10 +188,11 @@
     
     if ([segue.identifier isEqualToString:@"recommand"]) {
         RecommandVC* vc = (RecommandVC*)[segue destinationViewController];
-        vc.questionList = self.recommandList;
+        vc.questionList = [NSMutableArray arrayWithArray:self.recommandList];
     } else if ([segue.identifier isEqualToString:@"myQuestion"]) {
         MyQuestionVC* vc = (MyQuestionVC*)segue.destinationViewController;
         vc.type = ((Subject*)sender).type;
+        vc.shoudUpdate = ((Subject*)sender).shoudUpdate;
     }  else if ([segue.identifier isEqualToString:@"english"]||
         [segue.identifier isEqualToString:@"math"]||
         [segue.identifier isEqualToString:@"major"]) {

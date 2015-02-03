@@ -20,6 +20,8 @@
 @property (nonatomic,strong) NSMutableArray* subjects;
 +(QuestionBook *)getInstance;
 - (void)loadAllData;
+- (Question*)insertQuestionFromServer:(MQuestion*)currentQuestion day:(NSInteger)day;
+
 - (Question*)insertQuestionFromRecommand:(MQuestion*)currentQuestion;
 - (NSArray*)getQuestionOfDayAndType:(NSString*)day type:(NSInteger)type;
 - (NSArray*)getQuestionOfType:(NSInteger)type;

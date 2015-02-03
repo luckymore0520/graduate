@@ -106,10 +106,16 @@
         view.photoViewDelegate = self;
         MJPhoto *photo = [[MJPhoto alloc] init];
         MQuestion* question = [self.questionList objectAtIndex:i];
-        NSString *imageUrl = [ToolUtils getImageUrlWtihString:question.img_ width:640 height:0].absoluteString;
-        NSString *url = [imageUrl stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-                NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)url, NULL, NULL,  kCFStringEncodingUTF8 ));
-        photo.url = [NSURL URLWithString:encodedString]; // 图片路径
+        if (question.isRecommend_.integerValue==1) {
+            UIImage* image = [UIImage imageWithData:[ToolUtils loadData:question.id_]];
+            photo.image = image;
+            photo.firstShow = NO;
+        } else if (question.isRecommend_.integerValue==0) {
+            NSString *imageUrl = [ToolUtils getImageUrlWtihString:question.img_ width:640 height:0].absoluteString;
+            NSString *url = [imageUrl stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+            NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)url, NULL, NULL,  kCFStringEncodingUTF8 ));
+            photo.url = [NSURL URLWithString:encodedString]; // 图片路径
+        }
         photo.desc = question.remark_;
         photo.index = i;
         view.photo = photo;

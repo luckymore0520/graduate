@@ -7,6 +7,8 @@
 //
 
 #import "RecordVC.h"
+#import "MQuesDelete.h"
+#import "MReturn.h"
 
 @interface RecordVC ()<UIScrollViewDelegate>
 
@@ -39,12 +41,18 @@
 }
 - (IBAction)delete:(id)sender {
     
+    
+    
     MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
+    MQuesDelete* delete = [[MQuesDelete alloc]init];
+    [delete load:self id:currentQuestion.id_];
+    
     QuestionBook* book = [QuestionBook getInstance];
     Question* question = [book getQuestionByMQuestion:currentQuestion];
     if (question.is_recommand.integerValue==1) {
         [ToolUtils deleteFile:question.questionid];
     }
+    
     
     
     question.img = @"";
@@ -62,8 +70,20 @@
     if (nextPage>=0) {
         [self.scrollView setContentOffset:CGPointMake(nextPage*self.view.frame.size.width, 0) animated:YES];
     }
+    
+    
 }
 
+
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MQuesDelete"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue==1) {
+            NSLog(@"删除成功");
+        }
+    }
+}
 /*
 #pragma mark - Navigation
 

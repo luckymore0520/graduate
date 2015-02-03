@@ -11,4 +11,6 @@
 @interface MyQuestionVC : BaseFuncVC
 @property (nonatomic,strong)NSMutableArray* myQuestions;
 @property (nonatomic)NSInteger type;
+@property (nonatomic)BOOL shoudUpdate;
+
 @end

@@ -11,6 +11,9 @@
 @implementation MImgUpload
 - (ApiHelper *)load:(id<ApiDelegate>)delegate img:(UIImage *)img name:(NSString *)fileName
 {
+    if (![ToolUtils connectedToNetWork]&&![ToolUtils ignoreNetwork]) {
+        return nil;
+    }
     NSData* originData =  UIImagePNGRepresentation(img);
     NSData* encodeData = [GTMBase64 encodeData:originData];
     NSString* encodeResult = [[NSString alloc] initWithData:encodeData encoding:NSUTF8StringEncoding];

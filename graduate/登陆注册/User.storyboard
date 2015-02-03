@@ -99,7 +99,7 @@
                                     <action selector="register:" destination="yb1-gG-uHA" eventType="touchUpInside" id="gdL-EX-Wsu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bd8-fa-Uts">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bd8-fa-Uts">
                                 <rect key="frame" x="120" y="126" width="54" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="iA6-nJ-DcK"/>
@@ -152,21 +152,21 @@
                                 <exclude reference="bd8-fa-Uts"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="FeX-KO-r4i"/>
-                                <exclude reference="Lm4-gi-tpN"/>
-                                <exclude reference="Oec-ob-gtn"/>
                                 <exclude reference="iDS-Az-McG"/>
                                 <exclude reference="wAn-pJ-sOf"/>
                                 <exclude reference="zo0-de-9c6"/>
                                 <exclude reference="5yp-1s-EWC"/>
                                 <exclude reference="Ut2-Mw-ho2"/>
                                 <exclude reference="XeE-TW-yFU"/>
+                                <exclude reference="VoD-AB-dYb"/>
+                                <exclude reference="tlR-RL-9Rq"/>
                                 <exclude reference="XMY-AY-Wla"/>
                                 <exclude reference="jaU-AK-pEd"/>
                                 <exclude reference="kwy-N9-7z1"/>
                                 <exclude reference="tYD-Pa-bU4"/>
-                                <exclude reference="VoD-AB-dYb"/>
-                                <exclude reference="tlR-RL-9Rq"/>
+                                <exclude reference="FeX-KO-r4i"/>
+                                <exclude reference="Lm4-gi-tpN"/>
+                                <exclude reference="Oec-ob-gtn"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -179,21 +179,21 @@
                                 <include reference="bd8-fa-Uts"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="FeX-KO-r4i"/>
-                                <include reference="Lm4-gi-tpN"/>
-                                <include reference="Oec-ob-gtn"/>
                                 <include reference="iDS-Az-McG"/>
                                 <include reference="wAn-pJ-sOf"/>
                                 <include reference="zo0-de-9c6"/>
                                 <include reference="5yp-1s-EWC"/>
                                 <include reference="Ut2-Mw-ho2"/>
                                 <include reference="XeE-TW-yFU"/>
+                                <include reference="VoD-AB-dYb"/>
+                                <include reference="tlR-RL-9Rq"/>
                                 <include reference="XMY-AY-Wla"/>
                                 <include reference="jaU-AK-pEd"/>
                                 <include reference="kwy-N9-7z1"/>
                                 <include reference="tYD-Pa-bU4"/>
-                                <include reference="VoD-AB-dYb"/>
-                                <include reference="tlR-RL-9Rq"/>
+                                <include reference="FeX-KO-r4i"/>
+                                <include reference="Lm4-gi-tpN"/>
+                                <include reference="Oec-ob-gtn"/>
                             </mask>
                         </variation>
                     </view>

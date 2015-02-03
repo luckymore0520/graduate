@@ -14,4 +14,5 @@
 @property (nonatomic)NSInteger newAdd;
 @property (nonatomic)NSString* img;
 @property (nonatomic)NSInteger type;
+@property (nonatomic)BOOL shoudUpdate;
 @end
