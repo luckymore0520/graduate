@@ -129,7 +129,9 @@ QuestionBook* questionBook = nil;
         return nil;
     }else{
         NSLog(@"Save successful! questionid:%@",question.questionid);
-        [[_allQuestions objectAtIndex:(currentQuestion.type_.intValue-1)]addObject:question];
+        if (result.count==0) {
+            [[_allQuestions objectAtIndex:(currentQuestion.type_.intValue-1)]addObject:question];
+        }
         return question;;
     }
 
