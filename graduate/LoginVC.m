@@ -95,8 +95,9 @@
 //初始化腾讯第三方登陆
 - (void) initTencent
 {
-
-    _tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"222222" andDelegate:self];
+    if (!_tencentOAuth) {
+        _tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"222222" andDelegate:self];
+    }
 }
 
 
@@ -104,6 +105,10 @@
 - (IBAction)login:(id)sender {
     permissions = [[NSMutableArray alloc]initWithObjects:kOPEN_PERMISSION_GET_USER_INFO,kOPEN_PERMISSION_GET_INFO,   nil];
     [_tencentOAuth authorize:permissions inSafari:NO];
+    
+    
+    
+    [_tencentOAuth logout:self];
 }
 - (IBAction)weiboLogin:(id)sender {
     WBAuthorizeRequest *request = [WBAuthorizeRequest request];
@@ -188,11 +193,16 @@
 
 
 #pragma mark -QQ登陆
+- (void)tencentDidUpdate:(TencentOAuth *)tencentOAuth
+{
+    NSLog(@"Update");
+}
 - (void)tencentDidNotNetWork
 {
     
     NSLog(@"DidNotNetWork");
 }
+
 
 - (void)tencentDidLogin
 {

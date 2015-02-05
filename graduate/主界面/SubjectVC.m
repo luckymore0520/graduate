@@ -177,14 +177,20 @@
     }
 }
 
-
+- (void)showError:(NSError *)error functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MQuesCountStatus"]) {
+        [self calculateTotal];
+        [self.tableview reloadData];
+    }
+}
 
 - (void)initSubject
 {
     self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects] ];
-    [self.tableview reloadData];
+//    [self.tableview reloadData];
     [[[MQuesCountStatus alloc]init]load:self];
-    [self calculateTotal];
+//    [self calculateTotal];
     
 }
 

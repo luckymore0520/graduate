@@ -10,6 +10,7 @@
 
 @interface ChatCenterPostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *postAltasImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *postSexImageView;
 @property (weak, nonatomic) IBOutlet UILabel *postNickNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postGenderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postRepliedLabel;

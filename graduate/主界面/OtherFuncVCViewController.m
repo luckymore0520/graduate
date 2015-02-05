@@ -7,7 +7,8 @@
 //
 
 #import "OtherFuncVCViewController.h"
-
+#import "SelfCenterViewController.h"
+#import "FeedBackViewController.h"
 @interface OtherFuncVCViewController ()
 
 @end
@@ -23,6 +24,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)goToFeedback:(id)sender {
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+    
+    SelfCenterViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"feedback"];
+    [self.navigationController pushViewController:nextVC animated:YES];
+
+}
+- (IBAction)goToSelfCenter:(id)sender {
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+                                
+    SelfCenterViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"selfCenter"];
+    [self.navigationController pushViewController:nextVC animated:YES];
+
+}
+
+
 
 /*
 #pragma mark - Navigation

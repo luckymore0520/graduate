@@ -9,6 +9,6 @@
 #import "ApiHelper.h"
 
 @interface MPasswdChange : ApiHelper
-- (ApiHelper *)load:(id<ApiDelegate>)delegate password:(NSString *)password nickname:(NSString*)nickname sex:(NSInteger)sex;
-
+- (ApiHelper *)load:(id<ApiDelegate>)delegate password:(NSString *)password nickname:(NSString*)nickname sex:(NSInteger)sex ;
+- (ApiHelper *)load:(id<ApiDelegate>)delegate password:(NSString *)password nickname:(NSString*)nickname sex:(NSInteger)sex oldPassword:(NSString*)oldPassword;
 @end

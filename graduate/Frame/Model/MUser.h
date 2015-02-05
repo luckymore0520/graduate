@@ -41,4 +41,5 @@
 
 @property (copy,nonatomic) NSString *subjectMajor2_;
 
+@property (retain,nonatomic) NSNumber* hasPassword_;
 @end

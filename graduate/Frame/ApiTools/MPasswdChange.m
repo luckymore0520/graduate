@@ -14,4 +14,10 @@
     NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:password,@"password",nickname,@"nickname",[NSString stringWithFormat:@"%d",sex],@"sex", nil];
     return [self load:@"MPasswdChange" params:params delegate:delegate];
 }
+
+- (ApiHelper *)load:(id<ApiDelegate>)delegate password:(NSString *)password nickname:(NSString*)nickname sex:(NSInteger)sex oldPassword:(NSString*)oldPassword
+{
+    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:password,@"password",nickname,@"nickname",[NSString stringWithFormat:@"%d",sex],@"sex",oldPassword,@"passwordOld", nil];
+    return [self load:@"MPasswdChange" params:params delegate:delegate];
+}
 @end

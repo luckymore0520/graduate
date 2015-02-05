@@ -60,6 +60,7 @@
         [self handleData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [self.delegate showError:error functionName:_name];
     }];
     return self;
 }
