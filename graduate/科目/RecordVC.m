@@ -60,20 +60,45 @@
     question.img = @"";
     [book save];
 
-    NSInteger nextPage = (self.currentPage+1==self.questionList.count)?self.currentPage-1:self.currentPage;
-    
-    [self.questionList removeObject:currentQuestion];
-    
     [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
+
     
     
-    
-    [self loadQuestions];
-    if (nextPage>=0) {
-        [self.scrollView setContentOffset:CGPointMake(nextPage*self.view.frame.size.width, 0) animated:YES];
+    if (self.questionList.count==1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        
+        
+        QuestionView* removeView = [self.questionViews objectAtIndex:self.currentPage];
+        
+        if (self.currentPage+1==self.questionViews.count) {
+            self.currentPage--;
+            [self.questionList removeObject:currentQuestion];
+            self.scrollView.contentSize=CGSizeMake(self.scrollView.frame.size.width*self.questionList.count, 0);
+            self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width*self.currentPage, 0);
+            [removeView removeFromSuperview];
+            
+            
+            
+        } else {
+            for (int i = self.currentPage+1 ;i < self.questionViews.count;i++)
+            {
+                QuestionView* questionView = [self.questionViews objectAtIndex:i];
+                CGRect frame = questionView.frame;
+                frame.origin.x = frame.origin.x-self.scrollView.frame.size.width;
+                questionView.frame = frame;
+                [self.questionList removeObject:currentQuestion];
+                [self.questionViews removeObject:removeView];
+                [removeView removeFromSuperview];
+                self.scrollView.contentSize = CGSizeMake(self.questionViews.count*self.scrollView.frame.size.width, 0);
+
+            }
+        }
+
     }
     
     
+     
 }
 
 

@@ -29,6 +29,7 @@ MediaPlayController* mediaPlayController = nil;
     self.audioplayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:Nil];
     //3.缓冲
     [self.audioplayer prepareToPlay];
+    self.audioplayer.delegate = self;
     mediaPlayController.state = READY;
     self.url = url;
     //4.播放
@@ -52,5 +53,10 @@ MediaPlayController* mediaPlayController = nil;
     [self.audioplayer stop];
     mediaPlayController.state = STOP;
     
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [player play];
 }
 @end

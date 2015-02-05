@@ -20,10 +20,12 @@
 @property (nonatomic,strong)UIView* bottomContainerView;
 @property (nonatomic,strong)UIView* editView;
 @property (nonatomic,strong)UITextView* editTextView;
-@property (nonatomic,strong)UILabel* markLabel;
+@property (nonatomic,strong)UITextView* markLabel;
 @property (nonatomic,strong)NSMutableArray* questionList;
 @property (nonatomic)CGFloat bottomHeight;
 @property (nonatomic)BOOL canEdit;
+@property (nonatomic,strong)NSString* subject;
 - (void)loadQuestions;
 - (void)addBottomView:(NSString*)remark showAll:(BOOL)showAll;
+@property (nonatomic,strong) NSString* currentQuestionId;
 @end

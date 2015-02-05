@@ -40,6 +40,9 @@
 + (NSString*)getIdentify;
 + (void)setIdentify:(NSString*)openId;
 
++ (NSString*)getToken;
++ (void)setToken:(NSString*)token;
+
 //是否第一次使用，若第一次使用 返回的应该为nil
 + (NSString*)getFirstUse;
 + (void)setFirstUse:(NSString*)firstUse;

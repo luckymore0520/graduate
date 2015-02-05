@@ -10,7 +10,7 @@
 #import "MyTraceVC.h"
 #import "QCSlideSwitchView.h"
 #import "CoreDataHelper.h"
-@interface TraceRootVC ()<QCSlideSwitchViewDelegate>
+@interface TraceRootVC ()<QCSlideSwitchViewDelegate,TraceDelegate>
 @property (weak, nonatomic) IBOutlet QCSlideSwitchView *slideSwitchView;
 @property (nonatomic,strong)NSMutableArray* traceVCs;
 @property (nonatomic,strong)NSMutableArray* traceList;
@@ -66,6 +66,7 @@
         MyTraceVC* traceVC = [self.storyboard instantiateViewControllerWithIdentifier:@"trace_wide"];
         traceVC.shoudUpdate = self.shoudUpdate;
         traceVC.trace = trace;
+        traceVC.myDelegate = self;
         [_traceVCs addObject:traceVC];
         traceVC.title = [NSString stringWithFormat:@"第%i天",trace.myDay.integerValue];
     }
@@ -109,25 +110,17 @@
 
 - (void)slideSwitchView:(QCSlideSwitchView *)view didselectTab:(NSUInteger)number
 {
-//    QCListViewController *vc = nil;
-//    if (number == 0) {
-//        vc = self.vc1;
-//    } else if (number == 1) {
-//        vc = self.vc2;
-//    } else if (number == 2) {
-//        vc = self.vc3;
-//    } else if (number == 3) {
-//        vc = self.vc4;
-//    } else if (number == 4) {
-//        vc = self.vc5;
-//    } else if (number == 5) {
-//        vc = self.vc6;
-//    }
-//    [vc viewDidCurrentView];
+
+    MyTraceVC* myTrace =  (MyTraceVC*)[_traceVCs objectAtIndex:number];
+    [myTrace reLoadMusic];
 }
 
 
-
+#pragma mark -TraceDelegate
+- (void)pushDetailVC:(UIViewController *)detail
+{
+    [self.navigationController pushViewController:detail animated:YES];
+}
 
 
 /*

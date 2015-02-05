@@ -132,6 +132,10 @@
 		7D5DBB1A1A80B4350078B99C /* TraceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB191A80B4350078B99C /* TraceHeaderView.m */; };
 		7D5DBB1D1A80C2B00078B99C /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB1C1A80C2B00078B99C /* Trace.m */; };
 		7D5DBB211A8103890078B99C /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */; };
+		7D5DBB241A81BF300078B99C /* Sign.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB231A81BF300078B99C /* Sign.m */; };
+		7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB261A81BF5A0078B99C /* MSign.m */; };
+		7D5DBB2A1A81BFED0078B99C /* MUploadDiary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB291A81BFED0078B99C /* MUploadDiary.m */; };
+		7D5DBB2D1A81C1FA0078B99C /* SignVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB2C1A81C1FA0078B99C /* SignVC.m */; };
 		7D6A518D1A69610600355923 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518C1A69610600355923 /* main.m */; };
 		7D6A51901A69610600355923 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518F1A69610600355923 /* AppDelegate.m */; };
 		7D6A51981A69610600355923 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51971A69610600355923 /* Images.xcassets */; };
@@ -448,6 +452,14 @@
 		7D5DBB1C1A80C2B00078B99C /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trace.m; path = Model/Trace.m; sourceTree = SOURCE_ROOT; };
 		7D5DBB1F1A8103890078B99C /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		7D5DBB221A81BF300078B99C /* Sign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sign.h; path = Model/Sign.h; sourceTree = SOURCE_ROOT; };
+		7D5DBB231A81BF300078B99C /* Sign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sign.m; path = Model/Sign.m; sourceTree = SOURCE_ROOT; };
+		7D5DBB251A81BF5A0078B99C /* MSign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSign.h; path = Frame/ApiTools/MSign.h; sourceTree = "<group>"; };
+		7D5DBB261A81BF5A0078B99C /* MSign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSign.m; path = Frame/ApiTools/MSign.m; sourceTree = "<group>"; };
+		7D5DBB281A81BFED0078B99C /* MUploadDiary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUploadDiary.h; path = Frame/ApiTools/MUploadDiary.h; sourceTree = "<group>"; };
+		7D5DBB291A81BFED0078B99C /* MUploadDiary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUploadDiary.m; path = Frame/ApiTools/MUploadDiary.m; sourceTree = "<group>"; };
+		7D5DBB2B1A81C1FA0078B99C /* SignVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignVC.h; path = "科目/SignVC.h"; sourceTree = "<group>"; };
+		7D5DBB2C1A81C1FA0078B99C /* SignVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignVC.m; path = "科目/SignVC.m"; sourceTree = "<group>"; };
 		7D6A51871A69610600355923 /* graduate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = graduate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6A518B1A69610600355923 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D6A518C1A69610600355923 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -822,6 +834,8 @@
 				7D2432461A7CD8E900C00F64 /* SubjectCell.m */,
 				7DBD86641A7259DB00205576 /* SubjectVC.h */,
 				7DBD86651A7259DB00205576 /* SubjectVC.m */,
+				7D5DBB2B1A81C1FA0078B99C /* SignVC.h */,
+				7D5DBB2C1A81C1FA0078B99C /* SignVC.m */,
 			);
 			name = "科目";
 			sourceTree = "<group>";
@@ -956,6 +970,8 @@
 				7D5DBB1B1A80C2B00078B99C /* Trace.h */,
 				7D5DBB1C1A80C2B00078B99C /* Trace.m */,
 				7D24324B1A7D06F000C00F64 /* Question.h */,
+				7D5DBB221A81BF300078B99C /* Sign.h */,
+				7D5DBB231A81BF300078B99C /* Sign.m */,
 				7D24324C1A7D06F000C00F64 /* Question.m */,
 				7D2432491A7CE59100C00F64 /* Subject.m */,
 			);
@@ -1155,6 +1171,7 @@
 				7DA994D31A79F8E500A879CF /* MGetWelcome.m */,
 				7DA994D51A79FD4700A879CF /* MGetMobileVerify.h */,
 				7DA994D61A79FD4700A879CF /* MGetMobileVerify.m */,
+				7DA994E71A7A165C00A879CF /* MUpdateUserInfo.h */,
 				7DA994D81A7A031F00A879CF /* MRegister.h */,
 				7DA994D91A7A031F00A879CF /* MRegister.m */,
 				7DA994DE1A7A097900A879CF /* MPasswdChange.h */,
@@ -1163,7 +1180,6 @@
 				7DA994E21A7A0D8B00A879CF /* MLogin.m */,
 				7DA994E41A7A15E000A879CF /* MImgUpload.h */,
 				7DA994E51A7A15E000A879CF /* MImgUpload.m */,
-				7DA994E71A7A165C00A879CF /* MUpdateUserInfo.h */,
 				7DA994E81A7A165C00A879CF /* MUpdateUserInfo.m */,
 				7DA994EA1A7A29C500A879CF /* MIndex.h */,
 				7DA994EB1A7A29C500A879CF /* MIndex.m */,
@@ -1181,6 +1197,10 @@
 				7D5DBB101A8082680078B99C /* MQuesList.m */,
 				7D5DBB121A80836A0078B99C /* MQuesCountStatus.h */,
 				7D5DBB131A80836A0078B99C /* MQuesCountStatus.m */,
+				7D5DBB251A81BF5A0078B99C /* MSign.h */,
+				7D5DBB261A81BF5A0078B99C /* MSign.m */,
+				7D5DBB281A81BFED0078B99C /* MUploadDiary.h */,
+				7D5DBB291A81BFED0078B99C /* MUploadDiary.m */,
 			);
 			name = ApiTools;
 			sourceTree = "<group>";
@@ -1462,6 +1482,7 @@
 				7DBD86691A725EDB00205576 /* MainFunVC.m in Sources */,
 				7DA994CD1A79F5C900A879CF /* BaseModel.m in Sources */,
 				7D4E05E51A74EF7B001709DB /* MBProgressHUD.m in Sources */,
+				7D5DBB2A1A81BFED0078B99C /* MUploadDiary.m in Sources */,
 				7D4E05E31A74EF7B001709DB /* MBProgressHUD+Add.m in Sources */,
 				7DA994BE1A7878FE00A879CF /* MJIvar.m in Sources */,
 				7DBD867E1A727E6F00205576 /* SetPasswordViewController.m in Sources */,
@@ -1534,6 +1555,7 @@
 				7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */,
 				7DA994D41A79F8E500A879CF /* MGetWelcome.m in Sources */,
 				7D4E05C41A74EF71001709DB /* SDWebImageDownloaderOperation.m in Sources */,
+				7D5DBB2D1A81C1FA0078B99C /* SignVC.m in Sources */,
 				7D4E06401A767D9C001709DB /* CoreDataHelper.m in Sources */,
 				7DA994BD1A7878FE00A879CF /* MJArgument.m in Sources */,
 				7DA994DA1A7A031F00A879CF /* MRegister.m in Sources */,
@@ -1565,6 +1587,7 @@
 				7D4E05991A74DCB2001709DB /* QuestionView.m in Sources */,
 				7D2432121A7B785500C00F64 /* MainFeatureVC.m in Sources */,
 				7DDA29491A7B2144003F77C3 /* AFNetworkReachabilityManager.m in Sources */,
+				7D5DBB241A81BF300078B99C /* Sign.m in Sources */,
 				7D2432C31A7E181A00C00F64 /* MUploadQues.m in Sources */,
 				7D4E05C01A74EF71001709DB /* SDImageCache.m in Sources */,
 				7D5DBB0B1A8077A10078B99C /* MQuesDelete.m in Sources */,
@@ -1581,6 +1604,7 @@
 				7D4E05CA1A74EF71001709DB /* UIImage+WebP.m in Sources */,
 				7D5DBB211A8103890078B99C /* UIPlaceHolderTextView.m in Sources */,
 				7D24324D1A7D06F000C00F64 /* Question.m in Sources */,
+				7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */,
 				7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */,
 				7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */,
 				7D2432531A7D116300C00F64 /* QuestionCell.m in Sources */,

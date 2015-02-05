@@ -10,5 +10,6 @@
 
 @interface QuestionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
-
+@property (strong, nonatomic) UIView *selectView;
+- (void)setSelect:(BOOL) select;
 @end

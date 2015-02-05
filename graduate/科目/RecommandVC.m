@@ -105,7 +105,7 @@
         QuestionView* view = [[QuestionView alloc]initWithFrame:frame];
         view.myQuestion = [self.questionList objectAtIndex:i];
         view.photoViewDelegate = self;
-        view.orientation = view.myQuestion.orientation;
+        view.orientation = view.myQuestion.orientation==nil?[NSNumber numberWithInt:1]:view.myQuestion.orientation;
         MJPhoto *photo = [[MJPhoto alloc] init];
         MQuestion* question = [self.questionList objectAtIndex:i];
         if (question.isRecommend_.integerValue==1) {
@@ -123,6 +123,19 @@
         view.photo = photo;
         [view setBackgroundColor:[UIColor blackColor]];
         [self.questionViews addObject:view];
+    }
+    
+    
+    if (self.currentQuestionId) {
+        for (int i = 0  ; i < self.questionList.count ; i ++) {
+            MQuestion* question = [self.questionList objectAtIndex:i];
+            if ([question.id_ isEqualToString:self.currentQuestionId]) {
+                self.scrollView.contentOffset= CGPointMake(i*self.scrollView.frame.size.width, 0);
+                self.currentPage = i;
+                [self addBottomView:question.remark_ showAll:NO];
+                return;
+            }
+        }
     }
 }
 

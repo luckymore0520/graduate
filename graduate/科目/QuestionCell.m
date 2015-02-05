@@ -9,5 +9,14 @@
 #import "QuestionCell.h"
 
 @implementation QuestionCell
-
+- (void)setSelect:(BOOL) select;
+{
+    if (!self.selectView) {
+        self.selectView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 80)];
+        [self addSubview:self.selectView];
+        [self.selectView setBackgroundColor:[UIColor blueColor]];
+        [self.selectView setAlpha:0.5];
+    }
+    [self.selectView setHidden:!select];
+}
 @end

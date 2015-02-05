@@ -11,6 +11,7 @@
 #import "QuestionCell.h"
 #import "TraceHeaderView.h"
 #import "QuestionHeaderView.h"
+#import "RecordVC.h"
 @interface MyTraceVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong)NSMutableArray* myQuestions;
 @end
@@ -23,14 +24,19 @@
     
 }
 
+
+- (void)reLoadMusic
+{
+    NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl]];
+    self.isInView = YES;
+}
 - (void)loadQuestion
 {
     
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
     if (self.shoudUpdate) {
-        
-        
     }
 }
 
@@ -102,7 +108,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"showMyQuestion" sender:nil];
+//    [self performSegueWithIdentifier:@"showDetail" sender:nil];
+    
+    RecordVC* record = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
+    NSMutableArray* mQuestionList = [[NSMutableArray alloc]initWithCapacity:self.myQuestions.count];
+    for (NSDictionary* questionDic in self.myQuestions) {
+        for (Question* question in [questionDic objectForKey:@"array"]) {
+            [ mQuestionList addObject:[[QuestionBook getInstance]changeFromMQuestion:question]];
+
+        }
+    
+    }
+    record.questionList = mQuestionList;
+    
+    Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"array"]objectAtIndex:indexPath.row];
+    record.currentQuestionId = question.questionid;
+    [self.myDelegate pushDetailVC:record];
 }
 
 
@@ -117,10 +138,10 @@
         [header.traceImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:self.trace.pictureUrlForTrace width:self.view.frame.size.width height:240] ];
         [header.markLabel setText:self.trace.note];
         self.musicBt = header.musicBt;
-        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl]];
+        if (self.isInView) {
+            [self reLoadMusic];
+        }
         return header;
-
     } else if ( kind == UICollectionElementKindSectionFooter ) {
          QuestionHeaderView*  reusableview= [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionFooter withReuseIdentifier : @ "myFooter" forIndexPath : indexPath ] ;
         if (indexPath.section>0) {

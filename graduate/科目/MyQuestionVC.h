@@ -12,5 +12,6 @@
 @property (nonatomic,strong)NSMutableArray* myQuestions;
 @property (nonatomic)NSInteger type;
 @property (nonatomic)BOOL shoudUpdate;
-
+@property (nonatomic)NSString* subject;
+- (void)updateQuestions;
 @end

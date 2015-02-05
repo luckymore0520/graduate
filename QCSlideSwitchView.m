@@ -304,6 +304,9 @@ static const NSUInteger kTagOfRightSideButton = 999;
         int tag = (int)scrollView.contentOffset.x/self.bounds.size.width +100;
         UIButton *button = (UIButton *)[_topScrollView viewWithTag:tag];
         [self selectNameButton:button];
+        
+        [self.slideSwitchViewDelegate slideSwitchView:self didselectTab:tag-100];
+        
     }
 }
 

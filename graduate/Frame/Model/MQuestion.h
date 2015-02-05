@@ -47,4 +47,9 @@
 @property (retain,nonatomic) NSNumber *memoizedSize;
 
 @property (retain,nonatomic)NSNumber* orientation;
+
+@property (retain,nonatomic)NSNumber* hasLearned_;
+
+@property (retain,nonatomic)NSNumber* reviewCount_;
+
 @end

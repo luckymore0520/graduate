@@ -226,6 +226,7 @@
     question.review_time = 0;
     question.is_master = NO;
     question.isUpload = NO;
+    question.review_time = [NSNumber numberWithInt:0];
     question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue];
     question.create_time = [ToolUtils getCurrentDate];
     question.remark = self.markLabel.text;

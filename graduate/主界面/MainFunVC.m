@@ -150,8 +150,28 @@
             }];
             //若CoreData里有该条数据，检验是否下载音乐，未下载播放默认音乐并下载
             if (array.count!=0) {
+                CoreDataHelper* helper = [CoreDataHelper getInstance];
                 Trace* traceOfToday = [array firstObject];
+                MMusic* music = [main.music_ firstObject];
+                traceOfToday.songName = music.title_;
+                traceOfToday.pictureUrl =main.img_;
+                traceOfToday.myDay = [NSString
+                                      stringWithFormat:@"%d",main.days_.integerValue];
+                traceOfToday.remainday = main.daysLeft_;
+                traceOfToday.pictureUrlForSubject = main.imgGn_;
+                traceOfToday.pictureUrlForTrace = main.imgZj_;
+                traceOfToday.user  = [ToolUtils getUserid];
+                traceOfToday.singer = music.singer_;
+                NSError* error;
+                BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+                if (!isSaveSuccess) {
+                    NSLog(@"Error:%@",error);
+                }else{
+                    NSLog(@"Save successful!");
+                }
+
                 [self setMusic:traceOfToday];
+                
             } else {
                 [self saveDay:main musicUrl:nil];
             }
@@ -216,11 +236,7 @@
         NSLog(@"Save successful!");
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId = music.title_;
-//        if (_isDownloading) {
-//            return;
-//        }
         [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
-//        _isDownloading = YES;
     }
 }
 

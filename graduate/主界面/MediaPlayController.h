@@ -14,7 +14,7 @@
 #define SHOULDSTOP 4
 #define STOP 5
 
-@interface MediaPlayController : NSObject
+@interface MediaPlayController : NSObject<AVAudioPlayerDelegate>
 +(MediaPlayController *)getInstance;
 @property(nonatomic,strong)AVAudioPlayer *audioplayer;
 @property (nonatomic)NSInteger state;

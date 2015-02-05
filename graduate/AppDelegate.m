@@ -39,10 +39,6 @@
     self.mediaPlayController = [MediaPlayController getInstance];
     self.book = [QuestionBook getInstance];
     [_book loadAllData];
-    
-//    
-//    [ToolUtils setUserId:@"dc785099-a88d-11e4-9812-ac853dac2305"];
-//    [ToolUtils setVerify:@"0314a86c-16f6-4978-88f4-c6b47f52ba14"];
     return YES;
 }
 
@@ -180,19 +176,31 @@
 {
     if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
-        NSString *title = NSLocalizedString(@"认证结果", nil);
-        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
+//        NSString *title = NSLocalizedString(@"认证结果", nil);
+//        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
 //                                                        message:message
 //                                                       delegate:nil
 //                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
 //                                              otherButtonTitles:nil];
 //        NSString* weiboToken = [(WBAuthorizeResponse *)response accessToken];
-//    
+//
+        
         NSString* weiboId = [(WBAuthorizeResponse *)response userID];
+        if (!weiboId) {
+            return;
+        }
         [ToolUtils setIdentify:weiboId];
+        [ToolUtils setToken:[(WBAuthorizeResponse *)response accessToken]];
+        
+        
+        NSLog(@"%@ Token",[ToolUtils getToken]);
         [ToolUtils setUserInfo:nil];
+        
+        
+        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"weiboLogin" object:nil];
+        
 //        [alert show];
     }
 

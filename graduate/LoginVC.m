@@ -15,6 +15,7 @@
 #import "MReturn.h"
 #import "WBHttpRequest+WeiboUser.h"
 #import "AppDelegate.h"
+#import "WeiboUser.h"
 @interface LoginVC ()
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginBt;
@@ -62,11 +63,22 @@
 - (void)handleWeiboLogin
 {
     MLogin* login = [[MLogin alloc]init];
-    
-    
+    isThirdParty = YES;
     [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
-}
-//前往主界面
+    [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:@"77238273", @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
+        NSLog(@"获取成功");
+        WeiboUser* user = (WeiboUser*)result;
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId =user.avatarHDUrl;
+        [ToolUtils setIgnoreNetwork:YES];
+        [api download:self url:user.avatarHDUrl];
+        [ToolUtils setIgnoreNetwork:NO];
+        isThirdParty = YES;
+        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
+    }];
+    
+   
+}//前往主界面
 - (void)gotoMainMenu
 {
     
@@ -146,8 +158,9 @@
         if (ret.code_.integerValue==1) {
             NSDictionary* userinfo = [ToolUtils getUserInfo];
             MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
-            NSString* nickname  =[[userinfo objectForKey:@"nickname"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [updateUserInfo load:self nickname:nickname headImg:ret.msg_ sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+            [updateUserInfo load:self nickname:[userinfo objectForKey:@"nickname"] headImg:ret.msg_ sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+            
+            
         } else {
             [self gotoMainMenu];
         }
@@ -161,8 +174,13 @@
         [ToolUtils setIgnoreNetwork:YES];
         [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
         [ToolUtils setIgnoreNetwork:NO];
+        
     } else if ([names isEqualToString:@"MUpdateUserInfo"])
     {
+        NSDictionary* userinfo = [ToolUtils getUserInfo];
+        MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+        user.nickname_ = [userinfo objectForKey:@"username"];;
+        user.sex_ = [NSNumber numberWithInt:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1];
         MReturn* ret = [MReturn objectWithKeyValues:data];
         [self gotoMainMenu];
     }
@@ -204,8 +222,6 @@
         [ToolUtils setIgnoreNetwork:NO];
         isThirdParty = YES;
     }
-    
-
 }
 
 - (void)tencentDidNotLogin:(BOOL)cancelled

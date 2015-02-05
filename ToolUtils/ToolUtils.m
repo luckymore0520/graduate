@@ -406,6 +406,17 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
+
++ (NSString*)getToken
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"token"];
+
+}
++ (void)setToken:(NSString*)token
+{
+    [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"token"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
 ////检查网络连接类型
 //-(void)checkNetworktype:(id)sender{
 //    NSString *connectionKind;

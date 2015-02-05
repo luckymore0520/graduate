@@ -17,6 +17,14 @@
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Sign" representedClassName="Sign" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isUpload" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="myDay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Trace" representedClassName="Trace" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
@@ -34,5 +42,6 @@
     <elements>
         <element name="Question" positionX="-63" positionY="54" width="128" height="270"/>
         <element name="Trace" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="Sign" positionX="-63" positionY="135" width="128" height="133"/>
     </elements>
 </model>

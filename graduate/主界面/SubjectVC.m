@@ -57,6 +57,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalNewLabel;
 @property (nonatomic)BOOL isPresenting;
+@property (nonatomic)BOOL firstOpen;
 @end
 
 @implementation SubjectVC
@@ -66,30 +67,38 @@
     [self.editView removeFromSuperview];
     self.headView.layer.cornerRadius = 45;
     [self.headView setClipsToBounds:YES];
+    
+    self.firstOpen = YES;
+    [self reloadData];
+    
+
 }
     
 
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    if ([ToolUtils getFirstUse]) {
-        [[[MQuestionRecommand alloc]init]load:self];
-        [self initSubject];
-        MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-        [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:180 height:180] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            
-        }];
-        
-        NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
-        if (array.count>0) {
-            Trace* trace = [array firstObject];
-            [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:nil];
-            [self.dailyNoteLabel setText:trace.note];
-//            [self.dailyNoteLabel setTextAlignment:UITextAlignmentCenter];
-        }
-        [self.nickNameLabel setText:user.nickname_];
-        
+    if (self.firstOpen) {
+        self.firstOpen = NO;
+    } else {
+        [self reloadData];
     }
+}
+
+- (void)reloadData
+{
+    [[[MQuestionRecommand alloc]init]load:self];
+    MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:180 height:180] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    }];
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
+    if (array.count>0) {
+        Trace* trace = [array firstObject];
+        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:nil];
+        [self.dailyNoteLabel setText:trace.note];
+    }
+    [self.nickNameLabel setText:user.nickname_];
+    [self initSubject];
 }
 
 
@@ -103,6 +112,11 @@
     }
     [self.totalLabel setText:[NSString stringWithFormat:@"累计题目%d",total]];
     [self.totalNewLabel setText:[NSString stringWithFormat:@"新增错题%d",totalNew]];
+    
+    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+
+    [self.cardLabel setText:[NSString stringWithFormat:@"累计打卡%d",signList.count]];
+
     
 }
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
@@ -122,36 +136,48 @@
     } else if ([names isEqualToString:@"MQuesCountStatus"])
     {
         MQuestionCount* count = [MQuestionCount objectWithKeyValues:data];
+        int total = 0;
         for (Subject* subject in self.subjects) {
-            switch (subject.type) {
-                case 1:
-                    subject.shoudUpdate = subject.total < count.engCount_.integerValue;
-                    subject.total = subject.total>count.engCount_.integerValue?subject.total:count.engCount_.integerValue;
-                    break;
-                case 2:
-                    subject.shoudUpdate = subject.total < count.polityCount_.integerValue;
-                    subject.total = subject.total>count.polityCount_.integerValue?subject.total:count.polityCount_.integerValue;
-                    break;
-                case 3:
-                    subject.shoudUpdate = subject.total < count.mathCount_.integerValue;
-                    subject.total = subject.total>count.mathCount_.integerValue?subject.total:count.mathCount_.integerValue;
-                    break;
-                case 4:
-                    subject.shoudUpdate = subject.total < count.major1Count_.integerValue;
-                    subject.total = subject.total>count.major1Count_.integerValue?subject.total:count.major1Count_.integerValue;
-                    break;
-                case 5:
-                    subject.shoudUpdate = subject.total < count.major2Count_.integerValue;
-                    subject.total = subject.total>count.major2Count_.integerValue?subject.total:count.major2Count_.integerValue;
-                    break;
-                default:
-                    break;
+            total+=subject.total;
+        }
+        
+        if (total<count.totoalCount_.integerValue) {
+            for (Subject* subject in self.subjects) {
+                switch (subject.type) {
+                    case 1:
+                        subject.shoudUpdate = subject.total < count.engCount_.integerValue;
+                        subject.total = subject.total>count.engCount_.integerValue?subject.total:count.engCount_.integerValue;
+                        break;
+                    case 2:
+                        subject.shoudUpdate = subject.total < count.polityCount_.integerValue;
+                        subject.total = subject.total>count.polityCount_.integerValue?subject.total:count.polityCount_.integerValue;
+                        break;
+                    case 3:
+                        subject.shoudUpdate = subject.total < count.mathCount_.integerValue;
+                        subject.total = subject.total>count.mathCount_.integerValue?subject.total:count.mathCount_.integerValue;
+                        break;
+                    case 4:
+                        subject.shoudUpdate = subject.total < count.major1Count_.integerValue;
+                        subject.total = subject.total>count.major1Count_.integerValue?subject.total:count.major1Count_.integerValue;
+                        break;
+                    case 5:
+                        subject.shoudUpdate = subject.total < count.major2Count_.integerValue;
+                        subject.total = subject.total>count.major2Count_.integerValue?subject.total:count.major2Count_.integerValue;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+        
+        
+        
         [self calculateTotal];
         [self.tableview reloadData];
     }
 }
+
+
 
 - (void)initSubject
 {
@@ -159,38 +185,17 @@
     [self.tableview reloadData];
     [[[MQuesCountStatus alloc]init]load:self];
     [self calculateTotal];
-}
-
-
-
-
-- (IBAction)resignAll:(id)sender {
-    [self.keyboardBt setHidden:YES];
-    [self.editTextView resignFirstResponder];
-    [self.editView setHidden:YES];
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
-    } completion:^(BOOL finished) {
-    }];
-}
-
-
-
-- (IBAction)startEdit:(id)sender {
-    [self editRemark];
     
 }
 
 
 
 
-- (IBAction)setSubject:(id)sender {
-    if ([ToolUtils getMySubjects]) {
-        [ToolUtils showMessage:@"科目已设置"];
-        return;
-    }
-    [self performSegueWithIdentifier:@"setSubject" sender:nil];
+
+- (IBAction)startEdit:(id)sender {
+    [self editRemark];
 }
+
 
 - (IBAction)recommand:(id)sender {
     [self performSegueWithIdentifier:@"recommand" sender:nil];
@@ -207,13 +212,12 @@
     root.shoudUpdate = shoudUpdate;
     [self.navigationController pushViewController:root animated:YES];
 }
+
 - (IBAction)takePhoto:(id)sender {
     SCNavigationController *nav = [[SCNavigationController alloc] init];
     nav.scNaigationDelegate = self;
     [nav showCameraWithParentController:self];
-    
 }
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -225,6 +229,9 @@
         MyQuestionVC* vc = (MyQuestionVC*)segue.destinationViewController;
         vc.type = ((Subject*)sender).type;
         vc.shoudUpdate = ((Subject*)sender).shoudUpdate;
+        vc.subject = ((Subject*)sender).name;
+        
+        
     }  else if ([segue.identifier isEqualToString:@"english"]||
         [segue.identifier isEqualToString:@"math"]||
         [segue.identifier isEqualToString:@"major"]) {
@@ -294,8 +301,19 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Subject* subject = [_subjects objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"myQuestion" sender:subject];
+    
+    if (self.subjects.count==4) {
+        Subject* subject = [_subjects objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"myQuestion" sender:subject];
+        
+
+    } else {
+        [self performSegueWithIdentifier:@"editSubject" sender:nil];
+
+    }
+    
+    
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -419,8 +437,37 @@
 
 -(void)saveRemark
 {
+    if (self.editTextView.text.length>46) {
+        [ToolUtils showMessage:@"日记不能超过46个字"];
+        return;
+    }
+
+    
     [self.editTextView resignFirstResponder];
     [self.dailyNoteLabel setText:self.editTextView.text];
+    NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
+    CoreDataHelper* helper= [CoreDataHelper getInstance];
+    Trace* trace;
+    if (array.count==0) {
+        trace = (Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
+        trace.myDay = myDay;
+        trace.user = [ToolUtils getUserid];
+        NSLog(@"..................此处照理不可能发生");
+    } else {
+        trace = [array firstObject];
+    }
+    trace.note = self.editTextView.text;
+    
+    NSError* error;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+    }else{
+        NSLog(@"Save successful! 日记~~~~~~~~~");
+    }
+    
+    
 }
 
 

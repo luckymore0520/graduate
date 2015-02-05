@@ -14,15 +14,104 @@
 #import "ReviewVC.h"
 #import "RecordVC.h"
 #import "MQuesList.h"
-@interface MyQuestionVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+#import "MQuesDelete.h"
+#import "Subject.h"
+#import "ButtonGroup.h"
+@interface MyQuestionVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *photoView;
+@property (nonatomic,strong)NSMutableArray* selectedArray;
 @property (nonatomic) NSInteger day;
+@property (nonatomic)BOOL firstShow;
+@property (weak, nonatomic) IBOutlet UIView *selectView;
+@property (weak, nonatomic) IBOutlet UIView *reviewBtView;
+@property (weak, nonatomic) IBOutlet ButtonGroup *transferView;
+
+@property (weak, nonatomic) IBOutlet UIButton *subjectBt1;
+@property (weak, nonatomic) IBOutlet UIButton *subjectBt2;
+@property (weak, nonatomic) IBOutlet UIButton *subjectBt3;
+@property (nonatomic,strong)NSMutableArray* subjects;
+@property (nonatomic)BOOL selectModel;
 @end
 
 @implementation MyQuestionVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadData];
+    self.firstShow = YES;
+    [self addRightButton];
+    self.selectModel = NO;
+    self.selectedArray  = [[NSMutableArray alloc]init];
+    
+}
+
+
+- (void)initSubjects
+{
+    NSMutableArray* subjects = [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
+    self.subjectBt1.tag = -1;
+    self.subjectBt2.tag = -1;
+    self.subjectBt3.tag = -1;
+
+    NSArray* buttons = [NSArray arrayWithObjects:self.subjectBt1,self.subjectBt2,self.subjectBt3,nil];
+    
+    [self.transferView loadButton:buttons];
+    
+    for (UIButton* button in buttons) {
+        [button setTag:-1];
+    }
+    Subject* currentSubject = nil;
+    for (Subject* subject in subjects) {
+        if ([subject.name isEqualToString:self.subject]) {
+            currentSubject = subject;
+        }
+    }
+    [subjects removeObject:currentSubject];
+    self.subjects = subjects;
+    for (Subject* subject in self.subjects) {
+        for (int i = 0 ; i < buttons.count; i++) {
+            UIButton* button = [buttons objectAtIndex:i];
+            if (button.tag==-1) {
+                [button setTitle:subject.name forState:UIControlStateNormal];
+                button.tag = i;
+                break;
+            }
+        }
+    }
+}
+
+- (void)addRightButton
+{
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [button setTitle:@"选择" forState:UIControlStateNormal];
+    [button setTitle:@"取消" forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectPhotos:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = myAddButton;
+}
+
+- (void) selectPhotos:(id)sender
+{
+    [self.selectedArray removeAllObjects];
+    for (int i = 0 ; i < self.myQuestions.count; i++) {
+        for (int j = 0 ; j < [[[self.myQuestions objectAtIndex:i] objectForKey:@"array"] count]; j++) {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+            QuestionCell* cell = (QuestionCell*)[self.photoView cellForItemAtIndexPath:indexPath];
+            [cell setSelect:NO];
+        }
+    }
+    
+    [self.reviewBtView setHidden:!self.reviewBtView.hidden];
+    [self.selectView setHidden:!self.selectView.hidden];
+    self.selectModel = !self.selectModel;
+    UIButton* button = (UIButton*)sender;
+    [button setSelected:!button.selected];
+    
+    
+}
+- (void)loadData
+{
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
     [self.myQuestions sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -30,9 +119,6 @@
         NSString* b = [obj2 objectForKey:@"day"];
         return  [b compare:a];
     }];
-//    [self.photoView reloadData];
-
-    
     if (self.shoudUpdate) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -42,14 +128,28 @@
         self.day = currentDay;
         NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
         [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
+        
+        
+        
     }
-
+ 
 }
 
-- (void)viewWillAppear:(BOOL)animated
+
+- (void)viewDidAppear:(BOOL)animated
 {
-    
+    if (self.firstShow) {
+        self.firstShow = NO;
+    } else {
+        [self loadData];
+        [self.photoView reloadData];
+    }
+    [self initSubjects];
+    CGRect frame = self.view.frame;
+    NSLog(@"%lf",frame.origin.y);
 }
+
+
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
@@ -85,19 +185,104 @@
             
             self.myQuestions =
             [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
+            self.shoudUpdate = NO;
             [self.photoView reloadData];
         }
         
         
+    } else if ([names isEqualToString:@"MQuesDelete.h"])
+    {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue==1) {
+            NSLog(@"删除成功");
+        }
     }
 }
 
-- (IBAction)back:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 - (IBAction)reviewModelAction:(id)sender {
     [self performSegueWithIdentifier:@"reviewMyQuestion" sender:nil];
 }
+
+- (IBAction)transfer:(id)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.transferView.transform = CGAffineTransformMakeTranslation(0, -self.transferView.frame.size.height);
+    }];
+    
+    
+    
+    
+    
+}
+- (IBAction)cancelTransfer:(id)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.transferView.transform = CGAffineTransformMakeTranslation(0, 0);
+    }];
+    
+    
+}
+- (IBAction)ensureTransfer:(id)sender {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.transferView.transform = CGAffineTransformMakeTranslation(0, 0);
+    }];
+    
+    
+    
+    
+    
+    Subject* subject = [self.subjects objectAtIndex:[self.transferView selectedIndex]];
+
+    QuestionBook* book = [QuestionBook getInstance];
+    
+    [[book.allQuestions objectAtIndex:self.type-1]removeObjectsInArray:self.selectedArray];
+    [[book.allQuestions objectAtIndex:subject.type-1]addObjectsFromArray:self.selectedArray];
+    
+    
+    
+    
+    
+    
+    for (Question* question in self.selectedArray) {
+        question.subject = subject.name;
+        question.type = [NSNumber numberWithInt:subject.type];
+        question.isUpload = NO;
+    }
+    NSMutableArray* shoudRemoveDic = [[NSMutableArray alloc]init];
+    for (NSDictionary* dic in self.myQuestions) {
+        NSMutableArray* array =  [dic objectForKey:@"array"];
+        [array removeObjectsInArray:self.selectedArray];
+        if (array.count==0) {
+            [shoudRemoveDic addObject:dic];
+        }
+    }
+    [self.myQuestions removeObjectsInArray:shoudRemoveDic];
+    
+    
+    
+    [self.photoView reloadData];
+
+    [book save];
+    
+    
+    [book updateQuestions];
+}
+
+- (IBAction)delete:(id)sender {
+    
+    
+    UIActionSheet* actionsheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除笔记" otherButtonTitles:nil, nil];
+    [actionsheet showInView:[UIApplication sharedApplication].keyWindow];
+    
+    
+    
+    
+
+}
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -139,8 +324,34 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [self performSegueWithIdentifier:@"showDetail" sender:nil];
- 
+    if (!self.selectModel) {
+        RecordVC* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
+        detailVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+        Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+        detailVC.currentQuestionId = question.questionid;
+        [self.navigationController pushViewController:detailVC animated:YES];
+        
+    } else {
+        Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+        QuestionCell* cell = (QuestionCell*)[self.photoView cellForItemAtIndexPath:indexPath];
+
+        if ([self.selectedArray indexOfObject:question]== NSNotFound) {
+            [self.selectedArray addObject:question];
+            NSLog(@"不在里面");
+            [cell setSelect:YES];
+        } else {
+            [self.selectedArray removeObject:question];
+            NSLog(@"在里面");
+            [cell setSelect:NO];
+        }
+        
+        
+        
+        
+    }
+//    [self performSegueWithIdentifier:@"showDetail" sender:indexPath];
+    
+    
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
@@ -154,6 +365,8 @@
     }
     return reusableview;
 }
+
+
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -161,12 +374,45 @@
         ReviewVC* reviewVC = [segue destinationViewController];
 //        reviewVC.questionList = self.myQuestions;
         reviewVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
-    } else if ([segue.identifier isEqual:@"showDetail"])
-    {
-        RecordVC* recordVC = [segue destinationViewController];
-        recordVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+        reviewVC.subject = self.subject;
     }
 }
 
 
+#pragma mark -ActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        NSMutableArray* shoudRemoveDic = [[NSMutableArray alloc]init];
+        for (NSDictionary* dic in self.myQuestions) {
+            NSMutableArray* array =  [dic objectForKey:@"array"];
+            [array removeObjectsInArray:self.selectedArray];
+            if (array.count==0) {
+                [shoudRemoveDic addObject:dic];
+            }
+        }
+        [self.myQuestions removeObjectsInArray:shoudRemoveDic];
+
+        NSMutableString* questionIds = [[NSMutableString alloc]init];
+        for (Question* question in self.selectedArray) {
+            question.img = @"";
+            if (question.is_recommand.integerValue==1) {
+                [ToolUtils deleteFile:question.questionid];
+            }
+            [questionIds appendFormat:@"%@,",question.questionid];
+        }
+        
+        
+        
+        
+        [[QuestionBook getInstance]save];
+        
+        MQuesDelete* delete = [[MQuesDelete alloc]init];
+        [delete load:self id:questionIds];
+        
+        [self.selectedArray removeAllObjects];
+        [self.photoView reloadData];
+
+    }
+}
 @end

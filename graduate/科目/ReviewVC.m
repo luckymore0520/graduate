@@ -9,6 +9,7 @@
 
 
 #import "ReviewVC.h"
+#import "SignVC.h"
 @interface ReviewVC ()
 
 @end
@@ -40,7 +41,11 @@
 
 - (void)loadQuestions
 {
-    self.questionViews = [[NSMutableArray alloc]init];
+    
+    for (UIView* view in self.questionViews) {
+        [view removeFromSuperview];
+    }
+
     CGSize pageScrollViewSize = self.view.frame.size;
     self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * self.questionList.count, 0);
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -73,6 +78,9 @@
         [self.questionViews addObject:view];
     }
     [self.scrollView addSubview:self.questionViews.firstObject];
+    
+    
+    
 }
 
 
@@ -103,9 +111,7 @@
 //已掌握
 - (IBAction)hasKnownAction:(id)sender {
     QuestionBook* book = [QuestionBook getInstance];
-    Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
-    question.is_master =[NSNumber numberWithBool:YES];
-    [book save];
+    [book review:[self.questionList objectAtIndex:self.currentPage] isMaster:YES];
     [self pageChange:nil];
 #warning 此处需要调用已掌握的接口
 }
@@ -113,9 +119,7 @@
 //未掌握
 - (IBAction)notKnowAction:(id)sender {
     QuestionBook* book = [QuestionBook getInstance];
-    Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
-    question.is_master =[NSNumber numberWithBool:NO];
-    [book save];
+    [book review:[self.questionList objectAtIndex:self.currentPage] isMaster:NO];
     [self pageChange:nil];
 #warning 此处需要调用未掌握的接口
 
@@ -136,19 +140,36 @@
     if (!showAll&&remark.length>=40) {
         remark = [remark substringToIndex:40];
         remark = [NSString stringWithFormat:@"%@....",remark];
+    
+    
+    
+    
+    } else {
+        
     }
+    
+    
+    
+    
     CGRect frame = [[UIScreen mainScreen]bounds];
     CGFloat width = frame.size.width;
-    UIFont *font = [UIFont systemFontOfSize:13];
+    UIFont *font = [UIFont systemFontOfSize:14];
     CGSize size = CGSizeMake(width,2000);
     CGSize labelsize = [remark sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
     NSLog(@"labelheight%lf",labelsize.height);
 
-    _markLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 5 , width, labelsize.height+20)];
+    if (labelsize.height>60) {
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(5, 5 , width, 80)];
+    } else {
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(5, 5 , width, labelsize.height+30)];
+
+    }
+    
+    
     [_markLabel setFont:font];
 
     _markLabel.text = remark;
-    [_markLabel setNumberOfLines:0];
+//    [UITextView setNumberOfLines:0];
     [_markLabel setBackgroundColor:[UIColor clearColor]];
     [_markLabel setTextColor:[UIColor whiteColor]];
     
@@ -201,7 +222,7 @@
         [self.bottomContainerView addSubview:starBt];
     }
     
-   
+    [self.markLabel setEditable:NO];
     
 }
 
@@ -281,6 +302,10 @@
     QuestionBook* book = [QuestionBook getInstance];
     Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
     question.remark = self.editTextView.text;
+    
+    ((MQuestion*)[self.questionList objectAtIndex:self.currentPage]).remark_=self.editTextView.text;
+    
+    
     [book save];
     
     
@@ -326,27 +351,16 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleDefault;
-//    //UIStatusBarStyleDefault = 0 黑色文字，浅色背景时使用
-//    //UIStatusBarStyleLightContent = 1 白色文字，深色背景时使用
-//}
 
-
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;//隐藏为YES，显示为NO
-}
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"complete"]) {
+        SignVC* nextVC = (SignVC*)segue.destinationViewController;
+        nextVC.subject = self.subject;
+    }
 }
-*/
+
 
 @end

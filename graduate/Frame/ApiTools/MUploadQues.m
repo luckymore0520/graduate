@@ -27,9 +27,16 @@
     if (question.subject) {
         [params setObject:question.subject forKey:@"subject"];
     }
+    
+    
     [params setObject:question.is_highlight forKey:@"isHighlight"];
     [params setObject:question.is_recommand forKey:@"isRecommend"];
     [params setObject:question.type forKey:@"type"];
+    
+    [params setObject:question.review_time==nil?[NSNumber numberWithInt:0]:question.review_time forKey:@"reviewCount"];
+    [params setObject:question.is_master==nil?[NSNumber numberWithBool:NO]:question.is_master forKey:@"hasLearned"];
+    
+    
     return [self post:@"MUploadQues" params:params delegate:delegate];
 }
 @end

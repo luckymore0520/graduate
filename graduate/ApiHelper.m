@@ -121,7 +121,11 @@
     if (resultDict) {
         if ([[resultDict objectForKey:@"errorCode"]integerValue]==0) {
             if ([resultDict objectForKey:@"data"]) {
-                [_delegate dispos:[resultDict objectForKey:@"data"] functionName:_name];
+                if (!self.object) {
+                    [_delegate dispos:[resultDict objectForKey:@"data"] functionName:_name];
+                } else {
+                    [_delegate dispos:[resultDict objectForKey:@"data"] functionName:_name object:self.object];
+                }
             } else {
                 [_delegate showAlert:@"网络请求错误，请重试" functionName:_name];
             }

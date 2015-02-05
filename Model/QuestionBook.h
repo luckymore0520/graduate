@@ -10,14 +10,11 @@
 #import "CoreDataHelper.h"
 #import "Question.h"
 #import "MQuestion.h"
-@interface QuestionBook : NSObject
-@property (nonatomic,strong) NSMutableArray* mathBook;
-@property (nonatomic,strong) NSMutableArray* englishBook;
-@property (nonatomic,strong) NSMutableArray* politicBook;
-@property (nonatomic,strong) NSMutableArray* major1Book;
-@property (nonatomic,strong) NSMutableArray* major2Book;
+#import "MUploadQues.h"
+@interface QuestionBook : NSObject<ApiDelegate>
 @property (nonatomic,strong) NSMutableArray* allQuestions;
 @property (nonatomic,strong) NSMutableArray* subjects;
+@property (nonatomic) NSInteger needUpload;
 +(QuestionBook *)getInstance;
 - (void)loadAllData;
 - (Question*)insertQuestionFromServer:(MQuestion*)currentQuestion day:(NSInteger)day;
@@ -31,5 +28,7 @@
 - (MQuestion*)changeFromMQuestion:(Question*)question;
 - (Question*)getQuestionByMQuestion:(MQuestion*)mquestion;
 - (NSArray*)getQuestionByDay:(NSString*)day;
+- (void)review:(MQuestion*)mQuestion isMaster:(BOOL)isMaster;
 - (void)save;
+- (void)updateQuestions;
 @end

@@ -105,7 +105,8 @@
         case SHOULDSTOP:
             [[MediaPlayController getInstance]stop];
             [_musicBt setTitle:@"开始" forState:UIControlStateNormal];
-            [self loadMusic:self.musicUrl];
+//            [self loadMusic:self.musicUrl];
+            [_controller prepareToPlayWithUrl:self.musicUrl];
             [_musicBt setTag:READY];
             break;
         default:

@@ -15,7 +15,8 @@
 - (void)dispos:(NSDictionary*) data functionName:(NSString*)names;
 - (void)showError:(NSError*) error functionName:(NSString*)names;
 - (void) showAlert:(NSString*) alert functionName:(NSString*)names;
-
+@optional
+- (void)dispos:(NSDictionary*) data functionName:(NSString*)names object:(id)object;
 @end
 
 //COCOAPODS,AFNETWORKING, MANTLE/MJextentison, MASONRY,blockkit,sourcetree/gitflow
@@ -31,7 +32,7 @@
 @property (nonatomic,strong)NSDictionary* params;
 @property (nonatomic,strong)NSString* content;
 @property (nonatomic,strong)NSString* fileId;
-
+@property (nonatomic,strong)id object;
 -(ApiHelper*) load:(NSString*)method params:(NSDictionary*) params delegate:(id<ApiDelegate>) delegate;
 -(ApiHelper*) post:(NSString*)method params:(NSDictionary*) params delegate:(id<ApiDelegate>) delegate;
 - (ApiHelper*)setPage:(NSInteger)page limit:(NSInteger) limit;

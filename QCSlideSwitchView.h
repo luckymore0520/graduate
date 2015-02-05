@@ -121,5 +121,7 @@
  */
 - (void)slideSwitchView:(QCSlideSwitchView *)view didselectTab:(NSUInteger)number;
 
+
+
 @end
 

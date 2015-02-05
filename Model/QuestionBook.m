@@ -10,6 +10,12 @@
 #import "ToolUtils.h"
 #import "Subject.h"
 #import "MUser.h"
+#import "MImgUpload.h"
+#import "MReturn.h"
+#import "Sign.h"
+#import "MSign.h"
+
+
 @implementation QuestionBook
 
 QuestionBook* questionBook = nil;
@@ -21,6 +27,7 @@ QuestionBook* questionBook = nil;
             questionBook = [[self alloc] init];
         }
     }
+
     return questionBook;
 }
 
@@ -37,33 +44,139 @@ QuestionBook* questionBook = nil;
 
 - (void)loadAllData
 {
-    _englishBook =
+    NSMutableArray* _englishBook =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=1 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
     
-    _politicBook =
+    NSMutableArray* _politicBook =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=2 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
     
     
-    _mathBook =
+    NSMutableArray* _mathBook =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=3 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
 
     
     
-    _major1Book =
+    NSMutableArray* _major1Book =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=4 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
 
     
     
-    _major2Book =
+    NSMutableArray* _major2Book =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=5 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
     
     _allQuestions = [NSMutableArray arrayWithObjects:[self removeEmptyQuestions:_englishBook],[self removeEmptyQuestions:_politicBook],[self removeEmptyQuestions:_mathBook],[self removeEmptyQuestions:_major1Book],[self removeEmptyQuestions:_major2Book], nil];
-
+    self.needUpload = 0;
+    [self updateQuestions];
+    
 }
 
+
+- (void)updateQuestions
+{
+    
+    dispatch_queue_t quene = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(quene, ^{
+    
+        for (NSMutableArray* arr in _allQuestions) {
+            for (Question* question in arr) {
+                if (!question.isUpload.boolValue) {
+                    [self upLoadQuestion:question];
+                    NSLog(@"开始上传问题 %@",question.questionid);
+                    self.needUpload++;
+                }
+            }
+        }
+        
+        NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+        
+        for (Sign* sign in signList) {
+            if (!sign.isUpload.boolValue) {
+                [self sign:sign];
+                NSLog(@"开始上传打卡 %@",sign.date);
+                self.needUpload++;
+            }
+        }
+        
+        
+    });
+}
+
+
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names object:(id)object
+{
+    
+    if ([names isEqualToString:@"MImgUpload"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue==1) {
+            Question* question = (Question*)object;
+            question.img = ret.msg_;
+            MUploadQues* upLoadQues = [[MUploadQues alloc]init];
+            upLoadQues.object = question;
+            [upLoadQues load:self question:question];
+             NSLog(@"成功上传图片 %@",question.questionid);
+ 
+        }
+        
+        
+    } else if([names isEqualToString:@"MUploadQues"]){
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue==1) {
+            Question* question = (Question*)object;
+            question.isUpload = [NSNumber numberWithBool:YES];
+            
+            NSLog(@"成功上传问题 %@",question.questionid);
+
+        }
+        
+        
+    } else if ([names isEqualToString:@"MSign"])
+    {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue==1) {
+            Sign* sign = (Sign*)object;
+            sign.isUpload = [NSNumber numberWithBool:YES];
+            NSLog(@"成功上传打卡 %@",sign.date);
+
+        }
+    }
+    
+    if (self.needUpload==0) {
+        [self save];
+    }
+}
+
+- (void)showAlert:(NSString *)alert functionName:(NSString *)names
+{
+    NSLog(@"上传问题失败！！");
+}
+
+
+
+-(void)upLoadQuestion:(Question*)question
+{
+//    MQuestion* mQuestion = [self changeFromMQuestion:question];
+    if ([question.img isEqualToString:question.questionid]) {
+        UIImage* image = [UIImage imageWithData:[ToolUtils loadData:question.questionid]];
+        MImgUpload* upLoad = [[MImgUpload alloc]init];
+        upLoad.object = question;
+        [upLoad load:self img:image name:question.questionid];
+    } else {
+        MUploadQues* upLoadQues = [[MUploadQues alloc]init];
+        upLoadQues.object = question;
+        [upLoadQues load:self question:question];
+    }
+}
+
+- (void)sign:(Sign*)sign
+{
+    MSign* mSign = [[MSign alloc]init];
+    mSign.object = sign;
+    [mSign load:self type:sign.type.integerValue subject:sign.subject date:sign.date];
+    
+}
 - (Question*)insertQuestionFromServer:(MQuestion*)currentQuestion day:(NSInteger)day
 {
     NSArray* result = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"questionid=%@",currentQuestion.id_] tableName:@"Question"];
@@ -83,6 +196,8 @@ QuestionBook* questionBook = nil;
     question.subject = currentQuestion.subject_;
     question.is_highlight = currentQuestion.isHighlight_;
     question.is_recommand = 0;
+    question.review_time = currentQuestion.reviewCount_;
+    question.is_master = currentQuestion.hasLearned_;
     question.isUpload = [NSNumber numberWithBool:YES];
     question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
     question.myDay = [NSString stringWithFormat:@"%d",day];
@@ -119,6 +234,8 @@ QuestionBook* questionBook = nil;
     question.subject = currentQuestion.subject_;
     question.is_highlight = currentQuestion.isHighlight_;
     question.is_recommand = currentQuestion.isRecommend_;
+    question.review_time = currentQuestion.reviewCount_;
+    question.is_master = currentQuestion.hasLearned_;
     question.isUpload = [NSNumber numberWithBool:NO];
     question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
     question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
@@ -153,6 +270,8 @@ QuestionBook* questionBook = nil;
     mquestion.isHighlight_ = question.is_highlight;
     mquestion.isRecommend_ = question.is_recommand;
     mquestion.createTime_ = question.create_time;
+    mquestion.hasLearned_ = question.is_master;
+    mquestion.reviewCount_ = question.review_time;
     return mquestion;
 }
 
@@ -210,6 +329,9 @@ QuestionBook* questionBook = nil;
     NSMutableArray* resultArr = [[NSMutableArray alloc]init];
     
     for (Question* question in questionOfDay) {
+        if (question.img.length==0) {
+            continue;
+        }
         BOOL has=NO;
         for (NSDictionary* dic in resultArr) {
             if ([[dic objectForKey:@"subject"]isEqualToString:question.subject]) {
@@ -227,11 +349,38 @@ QuestionBook* questionBook = nil;
         
         
     }
+    
+    
+    
     return resultArr;
 }
 
 - (NSArray *)getMySubjects
 {
+    
+    
+    NSMutableArray* _englishBook =
+    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=1 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    
+    
+    NSMutableArray* _politicBook =
+    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=2 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    
+    
+    
+    NSMutableArray* _mathBook =
+    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=3 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    
+    
+    
+    NSMutableArray* _major1Book =
+    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=4 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    
+    
+    
+    NSMutableArray* _major2Book =
+    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=5 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    
     NSDictionary* userInfo = [ToolUtils getUserInfomation];
     MUser* user = [MUser objectWithKeyValues:userInfo];
     if (user.subjectMajor1_.length==0) {
@@ -248,7 +397,7 @@ QuestionBook* questionBook = nil;
         
         Subject* english = [[Subject alloc]init];
         english.name = user.subjectEng_;
-        english.total = book.englishBook.count;
+        english.total = _englishBook.count;
         english.newAdd = [book getQuestionOfDayAndType:today type:1].count;
         english.type=1;
         [self.subjects addObject:english];
@@ -256,7 +405,7 @@ QuestionBook* questionBook = nil;
         
         Subject* politic = [[Subject alloc]init];
         politic.name = user.subjectPolity_;
-        politic.total = book.politicBook.count;
+        politic.total = _politicBook.count;
         politic.newAdd = [book getQuestionOfDayAndType:today type:2].count;
         politic.type = 2;
         [self.subjects addObject:politic];
@@ -266,7 +415,7 @@ QuestionBook* questionBook = nil;
         if (user.subjectMath_.length!=0) {
             Subject* maths = [[Subject alloc]init];
             maths.name = user.subjectMath_;
-            maths.total = book.mathBook.count;
+            maths.total = _mathBook.count;
             maths.newAdd = [book getQuestionOfDayAndType:today type:3].count;
             maths.type =3;
             [self.subjects addObject:maths];
@@ -275,7 +424,7 @@ QuestionBook* questionBook = nil;
         } else {
             Subject* major2 = [[Subject alloc]init];
             major2.name = user.subjectMajor2_;
-            major2.total = book.major2Book.count;
+            major2.total = _major2Book.count;
             major2.newAdd = [book getQuestionOfDayAndType:today type:5].count;
             major2.type = 5;
             [self.subjects addObject:major2];
@@ -284,7 +433,7 @@ QuestionBook* questionBook = nil;
         
         Subject* major1 = [[Subject alloc]init];
         major1.name = user.subjectMajor1_;
-        major1.total = book.major1Book.count;
+        major1.total = _major1Book.count;
         major1.newAdd = [book getQuestionOfDayAndType:today type:4].count;
         major1.type =4;
         [self.subjects addObject:major1];
@@ -320,5 +469,15 @@ QuestionBook* questionBook = nil;
         NSLog(@"Save successful!");
     }
 }
+
+- (void)review:(MQuestion*)mQuestion isMaster:(BOOL)isMaster
+{
+    Question* question = [self getQuestionByMQuestion:mQuestion];
+    question.review_time = [NSNumber numberWithInt:question.review_time.integerValue+1];
+    question.isUpload = [NSNumber numberWithBool:NO];
+    question.is_master = [NSNumber numberWithBool:isMaster];
+    [self save];
+}
+
 
 @end
