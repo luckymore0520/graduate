@@ -9,6 +9,7 @@
 #import "OtherFuncVCViewController.h"
 #import "SelfCenterViewController.h"
 #import "FeedBackViewController.h"
+
 @interface OtherFuncVCViewController ()
 
 @end
@@ -23,6 +24,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)goToSquare:(id)sender {
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"SquareStoryboard" bundle:nil];
+    
+    UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"square"];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 - (IBAction)goToFeedback:(id)sender {
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];

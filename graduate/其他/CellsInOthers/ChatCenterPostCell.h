@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MComment.h"
+#import "MPost.h"
 @interface ChatCenterPostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *postAltasImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *postSexImageView;
@@ -17,5 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *postIntervalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postContextLabel;
-
+@property (weak, nonatomic) IBOutlet UIButton *replyBt;
+@property (nonatomic,strong) MComment* comment;
+@property (nonatomic,strong)MPost* post;
++ (CGFloat)getHeight:(NSString*) content;
 @end

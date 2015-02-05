@@ -2737,6 +2737,9 @@
                                 <state key="normal" title="广场">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="goToSquare:" destination="tDp-dd-JJk" eventType="touchUpInside" id="n0B-Hu-c7s"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tC-KM-kGi">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>

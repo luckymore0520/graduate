@@ -20,4 +20,13 @@
     // Configure the view for the selected state
 }
 
++ (CGFloat)getHeight:(NSString*) content
+{
+    UIFont *font = [UIFont systemFontOfSize:18];
+    CGSize size = CGSizeMake([[UIScreen mainScreen]applicationFrame].size.width,2000);
+    CGSize labelsize = [content sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+    return labelsize.height;
+   
+}
+
 @end

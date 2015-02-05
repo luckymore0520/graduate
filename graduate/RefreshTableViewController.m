@@ -178,15 +178,6 @@ NSString *const MJTableViewCellIdentifier = @"Cell";
     return cell;
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    if (scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height) {
-//        if (hasMore && !isLoading) {
-//            page++;
-//            [self loadData];
-//        }
-//    }
-//}
 
 - (void)didReceiveMemoryWarning
 {

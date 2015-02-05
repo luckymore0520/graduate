@@ -9,7 +9,7 @@
 #import "MJRefresh.h"
 #import "BaseFuncVC.h"
 //#import "FootView.h"
-@interface RefreshTableViewController : BaseFuncVC<UIScrollViewDelegate>
+@interface RefreshTableViewController : BaseFuncVC<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     @protected
     MJRefreshHeaderView *_header;

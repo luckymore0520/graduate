@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ChatCenterVC : UITableViewController
+#import "RefreshTableViewController.h"
+@interface ChatCenterVC : RefreshTableViewController
 
 @end

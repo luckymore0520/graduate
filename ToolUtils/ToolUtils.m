@@ -417,6 +417,12 @@
     [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"token"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
+
++(void)showToast:(NSString*)msg toView:(UIView*)view
+
+{
+    [MBProgressHUD showSuccess:msg toView:view];
+}
 ////检查网络连接类型
 //-(void)checkNetworktype:(id)sender{
 //    NSString *connectionKind;

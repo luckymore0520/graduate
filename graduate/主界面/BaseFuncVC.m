@@ -208,6 +208,23 @@
     [ToolUtils showMessage:[error description]];
 }
 
+
+
+- (void)addRightButton:(NSString*)title action:(SEL)action img:(NSString*)img
+{
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [button setTitle:title forState:UIControlStateNormal];
+    
+    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    if (img) {
+        [button setBackgroundImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
+
+    }
+    
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = myAddButton;
+}
 /*
 #pragma mark - Navigation
 
@@ -218,4 +235,18 @@
 }
 */
 
+- (void)addMask
+{
+    if (!self.maskView) {
+        self.maskView = [[UIView alloc]initWithFrame:self.view.frame];
+        [self.maskView setAlpha:0.5];
+        [self.maskView setBackgroundColor:[UIColor blackColor]];
+    }
+    [self.view addSubview:self.maskView];
+
+}
+- (void)removeMask
+{
+    [self.maskView removeFromSuperview];
+}
 @end

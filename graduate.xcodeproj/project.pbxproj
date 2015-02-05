@@ -152,6 +152,19 @@
 		7D5DBB611A8356540078B99C /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB5B1A8356540078B99C /* MJRefreshFooterView.m */; };
 		7D5DBB621A8356540078B99C /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB5D1A8356540078B99C /* MJRefreshHeaderView.m */; };
 		7D5DBB651A8356830078B99C /* RefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB641A8356830078B99C /* RefreshTableViewController.m */; };
+		7D5DBB691A835B2C0078B99C /* MPosst.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB681A835B2B0078B99C /* MPosst.m */; };
+		7D5DBB6C1A835BCE0078B99C /* MPostList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB6B1A835BCE0078B99C /* MPostList.m */; };
+		7D5DBB6F1A83635B0078B99C /* ChatCenterPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB6E1A83635B0078B99C /* ChatCenterPublishViewController.m */; };
+		7D5DBB721A8364D80078B99C /* MPostPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB711A8364D80078B99C /* MPostPublish.m */; };
+		7D5DBB751A8368E60078B99C /* MGetMsgCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB741A8368E60078B99C /* MGetMsgCount.m */; };
+		7D5DBB781A836DD90078B99C /* MessageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB771A836DD90078B99C /* MessageListViewController.m */; };
+		7D5DBB7B1A836E020078B99C /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB7A1A836E020078B99C /* MessageCell.m */; };
+		7D5DBB7E1A836EA70078B99C /* MComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB7D1A836EA70078B99C /* MComment.m */; };
+		7D5DBB811A836EC40078B99C /* MCommentList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB801A836EC40078B99C /* MCommentList.m */; };
+		7D5DBB841A836F5E0078B99C /* MCommentsToMe.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB831A836F5E0078B99C /* MCommentsToMe.m */; };
+		7D5DBB871A83898F0078B99C /* ChatCenterDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB861A83898F0078B99C /* ChatCenterDetailViewController.m */; };
+		7D5DBB8A1A838A9C0078B99C /* MComments.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB891A838A9C0078B99C /* MComments.m */; };
+		7D5DBB8D1A83A2F60078B99C /* MCommentPublish.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB8C1A83A2F60078B99C /* MCommentPublish.m */; };
 		7D6A518D1A69610600355923 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518C1A69610600355923 /* main.m */; };
 		7D6A51901A69610600355923 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518F1A69610600355923 /* AppDelegate.m */; };
 		7D6A51981A69610600355923 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51971A69610600355923 /* Images.xcassets */; };
@@ -506,6 +519,32 @@
 		7D5DBB5D1A8356540078B99C /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
 		7D5DBB631A8356830078B99C /* RefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshTableViewController.h; sourceTree = "<group>"; };
 		7D5DBB641A8356830078B99C /* RefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshTableViewController.m; sourceTree = "<group>"; };
+		7D5DBB671A835B2B0078B99C /* MPosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPosts.h; path = Frame/ApiTools/MPosts.h; sourceTree = "<group>"; };
+		7D5DBB681A835B2B0078B99C /* MPosst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPosst.m; path = Frame/ApiTools/MPosst.m; sourceTree = "<group>"; };
+		7D5DBB6A1A835BCE0078B99C /* MPostList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPostList.h; path = Frame/Model/MPostList.h; sourceTree = "<group>"; };
+		7D5DBB6B1A835BCE0078B99C /* MPostList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPostList.m; path = Frame/Model/MPostList.m; sourceTree = "<group>"; };
+		7D5DBB6D1A83635B0078B99C /* ChatCenterPublishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatCenterPublishViewController.h; path = "发现/广场/ChatCenterPublishViewController.h"; sourceTree = "<group>"; };
+		7D5DBB6E1A83635B0078B99C /* ChatCenterPublishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatCenterPublishViewController.m; path = "发现/广场/ChatCenterPublishViewController.m"; sourceTree = "<group>"; };
+		7D5DBB701A8364D80078B99C /* MPostPublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPostPublish.h; path = Frame/ApiTools/MPostPublish.h; sourceTree = "<group>"; };
+		7D5DBB711A8364D80078B99C /* MPostPublish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPostPublish.m; path = Frame/ApiTools/MPostPublish.m; sourceTree = "<group>"; };
+		7D5DBB731A8368E60078B99C /* MGetMsgCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGetMsgCount.h; sourceTree = "<group>"; };
+		7D5DBB741A8368E60078B99C /* MGetMsgCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGetMsgCount.m; sourceTree = "<group>"; };
+		7D5DBB761A836DD90078B99C /* MessageListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageListViewController.h; path = "发现/广场/MessageListViewController.h"; sourceTree = "<group>"; };
+		7D5DBB771A836DD90078B99C /* MessageListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageListViewController.m; path = "发现/广场/MessageListViewController.m"; sourceTree = "<group>"; };
+		7D5DBB791A836E020078B99C /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageCell.h; path = "发现/广场/MessageCell.h"; sourceTree = "<group>"; };
+		7D5DBB7A1A836E020078B99C /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageCell.m; path = "发现/广场/MessageCell.m"; sourceTree = "<group>"; };
+		7D5DBB7C1A836EA70078B99C /* MComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MComment.h; path = Frame/Model/MComment.h; sourceTree = "<group>"; };
+		7D5DBB7D1A836EA70078B99C /* MComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MComment.m; path = Frame/Model/MComment.m; sourceTree = "<group>"; };
+		7D5DBB7F1A836EC40078B99C /* MCommentList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCommentList.h; path = Frame/Model/MCommentList.h; sourceTree = "<group>"; };
+		7D5DBB801A836EC40078B99C /* MCommentList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCommentList.m; path = Frame/Model/MCommentList.m; sourceTree = "<group>"; };
+		7D5DBB821A836F5E0078B99C /* MCommentsToMe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCommentsToMe.h; path = Frame/ApiTools/MCommentsToMe.h; sourceTree = "<group>"; };
+		7D5DBB831A836F5E0078B99C /* MCommentsToMe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCommentsToMe.m; path = Frame/ApiTools/MCommentsToMe.m; sourceTree = "<group>"; };
+		7D5DBB851A83898F0078B99C /* ChatCenterDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatCenterDetailViewController.h; path = "发现/广场/ChatCenterDetailViewController.h"; sourceTree = "<group>"; };
+		7D5DBB861A83898F0078B99C /* ChatCenterDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatCenterDetailViewController.m; path = "发现/广场/ChatCenterDetailViewController.m"; sourceTree = "<group>"; };
+		7D5DBB881A838A9C0078B99C /* MComments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MComments.h; path = Frame/ApiTools/MComments.h; sourceTree = "<group>"; };
+		7D5DBB891A838A9C0078B99C /* MComments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MComments.m; path = Frame/ApiTools/MComments.m; sourceTree = "<group>"; };
+		7D5DBB8B1A83A2F60078B99C /* MCommentPublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCommentPublish.h; path = Frame/ApiTools/MCommentPublish.h; sourceTree = "<group>"; };
+		7D5DBB8C1A83A2F60078B99C /* MCommentPublish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCommentPublish.m; path = Frame/ApiTools/MCommentPublish.m; sourceTree = "<group>"; };
 		7D6A51871A69610600355923 /* graduate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = graduate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6A518B1A69610600355923 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D6A518C1A69610600355923 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1095,6 +1134,14 @@
 				7D2431F91A7B785500C00F64 /* ChatCenterPostCell.m */,
 				7D2432001A7B785500C00F64 /* ChatCenterVC.h */,
 				7D2432011A7B785500C00F64 /* ChatCenterVC.m */,
+				7D5DBB6D1A83635B0078B99C /* ChatCenterPublishViewController.h */,
+				7D5DBB6E1A83635B0078B99C /* ChatCenterPublishViewController.m */,
+				7D5DBB761A836DD90078B99C /* MessageListViewController.h */,
+				7D5DBB771A836DD90078B99C /* MessageListViewController.m */,
+				7D5DBB791A836E020078B99C /* MessageCell.h */,
+				7D5DBB7A1A836E020078B99C /* MessageCell.m */,
+				7D5DBB851A83898F0078B99C /* ChatCenterDetailViewController.h */,
+				7D5DBB861A83898F0078B99C /* ChatCenterDetailViewController.m */,
 			);
 			name = "广场";
 			sourceTree = "<group>";
@@ -1274,6 +1321,12 @@
 				7D24322B1A7C982800C00F64 /* MQuestionList.m */,
 				7D5DBB151A8084A80078B99C /* MQuestionCount.h */,
 				7D5DBB161A8084A80078B99C /* MQuestionCount.m */,
+				7D5DBB6A1A835BCE0078B99C /* MPostList.h */,
+				7D5DBB6B1A835BCE0078B99C /* MPostList.m */,
+				7D5DBB7C1A836EA70078B99C /* MComment.h */,
+				7D5DBB7F1A836EC40078B99C /* MCommentList.h */,
+				7D5DBB801A836EC40078B99C /* MCommentList.m */,
+				7D5DBB7D1A836EA70078B99C /* MComment.m */,
 			);
 			name = InterfaceModel;
 			sourceTree = "<group>";
@@ -1317,6 +1370,18 @@
 				7D5DBB291A81BFED0078B99C /* MUploadDiary.m */,
 				7D5DBB4E1A834D280078B99C /* MFeedback.h */,
 				7D5DBB4F1A834D280078B99C /* MFeedback.m */,
+				7D5DBB671A835B2B0078B99C /* MPosts.h */,
+				7D5DBB681A835B2B0078B99C /* MPosst.m */,
+				7D5DBB701A8364D80078B99C /* MPostPublish.h */,
+				7D5DBB711A8364D80078B99C /* MPostPublish.m */,
+				7D5DBB731A8368E60078B99C /* MGetMsgCount.h */,
+				7D5DBB741A8368E60078B99C /* MGetMsgCount.m */,
+				7D5DBB821A836F5E0078B99C /* MCommentsToMe.h */,
+				7D5DBB831A836F5E0078B99C /* MCommentsToMe.m */,
+				7D5DBB881A838A9C0078B99C /* MComments.h */,
+				7D5DBB891A838A9C0078B99C /* MComments.m */,
+				7D5DBB8B1A83A2F60078B99C /* MCommentPublish.h */,
+				7D5DBB8C1A83A2F60078B99C /* MCommentPublish.m */,
 			);
 			name = ApiTools;
 			sourceTree = "<group>";
@@ -1594,12 +1659,14 @@
 				7D24324A1A7CE59100C00F64 /* Subject.m in Sources */,
 				7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */,
 				7D24322C1A7C982800C00F64 /* MQuestionList.m in Sources */,
+				7D5DBB841A836F5E0078B99C /* MCommentsToMe.m in Sources */,
 				7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */,
 				7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */,
 				7D2432C01A7DD18F00C00F64 /* SVProgressHUD.m in Sources */,
 				7D2432151A7B785500C00F64 /* PostDetailsVC.m in Sources */,
 				7D24320E1A7B785500C00F64 /* PostDetailsPostCell.m in Sources */,
 				7DBD86691A725EDB00205576 /* MainFunVC.m in Sources */,
+				7D5DBB7B1A836E020078B99C /* MessageCell.m in Sources */,
 				7DA994CD1A79F5C900A879CF /* BaseModel.m in Sources */,
 				7D4E05E51A74EF7B001709DB /* MBProgressHUD.m in Sources */,
 				7D5DBB2A1A81BFED0078B99C /* MUploadDiary.m in Sources */,
@@ -1617,11 +1684,13 @@
 				7DA994C11A7878FE00A879CF /* MJType.m in Sources */,
 				7D4E05881A74B1DF001709DB /* OtherFuncVCViewController.m in Sources */,
 				7DDA294A1A7B2144003F77C3 /* AFSecurityPolicy.m in Sources */,
+				7D5DBB7E1A836EA70078B99C /* MComment.m in Sources */,
 				7D4E062D1A766658001709DB /* RegistVC.m in Sources */,
 				7DA994F21A7A2AA800A879CF /* MMusic.m in Sources */,
 				7D2432141A7B785500C00F64 /* PostDetailsReplyCell.m in Sources */,
 				7D5DBB501A834D280078B99C /* MFeedback.m in Sources */,
 				7D2432B41A7DD18F00C00F64 /* SCCaptureSessionManager.m in Sources */,
+				7D5DBB6F1A83635B0078B99C /* ChatCenterPublishViewController.m in Sources */,
 				7D5DBB5F1A8356540078B99C /* MJRefreshBaseView.m in Sources */,
 				7D4E05781A748EFB001709DB /* MAOFlipTransition.m in Sources */,
 				7D4E05BF1A74EF71001709DB /* NSData+ImageContentType.m in Sources */,
@@ -1642,6 +1711,7 @@
 				7D2432B61A7DD18F00C00F64 /* SCSlider.m in Sources */,
 				7D5DBB111A8082680078B99C /* MQuesList.m in Sources */,
 				7DDA29471A7B2144003F77C3 /* AFHTTPRequestOperationManager.m in Sources */,
+				7D5DBB691A835B2C0078B99C /* MPosst.m in Sources */,
 				7D4E05791A748EFB001709DB /* MAOFlipViewController.m in Sources */,
 				7D24320F1A7B785500C00F64 /* ToggleCell.m in Sources */,
 				7D2432D11A7E453F00C00F64 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -1654,6 +1724,8 @@
 				7D4E06181A75E9DA001709DB /* RecordVC.m in Sources */,
 				7DA994C01A7878FE00A879CF /* MJMethod.m in Sources */,
 				7D5DBB081A8075B80078B99C /* Reachability.m in Sources */,
+				7D5DBB781A836DD90078B99C /* MessageListViewController.m in Sources */,
+				7D5DBB8D1A83A2F60078B99C /* MCommentPublish.m in Sources */,
 				7DA994EC1A7A29C500A879CF /* MIndex.m in Sources */,
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
 				7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */,
@@ -1669,6 +1741,7 @@
 				7DBD86871A7285FE00205576 /* ArticleList.m in Sources */,
 				7D24320D1A7B785500C00F64 /* EssencePostCell.m in Sources */,
 				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
+				7D5DBB871A83898F0078B99C /* ChatCenterDetailViewController.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
 				7D4E05EA1A74EF7B001709DB /* MJPhotoProgressView.m in Sources */,
 				7D2432B31A7DD18F00C00F64 /* SCCaptureCameraController.m in Sources */,
@@ -1693,12 +1766,15 @@
 				7D4E05771A748EFB001709DB /* MAOFlipInteraction.m in Sources */,
 				7D6A518D1A69610600355923 /* main.m in Sources */,
 				7DA994D71A79FD4700A879CF /* MGetMobileVerify.m in Sources */,
+				7D5DBB8A1A838A9C0078B99C /* MComments.m in Sources */,
+				7D5DBB811A836EC40078B99C /* MCommentList.m in Sources */,
 				7D4E05851A74AD99001709DB /* BaseFuncVC.m in Sources */,
 				7D2432B71A7DD18F00C00F64 /* UIImage+Resize.m in Sources */,
 				7D4E06301A76678A001709DB /* CodeVC.m in Sources */,
 				7D4E05E91A74EF7B001709DB /* MJPhotoLoadingView.m in Sources */,
 				7D4E05931A74D869001709DB /* RecommandVC.m in Sources */,
 				7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */,
+				7D5DBB6C1A835BCE0078B99C /* MPostList.m in Sources */,
 				7D2432D21A7E453F00C00F64 /* SWCellScrollView.m in Sources */,
 				7D5DBB3D1A83276E0078B99C /* SelfEditViewController.m in Sources */,
 				7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */,
@@ -1716,6 +1792,7 @@
 				7DDA29491A7B2144003F77C3 /* AFNetworkReachabilityManager.m in Sources */,
 				7D5DBB241A81BF300078B99C /* Sign.m in Sources */,
 				7D2432C31A7E181A00C00F64 /* MUploadQues.m in Sources */,
+				7D5DBB751A8368E60078B99C /* MGetMsgCount.m in Sources */,
 				7D5DBB651A8356830078B99C /* RefreshTableViewController.m in Sources */,
 				7D4E05C01A74EF71001709DB /* SDImageCache.m in Sources */,
 				7D5DBB0B1A8077A10078B99C /* MQuesDelete.m in Sources */,
@@ -1736,6 +1813,7 @@
 				7D24324D1A7D06F000C00F64 /* Question.m in Sources */,
 				7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */,
 				7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */,
+				7D5DBB721A8364D80078B99C /* MPostPublish.m in Sources */,
 				7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */,
 				7D5DBB371A83108D0078B99C /* SelfHeaderCell.m in Sources */,
 				7D2432531A7D116300C00F64 /* QuestionCell.m in Sources */,
