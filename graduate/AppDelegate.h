@@ -17,6 +17,5 @@
 @property (strong,nonatomic)MediaPlayController* mediaPlayController;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong,nonatomic)QuestionBook* book;
-
 @end
 

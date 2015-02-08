@@ -23,9 +23,9 @@
 {
     
     NSLog(@"歌曲下载%@",url);
-    if (![ToolUtils connectedToNetWork]&&![ToolUtils ignoreNetwork]) {
-        return nil;
-    }
+//    if (![ToolUtils connectedToNetWork]&&![ToolUtils ignoreNetwork]) {
+//        return nil;
+//    }
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     

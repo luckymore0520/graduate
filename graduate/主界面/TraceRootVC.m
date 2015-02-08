@@ -46,14 +46,16 @@
 
     
     
-//    NSMutableArray* futureDays = [[NSMutableArray alloc]init];
-//    
-//    for (Trace* trace in _traceList) {
-//        if (trace.myDay.integerValue>[ToolUtils getCurrentDay].integerValue) {
-//            [futureDays addObject:trace];
-//        }
-//    }
-//    [_traceList removeObjectsInArray:futureDays];
+    NSMutableArray* futureDays = [[NSMutableArray alloc]init];
+    
+    for (Trace* trace in _traceList) {
+        if (trace.myDay.integerValue>[ToolUtils getCurrentDay].integerValue) {
+            [futureDays addObject:trace];
+        }
+    }
+    [_traceList removeObjectsInArray:futureDays];
+    
+    
     
     
     [self.traceList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {

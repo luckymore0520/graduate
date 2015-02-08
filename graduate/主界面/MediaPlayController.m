@@ -27,6 +27,7 @@ MediaPlayController* mediaPlayController = nil;
 {
     //2.创建播放器（注意：一个AVAudioPlayer只能播放一个url）
     self.audioplayer=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:Nil];
+    self.progressView.player = self.audioplayer;
     //3.缓冲
     [self.audioplayer prepareToPlay];
     self.audioplayer.delegate = self;
@@ -37,26 +38,30 @@ MediaPlayController* mediaPlayController = nil;
 
 - (void)play
 {
-    [self.audioplayer play];
+    [self.progressView play];
+//    [self.audioplayer play];
     mediaPlayController.state = PLAY;
 }
 
 - (void) pause
 {
-    [self.audioplayer pause];
+    [self.progressView pause];
+//    [self.audioplayer pause];
     mediaPlayController.state = PAUSE;
 
 }
 
 - (void)stop
 {
-    [self.audioplayer stop];
+    [self.progressView revert];
+//    [self.audioplayer stop];
     mediaPlayController.state = STOP;
     
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
+    
     [player play];
 }
 @end

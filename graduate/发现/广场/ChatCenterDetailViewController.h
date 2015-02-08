@@ -10,4 +10,5 @@
 #import "MPost.h"
 @interface ChatCenterDetailViewController : RefreshTableViewController
 @property (nonatomic,strong)MPost* post;
+@property (nonatomic,strong)NSString* postId;
 @end

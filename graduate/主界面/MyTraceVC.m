@@ -12,7 +12,8 @@
 #import "TraceHeaderView.h"
 #import "QuestionHeaderView.h"
 #import "RecordVC.h"
-@interface MyTraceVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+#import "MQuesList.h"
+@interface MyTraceVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate>
 @property (nonatomic,strong)NSMutableArray* myQuestions;
 @end
 
@@ -21,26 +22,109 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadQuestion];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"WillAppear");
     
 }
-
-
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"didAppear");
+}
 - (void)reLoadMusic
 {
-    NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl]];
+    if (self.trace.songUrl) {
+        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl ]];
+    } else {
+        [self loadMusic:nil];
+    }
+
     self.isInView = YES;
+
+  
 }
+
+- (void)downloadMusic
+{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"下载歌曲" message:@"您未下载该歌曲，点击确定下载后自动播放" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定"   , nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId = self.trace.songName;
+        [api download:self url:[ToolUtils getImageUrlWtihString:self.trace.musicFile].absoluteString];
+
+    }
+}
+
+
+
 - (void)loadQuestion
 {
     
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
-    if (self.shoudUpdate) {
+
+}
+
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MQuesList"]) {
+        QuestionBook* book = [QuestionBook getInstance];
+        MQuestionList* list = [MQuestionList objectWithKeyValues:data];
+        for (MQuestion* question in list.list_) {
+            BOOL has = NO;
+            for (Question* localQuestion in [book getQuestionListByDay:self.trace.myDay]) {
+                if ([localQuestion.questionid isEqualToString:question.id_]) {
+                    has = YES;
+                    break;
+                }
+            }
+            if (!has) {
+                [book insertQuestionFromServer:question day:self.trace.myDay.integerValue];
+            }
+        }
+        self.shoudUpdate = NO;
+        
+        self.myQuestions =
+        [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
+    } else if ([names isEqualToString:@"download"])
+    {
+        
+        NSURL* url = [data objectForKey:@"path"];
+        if (url) {
+            [self saveMusic:[data objectForKey:@"fileid"] musicUrl:[data objectForKey:@"filename"]];
+        }
     }
 }
 
-
+- (void)saveMusic:(NSString*)musicTitle musicUrl:(NSString*)musicUrl
+{
+    NSError* error;
+    self.trace.songUrl = musicUrl;
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"songName=%@",musicTitle] tableName:@"Trace"];
+    for (Trace* trace in array) {
+        trace.songUrl = musicUrl;
+        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+        if (!isSaveSuccess) {
+            NSLog(@"Error:%@",error);
+        }else{
+            NSLog(@"Save successful! Music:%@",musicTitle);
+            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+            [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:musicUrl]];
+            self.isInView = YES;
+        }
+    }
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -24,9 +24,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIStoryboard *userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+    UIStoryboard *userSB ;
+
+    userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+    
     self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
-    // Do any additional setup after loading the view.
+
+        // Do any additional setup after loading the view.
     
     MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
     [getWelcome load:self];
@@ -34,6 +38,9 @@
 
 
 - (IBAction)goToLogin:(id)sender {
+    
+    
+    
     [self.navigationController pushViewController:self.rootVC animated:YES];
         
 }
@@ -70,6 +77,7 @@
     if ([names isEqualToString:@"MGetWelcomePage"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         NSLog(@"%@",ret.msg_);
+        
     }
     
 }

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
 @interface SetPasswordViewController : BaseFuncVC
-
+@property (nonatomic)BOOL isReset;
 @end

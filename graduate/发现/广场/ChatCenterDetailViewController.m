@@ -10,6 +10,7 @@
 #import "MComments.h"
 #import "MCommentList.h"
 #import "MCommentPublish.h"
+#import "MPostDetail.h"
 #import "ChatCenterPostCell.h"
 #import "UIPlaceHolderTextView.h"
 @interface ChatCenterDetailViewController ()
@@ -33,9 +34,14 @@
 
 - (void)loadData
 {
+    if (!self.post) {
+        [[[MPostDetail alloc]init]load:self postid:self.postId];
+    } else {
+        self.postId = self.post.id_;
+    }
     MComments* comments = [[MComments alloc]init];
     comments = (MComments*)[comments setPage:page limit:pageCount];
-    [comments load:self postid:self.post.id_];
+    [comments load:self postid:_postId];
 }
 
 
@@ -70,6 +76,11 @@
         [self.commentList removeAllObjects];
         [comments load:self postid:self.post.id_];
         
+    } else if ([names isEqualToString:@"MPostDetail"])
+    {
+        MPost* post = [MPost objectWithKeyValues:data];
+        self.post = post;
+        [self doneWithView:_header];
     }
 }
 
@@ -94,7 +105,12 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section==0) {
-        return 1;
+        if (self.post) {
+            return 1;
+
+        } else {
+            return 0;
+        }
     }
     return _commentList.count;
 }

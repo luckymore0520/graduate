@@ -11,11 +11,17 @@
 #import "Question.h"
 #import "QuestionView.h"
 #import "QuestionBook.h"
+#import "UIImageView+LBBlurredImage.h"
 #import "MJPhoto.h"
 
 @interface ReviewVC : BaseFuncVC<UIScrollViewDelegate,MJPhotoViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *backMaskView;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIButton *collectBt;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic,strong) NSMutableArray* questionViews;
+@property (weak, nonatomic) IBOutlet UIImageView *footMask;
 @property (nonatomic)NSInteger currentPage;
 @property (nonatomic,strong)UIView* bottomContainerView;
 @property (nonatomic,strong)UIView* editView;

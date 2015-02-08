@@ -22,6 +22,15 @@
     self.bottomHeight = 0;
     self.canEdit = NO;
     [self setTitle:@"今日推荐"];
+    [self.navigationController.navigationBar setHidden:YES];
+    
+    self.scale = 1;
+    self.view.transform = CGAffineTransformMakeScale(1, 1);
+//    if([self.navigationController.navigationBar
+//        respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
+//        [self.navigationController.navigationBar  setBackgroundImage:[[UIImage imageNamed:@"台头渐变蒙版"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]   forBarMetrics:UIBarMetricsDefault];
+//    }
+//    
     // Do any additional setup after loading the view.
 }
 
@@ -46,16 +55,30 @@
 
 }
 
+
 - (IBAction)save:(id)sender {
+    UIButton* button = (UIButton*)sender;
+    [button setSelected:!button.isSelected];
     MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
-    self.recommandQuestion = [[QuestionBook getInstance] insertQuestionFromRecommand:currentQuestion];
-    if (self.recommandQuestion) {
-        [ToolUtils showMessage:@"收藏成功"];
-        if (!self.recommandQuestion.isUpload.boolValue) {
-            self.recommandQuestion.isUpload = [NSNumber numberWithBool:YES];
-            [[[MUploadQues alloc]init]load:self question:self.recommandQuestion];
+    Question* question =[[QuestionBook getInstance]getQuestionByMQuestion:currentQuestion];
+    if (question) {
+        [[QuestionBook getInstance]deleteQuestion:question];
+        [ToolUtils showToast:@"已取消收藏"  toView:self.view];
+    } else {
+        self.recommandQuestion = [[QuestionBook getInstance] insertQuestionFromRecommand:currentQuestion];
+        
+        if (self.recommandQuestion) {
+            [ToolUtils showToast:[NSString stringWithFormat:@"已收藏至%@笔记本",            currentQuestion.subject_
+]  toView:self.view];
+            if (!self.recommandQuestion.isUpload.boolValue) {
+                self.recommandQuestion.isUpload = [NSNumber numberWithBool:YES];
+                [[[MUploadQues alloc]init]load:self question:self.recommandQuestion];
+            }
         }
+
     }
+    
+    
 }
 
 
@@ -121,7 +144,7 @@
         photo.desc = question.remark_;
         photo.index = i;
         view.photo = photo;
-        [view setBackgroundColor:[UIColor blackColor]];
+        [view setBackgroundColor:[UIColor clearColor]];
         [self.questionViews addObject:view];
     }
     
@@ -161,7 +184,10 @@
         MQuestion* question = ((QuestionView*)photoView).myQuestion;
         [self addBottomView:question.remark_ showAll:NO];
     }
-    
+  
+}
+- (IBAction)backToMain:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

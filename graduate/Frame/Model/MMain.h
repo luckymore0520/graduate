@@ -16,7 +16,16 @@
 @property (copy,nonatomic) NSString *img_;
 @property (copy,nonatomic) NSString *imgZj_;
 @property (copy,nonatomic) NSString *imgGn_;
+@property (copy,nonatomic) NSString *diary_;
+@property (copy,nonatomic) NSString *date_;
 
 @property (retain,nonatomic) NSNumber *days_;
 @property (retain,nonatomic) NSNumber *daysLeft_;
+
+@property (retain,nonatomic) NSNumber *reviewCount_;
+
+@property (retain,nonatomic) NSNumber *addCount_;
+
+
+
 @end

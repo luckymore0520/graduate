@@ -7,6 +7,7 @@
 //
 
 #import "MessageListViewController.h"
+#import "ChatCenterDetailViewController.h"
 #import "MCommentList.h"
 #import "MessageCell.h"
 #import "MCommentsToMe.h"
@@ -98,8 +99,16 @@
     MessageCell* cell = [tableView dequeueReusableCellWithIdentifier:@"message"];
     MComment* comment = [self.commentList objectAtIndex:indexPath.row];
     [cell.contentLabel setText:comment.content_];
-    [cell.contentLabel setText:comment.isNew_.integerValue==0?@"已读":@"未读"];
+    [cell.stateLabel setText:comment.isNew_.integerValue==0?@"已读":@"未读"];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MComment* comment = [self.commentList objectAtIndex:indexPath.row];
+    ChatCenterDetailViewController* nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"centerDetail"];
+    nextVC.postId = comment.pid_;
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 

@@ -17,7 +17,13 @@
 #import "ToolUtils.h"
 #import "QuestionBook.h"
 #import "MediaPlayVC.h"
-@interface AppDelegate ()<WeiboSDKDelegate>
+#import "WXApi.h"
+#import "APService.h"
+#import "MobClick.h"
+#import "Trace.h"
+#import "MFootprint.h"
+#import "MMainList.h"
+@interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,ApiDelegate>
 
 @end
 
@@ -36,10 +42,74 @@
     [_window makeKeyAndVisible];
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:WEIBOAPPKEY];
+    
+    
+    [WXApi registerApp:@"wxd930ea5d5a258f4f" withDescription:@"demo 2.0"];
+    [self initJPush:launchOptions];
+    [self initUmen];
+
+    
     self.mediaPlayController = [MediaPlayController getInstance];
     self.book = [QuestionBook getInstance];
     [_book loadAllData];
+    
+//    [self updateTraces];
+    [self initFont];
+    
     return YES;
+}
+
+
+
+- (void)initFont
+{
+
+    NSArray *familyNames = [UIFont familyNames];
+    for( NSString *familyName in familyNames ){
+        printf( "Family: %s \n", [familyName UTF8String] );
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+        for( NSString *fontName in fontNames ){
+            printf( "\tFont: %s \n", [fontName UTF8String] );
+        }
+    }
+}
+
+
+- (void)initUmen
+{
+    [MobClick startWithAppkey:@"54d46cc0fd98c574ef000420" reportPolicy:BATCH   channelId:@"App Store"];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+        
+}
+
+- (void) initJPush:(NSDictionary*) launchOptions
+{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        //可以添加自定义categories
+        
+        [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                       UIUserNotificationTypeSound |
+                                                       UIUserNotificationTypeAlert)
+                                           categories:nil];
+    } else {
+        //categories 必须为nil
+        [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                       UIRemoteNotificationTypeSound |
+                                                       UIRemoteNotificationTypeAlert)
+                                           categories:nil];
+    }
+#else
+    //categories 必须为nil
+    [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                   UIRemoteNotificationTypeSound |
+                                                   UIRemoteNotificationTypeAlert)
+                                       categories:nil];
+#endif
+    // Required
+    [APService setupWithOption:launchOptions];
 }
 
 
@@ -130,7 +200,21 @@
 }
 
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Required
+    [APService registerDeviceToken:deviceToken];
+}
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // Required
+    [APService handleRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    // IOS 7 Support Required
+    [APService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -148,6 +232,12 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSInteger badge = application.applicationIconBadgeNumber;
+    if (badge > 0) {
+        badge = 0;
+        [application setApplicationIconBadgeNumber:badge];
+    }
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -163,6 +253,9 @@
 
     } else if ([sourceApplication isEqualToString:@"com.sina.weibo"]){
         return [WeiboSDK handleOpenURL:url delegate:self];
+    } else
+    {
+        return [WXApi handleOpenURL:url delegate:self];
     }
     return YES;
 }
@@ -205,4 +298,19 @@
     }
 
 }
+
+-(void) onResp:(BaseResp*)resp
+{
+    if([resp isKindOfClass:[SendAuthResp class]])
+    {
+        SendAuthResp *temp = (SendAuthResp*)resp;
+        
+        NSString *strTitle = [NSString stringWithFormat:@"Auth结果"];
+        NSString *strMsg = [NSString stringWithFormat:@"code:%@,state:%@,errcode:%d", temp.code, temp.state, temp.errCode];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
 @end

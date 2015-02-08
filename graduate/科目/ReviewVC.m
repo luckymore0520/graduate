@@ -18,10 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
     self.bottomHeight = 60.0;
     self.canEdit = YES;
-    [self.scrollView setBackgroundColor:[UIColor blackColor]];
     [self setTitle:@"复习"];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
@@ -59,6 +57,7 @@
         view.myQuestion = [self.questionList objectAtIndex:i];
         view.photoViewDelegate = self;
         view.orientation = view.myQuestion.orientation;
+        view.backgroundColor = [UIColor clearColor];
         MJPhoto *photo = [[MJPhoto alloc] init];
         MQuestion* question = [self.questionList objectAtIndex:i];
         if (question.isRecommend_.integerValue==1) {
@@ -74,7 +73,7 @@
         photo.desc = question.remark_;
         photo.index = i;
         view.photo = photo;
-        [view setBackgroundColor:[UIColor blackColor]];
+        [view setBackgroundColor:[UIColor clearColor]];
         [self.questionViews addObject:view];
     }
     [self.scrollView addSubview:self.questionViews.firstObject];
@@ -140,10 +139,6 @@
     if (!showAll&&remark.length>=40) {
         remark = [remark substringToIndex:40];
         remark = [NSString stringWithFormat:@"%@....",remark];
-    
-    
-    
-    
     } else {
         
     }
@@ -151,44 +146,88 @@
     
     
     
+    
+    
     CGRect frame = [[UIScreen mainScreen]bounds];
     CGFloat width = frame.size.width;
-    UIFont *font = [UIFont systemFontOfSize:14];
+    
+    
+    
+    UIFont* titleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
+    CGRect titleFrame = CGRectMake(15, 23, width-100, 45);
+    UILabel* titleLabel = [[UILabel alloc]initWithFrame:titleFrame];
+    [titleLabel setFont:titleFont];
+    [titleLabel setTextColor:[UIColor whiteColor]];
+    [titleLabel setText:@"南大学霸推荐英语笔记"];
+    
+    
+    
+    UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
+    NSString* totalPage =[NSString stringWithFormat:@"/%d", self.questionList.count];
+    NSString* currentPage = [NSString stringWithFormat:@"%d",self.currentPage+1];
+    NSLog(@"length~~~%lf",width-totalPage.length*10+currentPage.length*15);
+    CGRect pageTitleFrame = CGRectMake(width-totalPage.length*10-currentPage.length*15-15, 26, totalPage.length*10+currentPage.length*15, 45);
+    
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",currentPage,totalPage]];
+    NSRange currentRange = {0,[currentPage length]};
+    [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:19] range:currentRange];
+    [content addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:currentRange];
+    NSRange totalRange = {[currentPage length],[totalPage length]};
+    [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16] range:totalRange];
+    [content addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] range:totalRange];
+    UILabel* titlePageLabel = [[UILabel alloc]initWithFrame:pageTitleFrame];
+    [titlePageLabel setAttributedText:content];
+    
+    
+    
+    
+    
+    
+
+    
+    UIFont *font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:12];
     CGSize size = CGSizeMake(width,2000);
     CGSize labelsize = [remark sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
     NSLog(@"labelheight%lf",labelsize.height);
 
     if (labelsize.height>60) {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(5, 5 , width, 80)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 65 , width-20, 80)];
     } else {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(5, 5 , width, labelsize.height+30)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 65 , width-20, labelsize.height+30)];
 
     }
     
     
+    
+    
+    
+    
     [_markLabel setFont:font];
-
+    
     _markLabel.text = remark;
 //    [UITextView setNumberOfLines:0];
     [_markLabel setBackgroundColor:[UIColor clearColor]];
-    [_markLabel setTextColor:[UIColor whiteColor]];
+    [_markLabel setTextColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]];
     
 
     if (self.bottomContainerView) {
         [self.bottomContainerView removeFromSuperview];
     }
     
+    
+    
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
-    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-50-self.bottomHeight, screenFrame.size.width, _markLabel.frame.size.height+50);
+    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-50-self.bottomHeight-65, screenFrame.size.width, _markLabel.frame.size.height+50+65);
+    
+    
     
     self.bottomContainerView = [[UIView alloc]initWithFrame:frame];
-    [self.bottomContainerView setBackgroundColor:[UIColor blackColor]];
-    [self.bottomContainerView setAlpha:0.5];
-   
+    [self.bottomContainerView setBackgroundColor:[UIColor clearColor]];
+    [self.bottomContainerView addSubview:titleLabel];
     [self.bottomContainerView addSubview:_markLabel];
-    
+    [self.bottomContainerView addSubview:titlePageLabel];
     if (!showAll&&originRemark.length>=40) {
-        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10, 80, labelsize.height/2+10);
+        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10+60, 80, labelsize.height/2+10);
         UIButton* showAllBt = [[UIButton alloc]initWithFrame:showAllBtFrame];
         [showAllBt setTitle:@"查看更多" forState:UIControlStateNormal];
         [showAllBt.titleLabel setFont:font];
@@ -223,7 +262,31 @@
     }
     
     [self.markLabel setEditable:NO];
-    
+    [self.view bringSubviewToFront:self.collectBt];
+    MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
+    if ([[QuestionBook getInstance]getQuestionByMQuestion:question]) {
+        [self.collectBt setSelected:YES];
+    } else {
+        [self.collectBt setSelected:NO];
+
+    }
+    if (self.questionViews.count>self.currentPage) {
+        QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
+        UIImage* img ;
+        if (view.img) {
+            img = view.img;
+        } else {
+            img = view.imageView.image;
+        }
+        if (img) {
+            [view setBackgroundColor:[UIColor clearColor]];
+            [self.backgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+            [self.backgroundImageView setImageToBlur:img blurRadius:40 completionBlock:nil];
+            [self.backgroundImageView setClipsToBounds:YES];
+            
+        }
+
+    }
 }
 
 
@@ -288,6 +351,10 @@
         //        [self.keyboardBt setHidden:NO];
     }];
     
+    
+
+  
+    
 }
 
 
@@ -338,15 +405,17 @@
 - (void)photoViewSingleTap:(MJPhotoView *)photoView
 {
     CGFloat alpha = self.bottomContainerView.alpha;
-    [self.navigationController setNavigationBarHidden:!alpha==0 animated:YES];
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]&&alpha!=0) {
         [self prefersStatusBarHidden];
         [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
     }
     [UIView animateWithDuration:0.5 animations:^{
-        [self.bottomContainerView setAlpha:alpha==0?0.5:0];
+        [self.bottomContainerView setAlpha:alpha==0?1:0];
+        [self.headerView setAlpha:alpha==0?1:0];
+        [self.footMask setAlpha:alpha==0?1:0];
+        [self.collectBt setAlpha:alpha==0?1:0];
+        [self.backMaskView setAlpha:alpha==0?0.5:1];
     }];
-
     // 隐藏状态栏
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }

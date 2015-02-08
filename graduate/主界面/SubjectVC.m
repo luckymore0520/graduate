@@ -29,6 +29,7 @@
 #import "UIPlaceHolderTextView.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
+@property (weak, nonatomic) IBOutlet UIImageView *rollImage;
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
 //日记
 @property (weak, nonatomic) IBOutlet UILabel *dailyNoteLabel;
@@ -58,26 +59,59 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalNewLabel;
 @property (nonatomic)BOOL isPresenting;
 @property (nonatomic)BOOL firstOpen;
-@end
+@property (nonatomic,strong)NSArray* subjectImgList;
+@property (weak, nonatomic) IBOutlet UIView *centerLine;
 
+@end
+CGFloat angle;
 @implementation SubjectVC
 
 - (void)viewDidLoad {
+    if (self.view.frame.size.height>500) {
+        [self.tableview setScrollEnabled:NO];
+    }
     [super viewDidLoad];
     [self.editView removeFromSuperview];
-    self.headView.layer.cornerRadius = 45;
+    self.headView.layer.cornerRadius = 42;
     [self.headView setClipsToBounds:YES];
     
+    self.headView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.headView.layer.borderWidth = 3;
+    _subjectImgList  = [NSArray arrayWithObjects:@"英语",@"政治",@"数学",@"专业课一",@"专业课二", nil];
     self.firstOpen = YES;
     [self reloadData];
-    
+    [self.view bringSubviewToFront:self.centerLine];
+
 
 }
+
     
 
+-(void) startAnimation
+{
+    if (angle>360) {
+        return;
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.005];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
+    self.rollImage.transform = CGAffineTransformMakeRotation(angle * (M_PI / 180.0f));
+    [UIView commitAnimations];
+}
+
+-(void)endAnimation
+{
+    angle += 10;
+    [self startAnimation];
+    
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    angle = 0;
+
+    [self startAnimation];
     if (self.firstOpen) {
         self.firstOpen = NO;
     } else {
@@ -89,13 +123,19 @@
 {
     [[[MQuestionRecommand alloc]init]load:self];
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-    [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:180 height:180] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
     if (array.count>0) {
         Trace* trace = [array firstObject];
         [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:nil];
         [self.dailyNoteLabel setText:trace.note];
+        if (trace.note.length<23) {
+            self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
+        } else {
+            self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
+            
+        }
     }
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
@@ -110,12 +150,12 @@
         total+=subject.total;
         totalNew+=subject.newAdd;
     }
-    [self.totalLabel setText:[NSString stringWithFormat:@"累计题目%d",total]];
-    [self.totalNewLabel setText:[NSString stringWithFormat:@"新增错题%d",totalNew]];
+    [self.totalLabel setText:[NSString stringWithFormat:@"%d",total]];
+    [self.totalNewLabel setText:[NSString stringWithFormat:@"%d",totalNew]];
     
     NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
 
-    [self.cardLabel setText:[NSString stringWithFormat:@"累计打卡%d",signList.count]];
+    [self.cardLabel setText:[NSString stringWithFormat:@"%d",signList.count]];
 
     
 }
@@ -204,7 +244,13 @@
 
 
 - (IBAction)recommand:(id)sender {
-    [self performSegueWithIdentifier:@"recommand" sender:nil];
+    if (self.subjects.count<4) {
+        [self performSegueWithIdentifier:@"editSubject" sender:nil];
+
+    } else {
+        [self performSegueWithIdentifier:@"recommand" sender:nil];
+
+    }
 }
 
 - (IBAction)goToMyTraces:(id)sender {
@@ -220,9 +266,14 @@
 }
 
 - (IBAction)takePhoto:(id)sender {
-    SCNavigationController *nav = [[SCNavigationController alloc] init];
-    nav.scNaigationDelegate = self;
-    [nav showCameraWithParentController:self];
+    if (self.subjects.count<4) {
+        [self performSegueWithIdentifier:@"editSubject" sender:nil];
+
+    } else {
+        SCNavigationController *nav = [[SCNavigationController alloc] init];
+        nav.scNaigationDelegate = self;
+        [nav showCameraWithParentController:self];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -267,19 +318,21 @@
         [cell.nameLabel setText:@"添加课程"];
         [cell.totalLabel setText:@"添加考试课程"];
         [cell.addLabel setText:@""];
+        [cell.imgView setImage:[UIImage imageNamed:@"添加课程"]];
     } else {
-        
-        
         Subject* subject = [_subjects objectAtIndex:indexPath.row];
-        
-        
-        
+        [cell.imgView setImage:[UIImage imageNamed:[self.subjectImgList objectAtIndex:subject.type-1]]];
         [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:100.0f];
         [cell.nameLabel setText:subject.name];
-        [cell.totalLabel setText:[NSString stringWithFormat:@"%d篇",subject.total]];
+        [cell.totalLabel setText:[NSString stringWithFormat:@"%d篇/",subject.total]];
        [cell.addLabel setText:[NSString stringWithFormat:@"%d篇新增",subject.newAdd]];
         
         cell.delegate = self;
+        if (self.subjects.count<4) {
+            [cell.totalLabel setHidden:YES];
+            [cell.addLabel setHidden:YES];
+            
+        }
     }
     return cell;
     
@@ -290,7 +343,7 @@
 
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
-                                                title:@"重新编辑"];
+                                                title:@"编辑课程"];
     
     return rightUtilityButtons;
 }
@@ -312,7 +365,7 @@
         Subject* subject = [_subjects objectAtIndex:indexPath.row];
         [self performSegueWithIdentifier:@"myQuestion" sender:subject];
         
-
+        
     } else {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
 
@@ -376,7 +429,14 @@
 
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
 {
+
     return YES;
+}
+
+- (void)swipeableTableViewCellDidEndScrolling:(SWTableViewCell *)cell{
+    if (cell.isUtilityButtonsHidden) {
+        [((SubjectCell*)cell).arrow setHidden:NO];
+    }
 }
 
 - (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
@@ -389,42 +449,46 @@
     if ([subject.name isEqualToString:@"政治"]) {
         return NO;
     }
+    
+    [((SubjectCell*)cell).arrow setHidden:YES];
     return YES;
 }
 
 
 - (void)editRemark
 {
+    [self addMask];
     if (!_editView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 160);
         _editView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_editView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 160);
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 110);
         
         _editTextView = [[UIPlaceHolderTextView alloc]initWithFrame:textFrame];
         [_editTextView setPlaceholder:@"日记不能超过46个字"];
         [_editTextView setText:self.dailyNoteLabel.text];
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.placeholderColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
         [_editView addSubview:_editTextView];
-        
-        
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:cancelButton];
         
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveRemark) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-        [saveButton.titleLabel setTextColor:[UIColor blueColor]];
-        
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
-    
+    [self.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -447,10 +511,15 @@
         [ToolUtils showMessage:@"日记不能超过46个字"];
         return;
     }
-
-    
     [self.editTextView resignFirstResponder];
     [self.dailyNoteLabel setText:self.editTextView.text];
+    if (self.editTextView.text.length<23) {
+        self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
+    } else {
+        self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
+
+    }
+    
     NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
     CoreDataHelper* helper= [CoreDataHelper getInstance];
@@ -482,9 +551,11 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
-        
+        [self removeMask];
     }];
+    
 }
+
 
 
 @end

@@ -167,7 +167,6 @@
                 }
             }
             if (!has) {
-//                [book insertQuestionFromRecommand:question];
                 [book insertQuestionFromServer:question day:self.day];
                 hasInsert=YES;
             }

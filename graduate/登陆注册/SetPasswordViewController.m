@@ -21,6 +21,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *maleButton;
 @property (weak, nonatomic) IBOutlet UIButton *femaleButton;
 @property (weak, nonatomic) IBOutlet ButtonGroup *setBtGroup;
+@property (weak, nonatomic) IBOutlet UILabel *passwordBack;
+@property (weak, nonatomic) IBOutlet UILabel *confirmPasswordBack;
+@property (weak, nonatomic) IBOutlet UILabel *nickNameBack;
+@property (weak, nonatomic) IBOutlet UILabel *selectSexLabel;
+@property (weak, nonatomic) IBOutlet UIButton *completeBt;
 
 @end
 
@@ -28,8 +33,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTitle:@"账号设置"];
     self.textFields = [NSArray arrayWithObjects:_setPasswordField,_comfirmPasswordField,_nickField, nil];
-//    self.keyButtons = [NSArray arrayWithObjects:_completeButton,_maleButton,_femaleButton, nil];
+    self.keyButtons = [NSArray arrayWithObjects:_completeButton,_maleButton,_femaleButton, nil];
     [self.setBtGroup loadButton:[NSArray arrayWithObjects:_maleButton,_femaleButton ,nil]];
     
     NSDictionary* dic = [ToolUtils getUserInfomation];
@@ -38,7 +44,38 @@
         [self.nickField setText:_user.nickname_];
         [self.setBtGroup setSelectedIndex:self.user.sex_.integerValue];
     }
+    
+    [self adjustView];
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)adjustView
+{
+    
+    if (self.isReset) {
+        [self.selectSexLabel setHidden:YES];
+        self.nickNameBack.hidden = YES;
+        self.nickField.hidden = YES;
+        self.setBtGroup.hidden = YES;
+        self.completeBt.transform = CGAffineTransformMakeTranslation(0, -130);
+    }
+    
+    
+    _passwordBack.layer.borderColor =    [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:0.5].CGColor;
+    _passwordBack.layer.borderWidth = 1;
+
+    _confirmPasswordBack.layer.borderColor =    [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:1].CGColor;
+    _confirmPasswordBack.layer.borderWidth = 1;
+    
+    _nickNameBack.layer.borderColor =    [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:0.5].CGColor;
+    _nickNameBack.layer.borderWidth = 1;
+    
+    _setBtGroup.layer.borderColor =    [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:0.5].CGColor;
+    _setBtGroup.layer.borderWidth = 1;
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,17 +87,25 @@
 
 - (IBAction)complete:(id)sender {
     if (_setPasswordField.text.length==0) {
-        [ToolUtils showMessage:@"密码不能为空"];
+        [ToolUtils showMessage:@"请输入完整信息，完成账号设置" title:@"账号未能设置"];
     } else if (![_setPasswordField.text isEqualToString:_comfirmPasswordField.text])
     {
-        [ToolUtils showMessage:@"两次密码不一致"];
+        [ToolUtils showMessage:@"两次输入密码不同，请重新输入" title:@"密码不一样"];
+//        [ToolUtils showMessage:@"两次密码不一致"];
     } else if ([_nickField.text length]==0)
     {
-        [ToolUtils showMessage:@"昵称不能为空"];
+        [ToolUtils showMessage:@"请输入完整信息，完成账号设置" title:@"账号未能设置"];
     } else {
+        [self waiting:@"正在注册..."];
         MPasswdChange* pc = [[MPasswdChange alloc]init];
         NSString* password = [ToolUtils md5:self.setPasswordField.text];
-        [pc load:self password:password nickname:_nickField.text sex:[_setBtGroup selectedIndex]];
+        if (self.isReset) {
+            [pc load:self password:password nickname:nil sex:-1];
+
+        } else {
+            [pc load:self password:password nickname:_nickField.text sex:[_setBtGroup selectedIndex]];
+
+        }
     }
 }
 
@@ -70,6 +115,7 @@
     if ([names isEqualToString:@"MPasswdChange"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
+            [self waitingEnd];
             UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
             RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
             [self.navigationController presentViewController:_rootVC animated:YES completion:^{
@@ -78,6 +124,19 @@
             [ToolUtils showMessage:ret.msg_];
         }
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField==self.setPasswordField) {
+        [self.comfirmPasswordField becomeFirstResponder];
+    } else if (textField==self.comfirmPasswordField)
+    {
+        [self.nickField becomeFirstResponder];
+    } else {
+        return [super textFieldShouldReturn:textField];
+    }
+    return YES;
 }
 /*
 #pragma mark - Navigation

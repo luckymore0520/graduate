@@ -115,7 +115,15 @@
         } else {
             [self performSegueWithIdentifier:@"setPassword" sender:nil];
         }
+    } else if (indexPath.section==3)
+    {
+        if (indexPath.row==0) {
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
+            UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"myCollection"];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }
     }
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

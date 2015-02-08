@@ -28,6 +28,7 @@
     <entity name="Trace" representedClassName="Trace" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="musicFile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="myDay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pictureUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -41,7 +42,7 @@
     </entity>
     <elements>
         <element name="Question" positionX="-63" positionY="54" width="128" height="270"/>
-        <element name="Trace" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="Sign" positionX="-63" positionY="135" width="128" height="133"/>
+        <element name="Trace" positionX="-63" positionY="-18" width="128" height="240"/>
     </elements>
 </model>

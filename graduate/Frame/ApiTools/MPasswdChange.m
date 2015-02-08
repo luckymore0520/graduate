@@ -11,7 +11,16 @@
 @implementation MPasswdChange
 - (ApiHelper *)load:(id<ApiDelegate>)delegate password:(NSString *)password nickname:(NSString*)nickname sex:(NSInteger)sex
 {
-    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:password,@"password",nickname,@"nickname",[NSString stringWithFormat:@"%d",sex],@"sex", nil];
+    NSMutableDictionary* params = [[NSMutableDictionary alloc]init];
+    if (nickname) {
+        [params setObject:nickname forKey:@"nickname"];
+    }
+    if (password) {
+        [params setObject:password forKey:@"password"];
+    }
+    if (sex!=-1) {
+        [params setObject:[NSString stringWithFormat:@"%d",sex] forKey:@"sex"];
+    }
     return [self load:@"MPasswdChange" params:params delegate:delegate];
 }
 
