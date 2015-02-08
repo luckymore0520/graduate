@@ -31,4 +31,6 @@
 - (void)review:(MQuestion*)mQuestion isMaster:(BOOL)isMaster;
 - (void)save;
 - (void)updateQuestions;
+- (NSArray*)getQuestionListByDay:(NSString*)day;
+- (void)deleteQuestion:(Question*)question;
 @end

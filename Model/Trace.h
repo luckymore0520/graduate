@@ -24,5 +24,6 @@
 @property (nonatomic, retain) NSString * date;
 @property (nonatomic, retain) NSString * pictureUrlForTrace;
 @property (nonatomic, retain) NSString * pictureUrlForSubject;
+@property (nonatomic, retain) NSString * musicFile;
 
 @end

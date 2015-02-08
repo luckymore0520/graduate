@@ -71,11 +71,12 @@
 
 
 
+
 + (BOOL)checkTel:(NSString *)str showAlert:(BOOL)show
 
 {
     
-    if ([str length] == 0) {
+    if ([str length] != 11) {
         if (show) {
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"请输入正确的电话号码", nil) message:NSLocalizedString(@"电话号码不能为空", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             
@@ -122,6 +123,14 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
 }
+
+
++(void)showMessage:(NSString *)message title:(NSString*)title
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 
 + (BOOL)checkTextRange:(NSString *)text min:(NSInteger)min max:(NSInteger)max
 {

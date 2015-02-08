@@ -7,6 +7,7 @@
 //
 
 #import "LoginVC.h"
+#import "RegistVC.h"
 #import "RootViewController.h"
 #import "MLogin.h"
 #import "MUser.h"
@@ -16,11 +17,20 @@
 #import "WBHttpRequest+WeiboUser.h"
 #import "AppDelegate.h"
 #import "WeiboUser.h"
+#import "WXApi.h"
 @interface LoginVC ()
+@property (weak, nonatomic) IBOutlet UIView *usernameView;
+@property (weak, nonatomic) IBOutlet UIView *passwordView;
+@property (weak, nonatomic) IBOutlet UIButton *forgetBt;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *loginBt;
+@property (weak, nonatomic) IBOutlet UIButton *registBt;
+@property (weak, nonatomic) IBOutlet UIButton *qqBt;
+
+@property (weak, nonatomic) IBOutlet UIButton *weiboBt;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 //@property (nonatomic,strong)CCPCallService* ccpService;
+@property (weak, nonatomic) IBOutlet UIButton *weixinBt;
 @end
 
 @implementation LoginVC
@@ -33,25 +43,45 @@
     return self;
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setTitle:@"登陆页"];
     isThirdParty = NO;
+    [self.navigationController setNavigationBarHidden:YES];
+    [_passwordField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [_usernameField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"忘记密码？"]];
+    NSRange contentRange = {0,[content length]};
+    [content addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:contentRange];
+    [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16] range:contentRange];
+    [self.forgetBt.titleLabel setAttributedText:content];
     self.textFields = [NSArray arrayWithObjects:_passwordField,_usernameField,nil];
     self.keyButtons = [NSArray arrayWithObjects:_loginBt, nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(handleWeiboLogin) name:@"weiboLogin" object:nil];
+    
+         // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self initTencent];
     [self.navigationController setNavigationBarHidden:YES];
-      // Do any additional setup after loading the view.
+    [self.waitingView setHidden:YES];
+    [self.maskView setHidden:YES];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    [self initTencent];
     if ([ToolUtils getHasLogin]) {
         [self gotoMainMenu];
     }
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -65,7 +95,9 @@
     MLogin* login = [[MLogin alloc]init];
     isThirdParty = YES;
     [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
+    [self waiting:@"正在获取个人信息"];
     [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:@"77238273", @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
+        [self waitingEnd];
         NSLog(@"获取成功");
         WeiboUser* user = (WeiboUser*)result;
         ApiHelper* api = [[ApiHelper alloc]init];
@@ -81,14 +113,16 @@
 }//前往主界面
 - (void)gotoMainMenu
 {
-    
+    [self.waitingView setHidden:YES];
+    [self.maskView setHidden:YES];
+    [ToolUtils setHasLogin:YES];
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
     UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:_rootVC];
     [nav setNavigationBarHidden:YES];
     [self.navigationController presentViewController:nav animated:YES completion:^{
+        [self waitingEnd];
     }];
-    [ToolUtils setHasLogin:YES];
 }
 
 
@@ -105,11 +139,22 @@
 - (IBAction)login:(id)sender {
     permissions = [[NSMutableArray alloc]initWithObjects:kOPEN_PERMISSION_GET_USER_INFO,kOPEN_PERMISSION_GET_INFO,   nil];
     [_tencentOAuth authorize:permissions inSafari:NO];
-    
-    
-    
     [_tencentOAuth logout:self];
 }
+
+
+
+- (IBAction)weixinLogin:(id)sender {
+    SendAuthReq* req = [[SendAuthReq alloc] init] ;
+    req.scope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact"; // @"post_timeline,sns"
+    req.state = @"xxx";
+    req.openID = @"0c806938e2413ce73eef92cc3";
+    [WXApi sendAuthReq:req viewController:self delegate:[[UIApplication sharedApplication]delegate]];
+}
+
+
+
+
 - (IBAction)weiboLogin:(id)sender {
     WBAuthorizeRequest *request = [WBAuthorizeRequest request];
     request.redirectURI = KREDIRECTURL;
@@ -121,6 +166,7 @@
     [WeiboSDK sendRequest:request];
 }
 
+
 - (IBAction)normalLogin:(id)sender {
     if (_usernameField.text.length==0) {
         [ToolUtils showMessage:@"请输入登录号或者手机号"];
@@ -129,6 +175,7 @@
         [ToolUtils showMessage:@"密码不得为空"];
     } else {
         isThirdParty = NO;
+        [self waiting:@"正在登陆..."];
         MLogin* login = [[MLogin alloc]init];
         NSString* password = [ToolUtils md5:_passwordField.text];
         if ([ToolUtils checkTel:_usernameField.text showAlert:NO]) {
@@ -140,6 +187,7 @@
     
 }
 - (IBAction)register:(id)sender {
+    
     [self performSegueWithIdentifier:@"register" sender:@"regist"];
 }
 
@@ -156,7 +204,6 @@
         if (!isThirdParty) {
             [self gotoMainMenu];
         }
-//        [self gotoMainMenu];
     } else if ([names isEqualToString:@"MImgUpload"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         NSLog(@"%@",ret.msg_);
@@ -188,6 +235,14 @@
         user.sex_ = [NSNumber numberWithInt:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1];
         MReturn* ret = [MReturn objectWithKeyValues:data];
         [self gotoMainMenu];
+    }
+}
+
+- (void)showAlert:(NSString *)alert functionName:(NSString *)names
+{
+    [self waitingEnd];
+    if ([names isEqualToString:@"MLogin"]) {
+        [ToolUtils showMessage:@"请输入正确的用户名密码" title:@"用户名密码不正确"];
     }
 }
 
@@ -224,6 +279,7 @@
     MLogin* login = [[MLogin alloc]init];
     [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
     if (userInfo) {
+        
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId =[userInfo objectForKey:@"figureurl_qq_1"];
@@ -245,8 +301,46 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"register"]) {
-        
+        NSString* string = (NSString*)sender;
+        RegistVC* nextVC = (RegistVC*)[segue destinationViewController];
+        if ([string isEqualToString:@"forget"]) {
+            nextVC.type = FORGET;
+        } else {
+            nextVC.type = REGIST;
+
+        }
     }
 }
+
+#pragma mark -textfieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField==self.usernameField) {
+        [self.passwordField becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+        [self normalLogin:nil];
+        [self animationReturn];
+    }
+    return YES;
+}
+
+//增加遮罩按钮，点击键盘弹回
+- (void)addMaskBt
+{
+    if (self.maskBt) {
+        [self.maskBt setHidden:YES];
+        [self.maskBt removeFromSuperview];
+    }
+    self.maskBt = [[UIButton alloc]initWithFrame:self.view.frame];
+    [self.view addSubview:self.maskBt];
+    [self.maskBt addTarget:self action:@selector(resignAll) forControlEvents:UIControlEventTouchUpInside];
+    [self.view bringSubviewToFront:self.passwordView];
+    [self.view bringSubviewToFront:self.usernameView];
+    for (UIButton* button in self.keyButtons) {
+        [self.view bringSubviewToFront:button];
+    }
+}
+
 
 @end

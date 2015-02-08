@@ -133,6 +133,8 @@
 {
     
     
+    
+    
     if ([toVC class]==[SubjectVC class]) {
         ((SubjectVC*)toVC).parentVC =  self;
     }
@@ -157,6 +159,8 @@
     return nil;
    
 }
+
+
 
 - (BOOL)isMainPage:(UIViewController*)toVC
 {

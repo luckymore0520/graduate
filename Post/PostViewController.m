@@ -380,6 +380,9 @@
         [_markLabel setFrame:markFrame];
         [_markLabel setNeedsDisplay];
     }
+    
+    
+    
 
 }
 

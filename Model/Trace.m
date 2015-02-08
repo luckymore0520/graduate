@@ -23,5 +23,5 @@
 @dynamic date;
 @dynamic pictureUrlForTrace;
 @dynamic pictureUrlForSubject;
-
+@dynamic musicFile;
 @end

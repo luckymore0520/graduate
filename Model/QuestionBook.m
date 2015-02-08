@@ -195,7 +195,7 @@ QuestionBook* questionBook = nil;
     question.type = currentQuestion.type_;
     question.subject = currentQuestion.subject_;
     question.is_highlight = currentQuestion.isHighlight_;
-    question.is_recommand = 0;
+    question.is_recommand = [NSNumber numberWithInt:0];
     question.review_time = currentQuestion.reviewCount_;
     question.is_master = currentQuestion.hasLearned_;
     question.isUpload = [NSNumber numberWithBool:YES];
@@ -231,11 +231,11 @@ QuestionBook* questionBook = nil;
     question.img = currentQuestion.img_;
     question.remark = currentQuestion.remark_;
     question.type = currentQuestion.type_;
-    question.subject = currentQuestion.subject_;
     question.is_highlight = currentQuestion.isHighlight_;
     question.is_recommand = currentQuestion.isRecommend_;
     question.review_time = currentQuestion.reviewCount_;
     question.is_master = currentQuestion.hasLearned_;
+    question.subject = currentQuestion.subject_;
     question.isUpload = [NSNumber numberWithBool:NO];
     question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
     question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
@@ -322,6 +322,13 @@ QuestionBook* questionBook = nil;
     return resultArr;
 }
 
+
+- (NSArray*)getQuestionListByDay:(NSString*)day
+{
+    NSArray* questionOfDay = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and userid=%@",day,[ToolUtils getUserid]] tableName:@"Question"];
+    return questionOfDay;
+}
+
 - (NSArray*)getQuestionByDay:(NSString*)day
 {
     NSArray* questionOfDay = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and userid=%@",day,[ToolUtils getUserid]] tableName:@"Question"];
@@ -388,6 +395,7 @@ QuestionBook* questionBook = nil;
         politic.name = @"政治";
         politic.total = 0;
         politic.newAdd = 0;
+        politic.type = 2;
         _subjects = [NSMutableArray arrayWithObjects:politic, nil];
     } else {
         QuestionBook* book = [QuestionBook getInstance];
@@ -477,6 +485,21 @@ QuestionBook* questionBook = nil;
     question.isUpload = [NSNumber numberWithBool:NO];
     question.is_master = [NSNumber numberWithBool:isMaster];
     [self save];
+}
+
+
+- (void)deleteQuestion:(Question*)question
+{
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    [[self.allQuestions objectAtIndex:question.type.integerValue-1] removeObject:question];
+    [helper.managedObjectContext deleteObject:question];
+    NSError* error;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+    }else{
+        NSLog(@"Save successful!");
+    }
 }
 
 
