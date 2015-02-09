@@ -11,6 +11,7 @@
 #import "MReturn.h"
 
 @interface RecordVC ()<UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @end
 
@@ -18,8 +19,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.canEdit = YES;
+    self.hasTitle = NO;
     self.title = @"我的错题";
+    self.bottomHeight = 45;
 }
 
 
@@ -101,6 +103,25 @@
      
 }
 
+- (void)photoViewSingleTap:(MJPhotoView *)photoView
+{
+    CGFloat alpha = self.bottomContainerView.alpha;
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]&&alpha!=0) {
+        [self prefersStatusBarHidden];
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    }
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.bottomContainerView setAlpha:alpha==0?1:0];
+        [self.headerView setAlpha:alpha==0?1:0];
+        [self.footMask setAlpha:alpha==0?1:0];
+        [self.collectBt setAlpha:alpha==0?1:0];
+        [self.backMaskView setAlpha:alpha==0?0.5:1];
+        [self.bottomView setAlpha:alpha==0?1:0];
+    }];
+    // 隐藏状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
@@ -111,14 +132,7 @@
         }
     }
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
 
 @end

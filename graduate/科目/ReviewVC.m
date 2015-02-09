@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.bottomHeight = 60.0;
-    self.canEdit = YES;
+    self.hasTitle = NO;
     [self setTitle:@"复习"];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
@@ -135,6 +135,7 @@
 
 - (void)addBottomView:(NSString*)originRemark showAll:(BOOL)showAll 
 {
+  
     NSString* remark = [originRemark copy];
     if (!showAll&&remark.length>=40) {
         remark = [remark substringToIndex:40];
@@ -151,32 +152,35 @@
     CGRect frame = [[UIScreen mainScreen]bounds];
     CGFloat width = frame.size.width;
     
-    
-    
-    UIFont* titleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
-    CGRect titleFrame = CGRectMake(15, 23, width-100, 45);
-    UILabel* titleLabel = [[UILabel alloc]initWithFrame:titleFrame];
-    [titleLabel setFont:titleFont];
-    [titleLabel setTextColor:[UIColor whiteColor]];
-    [titleLabel setText:@"南大学霸推荐英语笔记"];
-    
-    
-    
-    UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
-    NSString* totalPage =[NSString stringWithFormat:@"/%d", self.questionList.count];
-    NSString* currentPage = [NSString stringWithFormat:@"%d",self.currentPage+1];
-    NSLog(@"length~~~%lf",width-totalPage.length*10+currentPage.length*15);
-    CGRect pageTitleFrame = CGRectMake(width-totalPage.length*10-currentPage.length*15-15, 26, totalPage.length*10+currentPage.length*15, 45);
-    
-    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",currentPage,totalPage]];
-    NSRange currentRange = {0,[currentPage length]};
-    [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:19] range:currentRange];
-    [content addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:currentRange];
-    NSRange totalRange = {[currentPage length],[totalPage length]};
-    [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16] range:totalRange];
-    [content addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] range:totalRange];
-    UILabel* titlePageLabel = [[UILabel alloc]initWithFrame:pageTitleFrame];
-    [titlePageLabel setAttributedText:content];
+    UILabel* titleLabel;
+    UILabel* titlePageLabel;
+    if (self.hasTitle) {
+        UIFont* titleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
+        CGRect titleFrame = CGRectMake(15, 23, width-100, 45);
+        titleLabel = [[UILabel alloc]initWithFrame:titleFrame];
+        [titleLabel setFont:titleFont];
+        [titleLabel setTextColor:[UIColor whiteColor]];
+        [titleLabel setText:@"南大学霸推荐英语笔记"];
+        
+        
+        
+        UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
+        NSString* totalPage =[NSString stringWithFormat:@"/%d", self.questionList.count];
+        NSString* currentPage = [NSString stringWithFormat:@"%d",self.currentPage+1];
+        NSLog(@"length~~~%lf",width-totalPage.length*10+currentPage.length*15);
+        CGRect pageTitleFrame = CGRectMake(width-totalPage.length*10-currentPage.length*15-15, 26, totalPage.length*10+currentPage.length*15, 45);
+        
+        NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",currentPage,totalPage]];
+        NSRange currentRange = {0,[currentPage length]};
+        [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:19] range:currentRange];
+        [content addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:currentRange];
+        NSRange totalRange = {[currentPage length],[totalPage length]};
+        [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16] range:totalRange];
+        [content addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] range:totalRange];
+        titlePageLabel = [[UILabel alloc]initWithFrame:pageTitleFrame];
+        [titlePageLabel setAttributedText:content];
+
+    }
     
     
     
@@ -190,10 +194,12 @@
     CGSize labelsize = [remark sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
     NSLog(@"labelheight%lf",labelsize.height);
 
+    CGFloat titleHeight = self.hasTitle?50:0;
+    
     if (labelsize.height>60) {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 65 , width-20, 80)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 15+titleHeight , width-20, 80)];
     } else {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 65 , width-20, labelsize.height+30)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 15+titleHeight , width-20, labelsize.height+30)];
 
     }
     
@@ -217,12 +223,13 @@
     
     
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
-    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-50-self.bottomHeight-65, screenFrame.size.width, _markLabel.frame.size.height+50+65);
+    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-50-self.bottomHeight-15-titleHeight, screenFrame.size.width, _markLabel.frame.size.height+50+15+titleHeight);
     
     
     
     self.bottomContainerView = [[UIView alloc]initWithFrame:frame];
     [self.bottomContainerView setBackgroundColor:[UIColor clearColor]];
+    
     [self.bottomContainerView addSubview:titleLabel];
     [self.bottomContainerView addSubview:_markLabel];
     [self.bottomContainerView addSubview:titlePageLabel];
@@ -238,28 +245,6 @@
     
     [self.view addSubview:self.bottomContainerView];
   
-    
-    if (self.canEdit) {
-        CGRect editFrame = CGRectMake(frame.size.width-50, frame.size.height-50, 50, 50);
-        UIButton* editBt = [[UIButton alloc]initWithFrame:editFrame];
-        [editBt setTitle:@"编辑" forState:UIControlStateNormal];
-        [editBt.titleLabel setTextColor:[UIColor whiteColor]];
-        [editBt addTarget:self action:@selector(editRemark) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.bottomContainerView addSubview:editBt];
-        
-        
-        CGRect starFrame = CGRectMake(frame.size.width-100, frame.size.height-50, 50, 50);
-        UIButton* starBt = [[UIButton alloc]initWithFrame:starFrame];
-        [starBt setTitle:@"重点" forState:UIControlStateNormal];
-        [starBt setTitle:@"取消" forState:UIControlStateSelected];
-        [starBt.titleLabel setTextColor:[UIColor whiteColor]];
-        
-        MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
-        [starBt setSelected:question.isHighlight_.boolValue];
-        [starBt addTarget:self action:@selector(addToImportant:) forControlEvents:UIControlEventTouchUpInside];
-        [self.bottomContainerView addSubview:starBt];
-    }
     
     [self.markLabel setEditable:NO];
     [self.view bringSubviewToFront:self.collectBt];
@@ -287,11 +272,13 @@
         }
 
     }
+    
+    [self.bottomContainerView setHidden:self.headerView.hidden];
 }
 
 
 
-- (void)addToImportant:(id)sender
+- (IBAction)addToImportant:(id)sender
 {
     UIButton* selectBt = (UIButton*)sender;
     [selectBt setSelected:!selectBt.isSelected];
@@ -299,6 +286,10 @@
     Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
     question.is_highlight = question.is_highlight.boolValue?[NSNumber numberWithBool:NO]:[NSNumber numberWithBool:YES];
     [book save];
+
+}
+
+- (IBAction)rotate:(id)sender {
     
     QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
     [view rotate];
@@ -306,42 +297,39 @@
 
 
 
-- (void)editRemark
+- (IBAction)editRemark:(id)sender
 {
+    [self addMask];
     if (!_editView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 160);
         _editView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_editView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 160);
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 110);
         
         _editTextView = [[UITextView alloc]initWithFrame:textFrame];
-        
-        MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
-        
-        _editTextView.text = question.remark_;
-        
-        
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
         [_editView addSubview:_editTextView];
-        
-        
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:cancelButton];
         
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveRemark) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-        [saveButton.titleLabel setTextColor:[UIColor blueColor]];
-        
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
     
+    MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
+    _editTextView.text = question.remark_;
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -360,22 +348,18 @@
 
 -(void)cancelEdit
 {
+    [self removeMask];
     [self.editTextView resignFirstResponder];
 }
 
 -(void)saveRemark
 {
-    [self.editTextView resignFirstResponder];
+    [self cancelEdit];
     QuestionBook* book = [QuestionBook getInstance];
     Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
     question.remark = self.editTextView.text;
-    
     ((MQuestion*)[self.questionList objectAtIndex:self.currentPage]).remark_=self.editTextView.text;
-    
-    
     [book save];
-    
-    
     [self addBottomView:self.editTextView.text showAll:NO];
 }
 

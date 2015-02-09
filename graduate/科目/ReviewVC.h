@@ -29,7 +29,7 @@
 @property (nonatomic,strong)UITextView* markLabel;
 @property (nonatomic,strong)NSMutableArray* questionList;
 @property (nonatomic)CGFloat bottomHeight;
-@property (nonatomic)BOOL canEdit;
+@property (nonatomic)BOOL hasTitle;
 @property (nonatomic,strong)NSString* subject;
 - (void)loadQuestions;
 - (void)addBottomView:(NSString*)remark showAll:(BOOL)showAll;

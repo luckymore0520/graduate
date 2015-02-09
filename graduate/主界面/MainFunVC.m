@@ -22,6 +22,7 @@
 #import "CircularProgressView.h"
 
 @interface MainFunVC ()<CircularProgressDelegate>
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
@@ -110,6 +111,7 @@
             self.myDayLabel.transform = CGAffineTransformMakeTranslation(-10, 0);
         }
     }
+    [self.shareView setHidden:YES];
 }
 
 - (void)addCircle
@@ -125,6 +127,10 @@
     [self.bottomVIew addSubview:self.progressView];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.shareView setHidden:YES];
+}
 
 //判断改天音乐是否有下载
 - (void) setMusic:(Trace*)traceOfToday
@@ -340,7 +346,7 @@
 
 
 
-#pragma mark ButtonAction
+#pragma mark -ButtonAction
 //前往推荐帖子详情
 - (IBAction)goToDetail:(id)sender {
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Articles" bundle:nil];
@@ -352,6 +358,76 @@
         
     }];
 }
+- (IBAction)share:(id)sender {
+    [self.shareView setHidden:NO];
+    CGFloat height = self.shareView.frame.size.height;
+    CGRect frame = self.shareView.frame;
+    frame.origin.y = frame.origin.y -height;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.frame = frame;
+    }];
+}
+
+
+- (IBAction)closeShare:(id)sender {
+    [self.shareView setHidden:YES];
+    CGFloat height = self.shareView.frame.size.height;
+    CGRect frame = self.shareView.frame;
+    frame.origin.y = frame.origin.y +height;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.frame = frame;
+    } completion:^(BOOL finished) {
+    }] ;
+    
+}
+
+
+
+- (IBAction)saveToAlubm:(id)sender {
+    CGFloat height = self.shareView.frame.size.height;
+    CGRect frame = self.shareView.frame;
+    frame.origin.y = frame.origin.y +height;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.frame = frame;
+    } completion:^(BOOL finished) {
+        [self screenShots];
+    }] ;
+}
+
+-(void)screenShots
+{
+    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions) {
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    }
+    else
+    {
+        UIGraphicsBeginImageContext(imageSize);
+    }
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    for (UIWindow * window in [[UIApplication sharedApplication] windows]) {
+        if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen]) {
+            CGContextSaveGState(context);
+            CGContextTranslateCTM(context, [window center].x, [window center].y);
+            CGContextConcatCTM(context, [window transform]);
+            CGContextTranslateCTM(context, -[window bounds].size.width*[[window layer] anchorPoint].x, -[window bounds].size.height*[[window layer] anchorPoint].y);
+            [[window layer] renderInContext:context];
+            
+            CGContextRestoreGState(context);
+        }
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
+    NSLog(@"Suceeded!");
+    [ToolUtils showToast:@"图片已保存至相册" toView:self.view];
+
+}
+
 
 
 

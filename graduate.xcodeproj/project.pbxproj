@@ -767,6 +767,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D6A51D01A6B579100355923 /* OpenGLES.framework in Frameworks */,
 				7D44BBFF1A84A09800094D15 /* CoreFoundation.framework in Frameworks */,
 				7DBD866D1A72636D00205576 /* MediaPlayer.framework in Frameworks */,
 				7DD888ED1A6AC8A800D198DD /* libstdc++.dylib in Frameworks */,
@@ -775,7 +776,6 @@
 				7D2432221A7B9A2300C00F64 /* libWeiboSDK.a in Frameworks */,
 				7D6A53C01A6B5C5B00355923 /* UIKit.framework in Frameworks */,
 				7D5DBBBD1A8494E60078B99C /* libWeChatSDK.a in Frameworks */,
-				7D6A51D01A6B579100355923 /* OpenGLES.framework in Frameworks */,
 				7D6A51CE1A6B578B00355923 /* QuartzCore.framework in Frameworks */,
 				7DD888EB1A6AC89C00D198DD /* CoreTelephony.framework in Frameworks */,
 				7DD888E71A6AC88800D198DD /* CoreGraphics.framework in Frameworks */,

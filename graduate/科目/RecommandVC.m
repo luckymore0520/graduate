@@ -20,25 +20,14 @@
     [self.scrollView setPagingEnabled:YES];
     self.scrollView.delegate = self;
     self.bottomHeight = 0;
-    self.canEdit = NO;
     [self setTitle:@"今日推荐"];
     [self.navigationController.navigationBar setHidden:YES];
-    
+    self.hasTitle = YES;
     self.scale = 1;
     self.view.transform = CGAffineTransformMakeScale(1, 1);
-//    if([self.navigationController.navigationBar
-//        respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
-//        [self.navigationController.navigationBar  setBackgroundImage:[[UIImage imageNamed:@"台头渐变蒙版"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]   forBarMetrics:UIBarMetricsDefault];
-//    }
-//    
-    // Do any additional setup after loading the view.
 }
 
 
-- (void) viewWillAppear:(BOOL)animated
-{
-    
-}
 - (void)viewDidAppear:(BOOL)animated
 {
     if (self.questionList) {
@@ -185,9 +174,6 @@
         [self addBottomView:question.remark_ showAll:NO];
     }
   
-}
-- (IBAction)backToMain:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

@@ -89,6 +89,15 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.maskView setHidden:YES];
+    [self.maskView removeFromSuperview];
+    [self.waitingView setHidden:YES];
+    [self.waitingView removeFromSuperview];
+}
+
 
 - (void) registerForKeyboardNotifications
 {
@@ -369,23 +378,18 @@
         self.maskView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
         [self.maskView setAlpha:0.5];
         [self.maskView setBackgroundColor:[UIColor blackColor]];
+        [self.navigationController.view addSubview:self.maskView];
     }
-    [self.navigationController.view addSubview:self.maskView];
-
     [self.maskView setHidden:NO];
-    
 }
+
 
 - (void)removeMask
 {
     [self.maskView setHidden:YES];
-    [self.maskView removeFromSuperview];
+//    [self.maskView removeFromSuperview];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self waitingEnd];
-}
 
 
 
