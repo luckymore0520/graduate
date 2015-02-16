@@ -27,6 +27,7 @@
 
 @property (nonatomic,strong)UIImage* img;
 
+@property (nonatomic, assign) CGFloat parentHeight;
 - (void)photoDidFinishLoadWithImage:(UIImage *)image;
 
 @end

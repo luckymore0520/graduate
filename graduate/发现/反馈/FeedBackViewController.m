@@ -20,18 +20,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.textArea.layer.borderColor = [UIColor blackColor].CGColor;
+    [self setTitle:@"联系我们"];
+    self.textArea.layer.borderColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:1].CGColor;
     
     
     self.textArea.layer.borderWidth = 1;
     self.textArea.layer.cornerRadius = 10;
     self.textArea.delegate = self;
     
+    self.contactField.layer.borderColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:1].CGColor;
+    self.contactField.layer.borderWidth = 1;
+
+    
     self.textFields = [NSArray arrayWithObjects:self.contactField, nil];
     self.keyButtons = [NSArray arrayWithObjects:self.submitBt, nil];
+    self.submitBt.layer.cornerRadius  = 10 ;
     // Do any additional setup after loading the view.
 }
 
+- (void)initViews
+{
+    
+}
 
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -55,6 +65,9 @@
     }
     return YES;
 }
+
+
+
 - (IBAction)resignAll:(id)sender {
     [self.textArea resignFirstResponder];
 }
@@ -73,7 +86,6 @@
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MFeedback"]) {
-//        MReturn* ret = [MReturn objectWithKeyValues:data];
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"谢谢" message:@"我们很重视您的意见，您的意见是我们前进的动力。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     }

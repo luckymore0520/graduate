@@ -34,4 +34,5 @@
 - (void)loadQuestions;
 - (void)addBottomView:(NSString*)remark showAll:(BOOL)showAll;
 @property (nonatomic,strong) NSString* currentQuestionId;
+
 @end

@@ -100,6 +100,11 @@
     MComment* comment = [self.commentList objectAtIndex:indexPath.row];
     [cell.contentLabel setText:comment.content_];
     [cell.stateLabel setText:comment.isNew_.integerValue==0?@"已读":@"未读"];
+    if (comment.isNew_.integerValue==0) {
+        [cell.contentLabel setTextColor:[UIColor colorOfGrayText]];
+        [cell.stateLabel setTextColor:[UIColor colorOfGrayText]];
+
+    }
     return cell;
 }
 

@@ -29,12 +29,22 @@
     [self setTitle:@"广场"];
     _firstAppear = YES;
     _postArray = [[NSMutableArray alloc]init];
-    [self addRightButton:0];
        // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)initViews
+{
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self addRightButton:1];
 }
 
 
@@ -43,7 +53,7 @@
     if (!self.msgBt) {
         self.msgBt  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     }
-    [self.msgBt setTitle:[NSString stringWithFormat:@"%d",number] forState:UIControlStateNormal];
+    [self.msgBt setImage:[UIImage imageNamed:@"广场消息提醒"] forState:UIControlStateNormal];
     [self.msgBt setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.msgBt addTarget:self action:@selector(newMsg) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:self.msgBt];
@@ -99,7 +109,11 @@
                 }
             }
             if (!has) {
-                [self.postArray addObject:post];
+                if (page==1) {
+                    [self.postArray insertObject:post atIndex:0];
+                } else {
+                    [self.postArray addObject:post];
+                }
             }
             
            
@@ -123,6 +137,12 @@
 }
 
 #pragma mark - Table view data source
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MPost* post = [_postArray objectAtIndex:indexPath.section];
+    NSLog(@"%lf",110 + [ChatCenterPostCell getHeight:post.content_ hasConstraint:YES]);
+    return 110 + [ChatCenterPostCell getHeight:post.content_ hasConstraint:YES];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -133,7 +153,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

@@ -21,10 +21,9 @@
     self.scrollView.delegate = self;
     self.bottomHeight = 0;
     [self setTitle:@"今日推荐"];
-    [self.navigationController.navigationBar setHidden:YES];
     self.hasTitle = YES;
-    self.scale = 1;
-    self.view.transform = CGAffineTransformMakeScale(1, 1);
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+
 }
 
 
@@ -39,8 +38,8 @@
 
 #pragma mark -ButtonAction
 - (IBAction)back:(id)sender {
-    
     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
 
 }
 

@@ -83,6 +83,8 @@
 		7D2432D51A7E453F00C00F64 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432CE1A7E453F00C00F64 /* SWUtilityButtonTapGestureRecognizer.m */; };
 		7D2432D61A7E453F00C00F64 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432D01A7E453F00C00F64 /* SWUtilityButtonView.m */; };
 		7D2432D91A7E4A2300C00F64 /* ModifySubjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */; };
+		7D4445301A90C17B00A4BE04 /* UIColor+Graduate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D44452F1A90C17B00A4BE04 /* UIColor+Graduate.m */; };
+		7D4445331A91907100A4BE04 /* MPostReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4445321A91907100A4BE04 /* MPostReport.m */; };
 		7D44BBFD1A84A06500094D15 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D44BBFB1A84A06500094D15 /* PushConfig.plist */; };
 		7D44BBFF1A84A09800094D15 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D44BBFE1A84A09800094D15 /* CoreFoundation.framework */; };
 		7D44BC021A84A2E700094D15 /* libPushSDK-1.8.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D44BC011A84A2E700094D15 /* libPushSDK-1.8.2.a */; };
@@ -410,6 +412,10 @@
 		7D2432D01A7E453F00C00F64 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
 		7D2432D71A7E4A2300C00F64 /* ModifySubjectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModifySubjectVC.h; path = "科目/ModifySubjectVC.h"; sourceTree = "<group>"; };
 		7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModifySubjectVC.m; path = "科目/ModifySubjectVC.m"; sourceTree = "<group>"; };
+		7D44452E1A90C17B00A4BE04 /* UIColor+Graduate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Graduate.h"; path = "Tools/UIColor+Graduate.h"; sourceTree = "<group>"; };
+		7D44452F1A90C17B00A4BE04 /* UIColor+Graduate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Graduate.m"; path = "Tools/UIColor+Graduate.m"; sourceTree = "<group>"; };
+		7D4445311A91907100A4BE04 /* MPostReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPostReport.h; path = Frame/ApiTools/MPostReport.h; sourceTree = "<group>"; };
+		7D4445321A91907100A4BE04 /* MPostReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPostReport.m; path = Frame/ApiTools/MPostReport.m; sourceTree = "<group>"; };
 		7D44BBFB1A84A06500094D15 /* PushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PushConfig.plist; sourceTree = "<group>"; };
 		7D44BBFE1A84A09800094D15 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7D44BC001A84A2E700094D15 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
@@ -1050,6 +1056,8 @@
 			children = (
 				7D4E058E1A74C73A001709DB /* ButtonGroup.h */,
 				7D4E058F1A74C73A001709DB /* ButtonGroup.m */,
+				7D44452E1A90C17B00A4BE04 /* UIColor+Graduate.h */,
+				7D44452F1A90C17B00A4BE04 /* UIColor+Graduate.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1196,6 +1204,7 @@
 		7D5DBB2E1A830D010078B99C /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
+				7D5DBB471A834BCB0078B99C /* 反馈 */,
 				7D5DBB911A845B560078B99C /* 精华 */,
 				7D5DBB661A8358440078B99C /* 广场 */,
 				7D5DBB311A8310310078B99C /* 个人 */,
@@ -1327,10 +1336,9 @@
 		7D6A51891A69610600355923 /* graduate */ = {
 			isa = PBXGroup;
 			children = (
-				7D5DBB471A834BCB0078B99C /* 反馈 */,
+				7DA994C61A79EDF700A879CF /* Frame */,
 				7D5DBB2E1A830D010078B99C /* 发现 */,
 				7D4E058D1A74C6BD001709DB /* Tools */,
-				7DA994C61A79EDF700A879CF /* Frame */,
 				7D4E06371A767CA2001709DB /* Model */,
 				7D4E06151A752EED001709DB /* 其他 */,
 				7D4E05891A74C610001709DB /* 科目 */,
@@ -1564,6 +1572,8 @@
 				7D44BC091A84B88B00094D15 /* MFootprint.m */,
 				7D44BC0E1A84EA4900094D15 /* MRecommendKeys.h */,
 				7D44BC0F1A84EA4900094D15 /* MRecommendKeys.m */,
+				7D4445311A91907100A4BE04 /* MPostReport.h */,
+				7D4445321A91907100A4BE04 /* MPostReport.m */,
 			);
 			name = ApiTools;
 			sourceTree = "<group>";
@@ -1993,10 +2003,12 @@
 				7D5DBB9F1A8460D80078B99C /* MEssence.m in Sources */,
 				7D4E05C71A74EF71001709DB /* UIButton+WebCache.m in Sources */,
 				7D4E05801A749CE4001709DB /* MediaPlayController.m in Sources */,
+				7D4445331A91907100A4BE04 /* MPostReport.m in Sources */,
 				7D2432D61A7E453F00C00F64 /* SWUtilityButtonView.m in Sources */,
 				7D4E05EC1A74EF7B001709DB /* MJPhotoView.m in Sources */,
 				7D2432471A7CD8E900C00F64 /* SubjectCell.m in Sources */,
 				7DA994C31A7878FE00A879CF /* NSObject+MJCoding.m in Sources */,
+				7D4445301A90C17B00A4BE04 /* UIColor+Graduate.m in Sources */,
 				7D4E05EB1A74EF7B001709DB /* MJPhotoToolbar.m in Sources */,
 				7D4E05991A74DCB2001709DB /* QuestionView.m in Sources */,
 				7D2432121A7B785500C00F64 /* MainFeatureVC.m in Sources */,

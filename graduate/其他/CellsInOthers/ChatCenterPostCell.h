@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MComment.h"
 #import "MPost.h"
+#define MALE @"男生图标"
+#define FEMALE @"女生图标"
 @interface ChatCenterPostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *postAltasImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *postSexImageView;
@@ -21,5 +23,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *replyBt;
 @property (nonatomic,strong) MComment* comment;
 @property (nonatomic,strong)MPost* post;
-+ (CGFloat)getHeight:(NSString*) content;
++ (CGFloat)getHeight:(NSString*) content hasConstraint:(BOOL)hasConstraint;
 @end

@@ -11,6 +11,8 @@
 #import "ReviewVC.h"
 #import "SignVC.h"
 @interface ReviewVC ()
+@property (weak, nonatomic) IBOutlet UIView *footToolView;
+@property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
 
 @end
 
@@ -18,13 +20,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.bottomHeight = 60.0;
+    self.bottomHeight = 130.0;
     self.hasTitle = NO;
     [self setTitle:@"复习"];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+
+}
+- (void)initViews
+{
+    
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -36,6 +47,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)goBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)loadQuestions
 {
@@ -58,6 +72,9 @@
         view.photoViewDelegate = self;
         view.orientation = view.myQuestion.orientation;
         view.backgroundColor = [UIColor clearColor];
+        if (!self.footMask) {
+            view.parentHeight = self.scrollView.frame.size.height;
+        }
         MJPhoto *photo = [[MJPhoto alloc] init];
         MQuestion* question = [self.questionList objectAtIndex:i];
         if (question.isRecommend_.integerValue==1) {
@@ -197,9 +214,9 @@
     CGFloat titleHeight = self.hasTitle?50:0;
     
     if (labelsize.height>60) {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 15+titleHeight , width-20, 80)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 5+titleHeight , width-20, 80)];
     } else {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 15+titleHeight , width-20, labelsize.height+30)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 5+titleHeight , width-20, labelsize.height+30)];
 
     }
     
@@ -213,7 +230,13 @@
     _markLabel.text = remark;
 //    [UITextView setNumberOfLines:0];
     [_markLabel setBackgroundColor:[UIColor clearColor]];
-    [_markLabel setTextColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]];
+    if (self.footMask) {
+        [_markLabel setTextColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]];
+
+    } else {
+        [_markLabel setTextColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1]];
+
+    }
     
 
     if (self.bottomContainerView) {
@@ -223,21 +246,25 @@
     
     
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
-    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-50-self.bottomHeight-15-titleHeight, screenFrame.size.width, _markLabel.frame.size.height+50+15+titleHeight);
+    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-self.bottomHeight-15-titleHeight, screenFrame.size.width, _markLabel.frame.size.height+15+titleHeight);
     
     
     
     self.bottomContainerView = [[UIView alloc]initWithFrame:frame];
-    [self.bottomContainerView setBackgroundColor:[UIColor clearColor]];
+    if (!self.footMask) {
+        [self.bottomContainerView setBackgroundColor:[UIColor whiteColor]];
+    } else {
+        [self.bottomContainerView setBackgroundColor:[UIColor clearColor]];
+
+    }
     
     [self.bottomContainerView addSubview:titleLabel];
     [self.bottomContainerView addSubview:_markLabel];
     [self.bottomContainerView addSubview:titlePageLabel];
     if (!showAll&&originRemark.length>=40) {
-        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10+60, 80, labelsize.height/2+10);
+        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10, 80, labelsize.height/2+10);
         UIButton* showAllBt = [[UIButton alloc]initWithFrame:showAllBtFrame];
-        [showAllBt setTitle:@"查看更多" forState:UIControlStateNormal];
-        [showAllBt.titleLabel setFont:font];
+        [showAllBt setImage:[UIImage imageNamed:@"查看全部"] forState:UIControlStateNormal];
         [_bottomContainerView addSubview:showAllBt];
         [showAllBt addTarget:self action:@selector(showAll) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -273,7 +300,15 @@
 
     }
     
+    
+    [self.isImportantBt setSelected:question.isHighlight_.integerValue==1];
+
+    
     [self.bottomContainerView setHidden:self.headerView.hidden];
+    if (self.footToolView) {
+        [self.view bringSubviewToFront:self.footToolView];
+    }
+    [self.isImportantBt setSelected:question.isHighlight_.boolValue];
 }
 
 
@@ -283,8 +318,10 @@
     UIButton* selectBt = (UIButton*)sender;
     [selectBt setSelected:!selectBt.isSelected];
     QuestionBook* book = [QuestionBook getInstance];
-    Question* question = [book getQuestionByMQuestion:[self.questionList objectAtIndex:self.currentPage]];
+    MQuestion* mQuestion = [self.questionList objectAtIndex:self.currentPage];
+    Question* question = [book getQuestionByMQuestion:mQuestion];
     question.is_highlight = question.is_highlight.boolValue?[NSNumber numberWithBool:NO]:[NSNumber numberWithBool:YES];
+    mQuestion.isHighlight_ = question.is_highlight;
     [book save];
 
 }
@@ -388,20 +425,22 @@
 
 - (void)photoViewSingleTap:(MJPhotoView *)photoView
 {
-    CGFloat alpha = self.bottomContainerView.alpha;
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]&&alpha!=0) {
-        [self prefersStatusBarHidden];
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    if (self.footMask) {
+        CGFloat alpha = self.bottomContainerView.alpha;
+        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]&&alpha!=0) {
+            [self prefersStatusBarHidden];
+            [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+        }
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.bottomContainerView setAlpha:alpha==0?1:0];
+            [self.headerView setAlpha:alpha==0?1:0];
+            [self.footMask setAlpha:alpha==0?1:0];
+            [self.collectBt setAlpha:alpha==0?1:0];
+            [self.backMaskView setAlpha:alpha==0?0.5:1];
+        }];
+        // 隐藏状态栏
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
     }
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.bottomContainerView setAlpha:alpha==0?1:0];
-        [self.headerView setAlpha:alpha==0?1:0];
-        [self.footMask setAlpha:alpha==0?1:0];
-        [self.collectBt setAlpha:alpha==0?1:0];
-        [self.backMaskView setAlpha:alpha==0?0.5:1];
-    }];
-    // 隐藏状态栏
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 

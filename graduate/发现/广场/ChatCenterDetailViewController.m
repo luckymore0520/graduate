@@ -10,14 +10,16 @@
 #import "MComments.h"
 #import "MCommentList.h"
 #import "MCommentPublish.h"
+#import "MPostReport.h"
 #import "MPostDetail.h"
 #import "ChatCenterPostCell.h"
 #import "UIPlaceHolderTextView.h"
-@interface ChatCenterDetailViewController ()
+@interface ChatCenterDetailViewController ()<UIActionSheetDelegate>
 @property (nonatomic,strong)NSMutableArray* commentList;
 @property (nonatomic,strong)UIView* editView;
 @property (nonatomic,strong)UIPlaceHolderTextView* editTextView;
 @property (nonatomic,strong)NSString* selectFloor;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 @end
 
 @implementation ChatCenterDetailViewController
@@ -31,7 +33,30 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)initViews
+{
+    
+}
+- (IBAction)share:(id)sender {
+    [self addMask];
+    [self.view bringSubviewToFront:_shareView];
+    [UIView animateWithDuration:0.3 animations:^{
+        _shareView.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -_shareView.frame.size.height);
+    }];
+    
+}
+- (IBAction)cancelShare:(id)sender {
+    [self removeMask];
+    [UIView animateWithDuration:0.3 animations:^{
+        _shareView.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, 0);
+    }];
+}
 
+
+- (IBAction)showMore:(id)sender {
+    UIActionSheet* actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"举报" otherButtonTitles:nil, nil];
+    [actionSheet showInView:self.view];
+}
 - (void)loadData
 {
     if (!self.post) {
@@ -81,6 +106,9 @@
         MPost* post = [MPost objectWithKeyValues:data];
         self.post = post;
         [self doneWithView:_header];
+    } else if ([names isEqualToString:@"MPostReport"])
+    {
+        [ToolUtils showToast:@"举报成功!" toView:self.view];
     }
 }
 
@@ -100,8 +128,15 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-#pragma mark -tableViewDelegate
+#pragma mark - actionsheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        MPostReport* report = [[MPostReport alloc]init];
+        [report load:self pid:self.post.id_];
+    }
+}
+#pragma mark - tableViewDelegate
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section==0) {
@@ -117,22 +152,29 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+    if (section==0) {
+        return 0;
+    }
+    return 5;
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    if (self.commentList.count>0) {
+        return 2;
+    }
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 100+[ChatCenterPostCell getHeight:self.post.content_];
+        return 134+[ChatCenterPostCell getHeight:self.post.content_ hasConstraint:NO];
     } else if (indexPath.section==1)
     {
         MComment* comment = [self.commentList objectAtIndex:indexPath.row];
-        return 80+[ChatCenterPostCell getHeight:comment.content_];
+        return 80+[ChatCenterPostCell getHeight:comment.content_ hasConstraint:NO];
     }
     return 0;
 }
@@ -170,47 +212,44 @@
 }
 
 
+
 - (void)editRemark:(id)sender
 {
     [self addMask];
     if (!_editView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 160);
         _editView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_editView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 160);
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 110);
         
         _editTextView = [[UIPlaceHolderTextView alloc]initWithFrame:textFrame];
-        
-        
-        
-        
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
         [_editView addSubview:_editTextView];
-       
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:cancelButton];
-        [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveRemark) forControlEvents:UIControlEventTouchUpInside];
-        [saveButton setTitle:@"发表" forState:UIControlStateNormal];
-        [saveButton.titleLabel setTextColor:[UIColor blueColor]];
-        [saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        
-        
+        [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
     NSInteger tag = ((UIButton*)sender).tag;
     if (tag>=0) {
         MComment* comment = [self.commentList objectAtIndex:tag];
-        _editTextView.placeholder = [NSString stringWithFormat:@"回复%@:",comment.nickname_];
+        _editTextView.text = [NSString stringWithFormat:@"回复%@:",comment.nickname_];
         self.selectFloor = comment.id_;
     }
+
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -219,8 +258,6 @@
     } completion:^(BOOL finished) {
         //        [self.keyboardBt setHidden:NO];
     }];
-    [self.view bringSubviewToFront:self.editView];
-    
 }
 
 
@@ -239,10 +276,7 @@
     
     MCommentPublish* publish = [[MCommentPublish alloc]init];
     [publish load:self postid:_post.id_ content:self.editTextView.text replyid:self.selectFloor];
-    
-    
     [self.editTextView resignFirstResponder];
-    
 }
 
 

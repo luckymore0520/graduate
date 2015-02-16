@@ -42,13 +42,36 @@
     [self addRightButton];
     self.selectModel = NO;
     self.selectedArray  = [[NSMutableArray alloc]init];
+    [self.navigationController setNavigationBarHidden:NO];
+}
+
+- (void)initViews
+{
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
+
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    if (self.firstShow) {
+        self.firstShow = NO;
+    } else {
+        [self loadData];
+        [self.photoView reloadData];
+    }
+    [self initSubjects];
+    CGRect frame = self.view.frame;
+    NSLog(@"%lf",frame.origin.y);
+    [self.navigationController setNavigationBarHidden:NO];
+
+}
+
+
 
 - (void)initSubjects
 {
@@ -139,19 +162,6 @@
  
 }
 
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    if (self.firstShow) {
-        self.firstShow = NO;
-    } else {
-        [self loadData];
-        [self.photoView reloadData];
-    }
-    [self initSubjects];
-    CGRect frame = self.view.frame;
-    NSLog(@"%lf",frame.origin.y);
-}
 
 
 
@@ -333,6 +343,7 @@
         Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         detailVC.currentQuestionId = question.questionid;
         [self.navigationController pushViewController:detailVC animated:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
         
     } else {
         Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];

@@ -52,4 +52,6 @@
 
 @property (retain,nonatomic)NSNumber* reviewCount_;
 
+@property (retain,nonatomic)NSString* myDay_;
+
 @end

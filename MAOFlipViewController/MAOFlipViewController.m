@@ -11,6 +11,7 @@
 #import "SubjectVC.h"
 #import "MainFunVC.h"
 #import "OtherFuncVCViewController.h"
+#import "MyQuestionVC.h"
 @interface MAOFlipViewController ()<FlipInteactionDelegate, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
 @property (nonatomic) MAOFlipInteraction *flipInteraction;
 @property (nonatomic) MAOFlipTransition *flipTransition;
@@ -160,6 +161,14 @@
    
 }
 
+/*
+ 设置rootViewController的NavigationBar 不可见
+ */
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if ([viewController class]==[MyQuestionVC class]) {
+        [navigationController setNavigationBarHidden:NO];
+    }
+}
 
 
 - (BOOL)isMainPage:(UIViewController*)toVC

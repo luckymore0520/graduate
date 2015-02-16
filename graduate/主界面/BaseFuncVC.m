@@ -55,9 +55,7 @@
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.scale = 1;
-    
     [self initViews];
-    
     // Do any additional setup after loading the view.
 }
 
@@ -66,8 +64,6 @@
     if (self.view.frame.size.width<350) {
         self.scale = 0.854;
         self.view.transform = CGAffineTransformMakeScale(0.854, 0.854);
-        
-        
     }
 }
 
@@ -335,7 +331,7 @@
     UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [button setTitle:title forState:UIControlStateNormal];
     
-    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if (img) {
         [button setBackgroundImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
 
@@ -378,7 +374,12 @@
         self.maskView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
         [self.maskView setAlpha:0.5];
         [self.maskView setBackgroundColor:[UIColor blackColor]];
-        [self.navigationController.view addSubview:self.maskView];
+        if (self.scale==1) {
+            [self.view addSubview:self.maskView];
+        } else {
+            [self.navigationController.view addSubview:self.maskView];
+        }
+        
     }
     [self.maskView setHidden:NO];
 }

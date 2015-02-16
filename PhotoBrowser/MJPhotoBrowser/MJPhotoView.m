@@ -51,6 +51,7 @@
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
         doubleTap.numberOfTapsRequired = 2;
         [self addGestureRecognizer:doubleTap];
+        self.parentHeight = 0;
     }
     return self;
 }
@@ -186,6 +187,9 @@
     // 内容尺寸
     self.contentSize = CGSizeMake(0, imageFrame.size.height+200);
     originHeight = imageFrame.size.height;
+    if (self.parentHeight!=0) {
+        boundsHeight = self.parentHeight;
+    }
     // y值
     if (imageFrame.size.height < boundsHeight) {
         imageFrame.origin.y = floorf((boundsHeight - imageFrame.size.height-44) / 2.0);

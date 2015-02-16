@@ -85,7 +85,12 @@ CGFloat angle;
 
 }
 
-    
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
 
 -(void) startAnimation
 {
@@ -548,10 +553,10 @@ CGFloat angle;
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
+    [self removeMask];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
-        [self removeMask];
     }];
     
 }

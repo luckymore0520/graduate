@@ -11,6 +11,7 @@
 #import "ApiHelper.h"
 #import "WaitingView.h"
 #import "CircularProgressView.h"
+#import "UIColor+Graduate.h"
 
 @interface BaseFuncVC : UIViewController<UITextFieldDelegate,ApiDelegate>
 {

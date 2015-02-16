@@ -12,6 +12,7 @@
 
 @interface RecordVC ()<UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
 
 @end
 
@@ -38,11 +39,7 @@
 
 
 
-- (IBAction)returnToMain:(id)sender {
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
-}
+
 - (IBAction)delete:(id)sender {
     
     
@@ -123,6 +120,15 @@
 }
 
 
+
+- (void)addBottomView:(NSString *)remark showAll:(BOOL)showAll
+{
+    [super addBottomView:remark showAll:showAll];
+    
+    MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
+
+    [self.isImportantBt setSelected:question.isHighlight_.integerValue==1];
+}
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MQuesDelete"]) {

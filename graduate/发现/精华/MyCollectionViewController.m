@@ -14,6 +14,7 @@
 #import "EssenceDetailViewController.h"
 @interface MyCollectionViewController ()
 @property (nonatomic,strong)NSMutableArray* myEssences;
+@property (nonatomic,strong)NSArray* typeArray;
 @end
 
 @implementation MyCollectionViewController
@@ -21,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.myEssences = [[NSMutableArray alloc]init];
+    self.typeArray = @[@"资料",@"资讯",@"真题"];
     // Do any additional setup after loading the view.
 }
 
@@ -71,6 +73,7 @@
     [cell.essenceTitleLabel setText:essence.title_];
     [cell.essenceSourceLabel setText:[NSString stringWithFormat:@"来自网友%@的分享",essence.source_]];
     [cell.essenceTimeLabel setText:[NSString stringWithFormat:@"%@",essence.time_]];
+    [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.type_.integerValue]]];
     return cell;
 }
 

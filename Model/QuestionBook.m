@@ -214,7 +214,7 @@ QuestionBook* questionBook = nil;
     return question;
 }
 
-- (Question*)insertQuestionFromRecommand:(MQuestion*)currentQuestion
+- (Question*)insertQuestionFromRecommand:(MQuestion*)currentQuestion 
 {
     NSArray* result = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"questionid=%@",currentQuestion.id_] tableName:@"Question"];
     Question* question;
@@ -238,7 +238,12 @@ QuestionBook* questionBook = nil;
     question.subject = currentQuestion.subject_;
     question.isUpload = [NSNumber numberWithBool:NO];
     question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
-    question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
+    if (currentQuestion.myDay_) {
+        question.myDay = currentQuestion.myDay_;
+
+    } else {
+        question.myDay = [NSString stringWithFormat:@"%@",[ToolUtils getCurrentDay]];
+    }
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
@@ -269,9 +274,10 @@ QuestionBook* questionBook = nil;
     mquestion.subject_ = question.subject;
     mquestion.isHighlight_ = question.is_highlight;
     mquestion.isRecommend_ = question.is_recommand;
-    mquestion.createTime_ = question.create_time;
+    mquestion.createTime_ = question.myDay;
     mquestion.hasLearned_ = question.is_master;
     mquestion.reviewCount_ = question.review_time;
+    mquestion.myDay_ = question.myDay;
     return mquestion;
 }
 

@@ -20,11 +20,15 @@
     // Configure the view for the selected state
 }
 
-+ (CGFloat)getHeight:(NSString*) content
++ (CGFloat)getHeight:(NSString*) content hasConstraint:(BOOL)hasConstraint
 {
-    UIFont *font = [UIFont systemFontOfSize:18];
+    UIFont *font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:14.0];
     CGSize size = CGSizeMake([[UIScreen mainScreen]applicationFrame].size.width,2000);
     CGSize labelsize = [content sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+    if (hasConstraint) {
+        CGSize oneLineSize = [@"a line" sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+        return oneLineSize.height*3<=labelsize.height?oneLineSize.height*3:labelsize.height;
+    }
     return labelsize.height;
    
 }
