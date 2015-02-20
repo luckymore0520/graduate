@@ -73,10 +73,28 @@ QuestionBook* questionBook = nil;
     
 }
 
+- (void)calculateNeedUpload
+{
+    _needUpload = 0;
+
+    for (NSMutableArray* arr in _allQuestions) {
+        for (Question* question in arr) {
+            if (!question.isUpload.boolValue) {
+                self.needUpload++;
+            }
+        }
+    }
+    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    for (Sign* sign in signList) {
+        if (!sign.isUpload.boolValue) {
+            self.needUpload++;
+        }
+    }
+}
 
 - (void)updateQuestions
 {
-    
+    _needUpload = 0;
     dispatch_queue_t quene = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(quene, ^{
     
@@ -107,7 +125,6 @@ QuestionBook* questionBook = nil;
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names object:(id)object
 {
-    
     if ([names isEqualToString:@"MImgUpload"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
@@ -126,7 +143,7 @@ QuestionBook* questionBook = nil;
         if (ret.code_.integerValue==1) {
             Question* question = (Question*)object;
             question.isUpload = [NSNumber numberWithBool:YES];
-            
+            self.needUpload--;
             NSLog(@"成功上传问题 %@",question.questionid);
 
         }
@@ -138,6 +155,7 @@ QuestionBook* questionBook = nil;
         if (ret.code_.integerValue==1) {
             Sign* sign = (Sign*)object;
             sign.isUpload = [NSNumber numberWithBool:YES];
+            self.needUpload--;
             NSLog(@"成功上传打卡 %@",sign.date);
 
         }
@@ -146,6 +164,8 @@ QuestionBook* questionBook = nil;
     if (self.needUpload==0) {
         [self save];
     }
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"backup" object:nil];
+
 }
 
 - (void)showAlert:(NSString *)alert functionName:(NSString *)names

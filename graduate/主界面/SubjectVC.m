@@ -38,8 +38,6 @@
 @property (strong, nonatomic)  UIView *editView;
 @property (strong, nonatomic)  UIPlaceHolderTextView *editTextView;
 
-//键盘消失按钮
-@property (weak, nonatomic) IBOutlet UIButton *keyboardBt;
 
 @property (weak, nonatomic) IBOutlet UIImageView *headView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundViw;
@@ -70,6 +68,7 @@ CGFloat angle;
     if (self.view.frame.size.height>500) {
         [self.tableview setScrollEnabled:NO];
     }
+    [self setTitle:@"主页"];
     [super viewDidLoad];
     [self.editView removeFromSuperview];
     self.headView.layer.cornerRadius = 42;
@@ -133,7 +132,7 @@ CGFloat angle;
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
     if (array.count>0) {
         Trace* trace = [array firstObject];
-        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:nil];
+        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
         [self.dailyNoteLabel setText:trace.note];
         if (trace.note.length<23) {
             self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
@@ -294,14 +293,6 @@ CGFloat angle;
         vc.subject = ((Subject*)sender).name;
         
         
-    }  else if ([segue.identifier isEqualToString:@"english"]||
-        [segue.identifier isEqualToString:@"math"]||
-        [segue.identifier isEqualToString:@"major"]) {
-        ModifySubjectVC* modify = (ModifySubjectVC*)segue.destinationViewController;
-        Subject* subject = (Subject*)sender;
-        modify.type = subject.type;
-        modify.subject = subject.name;
-        
     }
 }
 
@@ -413,23 +404,26 @@ CGFloat angle;
     NSIndexPath *cellIndexPath = [self.tableview indexPathForCell:cell];
     Subject* subject = [_subjects objectAtIndex:cellIndexPath.row];
     
-    
-    
+    NSString* type = @"";
     switch (subject.type) {
         case 1:
-            [self performSegueWithIdentifier:@"english" sender:subject];
+            type = @"setEnglish";
             break;
         case 3:
         case 5:
-            [self performSegueWithIdentifier:@"math" sender:subject];
+            type = @"setMathOrMajor2";
             break;
         case 4:
-            [self performSegueWithIdentifier:@"major" sender:subject];
+            type = @"setMajor1";
             break;
         default:
             break;
     }
-    
+    [cell hideUtilityButtonsAnimated:NO];
+    ModifySubjectVC* nextVC = [self.storyboard instantiateViewControllerWithIdentifier:type];
+    nextVC.type = subject.type;
+    nextVC.subject = subject.name;
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
@@ -493,7 +487,7 @@ CGFloat angle;
         [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
-    [self.view bringSubviewToFront:self.editView];
+    [self.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{

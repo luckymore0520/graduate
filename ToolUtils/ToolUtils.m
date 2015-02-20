@@ -297,11 +297,33 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
++(NSString*)getLastUpdateTime
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"lastUpdateTime"];
+
+}
++(void)setLastUpdateTime:(NSString*)lastUpdateTime
+{
+    NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:lastUpdateTime forKey:@"lastUpdateTime"];
+    [defaults synchronize];
+}
 
 +(NSDictionary*)getUserInfomation
 {
     return [[NSUserDefaults standardUserDefaults]objectForKey:@"userInfomation"];
 
+}
+
++(NSString*)getKeyboardHeight
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"keyboard"];
+}
++(void)setKeyboardHeight:(NSNumber*)keyboardHeight
+{
+    NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:keyboardHeight forKey:@"keyboard"];
+    [defaults synchronize];
 }
 +(void)setUserInfomation:(NSDictionary*)userInfo
 {

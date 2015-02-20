@@ -15,6 +15,7 @@
 @property (nonatomic,strong) NSMutableArray* allQuestions;
 @property (nonatomic,strong) NSMutableArray* subjects;
 @property (nonatomic) NSInteger needUpload;
+
 +(QuestionBook *)getInstance;
 - (void)loadAllData;
 - (Question*)insertQuestionFromServer:(MQuestion*)currentQuestion day:(NSInteger)day;
@@ -33,4 +34,5 @@
 - (void)updateQuestions;
 - (NSArray*)getQuestionListByDay:(NSString*)day;
 - (void)deleteQuestion:(Question*)question;
+- (void)calculateNeedUpload;
 @end

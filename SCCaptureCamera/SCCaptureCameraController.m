@@ -42,7 +42,7 @@
 //    bottomContainerViewTypeAudio     =   1   //录音页面
 //} BottomContainerViewType;
 
-@interface SCCaptureCameraController () {
+@interface SCCaptureCameraController ()<UIImagePickerControllerDelegate> {
     int alphaTimes;
     CGPoint currTouchPoint;
 }
@@ -63,6 +63,7 @@
 @property (nonatomic, strong) UIImageView *focusImageView;
 
 @property (nonatomic, strong) SCSlider *scSlider;
+
 
 //@property (nonatomic) id runtimeErrorHandlingObserver;
 //@property (nonatomic) BOOL lockInterfaceRotation;
@@ -105,8 +106,8 @@
     }
     
     //notification
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationOrientationChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:kNotificationOrientationChange object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationOrientationChange object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:) name:kNotificationOrientationChange object:nil];
     
     //session manager
     SCCaptureSessionManager *manager = [[SCCaptureSessionManager alloc] init];
@@ -118,7 +119,7 @@
     [manager configureWithParentLayer:self.view previewRect:_previewRect];
     self.captureManager = manager;
     
-    [self addTopViewWithText:@"关闭"];
+//    [self addTopViewWithText:@"关闭"];
     [self addbottomContainerView];
     [self addCameraMenuView];
     [self addFocusView];
@@ -127,6 +128,8 @@
     
     [_captureManager.session startRunning];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+
 #if SWITCH_SHOW_DEFAULT_IMAGE_FOR_NONE_CAMERA
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [SVProgressHUD showErrorWithStatus:@"设备不支持拍照功能，给个妹纸给你喵喵T_T"];
@@ -139,6 +142,27 @@
     }
 #endif
 }
+
+
+- (void)animationWithOrient:(UIDeviceOrientation)orient
+{
+    NSArray* angle = @[@0,@0,@M_PI,@M_PI_2,@-M_PI_2,@0,@0];
+    [UIView animateWithDuration:0.3 animations:^{
+        for (UIView* view in _bottomContainerView.subviews) {
+            view.transform = CGAffineTransformMakeRotation([angle[orient]floatValue]);
+        }
+    }];
+
+}
+
+- (void)orientChange:(NSNotification *)noti
+
+{
+    UIDeviceOrientation orient = [UIDevice currentDevice].orientation;
+    [self animationWithOrient:orient];
+    
+}
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -233,15 +257,15 @@
 
 //bottomContainerView，总体
 - (void)addbottomContainerView {
-    CGFloat bottomY = self.view.frame.size.height - 100;
+    CGFloat bottomY = self.view.frame.size.height - 95;
     
 //    CGFloat bottomY = _captureManager.previewLayer.frame.origin.y + _captureManager.previewLayer.frame.size.height;
-    CGRect bottomFrame = CGRectMake(0, bottomY, SC_DEVICE_SIZE.width, 100);
+    CGRect bottomFrame = CGRectMake(0, bottomY, SC_DEVICE_SIZE.width, 95);
     
     UIView *view = [[UIView alloc] initWithFrame:bottomFrame];
 //    view.backgroundColor = bottomContainerView_UP_COLOR;
     view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.5;
+    view.alpha = 0.45;
     [self.view addSubview:view];
     self.bottomContainerView = view;
 }
@@ -250,26 +274,45 @@
 - (void)addCameraMenuView {
     
     //拍照按钮
-//    CGFloat downH = (isHigherThaniPhone4_SC ? CAMERA_MENU_VIEW_HEIGH : 0);
-    CGFloat cameraBtnLength = 90;
+    CGFloat cameraBtnLength = 80;
     [self buildButton:CGRectMake((SC_DEVICE_SIZE.width - cameraBtnLength) / 2, (_bottomContainerView.frame.size.height  - cameraBtnLength) / 2 , cameraBtnLength, cameraBtnLength)
-         normalImgStr:@"shot.png"
-      highlightImgStr:@"shot_h.png"
+         normalImgStr:@"拍照-按钮"
+      highlightImgStr:@""
        selectedImgStr:@""
                action:@selector(takePictureBtnPressed:)
            parentView:_bottomContainerView];
+    CGFloat rightBtnLength = 40;
+    [self buildButton:CGRectMake(20, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 40, 40)
+         normalImgStr:@"我的相册"
+      highlightImgStr:@""
+       selectedImgStr:@""
+               action:@selector(album)
+           parentView:_bottomContainerView];
+    
+    [self buildButton:CGRectMake(SC_DEVICE_SIZE.width-20-50, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 40, 40)
+         normalImgStr:@"拍照取消"
+      highlightImgStr:@""
+       selectedImgStr:@""
+               action:@selector(dismissBtnPressed:)
+           parentView:_bottomContainerView];
+
     
     
-//    //拍照的菜单栏view（屏幕高度大于480的，此view在上面，其他情况在下面）
-//    CGFloat menuViewY = (isHigherThaniPhone4_SC ? SC_DEVICE_SIZE.height - CAMERA_MENU_VIEW_HEIGH : 0);
-//    UIView *menuView = [[UIView alloc] initWithFrame:CGRectMake(0, menuViewY, self.view.frame.size.width, CAMERA_MENU_VIEW_HEIGH)];
-//    menuView.backgroundColor = (isHigherThaniPhone4_SC ? bottomContainerView_DOWN_COLOR : [UIColor clearColor]);
-//    [self.view addSubview:menuView];
-//    self.cameraMenuView = menuView;
+}
+
+
+
+- (void)album
+{
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     
+    imagePickerController.delegate = self;
     
+    imagePickerController.allowsEditing = NO;
     
-//    [self addMenuViewButtons];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self.navigationController presentViewController:imagePickerController animated:YES completion:^{}];
 }
 
 //拍照菜单栏上的按钮
@@ -495,6 +538,9 @@ void c_slideAlpha() {
 #endif
 }
 
+
+
+
 #pragma mark -------------button actions---------------
 //拍照页面，拍照按钮
 - (void)takePictureBtnPressed:(UIButton*)sender {
@@ -516,9 +562,6 @@ void c_slideAlpha() {
     
     WEAKSELF_SC
     [_captureManager takePicture:^(UIImage *stillImage) {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            [SCCommon saveImageToPhotoAlbum:stillImage];//存至本机
-//        });
         [actiView stopAnimating];
         [actiView removeFromSuperview];
         actiView = nil;
@@ -534,13 +577,6 @@ void c_slideAlpha() {
         if ([nav.scNaigationDelegate respondsToSelector:@selector(didTakePicture:image:)]) {
             [nav.scNaigationDelegate didTakePicture:nav image:stillImage];
         }
-        //or your code 1
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationTakePicture object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:stillImage, kImage, nil]];
-        
-        //or your code 2
-//    PostViewController *con = [[PostViewController alloc] init];
-//    con.postImage = stillImage;
-//    [self.navigationController pushViewController:con animated:YES];
     }];
 }
 
@@ -602,67 +638,7 @@ void c_slideAlpha() {
 }
 
 
-//#pragma mark -------------save image to local---------------
-////保存照片至本机
-//- (void)saveImageToPhotoAlbum:(UIImage*)image {
-//    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-//}
-//
-//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-//    if (error != NULL) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"出错了!" message:@"存不了T_T" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//        [alert show];
-//    } else {
-//        SCDLog(@"保存成功");
-//    }
-//}
 
-#pragma mark ------------notification-------------
-- (void)orientationDidChange:(NSNotification*)noti {
-    
-    //    [_captureManager.previewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation)[UIDevice currentDevice].orientation];
-    
-    if (!_cameraBtnSet || _cameraBtnSet.count <= 0) {
-        return;
-    }
-    [_cameraBtnSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-        UIButton *btn = ([obj isKindOfClass:[UIButton class]] ? (UIButton*)obj : nil);
-        if (!btn) {
-            *stop = YES;
-            return ;
-        }
-        
-        btn.layer.anchorPoint = CGPointMake(0.5, 0.5);
-        CGAffineTransform transform = CGAffineTransformMakeRotation(0);
-        switch ([UIDevice currentDevice].orientation) {
-            case UIDeviceOrientationPortrait://1
-            {
-                transform = CGAffineTransformMakeRotation(0);
-                break;
-            }
-            case UIDeviceOrientationPortraitUpsideDown://2
-            {
-                transform = CGAffineTransformMakeRotation(M_PI);
-                break;
-            }
-            case UIDeviceOrientationLandscapeLeft://3
-            {
-                transform = CGAffineTransformMakeRotation(M_PI_2);
-                break;
-            }
-            case UIDeviceOrientationLandscapeRight://4
-            {
-                transform = CGAffineTransformMakeRotation(-M_PI_2);
-                break;
-            }
-            default:
-                break;
-        }
-        [UIView animateWithDuration:0.3f animations:^{
-            btn.transform = transform;
-        }];
-    }];
-}
 
 #pragma mark ---------rotate(only when this controller is presented, the code below effect)-------------
 //<iOS6
@@ -693,4 +669,41 @@ void c_slideAlpha() {
 }
 #endif
 
+
+#pragma mark - image picker delegte
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    //your code 0
+    SCNavigationController *nav = (SCNavigationController*)self.navigationController;
+    if ([nav.scNaigationDelegate respondsToSelector:@selector(didTakePicture:image:)]) {
+        [nav.scNaigationDelegate didTakePicture:nav image:[self useImage:image]];
+    }
+ }
+
+- (UIImage *)useImage:(UIImage *)image {
+    //    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    // Create a graphics image context
+    CGSize newSize = CGSizeMake(SC_DEVICE_SIZE.width*2,SC_DEVICE_SIZE.height*2);
+    UIGraphicsBeginImageContext(newSize);
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    //    [pool release];
+    return newImage;
+}
+
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
 @end

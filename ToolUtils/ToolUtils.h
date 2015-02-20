@@ -77,7 +77,12 @@
 +(BOOL)getHasLogin;
 +(void)setHasLogin:(BOOL)hasLogin;
 
+//键盘高度
++(NSString*)getKeyboardHeight;
++(void)setKeyboardHeight:(NSNumber*)keyboardHeight;
 
++(NSString*)getLastUpdateTime;
++(void)setLastUpdateTime:(NSString*)lastUpdateTime;
 
 + (NSString *)md5:(NSString *)str;
 + (void)save:(NSData*) data name:(NSString*)fileName;;

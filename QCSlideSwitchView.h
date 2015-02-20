@@ -22,7 +22,7 @@
     
     NSInteger _userSelectedChannelID;               //点击按钮选择名字ID
     
-    UIImageView *_shadowImageView;
+    UIView *_shadowImageView;
     UIImage *_shadowImage;
     
     UIColor *_tabItemNormalColor;                   //正常时tab文字颜色
@@ -35,7 +35,9 @@
     
     __weak id<QCSlideSwitchViewDelegate> _slideSwitchViewDelegate;
 }
-
+@property (nonatomic,strong) UIColor* shadowColor;
+@property (nonatomic,strong) NSArray* buttonNormalImages;
+@property (nonatomic,strong) NSArray* buttonSelectedImages;
 @property (nonatomic, strong) IBOutlet UIScrollView *rootScrollView;
 @property (nonatomic, strong) IBOutlet UIScrollView *topScrollView;
 @property (nonatomic, assign) CGFloat userContentOffsetX;
@@ -49,7 +51,6 @@
 @property (nonatomic, strong) UIImage *shadowImage;
 @property (nonatomic, strong) NSMutableArray *viewArray;
 @property (nonatomic, strong) IBOutlet UIButton *rigthSideButton;
-
 /*!
  * @method 创建子视图UI
  * @abstract
@@ -67,7 +68,7 @@
  * @result 颜色对象
  */
 + (UIColor *)colorFromHexRGB:(NSString *)inColorString;
-
+- (UIViewController*) currentVC;
 @end
 
 @protocol QCSlideSwitchViewDelegate <NSObject>

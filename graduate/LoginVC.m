@@ -17,6 +17,7 @@
 #import "WBHttpRequest+WeiboUser.h"
 #import "AppDelegate.h"
 #import "WeiboUser.h"
+#import "WKNavigationViewController.h"
 #import "WXApi.h"
 @interface LoginVC ()
 @property (weak, nonatomic) IBOutlet UIView *usernameView;
@@ -118,7 +119,7 @@
     [ToolUtils setHasLogin:YES];
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:_rootVC];
+    WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
     [nav setNavigationBarHidden:YES];
     [self.navigationController presentViewController:nav animated:YES completion:^{
         [self waitingEnd];

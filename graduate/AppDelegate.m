@@ -23,6 +23,7 @@
 #import "Trace.h"
 #import "MFootprint.h"
 #import "MMainList.h"
+#import "WKNavigationViewController.h"
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,ApiDelegate>
 
 @end
@@ -31,12 +32,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [ToolUtils setIgnoreNetwork:NO];
     [self initDeviceid];
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
 //   RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    UINavigationController* unv = [[UINavigationController alloc]initWithRootViewController:_rootVC];
+    WKNavigationViewController* unv = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
     [unv setNavigationBarHidden:YES];
     [_window setRootViewController:unv];
     [_window makeKeyAndVisible];

@@ -13,14 +13,16 @@
 #import "MImgUpload.h"
 #import "MUploadQues.h"
 #import "MReturn.h"
-@interface PostViewController ()
+@interface PostViewController ()<ButtonGroupDelegate>
 @property (nonatomic, strong) UIView *topContainerView;//顶部view
 @property (nonatomic,strong)UIView* bottomContainerView;
 @property (nonatomic, strong) UIButton *topLbl;//顶部的标题
 @property (nonatomic,strong)NSArray* subjects;
-@property (nonatomic,strong)UIView* eidtView;
+@property (nonatomic,strong)UIView* editView;
 @property (nonatomic,strong)UITextView* editTextView;
 @property (nonatomic,strong)ButtonGroup* subjectView;
+@property (nonatomic,strong)ButtonGroup* subjectBackView;
+
 @property (nonatomic,strong)Question* question;
 @property (nonatomic,strong)UILabel* markLabel;
 @property (nonatomic,strong)UIView* labelView;
@@ -37,6 +39,10 @@
     return self;
 }
 
+- (void)initViews
+{
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,20 +56,45 @@
         [self.view addSubview:imgView];
     }
     
-    
-    
-//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    backBtn.frame = CGRectMake(0, self.view.frame.size.height - 40, 80, 40);
-//    [backBtn setTitle:@"back" forState:UIControlStateNormal];
-//    [backBtn addTarget:self action:@selector(backBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:backBtn];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+
     
     [self addTopViewWithText:@"重拍"];
     [self addbottomContainerView];
     [self addCameraMenuView];
     [self addSubjectView];
+    [self animationWithOrient:[UIDevice currentDevice].orientation];
+}
+
+- (void)orientChange:(NSNotification *)noti
+
+{
+    UIDeviceOrientation orient = [UIDevice currentDevice].orientation;
+    [self animationWithOrient:orient];
     
-    
+}
+
+
+
+- (void)animationWithOrient:(UIDeviceOrientation)orient
+{
+    NSArray* angle = @[@0,@0,@M_PI,@M_PI_2,@-M_PI_2,@0,@0];
+    [UIView animateWithDuration:0.3 animations:^{
+        for (UIView* view in _bottomContainerView.subviews) {
+            if (view.subviews.count==0) {
+                view.transform = CGAffineTransformMakeRotation([angle[orient]floatValue]);
+
+            } else {
+                for (UIView* subView in view.subviews) {
+                    subView.transform = CGAffineTransformMakeRotation([angle[orient]floatValue]);
+                }
+            }
+        }
+        for (UIView* view in _topContainerView.subviews) {
+            view.transform = CGAffineTransformMakeRotation([angle[orient]floatValue]);
+
+        }
+    }];
     
 }
 
@@ -71,51 +102,47 @@
 //顶部标题
 - (void)addTopViewWithText:(NSString*)text {
     if (!_topContainerView) {
-        CGRect topFrame = CGRectMake(0, 0, SC_DEVICE_SIZE.width, 44);
+        CGRect topFrame = CGRectMake(0, 0, SC_DEVICE_SIZE.width, 64);
         
         UIView *tView = [[UIView alloc] initWithFrame:topFrame];
         tView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tView];
         self.topContainerView = tView;
-        UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, topFrame.size.width, topFrame.size.height)];
-        emptyView.backgroundColor = [UIColor blackColor];
-        emptyView.alpha = 0.4f;
-        [_topContainerView addSubview:emptyView];
+        self.topContainerView.backgroundColor = [UIColor blackColor];
+        self.topContainerView.alpha = 0.4;
+//        UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, topFrame.size.width, topFrame.size.height)];
+//        emptyView.backgroundColor = [UIColor blackColor];
+//        emptyView.alpha = 0.4f;
+//        [_topContainerView addSubview:emptyView];
         
         topFrame.origin.x += 10;
-        UIButton *lbl = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 100, topFrame.size.height)];
+        UIButton *lbl = [[UIButton alloc] initWithFrame:CGRectMake(15, 20, 48, topFrame.size.height-20)];
         [lbl addTarget:self action:@selector(backBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-        lbl.backgroundColor = [UIColor clearColor];
-        lbl.titleLabel.textColor = [UIColor whiteColor];
-        lbl.titleLabel.font = [UIFont systemFontOfSize:25.f];
+        [lbl setImage:[UIImage imageNamed:@"重拍按钮"] forState:UIControlStateNormal];
         [_topContainerView addSubview:lbl];
         self.topLbl = lbl;
         
         
-        UIButton *editBt = [[UIButton alloc] initWithFrame:CGRectMake(SC_DEVICE_SIZE.width-100, 0, 100, topFrame.size.height)];
+        UIButton *editBt = [[UIButton alloc] initWithFrame:CGRectMake(SC_DEVICE_SIZE.width-55, 20, 40, topFrame.size.height-20)];
         [editBt addTarget:self action:@selector(editRemark) forControlEvents:UIControlEventTouchUpInside];
-        editBt.backgroundColor = [UIColor clearColor];
-        editBt.titleLabel.textColor = [UIColor whiteColor];
-        editBt.titleLabel.font = [UIFont systemFontOfSize:25.f];
+        [editBt setImage:[UIImage imageNamed:@"备注按钮"] forState:UIControlStateNormal];
         [_topContainerView addSubview:editBt];
-        [editBt setTitle:@"编辑" forState:UIControlStateNormal];
         
     }
-    [_topLbl setTitle:text forState:UIControlStateNormal];
 }
 
 
 //bottomContainerView，总体
 - (void)addbottomContainerView {
-    CGFloat bottomY = self.view.frame.size.height - 150;
+    CGFloat bottomY = self.view.frame.size.height - 153;
     
     //    CGFloat bottomY = _captureManager.previewLayer.frame.origin.y + _captureManager.previewLayer.frame.size.height;
-    CGRect bottomFrame = CGRectMake(0, bottomY, SC_DEVICE_SIZE.width, 150);
+    CGRect bottomFrame = CGRectMake(0, bottomY, SC_DEVICE_SIZE.width, 153);
     
     UIView *view = [[UIView alloc] initWithFrame:bottomFrame];
     //    view.backgroundColor = bottomContainerView_UP_COLOR;
     view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.5;
+    view.alpha = 0.45;
     [self.view addSubview:view];
     self.bottomContainerView = view;
 }
@@ -125,51 +152,64 @@
     
     //拍照按钮
     //    CGFloat downH = (isHigherThaniPhone4_SC ? CAMERA_MENU_VIEW_HEIGH : 0);
-    CGFloat cameraBtnLength = 90;
+    CGFloat cameraBtnLength = 80;
     
     
     [self buildButton:CGRectMake((SC_DEVICE_SIZE.width - cameraBtnLength) / 2, (_bottomContainerView.frame.size.height  - cameraBtnLength) , cameraBtnLength, cameraBtnLength)
-         normalImgStr:@"shot.png"
-      highlightImgStr:@"shot_h.png"
+         normalImgStr:@"拍照-确认"
+      highlightImgStr:@""
        selectedImgStr:@""
                action:@selector(save)
            parentView:_bottomContainerView];
-    
-    
-    
-    //    //拍照的菜单栏view（屏幕高度大于480的，此view在上面，其他情况在下面）
-    //    CGFloat menuViewY = (isHigherThaniPhone4_SC ? SC_DEVICE_SIZE.height - CAMERA_MENU_VIEW_HEIGH : 0);
-    //    UIView *menuView = [[UIView alloc] initWithFrame:CGRectMake(0, menuViewY, self.view.frame.size.width, CAMERA_MENU_VIEW_HEIGH)];
-    //    menuView.backgroundColor = (isHigherThaniPhone4_SC ? bottomContainerView_DOWN_COLOR : [UIColor clearColor]);
-    //    [self.view addSubview:menuView];
-    //    self.cameraMenuView = menuView;
-    //    [self addMenuViewButtons];
 }
+
+
 
 - (void)addSubjectView
 {
     CGRect bottomFrame = _bottomContainerView.frame;
-    CGRect subjectFrame = CGRectMake( 0, bottomFrame.size.height-130, SC_DEVICE_SIZE.width, 30);
+    CGRect subjectFrame = CGRectMake( 0, 0, SC_DEVICE_SIZE.width, 65);
     _subjectView = [[ButtonGroup alloc]initWithFrame:subjectFrame];
+    _subjectBackView = [[ButtonGroup alloc]initWithFrame:subjectFrame];
+    [_bottomContainerView addSubview:_subjectBackView];
     [_bottomContainerView addSubview:_subjectView];
-    
     
     _subjects = [[QuestionBook getInstance]getMySubjects];
     CGFloat buttonWidth = (SC_DEVICE_SIZE.width-16)/4.0;
     NSMutableArray* buttonArrays = [[NSMutableArray alloc]init];
+    NSMutableArray* buttonBackArrays = [[NSMutableArray alloc]init];
     for (int i = 0 ; i < _subjects.count ; i++) {
         Subject* subject = [_subjects objectAtIndex:i];
-        CGRect frame = CGRectMake(5+i*(buttonWidth+4), 0, buttonWidth, 30);
+        CGRect frame = CGRectMake(5+i*(buttonWidth+4), 0, buttonWidth, buttonWidth);
         UIButton* button = [[UIButton alloc]initWithFrame:frame];
-        [button setTitle:subject.name forState:UIControlStateNormal];
-        [button setTitle:[NSString stringWithFormat:@"%@✓",subject.name] forState:UIControlStateSelected];
+        [button setTitle:[subject.name substringToIndex:1] forState:UIControlStateNormal];
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [button.titleLabel setFont:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:25]];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHex:0x585858] forState:UIControlStateSelected];
         [button setTag:subject.type];
+        
+        
+        UIButton* backButton = [[UIButton alloc]initWithFrame:frame];
+        [backButton setImage:[UIImage imageNamed:@"线圈"] forState:UIControlStateNormal];
+        [backButton setImage:[UIImage imageNamed:@"实圆"] forState:UIControlStateSelected];
+        [backButton setTag:subject.type];
+        
+        
+        [_subjectView addSubview:backButton];
         [_subjectView addSubview:button];
-        [button.titleLabel setTextColor:[UIColor blueColor]];
-//        [button setBackgroundColor:[UIColor whiteColor]];
         [buttonArrays addObject:button];
+        [buttonBackArrays addObject:backButton];
     }
     [_subjectView loadButton:buttonArrays];
+    _subjectView.delegate = self;
+    [_subjectBackView loadButton:buttonBackArrays];
+}
+
+
+- (void)selectIndex:(NSInteger)index name:(NSString *)buttonName
+{
+    [_subjectBackView setSelectedIndex:index];
 }
 
 - (UIButton*)buildButton:(CGRect)frame
@@ -283,38 +323,40 @@
 
 - (void)editRemark
 {
-    if (!_eidtView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
-        _eidtView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_eidtView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 160);
+    [self addMask];
+    if (!_editView) {
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 160);
+        _editView = [[UIView alloc]initWithFrame:frame];
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 110);
         
         _editTextView = [[UITextView alloc]initWithFrame:textFrame];
-        [_eidtView addSubview:_editTextView];
-        
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
+        [_editView addSubview:_editTextView];
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
-        [_eidtView addSubview:cancelButton];
-    
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
+        [_editView addSubview:cancelButton];
+        
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveRemark) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-        [saveButton.titleLabel setTextColor:[UIColor blueColor]];
-
-        [_eidtView addSubview:saveButton];
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
+        [_editView addSubview:saveButton];
     }
-    
+    _editTextView.text = self.markLabel.text;
     [self.editTextView becomeFirstResponder];
-    CGRect frame = _eidtView.frame;
+    CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-        self.eidtView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
     } completion:^(BOOL finished) {
         //        [self.keyboardBt setHidden:NO];
     }];
@@ -332,8 +374,9 @@
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
+    [self removeMask];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.eidtView.transform = CGAffineTransformMakeTranslation(0, 0);
+        self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
         
     }];
@@ -341,6 +384,7 @@
 
 -(void)cancelEdit
 {
+    
     [self.editTextView resignFirstResponder];
 }
 
@@ -350,8 +394,8 @@
     
     
     
-    UIFont *font = [UIFont systemFontOfSize:14];
-    CGSize size = CGSizeMake(SC_DEVICE_SIZE.width,2000);
+    UIFont *font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+    CGSize size = CGSizeMake(SC_DEVICE_SIZE.width-50,2000);
     CGSize labelsize = [self.editTextView.text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
     NSLog(@"labelheight%lf",labelsize.height);
     
@@ -367,7 +411,7 @@
         [_labelView setNeedsDisplay];
     }
     
-    CGRect markFrame = CGRectMake(5, 5, SC_DEVICE_SIZE.width-10,labelsize.height+10);
+    CGRect markFrame = CGRectMake(25, 5, SC_DEVICE_SIZE.width-50,labelsize.height+10);
     if (!_markLabel) {
         _markLabel = [[UILabel alloc]initWithFrame:markFrame];
         [_markLabel setText:_editTextView.text];
