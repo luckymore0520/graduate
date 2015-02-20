@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    [self addRightButton:@"保存" action:@selector(save:) img:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -30,7 +31,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)save:(id)sender {
+- (void)save:(id)sender {
     if (self.passwordField.text.length==0) {
         [ToolUtils showMessage:@"请输入密码"];
         return;
@@ -86,11 +87,19 @@
     }
     if (indexPath.row==1) {
         cell.passwordField.placeholder = @"请设置研大大密码";
+        [cell.cellNameLabel setText:@"密码"];
+        [cell.cellNameLabel setTextColor:[UIColor colorWithHex:0x333333]];
         self.passwordField = cell.passwordField;
+        cell.layer.borderColor = [UIColor colorOfBorder].CGColor;
+        cell.layer.borderWidth = 1;
+        self.passwordField.delegate = self;
     }
     if (indexPath.row==2) {
         cell.passwordField.placeholder = @"请再次输入";
         self.confirmPasswordField = cell.passwordField;
+        [cell.cellNameLabel setText:@"确认密码"];
+        [cell.cellNameLabel setTextColor:[UIColor colorWithHex:0x333333]];
+        self.confirmPasswordField.delegate = self;
     }
     return cell;
 }

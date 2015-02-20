@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ButtonGroup.h"
-@interface SelfOtherCell : UITableViewCell
+@interface SelfOtherCell : UITableViewCell<ButtonGroupDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *cellImgView;
 @property (weak, nonatomic) IBOutlet UILabel *cellNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailAddressLabel;
@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *maleBt;
 @property (weak, nonatomic) IBOutlet UIButton *femaleBt;
 @property (weak, nonatomic) IBOutlet ButtonGroup *cellBtGroup;
+@property (weak, nonatomic) IBOutlet UIImageView *cellSexImg;
 @property (weak, nonatomic) IBOutlet UITextField *nickNameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 

@@ -10,7 +10,6 @@
 #import "MUser.h"
 #import "MPasswdChange.h"
 #import "MReturn.h"
-
 @interface ModifyPasswordViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *oldPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
@@ -23,15 +22,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    [self setTitle:@"设置密码"];
+    [self addRightButton:@"保存" action:@selector(save:) img:nil];
+    self.passwordField.layer.borderWidth = 1;
+    self.passwordField.layer.borderColor = [UIColor colorOfBorder].CGColor;
     
     // Do any additional setup after loading the view.
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)save:(id)sender {
+- (void)save:(id)sender {
     if (_oldPasswordField.text.length==0) {
         [ToolUtils showMessage:@"请输入旧密码"];
         return;

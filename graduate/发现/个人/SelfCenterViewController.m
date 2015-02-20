@@ -29,6 +29,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)initViews
+{
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -45,7 +50,8 @@
 {
     if (indexPath.section==0) {
         SelfHeaderCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"imgHeader"];
-        [cell.headImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_user.headImg_ width:HEADIMG height:HEADIMG] placeholderImage:nil];
+        UIImage* placeHolder = [UIImage imageNamed:_user.sex_.integerValue ==0?@"默认男头像":@"默认女头像"];
+        [cell.headImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_user.headImg_ width:HEADIMG height:HEADIMG] placeholderImage:placeHolder];
         [cell.nickNameLabel setText:_user.nickname_];
         [cell.userIdLabel setText:[NSString stringWithFormat:@"研大大ID:%@",_user.account_]];
         
@@ -60,13 +66,20 @@
             [cell.emailAddressLabel setText:@""];
             [cell.emailTipLabel setText:@"添加"];
         }
-        
+        [cell.cellImgView setImage:[UIImage imageNamed:@"下载邮箱"]];
         return cell;
     } else if (indexPath.section == 2)
     {
-        SelfOtherCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"other"];
-        [cell.cellNameLabel setText:@"修改密码"];
-        
+        SelfOtherCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"email"];
+        [cell.cellNameLabel setText:@"密码管理"];
+        if (_user.hasPassword_.integerValue==0) {
+            [cell.emailTipLabel setText:@"设置"];
+        } else {
+            [cell.emailTipLabel setText:@"修改"];
+
+        }
+        [cell.emailAddressLabel setHidden:YES];
+        [cell.cellImgView setImage:[UIImage imageNamed:@"密码管理图标"]];
         return cell;
     } else if (indexPath.section==3)
                                {
@@ -74,11 +87,14 @@
                                    switch (indexPath.row) {
                                        case 0:
                                            [cell.cellNameLabel setText:@"我的收藏"];
+                                           [cell.cellImgView setImage:[UIImage imageNamed:@"我的收藏"]];
                                            break;
                                        case 1:
                                            [cell.cellNameLabel setText:@"检测更新"];
+                                           [cell.cellImgView setImage:[UIImage imageNamed:@"检测更新"]];
                                            break;
                                        case 2:
+                                           [cell.cellImgView setImage:[UIImage imageNamed:@"关于我们"]];
                                            [cell.cellNameLabel setText:@"关于我们"];
                                            break;
                                        default:
@@ -131,7 +147,7 @@
     if (indexPath.section==0) {
         return 100;
     }
-    return 50;
+    return 59;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -161,7 +177,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section
 {
-    return 20;
+    return 15;
 }
 /*
 #pragma mark - Navigation
@@ -172,44 +188,44 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
 - (void)editEmail
 {
+    [self addMask];
     if (!_editView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 120);
         _editView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_editView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 50);
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 70);
         
         _editTextView = [[UITextField alloc]initWithFrame:textFrame];
-        _editTextView.font = [UIFont systemFontOfSize:12];
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
         [_editView addSubview:_editTextView];
-        
-        
-        
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
-        [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:cancelButton];
         
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveEmail) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-        [saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
     self.editTextView.placeholder = @"请设置您的电子邮箱，以便接收下载的资料";
-    [self.editView setBackgroundColor:[UIColor whiteColor]];
+    [self.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-MAX(keyboardHeight, 240));
     } completion:^(BOOL finished) {
     }];
     
@@ -218,6 +234,7 @@
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
+    [self removeMask];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
@@ -248,12 +265,6 @@
     } else {
         [ToolUtils showMessage:@"邮箱格式不合法,请输入正确的邮箱"];
     }
-    
-    
-    
-    
-    
-    
 }
 
 #pragma mark -ActionSheetDelegate

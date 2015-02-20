@@ -18,4 +18,13 @@
     [super setSelected:NO animated:animated];
 }
 
+- (void)selectIndex:(NSInteger)index name:(NSString *)buttonName
+{
+    if (index==0) {
+        [_cellSexImg setImage:[UIImage imageNamed:@"性别选择"]];
+    } else {
+        [_cellSexImg setImage:[UIImage imageNamed:@"性别选择-女"]];
+    }
+}
+
 @end

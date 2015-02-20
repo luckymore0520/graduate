@@ -9,5 +9,8 @@
 #import "RefreshTableViewController.h"
 
 @interface EssenceListViewController : RefreshTableViewController
-
+@property (nonatomic,assign)NSInteger type;
+@property (nonatomic,weak)BaseFuncVC* parentVC;
+@property (nonatomic,strong)NSString* key;
+- (void)reloadData;
 @end

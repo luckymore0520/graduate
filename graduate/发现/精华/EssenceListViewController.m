@@ -17,96 +17,47 @@
 #import "MEssenceDownload.h"
 #import "EssenceDetailViewController.h"
 #import "EssenceDetailWebViewController.h"
-#import "MRecommendKeys.h"
 @interface EssenceListViewController ()<ButtonGroupDelegate,UIAlertViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *searchTable;
-@property (weak, nonatomic) IBOutlet UIButton *latestBt;
-@property (weak, nonatomic) IBOutlet UIButton *dataBt;
-@property (weak, nonatomic) IBOutlet UIButton *questionBt;
-@property (weak, nonatomic) IBOutlet ButtonGroup *typeGroup;
-@property (weak, nonatomic) IBOutlet UIButton *infomationBt;
-@property (nonatomic,strong)NSArray* buttonArray;
+
 @property (nonatomic,strong)NSMutableArray* essenceList;
 @property (nonatomic,strong)UIView* editView;
 @property (nonatomic,strong)UITextField* editTextView;
 @property (nonatomic,strong)MUser* user;
 @property (nonatomic,strong)UIAlertView* emailAlert;
 @property (nonatomic,strong)UIAlertView* shareAlert;
-@property (weak, nonatomic) IBOutlet UIView *searchView;
-@property (weak, nonatomic) IBOutlet UIButton *clearButton;
-@property (weak, nonatomic) IBOutlet UITextField *searchTextField;
-@property (nonatomic,strong)NSMutableArray* searchArray;
 @property (nonatomic,strong)MEssence* selectEssence;
+@property (nonatomic,strong)NSArray* typeArray;
 @end
 
 @implementation EssenceListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.buttonArray = [NSArray arrayWithObjects:_latestBt,_infomationBt,_dataBt,_questionBt,nil];
-    [self.typeGroup loadButton:self.buttonArray];
-    self.typeGroup.delegate = self;
     self.essenceList = [[NSMutableArray alloc]init];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-    self.textFields = [NSArray arrayWithObjects:_searchTextField, nil];
-    [self addRightButton:@"搜索" action:@selector(search) img:nil];
-    // Do any additional setup after loading the view.
+    _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
 }
 
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)initViews
 {
     
-    
-    
-    if (string.length>0) {
-        [self.clearButton setHidden:NO];
-        [[[MRecommendKeys alloc]init]load:self key:self.searchTextField.text];
-    } else {
-        [self.searchArray removeAllObjects];
-        [self.searchTable reloadData];
-        [self.clearButton setHidden:YES];
-
-    }
-    return YES;
 }
 
-- (IBAction)cancelSearch:(id)sender {
-
-    [self.searchTable setHidden:YES];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.searchView.transform  = CGAffineTransformMakeTranslation(0, 0);
-    } completion:^(BOOL finished) {
-        [self.navigationController setNavigationBarHidden:NO];
-        [self.tableView setHidden:NO];
-        [self.typeGroup setHidden:NO];
-        
-
-    }];
-}
-- (IBAction)searchResult:(id)sender {
-}
-
-- (void)search
+- (void)reloadData
 {
-    [self.navigationController setNavigationBarHidden:YES];
-    [self.tableView setHidden:YES];
-    [self.typeGroup setHidden:YES];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.searchView.transform  = CGAffineTransformMakeTranslation(0, 50);
-    } completion:^(BOOL finished) {
-        [self.searchTable setHidden:NO];
-
-    }];
+    page = 1;
+    [_essenceList removeAllObjects];
+    [_header beginRefreshing];
 }
+
 - (void)loadData
 {
 
     MGetEssenceList* getEssenceList = [[MGetEssenceList alloc]init];
     getEssenceList = (MGetEssenceList*)[getEssenceList setPage:page limit:pageCount];
-    UIButton* button = [self.buttonArray objectAtIndex:[self.typeGroup selectedIndex]];
-    [getEssenceList load:self type:button.tag key:nil];
+    [getEssenceList load:self type:self.type key:_key];
 }
+
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
@@ -133,15 +84,6 @@
     } else if ([names isEqualToString:@"MEssenceDownload"])
     {
         [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
-    } else if ([names isEqualToString:@"MRecommendKeys"])
-    {
-        
-        MKeys* keys = [MKeys objectWithKeyValues:data];
-        if (keys.key_.count>0) {
-            self.searchArray = keys.key_;
-            [self.searchTable reloadData];
-        }
-        
     }
 }
 
@@ -187,13 +129,9 @@
 #pragma mark -TableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"%d",self.searchArray.count);
-    if (tableView==self.tableView) {
         return self.essenceList.count;
-    } else {
-        return self.searchArray.count;
-    }
 }
+
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -207,13 +145,11 @@
         if (essence.hasDownload_.integerValue == 0) {
             [cell.essenceDownloadBt setHidden:YES];
         }
+        [cell.essenceIsVipLabel setHidden:!essence.needShare_.boolValue];
+        [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.type_.integerValue]]];
         return cell;
 
-    } else {
-        UITableViewCell* searchCell = [tableView dequeueReusableCellWithIdentifier:@"tips"];
-        [searchCell.textLabel setText:[self.searchArray objectAtIndex:indexPath.row]];
-        return searchCell;
-    }
+    } 
     return nil;
 }
 
@@ -222,31 +158,17 @@
     if (tableView==self.tableView) {
         MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
         if (essence.hasDownload_.integerValue==1) {
-            [self performSegueWithIdentifier:@"showDetail" sender:essence];
+            EssenceDetailViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceDetail"];
+            detail.essence = essence;
+            [self.parentVC.navigationController pushViewController:detail animated:YES];
         } else {
-            [self performSegueWithIdentifier:@"showWebDetail" sender:essence];
+            EssenceDetailWebViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
+            detail.url = [NSURL URLWithString:essence.url_];
+            [self.parentVC.navigationController pushViewController:detail animated:YES];
         }
-    } else {
-        NSString* key = [self.searchArray objectAtIndex:indexPath.row];
-        self.searchTextField.text = key;
-    }
-  
-}
-
-
-#pragma mark -Navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showDetail"]) {
-        EssenceDetailViewController* nextVC = (EssenceDetailViewController*)segue.destinationViewController;
-        nextVC.essence = sender;
-    } else if ([segue.identifier isEqualToString:@"showWebDetail"])
-    {
-        EssenceDetailWebViewController* nextVC = (EssenceDetailWebViewController*)segue.destinationViewController;
-        MEssence* essence = (MEssence*)sender;
-        nextVC.url = [NSURL URLWithString:essence.url_];
     }
 }
+
 
 
 #pragma mark -AlertViewDelegate
@@ -265,46 +187,46 @@
     
 }
 
-
 - (void)editEmail
 {
+    [self.parentVC addMask];
     if (!_editView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 120);
         _editView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_editView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 50);
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.parentVC.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 70);
         
         _editTextView = [[UITextField alloc]initWithFrame:textFrame];
-        _editTextView.font = [UIFont systemFontOfSize:12];
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.keyboardType = UIKeyboardTypeEmailAddress;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
         [_editView addSubview:_editTextView];
-        
-        
-        
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
-        [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:cancelButton];
         
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveEmail) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-        [saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
     self.editTextView.placeholder = @"请设置您的电子邮箱，以便接收下载的资料";
-    [self.editView setBackgroundColor:[UIColor whiteColor]];
+    [self.parentVC.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+        NSLog(@"%lf",-frame.size.height-(MAX(keyboardHeight, 240)));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-MAX(keyboardHeight,240));
     } completion:^(BOOL finished) {
+        //        [self.keyboardBt setHidden:NO];
     }];
     
 }
@@ -312,12 +234,14 @@
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
+    [self.parentVC removeMask];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {
         
     }];
 }
+
 
 
 -(void)cancelEdit
@@ -345,8 +269,6 @@
     } else {
         [ToolUtils showMessage:@"邮箱格式不合法,请输入正确的邮箱"];
     }
-    
-    
 }
 
 @end

@@ -33,18 +33,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTitle:@"精华详情"];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     self.typeList = [NSArray arrayWithObjects:@"视频",@"音频",@"文档" ,nil];
     // Do any additional setup after loading the view.
-    [self initView];
+    [self loadData];
     [[[MEssenceDetail alloc]init]load:self id:self.essence.id_];
     if (_user.email_.length>0) {
         [self.essenceDownloadBt setTitle:[NSString stringWithFormat:@"下载至%@",_user.email_] forState:UIControlStateNormal];
     }
+    _essenceDownloadBt.layer.cornerRadius = 5;
 }
 
 
-- (void)initView
+- (void)loadData
 {
     [self.essenceTitleLabel setText:self.essence.title_];
     [self.essenceTypeLabel setText:[self.typeList objectAtIndex:self.essence.resType_.integerValue]];
@@ -57,7 +59,7 @@
         
     }
     if (self.essence.downloadTimes_) {
-         [self.essenceShowTimeLabel setText:[NSString stringWithFormat:@"%d次",self.essence.downloadTimes_.integerValue]];
+         [self.essenceDownloadTimeLabel setText:[NSString stringWithFormat:@"%d次",self.essence.downloadTimes_.integerValue]];
     }
     if (self.essence.isCollected_.integerValue==1) {
         [self.essenceCollectButton setSelected:YES];
@@ -73,7 +75,7 @@
     } else if ([names isEqualToString:@"MEssenceDetail"])
     {
         self.essence = [MEssence objectWithKeyValues:data];
-        [self initView];
+        [self loadData];
     } else if ([names isEqualToString:@"MEssenceCollect"])
     {
         if (self.essenceCollectButton.selected) {
@@ -165,8 +167,8 @@
     [self.editTextView becomeFirstResponder];
     CGRect frame = _editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+        NSLog(@"%lf",-frame.size.height-(MAX(keyboardHeight,240)));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(MAX(keyboardHeight, 240)));
     } completion:^(BOOL finished) {
     }];
     

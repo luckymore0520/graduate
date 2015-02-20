@@ -7,6 +7,7 @@
 //
 
 #import "SetPasswordViewController.h"
+#import "WKNavigationViewController.h"
 #import "RootViewController.h"
 #import "ButtonGroup.h"
 #import "MPasswdChange.h"
@@ -117,7 +118,7 @@
         if (ret.code_.integerValue==1) {
             [self waitingEnd];
             UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
-            RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+            WKNavigationViewController* _rootVC =(WKNavigationViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
             [self.navigationController presentViewController:_rootVC animated:YES completion:^{
             }];
         } else {
