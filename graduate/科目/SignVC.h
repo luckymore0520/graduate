@@ -9,6 +9,8 @@
 #import "BaseFuncVC.h"
 
 @interface SignVC : BaseFuncVC
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
+@property (weak, nonatomic) IBOutlet UIButton *signButton;
 @property (nonatomic,strong)NSString* subject;
 @property (nonatomic)NSInteger type;
 @end

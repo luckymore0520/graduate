@@ -41,19 +41,20 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self addRightButton:1];
-}
-
 
 -(void) addRightButton:(NSInteger)number
 {
     if (!self.msgBt) {
         self.msgBt  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     }
-    [self.msgBt setImage:[UIImage imageNamed:@"广场消息提醒"] forState:UIControlStateNormal];
+
+    if (number>0) {
+        [self.msgBt setImage:[UIImage imageNamed:@"广场消息提醒_p"] forState:UIControlStateNormal];
+    } else {
+        [self.msgBt setImage:[UIImage imageNamed:@"广场消息提醒"] forState:UIControlStateNormal];
+
+    }
+    
     [self.msgBt setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.msgBt addTarget:self action:@selector(newMsg) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:self.msgBt];

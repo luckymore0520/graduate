@@ -13,7 +13,29 @@
 #import "MReturn.h"
 @implementation SignVC
 
+- (void)viewDidLoad
+{
+    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    int days = signList.count+1;
+    for (Sign* sign in signList) {
+        if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
+            [_signButton setTitle:@"回到主页" forState:UIControlStateNormal];
+            days = days-1;
+            break;
+        }
+    }
+    [_dayLabel setText:[NSString stringWithFormat:@"%d天",days]];
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [button setImage:[UIImage imageNamed:@"返回主页"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backToMain) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = myAddButton;
+}
 
+- (void)backToMain
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 
 - (IBAction)sign:(id)sender {
@@ -21,7 +43,7 @@
     NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
     for (Sign* sign in signList) {
         if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
-            [ToolUtils showMessage:@"您今日已打卡"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
             return;
         }
     }
@@ -39,6 +61,7 @@
         NSLog(@"Error:%@",error);
     }else{
         [ToolUtils showMessage:@"打卡成功"];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 
     [[[MSign alloc]init]load:self type:self.type subject:self.subject date:sign.date];

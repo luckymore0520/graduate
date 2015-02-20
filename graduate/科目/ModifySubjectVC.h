@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *fourthBt;
 @property (weak, nonatomic) IBOutlet UILabel *majorLabel;
 @property (weak, nonatomic) IBOutlet UITextField *majorField;
+@property (weak, nonatomic) IBOutlet UIView *majorLine;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (nonatomic)NSInteger type;
 @property (nonatomic,strong)NSString* subject;
 @end

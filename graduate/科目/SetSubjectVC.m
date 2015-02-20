@@ -11,7 +11,7 @@
 #import "MUpdateSubject.h"
 #import "MUser.h"
 #import "MReturn.h"
-@interface SetSubjectVC ()<UITextFieldDelegate,ButtonGroupDelegate>
+@interface SetSubjectVC ()<UITextFieldDelegate,ButtonGroupDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet ButtonGroup *englishGroup;
 @property (weak, nonatomic) IBOutlet UIButton *Eng2Bt;
 @property (weak, nonatomic) IBOutlet UIButton *Eng1Bt;
@@ -20,11 +20,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *math2Bt;
 @property (weak, nonatomic) IBOutlet UIButton *math1Bt;
 @property (weak, nonatomic) IBOutlet UIButton *math3Bt;
+@property (weak, nonatomic) IBOutlet UIButton *mathNoBt;
 @property (weak, nonatomic) IBOutlet UITextField *major1Field;
 @property (weak, nonatomic) IBOutlet UITextField *major2Field;
 @property (weak, nonatomic) IBOutlet ButtonGroup *mathGroup;
 @property (weak, nonatomic) IBOutlet UIButton *completeButton;
 @property (weak, nonatomic) IBOutlet UILabel *major2Label;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong)MUser* user;
 @end
 
@@ -35,17 +37,19 @@
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_major1Field,_major2Field, nil];
     self.keyButtons = [NSArray arrayWithObjects:_completeButton, nil];
-//    [_major2Label setHidden:YES];
-//    [_major2Field setHidden:YES];
-    // Do any additional setup after loading the view.
+    
+}
+
+- (void)initViews
+{
+    
 }
 
 //初始化ButtonGroup
 - (void)initGroup
 {
-    NSArray* mathGroupBts = [NSArray arrayWithObjects:_math1Bt,_math2Bt,_math3Bt ,nil];
+    NSArray* mathGroupBts = [NSArray arrayWithObjects:_math1Bt,_math2Bt,_math3Bt ,_mathNoBt, nil];
     [_mathGroup loadButton:mathGroupBts];
-    _mathGroup.canbeNull = YES;
     _mathGroup.name = @"Math";
     _mathGroup.delegate = self;
     
@@ -57,11 +61,17 @@
     
     _user  = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [_mathGroup setSelectedIndex:0];
+    BOOL hasMath = NO;
     for (int i = 0 ; i<mathGroupBts.count; i++) {
         UIButton* button = [mathGroupBts objectAtIndex:i];
         if ([button.titleLabel.text isEqualToString:_user.subjectMath_]) {
             [_mathGroup setSelectedIndex:i];
+            hasMath = YES;
+            break;
         }
+    }
+    if (!hasMath) {
+        [_mathGroup setSelectedIndex:3];
     }
     for (int i = 0 ; i<englishGroupBts.count; i++) {
         UIButton* button = [englishGroupBts objectAtIndex:i];
@@ -131,7 +141,7 @@
 - (void)selectIndex:(NSInteger)index name:(NSString *)buttonName
 {
     if ([buttonName isEqualToString:@"Math"]) {
-        if (index==-1) {
+        if (index==3) {
             [_major2Field setHidden:NO];
             [_major2Label setHidden:NO];
         } else {
@@ -143,14 +153,22 @@
 }
 
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - TableViewDelegate
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 2;
 }
-*/
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = [[UITableViewCell alloc]init];
+    return cell;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self resignAll];
+}
 
 @end

@@ -60,6 +60,12 @@
     // Do any additional setup after loading the view.
 }
 
+- (IBAction)goToPrint:(id)sender {
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+    
+    UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"print"];
+    [self.navigationController pushViewController:nextVC animated:YES];
+}
 
 
 
@@ -70,9 +76,16 @@
 - (IBAction)goToEssence:(id)sender {
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
     
-    UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"essenceList"];
+    UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"essenceRoot"];
     [self.navigationController pushViewController:nextVC animated:YES];
 
+}
+- (IBAction)goToBackUp:(id)sender {
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+    
+    UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"backUp"];
+    [self.navigationController pushViewController:nextVC animated:YES];
+    
 }
 - (IBAction)goToSquare:(id)sender {
     

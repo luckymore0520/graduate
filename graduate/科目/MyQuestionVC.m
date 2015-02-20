@@ -45,10 +45,7 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
-- (void)initViews
-{
-    
-}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -83,7 +80,8 @@
     NSArray* buttons = [NSArray arrayWithObjects:self.subjectBt1,self.subjectBt2,self.subjectBt3,nil];
     
     [self.transferView loadButton:buttons];
-    
+    self.transferView.canbeNull = YES;
+    [self.transferView setSelectedIndex:0];
     for (UIButton* button in buttons) {
         [button setTag:-1];
     }
@@ -112,7 +110,7 @@
     UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
     [button setTitle:@"选择" forState:UIControlStateNormal];
     [button setTitle:@"取消" forState:UIControlStateSelected];
-    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(selectPhotos:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = myAddButton;
@@ -155,11 +153,7 @@
         self.day = currentDay;
         NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
         [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
-        
-        
-        
     }
- 
 }
 
 
@@ -203,7 +197,7 @@
         }
         
         
-    } else if ([names isEqualToString:@"MQuesDelete.h"])
+    } else if ([names isEqualToString:@"MQuesDelete"])
     {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
@@ -320,9 +314,15 @@
     QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
     if (question.is_recommand.integerValue==0) {
-        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150]];
+        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:130 height:130]];
     } else {
         [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+    }
+    if (question.is_highlight.integerValue==1) {
+        [cell setIsStar:YES];
+        [cell.stateImg setHidden:NO];
+    } else {
+        [cell.stateImg setHidden:YES];
     }
     return cell;
 }
@@ -330,7 +330,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return CGSizeMake(75, 75);
+    return CGSizeMake(65, 65);
     
 }
 
@@ -375,7 +375,7 @@
     if ( kind == UICollectionElementKindSectionHeader ) {
        reusableview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "HeaderView" forIndexPath : indexPath ] ;
         Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:0];
-        [reusableview.dateLabel setText:[NSString stringWithFormat:@"%@ 第%@天",question.create_time,question.myDay]];
+        [reusableview.dateLabel setText:[NSString stringWithFormat:@"%@ 第%@天",  [question.create_time stringByReplacingOccurrencesOfString:@"-" withString:@"."],question.myDay]];
     }
     return reusableview;
 }
@@ -386,7 +386,6 @@
 {
     if ([segue.identifier isEqualToString:@"reviewMyQuestion"]) {
         ReviewVC* reviewVC = [segue destinationViewController];
-//        reviewVC.questionList = self.myQuestions;
         reviewVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
         reviewVC.subject = self.subject;
     }

@@ -17,11 +17,17 @@
    
 }
 
+- (void)initViews
+{
+    
+}
+
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_majorField, nil];
-
+    self.keyButtons = @[_submitButton];
 }
 
 //初始化ButtonGroup
@@ -41,6 +47,7 @@
             if ([_btGroup selectedIndex]==3) {
                 [_majorField setHidden:NO];
                 [_majorLabel setHidden:NO];
+                [_majorLine setHidden:NO];
                 if (self.type==5) {
                     [_majorField setText:self.subject];
                 }
@@ -58,9 +65,11 @@
         if (index==3) {
             [_majorField setHidden:NO];
             [_majorLabel setHidden:NO];
+            [_majorLine setHidden:NO];
         } else {
             [_majorField setHidden:YES];
             [_majorLabel setHidden:YES];
+            [_majorLine setHidden:YES];
         }
     }
 }

@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    keyboardHeight = MAX([[ToolUtils getKeyboardHeight] floatValue], 240);
     [self registerForKeyboardNotifications];
     if([self.navigationController.navigationBar
         respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
@@ -89,9 +90,11 @@
 {
     [super viewWillDisappear:animated];
     [self.maskView setHidden:YES];
+    self.maskView = nil;
     [self.maskView removeFromSuperview];
     [self.waitingView setHidden:YES];
     [self.waitingView removeFromSuperview];
+    self.waitingView = nil;
 }
 
 
@@ -105,11 +108,11 @@
 - (void) keyboardWasShown:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     NSLog(@"keyBoard:%f", keyboardSize.height);  //216
-    keyboardHeight = keyboardSize.height;
-    ///keyboardWasShown = YES;
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
 }
 
 - (void) keyboardWasHidden:(NSNotification *) notif
@@ -120,7 +123,8 @@
     CGSize keyboardSize = [value CGRectValue].size;
     NSLog(@"keyboardWasHidden keyBoard:%f", keyboardSize.height);
     // keyboardWasShown = NO;
-    keyboardHeight = keyboardSize.height;
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
     
 }
 
@@ -242,7 +246,7 @@
     } else {
         frame = textField.frame;
     }
-    int offset = frame.origin.y - (self.view.frame.size.height - 280);//键盘高度216
+    int offset = frame.origin.y - (self.view.frame.size.height - MAX(keyboardHeight, 240));//键盘高度216
     NSLog(@"offset is %d",offset);
     NSTimeInterval animationDuration = 0.30f;
     if (offset>0&& textField.frame.origin.y > offset) {
@@ -254,7 +258,7 @@
 
     [self addMaskBt];
     
-       return YES;
+    return YES;
 }
 
 
@@ -329,11 +333,13 @@
 - (void)addRightButton:(NSString*)title action:(SEL)action img:(NSString*)img
 {
     UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [button setTitle:title forState:UIControlStateNormal];
+    if (title) {
+        [button setTitle:title forState:UIControlStateNormal];
+    }
     
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if (img) {
-        [button setBackgroundImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
 
     }
     
@@ -374,12 +380,7 @@
         self.maskView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
         [self.maskView setAlpha:0.5];
         [self.maskView setBackgroundColor:[UIColor blackColor]];
-        if (self.scale==1) {
-            [self.view addSubview:self.maskView];
-        } else {
-            [self.navigationController.view addSubview:self.maskView];
-        }
-        
+        [self.navigationController.view addSubview:self.maskView];
     }
     [self.maskView setHidden:NO];
 }
@@ -390,8 +391,5 @@
     [self.maskView setHidden:YES];
 //    [self.maskView removeFromSuperview];
 }
-
-
-
 
 @end
