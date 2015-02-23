@@ -31,6 +31,8 @@
     [self initQuestions];
 }
 
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -50,26 +52,22 @@
     
     QuestionBook* book = [QuestionBook getInstance];
     Question* question = [book getQuestionByMQuestion:currentQuestion];
+    
     if (question.is_recommand.integerValue==1) {
         [ToolUtils deleteFile:question.questionid];
     }
     
-    
-    
-    question.img = @"";
-    [book save];
-
-    [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
-
-    
-    
+    if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
+        [[QuestionBook getInstance]deleteQuestion:question];
+    } else {
+        question.img = @"";
+        [book save];
+        [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
+    }
     if (self.questionList.count==1) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
-        
-        
         QuestionView* removeView = [self.questionViews objectAtIndex:self.currentPage];
-        
         if (self.currentPage+1==self.questionViews.count) {
             self.currentPage--;
             [self.questionList removeObject:currentQuestion];

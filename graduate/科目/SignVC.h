@@ -11,6 +11,11 @@
 @interface SignVC : BaseFuncVC
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UIButton *signButton;
+@property (nonatomic,assign)NSInteger reviewCount;
 @property (nonatomic,strong)NSString* subject;
 @property (nonatomic)NSInteger type;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
+
+@property (weak, nonatomic) IBOutlet UIView *maskBackView;
+
 @end

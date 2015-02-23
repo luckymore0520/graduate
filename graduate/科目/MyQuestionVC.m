@@ -142,7 +142,7 @@
     [self.myQuestions sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         NSString* a = [obj1 objectForKey:@"day"];
         NSString* b = [obj2 objectForKey:@"day"];
-        return  [b compare:a];
+        return  b.integerValue > a.integerValue;
     }];
     if (self.shoudUpdate) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -189,10 +189,8 @@
             NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
             [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
         } else {
-            
-            self.myQuestions =
-            [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
             self.shoudUpdate = NO;
+            [self loadData];
             [self.photoView reloadData];
         }
         
@@ -208,10 +206,13 @@
 
 
 - (IBAction)reviewModelAction:(id)sender {
-    [self performSegueWithIdentifier:@"reviewMyQuestion" sender:nil];
+    [self performSegueWithIdentifier:@"reviewMyQuestion" sender:sender];
 }
 
 - (IBAction)transfer:(id)sender {
+    if (_selectedArray.count==0) {
+        return;
+    }
     [UIView animateWithDuration:0.3 animations:^{
         self.transferView.transform = CGAffineTransformMakeTranslation(0, -self.transferView.frame.size.height);
     }];
@@ -277,6 +278,10 @@
 - (IBAction)delete:(id)sender {
     
     
+    if (_selectedArray.count==0) {
+        return;
+    }
+    
     UIActionSheet* actionsheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除笔记" otherButtonTitles:nil, nil];
     [actionsheet showInView:[UIApplication sharedApplication].keyWindow];
     
@@ -298,8 +303,11 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSMutableArray* arr = [[self.myQuestions objectAtIndex:section]objectForKey:@"array"];
-    return arr.count;
+    if (section<self.myQuestions.count) {
+        NSMutableArray* arr = [[self.myQuestions objectAtIndex:section]objectForKey:@"array"];
+        return arr.count;
+    }
+    return 0;
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -312,6 +320,7 @@
     
     static NSString * CellIdentifier = @"picture";
     QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    [cell.selectView setHidden:YES];
     Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
     if (question.is_recommand.integerValue==0) {
         [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:130 height:130]];
@@ -373,9 +382,19 @@
     QuestionHeaderView * reusableview = nil ;
 
     if ( kind == UICollectionElementKindSectionHeader ) {
-       reusableview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "HeaderView" forIndexPath : indexPath ] ;
-        Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:0];
-        [reusableview.dateLabel setText:[NSString stringWithFormat:@"%@ 第%@天",  [question.create_time stringByReplacingOccurrencesOfString:@"-" withString:@"."],question.myDay]];
+        reusableview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "HeaderView" forIndexPath : indexPath ] ;
+        if (indexPath.section<self.myQuestions.count) {
+        
+            Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:0];
+            if (question.myDay.integerValue == [[ToolUtils getCurrentDay] integerValue]) {
+                [reusableview.dateLabel setText:[NSString stringWithFormat:@"今日 第%@天",question.myDay]];
+                [reusableview.dateLabel setTextColor:[UIColor redColor]];
+            } else {
+                [reusableview.dateLabel setText:[NSString stringWithFormat:@"%@ 第%@天",  [question.create_time stringByReplacingOccurrencesOfString:@"-" withString:@"."],question.myDay]];
+                [reusableview.dateLabel setTextColor:[UIColor colorWithHex:0x333333]];
+            }
+            return reusableview;
+        }
     }
     return reusableview;
 }
@@ -388,6 +407,8 @@
         ReviewVC* reviewVC = [segue destinationViewController];
         reviewVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
         reviewVC.subject = self.subject;
+        UIButton* button = (UIButton*)sender;
+        reviewVC.reviewType = button.titleLabel.text;
     }
 }
 
@@ -413,6 +434,9 @@
                 [ToolUtils deleteFile:question.questionid];
             }
             [questionIds appendFormat:@"%@,",question.questionid];
+            if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
+                [[QuestionBook getInstance]deleteQuestion:question];
+            }
         }
         
         

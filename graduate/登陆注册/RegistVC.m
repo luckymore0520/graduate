@@ -190,7 +190,6 @@
             nextVC.isReset = NO;
         } else {
             nextVC.isReset = YES;
-            
         }
     }
 }

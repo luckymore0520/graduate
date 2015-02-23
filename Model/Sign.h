@@ -18,4 +18,5 @@
 @property (nonatomic, retain) NSString * userid;
 @property (nonatomic, retain) NSString* myDay;
 @property (nonatomic,retain)NSNumber* isUpload;
+@property (nonatomic,retain)NSNumber* reviewCount;
 @end

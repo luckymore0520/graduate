@@ -12,7 +12,7 @@
 #import "MPostList.h"
 #import "MGetMsgCount.h"
 #import "MReturn.h"
-
+#import "MMsgCount.h"
 #import "ChatCenterDetailViewController.h"
 @interface ChatCenterVC ()
 @property (nonatomic,strong)NSMutableArray* postArray;
@@ -126,8 +126,8 @@
         }
     } else if ([names isEqualToString:@"MGetMsgCount"])
     {
-        MReturn* ret = [MReturn objectWithKeyValues:data];
-        [self addRightButton:ret.code_.integerValue];
+        MMsgCount* ret = [MMsgCount objectWithKeyValues:data];
+        [self addRightButton:ret.square_.integerValue];
     }
 }
 

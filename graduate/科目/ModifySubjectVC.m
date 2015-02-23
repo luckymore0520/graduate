@@ -27,7 +27,22 @@
     [super viewDidLoad];
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_majorField, nil];
-    self.keyButtons = @[_submitButton];
+    if (self.majorField) {
+        self.majorField.inputAccessoryView = [self getAccessoryView];
+    }
+}
+
+- (UIView*)getAccessoryView
+{
+    UIView* accessoryView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, 60)];
+    UIButton* button = [[UIButton alloc]initWithFrame:accessoryView.frame];
+    [button addTarget:self action:@selector(save:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"完成" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button.titleLabel setFont:_submitButton.titleLabel.font];
+    [button setBackgroundImage:[UIImage imageNamed:@"保存按钮"] forState:UIControlStateNormal];
+    [accessoryView addSubview:button];
+    return accessoryView;
 }
 
 //初始化ButtonGroup

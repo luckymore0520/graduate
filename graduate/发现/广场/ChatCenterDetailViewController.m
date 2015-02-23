@@ -45,6 +45,18 @@
     }];
     
 }
+
+- (void)addMask
+{
+    if (!self.maskView) {
+        self.maskView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+        [self.maskView setAlpha:0.5];
+        [self.maskView setBackgroundColor:[UIColor blackColor]];
+        [self.view addSubview:self.maskView];
+    }
+    [self.maskView setHidden:NO];
+}
+
 - (IBAction)cancelShare:(id)sender {
     [self removeMask];
     [UIView animateWithDuration:0.3 animations:^{
@@ -248,6 +260,9 @@
         MComment* comment = [self.commentList objectAtIndex:tag];
         _editTextView.text = [NSString stringWithFormat:@"回复%@:",comment.nickname_];
         self.selectFloor = comment.id_;
+    } else {
+        _editTextView.text = @"";
+
     }
 
     [self.editTextView becomeFirstResponder];

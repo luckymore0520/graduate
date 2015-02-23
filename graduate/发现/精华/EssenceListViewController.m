@@ -146,7 +146,12 @@
             [cell.essenceDownloadBt setHidden:YES];
         }
         [cell.essenceIsVipLabel setHidden:!essence.needShare_.boolValue];
-        [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.type_.integerValue]]];
+        if (self.type==1||self.type==2) {
+            
+        } else if (essence.type_){
+            [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.type_.integerValue]]];
+
+        }
         return cell;
 
     } 
@@ -164,6 +169,7 @@
         } else {
             EssenceDetailWebViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
             detail.url = [NSURL URLWithString:essence.url_];
+            detail.postId = essence.id_;
             [self.parentVC.navigationController pushViewController:detail animated:YES];
         }
     }

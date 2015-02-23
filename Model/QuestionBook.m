@@ -114,7 +114,6 @@ QuestionBook* questionBook = nil;
             if (!sign.isUpload.boolValue) {
                 [self sign:sign];
                 NSLog(@"开始上传打卡 %@",sign.date);
-                self.needUpload++;
             }
         }
         
@@ -155,7 +154,6 @@ QuestionBook* questionBook = nil;
         if (ret.code_.integerValue==1) {
             Sign* sign = (Sign*)object;
             sign.isUpload = [NSNumber numberWithBool:YES];
-            self.needUpload--;
             NSLog(@"成功上传打卡 %@",sign.date);
 
         }
@@ -434,6 +432,7 @@ QuestionBook* questionBook = nil;
         english.total = _englishBook.count;
         english.newAdd = [book getQuestionOfDayAndType:today type:1].count;
         english.type=1;
+        english.firstStr = @"英";
         [self.subjects addObject:english];
         
         
@@ -442,6 +441,7 @@ QuestionBook* questionBook = nil;
         politic.total = _politicBook.count;
         politic.newAdd = [book getQuestionOfDayAndType:today type:2].count;
         politic.type = 2;
+        politic.firstStr = @"政";
         [self.subjects addObject:politic];
         
         
@@ -452,6 +452,7 @@ QuestionBook* questionBook = nil;
             maths.total = _mathBook.count;
             maths.newAdd = [book getQuestionOfDayAndType:today type:3].count;
             maths.type =3;
+            maths.firstStr = @"数";
             [self.subjects addObject:maths];
             
             
@@ -461,6 +462,11 @@ QuestionBook* questionBook = nil;
             major2.total = _major2Book.count;
             major2.newAdd = [book getQuestionOfDayAndType:today type:5].count;
             major2.type = 5;
+            NSString* first = [major2.name substringToIndex:1];
+            if ([first isEqualToString:@"英"]||[first isEqualToString:@"政"]) {
+                first = @"专";
+            }
+            major2.firstStr = first;
             [self.subjects addObject:major2];
             
         }
@@ -470,6 +476,16 @@ QuestionBook* questionBook = nil;
         major1.total = _major1Book.count;
         major1.newAdd = [book getQuestionOfDayAndType:today type:4].count;
         major1.type =4;
+        NSString* first = [major1.name substringToIndex:1];
+        Subject* last = [_subjects lastObject];
+        if ([first isEqualToString:@"英"]||[first isEqualToString:@"政"]||[first isEqualToString:last.firstStr]) {
+            if ([last.firstStr isEqualToString:@"专"]) {
+                first = [[major1.name substringFromIndex:1]substringToIndex:1];
+            } else {
+                first = @"专";
+            }
+        }
+        major1.firstStr = first;
         [self.subjects addObject:major1];
     }
     return _subjects;

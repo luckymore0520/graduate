@@ -81,6 +81,9 @@
 +(NSString*)getKeyboardHeight;
 +(void)setKeyboardHeight:(NSNumber*)keyboardHeight;
 
++(NSString*)recommandDay;
++(void)setRecommandDay:(NSString*)day;
+
 +(NSString*)getLastUpdateTime;
 +(void)setLastUpdateTime:(NSString*)lastUpdateTime;
 
@@ -89,7 +92,7 @@
 
 + (NSData*) loadData:(NSString*)fileName;
 +(BOOL)deleteFile:(NSString*) fileName ;
-
++(BOOL)connectToInternet;
 +(BOOL)connectedToNetWork;
 +(BOOL)ignoreNetwork;
 +(void)setIgnoreNetwork:(BOOL)ignore;

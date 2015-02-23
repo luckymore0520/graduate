@@ -10,8 +10,7 @@
 #import "QCSlideSwitchView.h"
 
 static const CGFloat kHeightOfTopScrollView = 44.0f;
-static const CGFloat kWidthOfButtonMargin = 16.0f;
-static const CGFloat kFontSizeOfTabButton = 17.0f;
+static const CGFloat kWidthOfButtonMargin = 0.0f;
 static const NSUInteger kTagOfRightSideButton = 999;
 
 @implementation QCSlideSwitchView
@@ -21,7 +20,7 @@ static const NSUInteger kTagOfRightSideButton = 999;
 - (void)initValues
 {
     //创建顶部可滑动的tab
-    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kHeightOfTopScrollView)];
+    _topScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, kHeightOfTopScrollView)];
     _topScrollView.delegate = self;
     _topScrollView.backgroundColor = [UIColor clearColor];
     _topScrollView.pagingEnabled = NO;
@@ -144,6 +143,12 @@ static const NSUInteger kTagOfRightSideButton = 999;
     [self setNeedsLayout];
 }
 
+- (void)selectVCAtIndex:(NSInteger)index
+{
+    UIButton *button = (UIButton *)[_topScrollView viewWithTag:index+100];
+    [self selectNameButton:button];
+    [self.slideSwitchViewDelegate slideSwitchView:self didselectTab:index];
+}
 /*!
  * @method 初始化顶部tab的各个按钮
  * @abstract
@@ -163,38 +168,38 @@ static const NSUInteger kTagOfRightSideButton = 999;
     //每个tab偏移量
     CGFloat xOffset = kWidthOfButtonMargin;
     if (!_buttonNormalImages) {
+        CGFloat width = [[UIScreen mainScreen]bounds].size.width/3;
         for (int i = 0; i < [_viewArray count]; i++) {
             UIViewController *vc = _viewArray[i];
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            CGSize textSize = [vc.title sizeWithFont:[UIFont systemFontOfSize:kFontSizeOfTabButton]
-                                   constrainedToSize:CGSizeMake(_topScrollView.bounds.size.width, kHeightOfTopScrollView)
-                                       lineBreakMode:NSLineBreakByTruncatingTail];
-            //累计每个tab文字的长度
-            topScrollViewContentWidth += kWidthOfButtonMargin+textSize.width;
+            button.titleLabel.textAlignment = NSTextAlignmentCenter;
+            topScrollViewContentWidth += kWidthOfButtonMargin+width;
             //设置按钮尺寸
             [button setFrame:CGRectMake(xOffset,0,
-                                        textSize.width, kHeightOfTopScrollView)];
+                                        width, kHeightOfTopScrollView)];
             //计算下一个tab的x偏移量
-            xOffset += textSize.width + kWidthOfButtonMargin;
-            
+            xOffset += width + kWidthOfButtonMargin;
             [button setTag:i+100];
             if (i == 0) {
-                _shadowImageView.frame = CGRectMake(kWidthOfButtonMargin, 0, textSize.width, _shadowImage.size.height);
+                _shadowImageView.frame = CGRectMake(kWidthOfButtonMargin, 0, width, _shadowImage.size.height);
                 button.selected = YES;
             }
             [button setTitle:vc.title forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont systemFontOfSize:kFontSizeOfTabButton];
+            button.titleLabel.font =  [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:15.0];
             [button setTitleColor:self.tabItemNormalColor forState:UIControlStateNormal];
             [button setTitleColor:self.tabItemSelectedColor forState:UIControlStateSelected];
             [button setBackgroundImage:self.tabItemNormalBackgroundImage forState:UIControlStateNormal];
             [button setBackgroundImage:self.tabItemSelectedBackgroundImage forState:UIControlStateSelected];
             [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
             [_topScrollView addSubview:button];
+            if (i==0) {
+                button.transform = CGAffineTransformMakeScale(1.1, 1.1);
+            }
         }
         _topScrollView.contentSize = CGSizeMake(topScrollViewContentWidth, kHeightOfTopScrollView);
 
     } else {
-        CGFloat width = self.frame.size.width/_buttonNormalImages.count;
+        CGFloat width = [[UIScreen mainScreen]bounds].size.width/_buttonNormalImages.count;
         for (int i = 0 ; i < _buttonNormalImages.count ; i++) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             CGRect frame = CGRectMake(i*width, 0, width, kHeightOfTopScrollView);
@@ -236,6 +241,8 @@ static const NSUInteger kTagOfRightSideButton = 999;
     if (sender.tag != _userSelectedChannelID) {
         //取之前的按钮
         UIButton *lastButton = (UIButton *)[_topScrollView viewWithTag:_userSelectedChannelID];
+        lastButton.transform = CGAffineTransformMakeScale(1, 1);
+
         lastButton.selected = NO;
         //赋值按钮ID
         _userSelectedChannelID = sender.tag;
@@ -244,7 +251,7 @@ static const NSUInteger kTagOfRightSideButton = 999;
     //按钮选中状态
     if (!sender.selected) {
         sender.selected = YES;
-        
+        sender.transform = CGAffineTransformMakeScale(1.1, 1.1);
         [UIView animateWithDuration:0.25 animations:^{
             
             [_shadowImageView setFrame:CGRectMake(sender.frame.origin.x, kHeightOfTopScrollView-2, sender.frame.size.width, 2)];
@@ -280,14 +287,17 @@ static const NSUInteger kTagOfRightSideButton = 999;
 - (void)adjustScrollViewContentX:(UIButton *)sender
 {
     CGFloat margin = kWidthOfButtonMargin;
-    if (_buttonNormalImages) {
-        margin = 0;
+    if (!_buttonNormalImages) {
+        margin = [[UIScreen mainScreen]bounds].size.width/3;
+    }
+    if (_viewArray.count==1) {
+        margin= margin*2;
     }
     //如果 当前显示的最后一个tab文字超出右边界
     if (sender.frame.origin.x - _topScrollView.contentOffset.x > self.bounds.size.width - (margin+sender.bounds.size.width)) {
         //向左滚动视图，显示完整tab文字
         [_topScrollView setContentOffset:CGPointMake(sender.frame.origin.x - (_topScrollView.bounds.size.width- (margin+sender.bounds.size.width)), 0)  animated:YES];
-    }
+    } else
     
     //如果 （tab的文字坐标 - 当前滚动视图左边界所在整个视图的x坐标） < 按钮的隔间 ，代表tab文字已超出边界
     if (sender.frame.origin.x - _topScrollView.contentOffset.x < margin) {

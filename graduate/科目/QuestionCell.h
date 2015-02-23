@@ -10,6 +10,7 @@
 
 @interface QuestionCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *stateImg;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (nonatomic,assign)BOOL isStar;

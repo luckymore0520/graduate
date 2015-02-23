@@ -121,6 +121,9 @@ MyTraceList* tracelist = nil;
     trace.singer = music.singer_;
     trace.date = myDay.date_;
     trace.musicFile = music.file_;
+    trace.addCount = myDay.addCount_;;
+    trace.reviewCount = myDay.reviewCount_;
+    trace.signCount = myDay.signCount_;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);
@@ -132,7 +135,8 @@ MyTraceList* tracelist = nil;
             [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
         } else if ([ToolUtils connectedToNetWork]) {
             [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
-        }    }
+        }
+    }
 }
 
 

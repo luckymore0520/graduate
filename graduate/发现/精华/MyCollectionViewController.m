@@ -40,7 +40,6 @@
         MEssenceList* essenceList = [MEssenceList objectWithKeyValues:data];
         for (MEssence* essence in essenceList.essence_) {
             BOOL has = NO;
-            
             for (MEssence* currentEssence in self.myEssences) {
                 if ([currentEssence.id_ isEqualToString:essence.id_]) {
                     has = YES;

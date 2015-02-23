@@ -63,6 +63,7 @@
 @property (nonatomic, strong) UIImageView *focusImageView;
 
 @property (nonatomic, strong) SCSlider *scSlider;
+@property (nonatomic,strong)UIImage* selectedImage;
 
 
 //@property (nonatomic) id runtimeErrorHandlingObserver;
@@ -132,13 +133,13 @@
 
 #if SWITCH_SHOW_DEFAULT_IMAGE_FOR_NONE_CAMERA
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [SVProgressHUD showErrorWithStatus:@"设备不支持拍照功能，给个妹纸给你喵喵T_T"];
-        
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CAMERA_TOPVIEW_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)];
-        imgView.clipsToBounds = YES;
-        imgView.contentMode = UIViewContentModeScaleAspectFill;
-        imgView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"meizi" ofType:@"jpg"]];
-        [self.view addSubview:imgView];
+        [SVProgressHUD showErrorWithStatus:@"设备不支持拍照功能"];
+//        
+//        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CAMERA_TOPVIEW_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)];
+//        imgView.clipsToBounds = YES;
+//        imgView.contentMode = UIViewContentModeScaleAspectFill;
+//        imgView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"meizi" ofType:@"jpg"]];
+//        [self.view addSubview:imgView];
     }
 #endif
 }
@@ -673,30 +674,25 @@ void c_slideAlpha() {
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [picker dismissViewControllerAnimated:YES completion:^{}];
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        self.selectedImage = [self useImage:image];
+        SCNavigationController *nav = (SCNavigationController*)self.navigationController;
+        if ([nav.scNaigationDelegate respondsToSelector:@selector(didTakePicture:image:)]) {
+            [nav.scNaigationDelegate didTakePicture:nav image:self.selectedImage];
+        }
+    
+    }];
+    
     //your code 0
-    SCNavigationController *nav = (SCNavigationController*)self.navigationController;
-    if ([nav.scNaigationDelegate respondsToSelector:@selector(didTakePicture:image:)]) {
-        [nav.scNaigationDelegate didTakePicture:nav image:[self useImage:image]];
-    }
  }
 
 - (UIImage *)useImage:(UIImage *)image {
-    //    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // Create a graphics image context
-    CGSize newSize = CGSizeMake(SC_DEVICE_SIZE.width*2,SC_DEVICE_SIZE.height*2);
+      CGSize newSize = CGSizeMake(SC_DEVICE_SIZE.width*2,SC_DEVICE_SIZE.height*2);
     UIGraphicsBeginImageContext(newSize);
-    // Tell the old image to draw in this new context, with the desired
-    // new size
     [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    // Get the new image from the context
     UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    // End the context
     UIGraphicsEndImageContext();
-    
-    //    [pool release];
     return newImage;
 }
 
@@ -704,6 +700,7 @@ void c_slideAlpha() {
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    [picker dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 @end

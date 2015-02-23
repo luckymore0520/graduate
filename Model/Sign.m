@@ -17,4 +17,5 @@
 @dynamic userid;
 @dynamic myDay;
 @dynamic isUpload;
+@dynamic reviewCount;
 @end

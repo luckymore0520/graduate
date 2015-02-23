@@ -60,15 +60,16 @@
     }
 }
 
+
+
 - (void)updateProgressCircle{
     //update progress value
     self.progress = (float) (self.player.currentTime / self.player.duration);
-    //redraw back & progress circles
     [self setNeedsDisplay];
-    
-//    if (self.delegate && [self.delegate conformsToProtocol:@protocol(CircularProgressDelegate)]) {
-//        [self.delegate didUpdateProgressView];
-//    }
+
+    if (self.delegate) {
+        [self.delegate didUpdateProgressView:self.progress];
+    }
 }
 
 - (void)play{
@@ -80,6 +81,7 @@
         [self.player play];
     }
 }
+
 
 - (void)pause{
     if (self.player.playing) {

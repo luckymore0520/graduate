@@ -13,6 +13,9 @@
 #import "Subject.h"
 #import "ButtonGroup.h"
 #import "IQActionSheetPickerView.h"
+#import "MReturn.h"
+#import "MQuesPrint.h"
+#import "BackUpViewController.h"
 @interface PrintViewController ()<IQActionSheetPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *endDateButton;
 @property (weak, nonatomic) IBOutlet UIButton *startDateButton;
@@ -33,12 +36,26 @@
 @property (nonatomic,strong)UIButton* selectedButton;
 @property (nonatomic,strong)NSString* startDate;
 @property (nonatomic,strong)NSString* endDate;
+
 @end
 
 @implementation PrintViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    _sendBt.layer.borderColor = [UIColor whiteColor].CGColor;
+    _sendBt.layer.borderWidth = 1;
+    _sendBt.layer.cornerRadius = 5;
+    [self setSubject];
+    [self setDate];
+    // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+    [[QuestionBook getInstance] calculateNeedUpload];
     if ([QuestionBook getInstance].needUpload>0) {
         [self.backupView setHidden:NO];
         [self.printView setHidden:YES];
@@ -46,17 +63,8 @@
         [self.backupView setHidden:YES];
         [self.printView setHidden:NO];
     }
-    _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-    _sendBt.layer.borderColor = [UIColor whiteColor].CGColor;
-    _sendBt.layer.borderWidth = 1;
-    _sendBt.layer.cornerRadius = 5;
     [self setButton];
-    [self setSubject];
-    [self setDate];
-    
-    // Do any additional setup after loading the view.
 }
-
 - (void)setDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -82,8 +90,7 @@
     if (_subjects.count==4) {
         for (int i = 0 ; i < 4 ; i++) {
             Subject* subject= _subjects[i];
-            [_buttonArray[i] setTitle:[subject.name substringToIndex:1] forState:UIControlStateNormal];
-            
+            [_buttonArray[i] setTitle:subject.firstStr forState:UIControlStateNormal];
         }
     }
     [_subjectGroup loadButton:_buttonArray];
@@ -101,9 +108,30 @@
 
 
 - (IBAction)print:(id)sender {
+    if (self.subjectGroup.selectedIndex<0) {
+        [ToolUtils showMessage:@"请先选择科目"];
+        return;
+    }
+
+    Subject* selectedSubject = self.subjects[[self.subjectGroup selectedIndex]];
+    NSString* type = [NSString stringWithFormat:@"%d",selectedSubject.type];
+    NSString* start = self.startDateButton.titleLabel.text;
+    NSString* endData = self.endDateButton.titleLabel.text;
+    [[[MQuesPrint alloc]init]load:self startDate:start endDate:endData type:type];
     
 }
 
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqualToString:@"MQuesPrint"]) {
+        MReturn* ret = [MReturn objectWithKeyValues:data];
+        if (ret.code_.integerValue ==1) {
+            [ToolUtils setLastUpdateTime:self.endDateButton.titleLabel.text];
+            [ToolUtils showMessage:@"打印文件已发送至您邮箱，请查收"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
 
 
 - (IBAction)setDate:(id)sender {
@@ -116,7 +144,8 @@
 
 
 - (IBAction)backUp:(id)sender {
-    
+    BackUpViewController* backUp = [self.storyboard instantiateViewControllerWithIdentifier:@"backUp"];
+    [self.navigationController pushViewController:backUp animated:YES];
 }
 
 - (void)setButton
@@ -201,11 +230,6 @@
     }
 }
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:YES];
-}
 
 
 - (void)didReceiveMemoryWarning {

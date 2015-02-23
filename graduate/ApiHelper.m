@@ -47,7 +47,9 @@
 //调用接口 get 方法名 参数 代理
 - (ApiHelper*)load:(NSString *)method params:(NSDictionary *)params delegate:(id<ApiDelegate>)delegate
 {
-    
+    if (![ToolUtils connectToInternet]) {
+        return self;
+    }
     _delegate = delegate;
     _name = method;
     _params = params;

@@ -119,9 +119,7 @@
     [ToolUtils setHasLogin:YES];
     UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
-    [nav setNavigationBarHidden:YES];
-    [self.navigationController presentViewController:nav animated:YES completion:^{
+    [self.navigationController presentViewController:_rootVC animated:YES completion:^{
         [self waitingEnd];
     }];
 }

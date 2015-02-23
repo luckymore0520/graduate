@@ -39,6 +39,9 @@
 @property (strong, nonatomic)  UIPlaceHolderTextView *editTextView;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *redDot;
+
+
 @property (weak, nonatomic) IBOutlet UIImageView *headView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundViw;
 
@@ -85,10 +88,23 @@ CGFloat angle;
 }
 
 
+- (IBAction)onClickImage:(id)sender
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+    UIViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"setInfo"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
+        [self.redDot setHidden:YES];
+    } else {
+        [self.redDot setHidden:NO];
+
+    }
 }
 
 -(void) startAnimation
@@ -146,22 +162,33 @@ CGFloat angle;
 }
 
 
+- (void)animationLabel:(NSArray*)statics
+{
+    int total = [[statics firstObject] integerValue];
+    int totalNew = [statics[1] integerValue];
+    int sign = [statics[2]integerValue];
+    BOOL hasEnd = self.totalLabel.text.integerValue==total
+                &&self.totalNewLabel.text.integerValue==totalNew
+    &&self.cardLabel.text.integerValue==sign;
+   
+    if (!hasEnd) {
+        self.totalLabel.text = [NSString stringWithFormat:@"%d",MIN(self.totalLabel.text.integerValue+1,total)];
+        self.totalNewLabel.text = [NSString stringWithFormat:@"%d",MIN(self.totalNewLabel.text.integerValue+1,totalNew)];
+        self.cardLabel.text = [NSString stringWithFormat:@"%d",MIN(self.cardLabel.text.integerValue+1,sign)];
+        [self performSelector:@selector(animationLabel:) withObject:statics afterDelay:0.02];
+    }
+    
+}
 - (void)calculateTotal
 {
-    int total = 0;
-    int totalNew = 0;
+    NSInteger total = 0;
+    NSInteger totalNew = 0;
     for (Subject* subject in self.subjects) {
         total+=subject.total;
         totalNew+=subject.newAdd;
     }
-    [self.totalLabel setText:[NSString stringWithFormat:@"%d",total]];
-    [self.totalNewLabel setText:[NSString stringWithFormat:@"%d",totalNew]];
-    
     NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
-
-    [self.cardLabel setText:[NSString stringWithFormat:@"%d",signList.count]];
-
-    
+    [self animationLabel:@[[NSNumber numberWithInteger:total],[NSNumber numberWithInteger:totalNew],[NSNumber numberWithInteger:signList.count]]];
 }
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
@@ -232,10 +259,7 @@ CGFloat angle;
 - (void)initSubject
 {
     self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects] ];
-//    [self.tableview reloadData];
     [[[MQuesCountStatus alloc]init]load:self];
-//    [self calculateTotal];
-    
 }
 
 
@@ -253,6 +277,7 @@ CGFloat angle;
 
     } else {
         [self performSegueWithIdentifier:@"recommand" sender:nil];
+        [ToolUtils setRecommandDay:[ToolUtils getCurrentDate]];
 
     }
 }

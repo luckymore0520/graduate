@@ -92,7 +92,6 @@
     } else if (![_setPasswordField.text isEqualToString:_comfirmPasswordField.text])
     {
         [ToolUtils showMessage:@"两次输入密码不同，请重新输入" title:@"密码不一样"];
-//        [ToolUtils showMessage:@"两次密码不一致"];
     } else if ([_nickField.text length]==0)
     {
         [ToolUtils showMessage:@"请输入完整信息，完成账号设置" title:@"账号未能设置"];
@@ -116,9 +115,10 @@
     if ([names isEqualToString:@"MPasswdChange"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
+            [ToolUtils setHasLogin:YES];
             [self waitingEnd];
             UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
-            WKNavigationViewController* _rootVC =(WKNavigationViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+            RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
             [self.navigationController presentViewController:_rootVC animated:YES completion:^{
             }];
         } else {

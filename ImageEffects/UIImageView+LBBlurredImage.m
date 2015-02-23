@@ -28,6 +28,9 @@ CGFloat const kLBBlurredImageDefaultSaturationDeltaFactor = 1.0;
             blurRadius:(CGFloat)blurRadius
        completionBlock:(LBBlurredImageCompletionBlock) completion
 {
+    if (image==nil) {
+        return;
+    }
     NSParameterAssert(image);
     NSParameterAssert(blurRadius >= 0);
     

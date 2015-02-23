@@ -16,7 +16,6 @@
 @property (nonatomic, retain) NSString * myDay;
 @property (nonatomic, retain) NSString * note;
 @property (nonatomic, retain) NSString * pictureUrl;
-@property (nonatomic, retain) NSNumber * remainday;
 @property (nonatomic, retain) NSString * singer;
 @property (nonatomic, retain) NSString * songName;
 @property (nonatomic, retain) NSString * songUrl;
@@ -25,5 +24,9 @@
 @property (nonatomic, retain) NSString * pictureUrlForTrace;
 @property (nonatomic, retain) NSString * pictureUrlForSubject;
 @property (nonatomic, retain) NSString * musicFile;
+@property (nonatomic, retain) NSNumber * remainday;
+@property (nonatomic, retain) NSNumber * addCount;
+@property (nonatomic, retain) NSNumber * reviewCount;
+@property (nonatomic, retain) NSNumber * signCount;
 
 @end

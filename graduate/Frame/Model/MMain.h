@@ -25,7 +25,7 @@
 @property (retain,nonatomic) NSNumber *reviewCount_;
 
 @property (retain,nonatomic) NSNumber *addCount_;
-
+@property (nonatomic,retain)NSNumber *signCount_;
 
 
 @end

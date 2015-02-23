@@ -10,9 +10,10 @@
 
 #import "ReviewVC.h"
 #import "SignVC.h"
-@interface ReviewVC ()
+@interface ReviewVC ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *footToolView;
 @property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
+@property (weak, nonatomic) IBOutlet UIView *progressBar;
 
 @end
 
@@ -20,16 +21,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.bottomHeight = 130.0;
+    self.bottomHeight = 150.0;
     self.hasTitle = NO;
-    [self setTitle:@"复习"];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES];
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
 
 }
 - (void)initViews
@@ -37,9 +38,22 @@
     
 }
 
+
+-(void)closeSelf{
+    [[[UIAlertView alloc]initWithTitle:@"退出复习" message:@"再坚持一下吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [self loadQuestions];
+    [self setTitle:[NSString stringWithFormat:@"%@(%d/%d)",self.reviewType,self.currentPage,self.questionList.count]];
 
 }
 - (void)didReceiveMemoryWarning {
@@ -47,9 +61,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)goBack:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (void)loadQuestions
 {
@@ -104,8 +116,13 @@
 
 
 -(void)pageChange:(UIPageControl *)sender{
+    
+    
+    
     self.currentPage ++;
-    if (self.currentPage<self.questionList.count) {
+    CGFloat width = self.progressBar.frame.size.width;
+    self.progressBar.transform = CGAffineTransformMakeTranslation(width*(self.currentPage/(self.questionList.count+0.0)), 0);
+    [self setTitle:[NSString stringWithFormat:@"%@(%d/%d)",self.reviewType,self.currentPage,self.questionList.count]];    if (self.currentPage<self.questionList.count) {
         QuestionView* originView = [self.questionViews objectAtIndex:self.currentPage-1];
         QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
         [self.scrollView addSubview:view];
@@ -213,22 +230,25 @@
 
     CGFloat titleHeight = self.hasTitle?50:0;
     
+    UIView* textBackView;
+    
     if (labelsize.height>60) {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 5+titleHeight , width-20, 80)];
+        textBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 5+titleHeight , width-20, 60)];
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(0, 0 , width-20, 60)];
     } else {
-        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(10, 5+titleHeight , width-20, labelsize.height+30)];
+        textBackView = [[UIView alloc]initWithFrame:CGRectMake(10, 5+titleHeight , width-20, labelsize.height+30)];
+
+        _markLabel = [[UITextView alloc]initWithFrame:CGRectMake(0, 0 , width-20, labelsize.height+30)];
 
     }
     
-    
-    
-    
-    
-    
+    [textBackView addSubview:_markLabel];
+    [textBackView setClipsToBounds:YES];
+
+    [_markLabel setShowsVerticalScrollIndicator:YES];
     [_markLabel setFont:font];
-    
     _markLabel.text = remark;
-//    [UITextView setNumberOfLines:0];
+    _markLabel.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     [_markLabel setBackgroundColor:[UIColor clearColor]];
     if (self.footMask) {
         [_markLabel setTextColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]];
@@ -246,7 +266,7 @@
     
     
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
-    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-self.bottomHeight-15-titleHeight, screenFrame.size.width, _markLabel.frame.size.height+15+titleHeight);
+    frame = CGRectMake(0, screenFrame.size.height - _markLabel.frame.size.height-self.bottomHeight-15-titleHeight-20, screenFrame.size.width, _markLabel.frame.size.height+15+titleHeight+20);
     
     
     
@@ -259,7 +279,7 @@
     }
     
     [self.bottomContainerView addSubview:titleLabel];
-    [self.bottomContainerView addSubview:_markLabel];
+    [self.bottomContainerView addSubview:textBackView];
     [self.bottomContainerView addSubview:titlePageLabel];
     if (!showAll&&originRemark.length>=40) {
         CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10, 80, labelsize.height/2+10);
@@ -451,6 +471,7 @@
     if ([segue.identifier isEqualToString:@"complete"]) {
         SignVC* nextVC = (SignVC*)segue.destinationViewController;
         nextVC.subject = self.subject;
+        nextVC.reviewCount = self.questionList.count;
     }
 }
 

@@ -68,7 +68,7 @@
             [cancelButton setTitle:@"取消"];
             [cancelButton setTarget:self];
             [cancelButton setAction:@selector(pickerCancelClicked:)];
-            [cancelButton setTintColor:[UIColor  greenColor]];
+            [cancelButton setTintColor:[UIColor  grayColor]];
             
 
             
@@ -77,7 +77,7 @@
             [doneBtn setTitle:@"确认"];
             [doneBtn setTarget:self];
             [doneBtn setAction:@selector(pickerDoneClicked:)];
-            [doneBtn setTintColor:[UIColor  greenColor]];
+            [doneBtn setTintColor:[UIColor  grayColor]];
             //  Create a cancel button to show on keyboard to resign it. Adding a selector to resign it.
           
             [items addObject:cancelButton];

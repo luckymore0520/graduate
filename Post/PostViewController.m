@@ -24,7 +24,7 @@
 @property (nonatomic,strong)ButtonGroup* subjectBackView;
 
 @property (nonatomic,strong)Question* question;
-@property (nonatomic,strong)UILabel* markLabel;
+@property (nonatomic,strong)UITextView* markLabel;
 @property (nonatomic,strong)UIView* labelView;
 @end
 
@@ -38,6 +38,20 @@
     }
     return self;
 }
+- (UIImage*)brighten:(UIImage*)selectedImage
+{
+    CIFilter* _colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
+    CIImage* _image =[CIImage imageWithCGImage:selectedImage.CGImage];
+    [_colorControlsFilter setValue:_image forKey:@"inputImage"];
+    [_colorControlsFilter setValue:[NSNumber numberWithFloat:1.2] forKey:@"inputContrast"];
+    CIImage *outputImage= [_colorControlsFilter outputImage];//取得输出图像
+    CIContext *_context=[CIContext contextWithOptions:nil];//使用GPU渲染，推荐,但注意GPU的CIContext无法跨应用访问，例如直接在UIImagePickerController的完成方法中调用上下文处理就会自动降级为CPU渲染，所以推荐现在完成方法中保存图像，然后在主程序中调用
+    CGImageRef temp=[_context createCGImage:outputImage fromRect:[outputImage extent]];
+
+    UIImage* returnImage = [UIImage imageWithCGImage:temp];
+    CGImageRelease(temp);//释放CGImage对象
+    return returnImage;
+}
 
 - (void)initViews
 {
@@ -48,7 +62,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     if (_postImage) {
-        UIImageView *imgView = [[UIImageView alloc] initWithImage:_postImage];
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[self brighten:_postImage]];
+        
         imgView.clipsToBounds = YES;
         imgView.contentMode = UIViewContentModeScaleAspectFill;
         imgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -81,7 +96,11 @@
     NSArray* angle = @[@0,@0,@M_PI,@M_PI_2,@-M_PI_2,@0,@0];
     [UIView animateWithDuration:0.3 animations:^{
         for (UIView* view in _bottomContainerView.subviews) {
+            if (view==_markLabel) {
+                continue;
+            }
             if (view.subviews.count==0) {
+                
                 view.transform = CGAffineTransformMakeRotation([angle[orient]floatValue]);
 
             } else {
@@ -182,14 +201,12 @@
         Subject* subject = [_subjects objectAtIndex:i];
         CGRect frame = CGRectMake(5+i*(buttonWidth+4), 0, buttonWidth, buttonWidth);
         UIButton* button = [[UIButton alloc]initWithFrame:frame];
-        [button setTitle:[subject.name substringToIndex:1] forState:UIControlStateNormal];
+        [button setTitle:subject.firstStr forState:UIControlStateNormal];
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         [button.titleLabel setFont:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:25]];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithHex:0x585858] forState:UIControlStateSelected];
         [button setTag:subject.type];
-        
-        
         UIButton* backButton = [[UIButton alloc]initWithFrame:frame];
         [backButton setImage:[UIImage imageNamed:@"线圈"] forState:UIControlStateNormal];
         [backButton setImage:[UIImage imageNamed:@"实圆"] forState:UIControlStateSelected];
@@ -398,7 +415,8 @@
     CGSize size = CGSizeMake(SC_DEVICE_SIZE.width-50,2000);
     CGSize labelsize = [self.editTextView.text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
     NSLog(@"labelheight%lf",labelsize.height);
-    
+    labelsize.height = MIN(labelsize.height,73);
+
     
     CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height-_bottomContainerView.frame.size.height-labelsize.height-20, SC_DEVICE_SIZE.width, labelsize.height+20);
     if (!_labelView) {
@@ -410,14 +428,13 @@
         [_labelView setFrame:frame];
         [_labelView setNeedsDisplay];
     }
-    
     CGRect markFrame = CGRectMake(25, 5, SC_DEVICE_SIZE.width-50,labelsize.height+10);
     if (!_markLabel) {
-        _markLabel = [[UILabel alloc]initWithFrame:markFrame];
+        _markLabel = [[UITextView alloc]initWithFrame:markFrame];
         [_markLabel setText:_editTextView.text];
-        [_markLabel setNumberOfLines:0];
         [_markLabel setFont:font];
         [_markLabel setTextColor:[UIColor whiteColor]];
+        [_markLabel setBackgroundColor:[UIColor clearColor]];
         [_labelView addSubview:_markLabel];
     } else {
         [_markLabel setText:_editTextView.text];

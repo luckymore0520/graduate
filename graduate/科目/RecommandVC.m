@@ -36,6 +36,13 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+
 #pragma mark -ButtonAction
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

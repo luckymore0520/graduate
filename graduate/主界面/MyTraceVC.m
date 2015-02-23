@@ -13,8 +13,13 @@
 #import "QuestionHeaderView.h"
 #import "RecordVC.h"
 #import "MQuesList.h"
+#import "Sign.h"
 @interface MyTraceVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UICollectionView *questionView;
+@property (strong, nonatomic)  CircularProgressView *progressBar;
 @property (nonatomic,strong)NSMutableArray* myQuestions;
+@property (nonatomic,assign)NSInteger phoneOfLine;
+@property (nonatomic,strong)TraceHeaderView* header;
 @end
 
 @implementation MyTraceVC
@@ -22,30 +27,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadQuestion];
+    _phoneOfLine = 5;
 }
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    NSLog(@"WillAppear");
-    
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-    NSLog(@"didAppear");
-}
+
+
 - (void)reLoadMusic
 {
     if (self.trace.songUrl) {
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl ]];
+        if (self.progressBar) {
+            [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl ] progressView:self.progressBar];
+        } else {
+            [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl]];
+        }
+        
     } else {
-        [self loadMusic:nil];
+        if (self.progressBar) {
+             [self loadMusic:nil progressView:self.progressBar] ;
+        } else {
+            [self loadMusic:nil] ;
+        }
     }
-
-    self.isInView = YES;
-
-  
 }
 
 - (void)downloadMusic
@@ -71,7 +75,27 @@
     
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
-
+    int total = 0 ;
+    for (NSDictionary* dic in self.myQuestions) {
+        total = total + [[dic objectForKey:@"array"] count];
+    }
+    if (self.shoudUpdate||total==0) {
+        [[[MQuesList alloc]init]load:self type:0 date:self.trace.date];
+    }
+    if (total>=self.trace.addCount.integerValue) {
+        self.trace.addCount = [NSNumber numberWithInteger:total];
+    }
+    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    int signCount = 0;
+    for (Sign* sign in signList) {
+        if (sign.myDay.integerValue<=self.trace.myDay.integerValue) {
+            signCount = signCount+1;
+            if (sign.myDay.integerValue == self.trace.myDay.integerValue) {
+                self.trace.reviewCount = sign.reviewCount;
+            }
+        }
+    }
+    self.trace.signCount = MAX(self.trace.signCount,[NSNumber numberWithInteger:signCount]);
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
@@ -95,6 +119,7 @@
         
         self.myQuestions =
         [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
+        
     } else if ([names isEqualToString:@"download"])
     {
         
@@ -136,8 +161,12 @@
     if (section==0) {
         return 0;
     }
-    return  [[[self.myQuestions objectAtIndex:section-1] objectForKey:@"array"] count];
-;
+    int count = [[[self.myQuestions objectAtIndex:section-1] objectForKey:@"array"] count];
+    if (count%(_phoneOfLine-1)==0) {
+        return count/(_phoneOfLine-1)*_phoneOfLine;
+    } else {
+        return count/(_phoneOfLine-1)*_phoneOfLine+count%(_phoneOfLine-1)+1;
+    }
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -147,15 +176,25 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * CellIdentifier = @"picture";
-    QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"array"]objectAtIndex:indexPath.row];
-    if (question.is_recommand.integerValue==0) {
-        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150]];
+    if (indexPath.row%_phoneOfLine==0) {
+        static NSString * CellIdentifier = @"subject";
+        QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (indexPath.row==0) {
+            NSString* subject = [[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"subject"];
+            [cell.titleLabel setText:subject];
+        }
+        return cell;
     } else {
-        [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+        static NSString * CellIdentifier = @"picture";
+        QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+        Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"array"]objectAtIndex:indexPath.row/_phoneOfLine*(_phoneOfLine-1)+indexPath.row%_phoneOfLine-1];
+        if (question.is_recommand.integerValue==0) {
+            [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150]];
+        } else {
+            [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+        }
+        return cell;
     }
-    return cell;
 }
 
 
@@ -168,7 +207,8 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(75, 75);
+  
+    return CGSizeMake(60, 60);
 }
 
 
@@ -177,35 +217,30 @@
     if (section!=0) {
         return CGSizeMake(0, 0);
     }
-    return CGSizeMake(self.view.frame.size.width, 472);
+    return CGSizeMake(self.view.frame.size.width, 372);
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
-    if (section==self.myQuestions.count) {
-        return CGSizeMake(0, 0);
-    }
-    return CGSizeMake(self.view.frame.size.width, 50);
+    return CGSizeMake(0, 0);
 }
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self performSegueWithIdentifier:@"showDetail" sender:nil];
-    
+    if (indexPath.row%_phoneOfLine==0) {
+        return;
+    }
     RecordVC* record = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
     NSMutableArray* mQuestionList = [[NSMutableArray alloc]initWithCapacity:self.myQuestions.count];
     for (NSDictionary* questionDic in self.myQuestions) {
         for (Question* question in [questionDic objectForKey:@"array"]) {
             [ mQuestionList addObject:[[QuestionBook getInstance]changeFromMQuestion:question]];
-
         }
-    
     }
     record.questionList = mQuestionList;
-    
-    Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"array"]objectAtIndex:indexPath.row];
+    Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"array"]objectAtIndex:indexPath.row/_phoneOfLine*(_phoneOfLine-1)+indexPath.row%(_phoneOfLine)-1];
     record.currentQuestionId = question.questionid;
     [self.myDelegate pushDetailVC:record];
 }
@@ -216,26 +251,20 @@
 {
     
     if ( kind == UICollectionElementKindSectionHeader && indexPath.section==0 ) {
-           TraceHeaderView* header = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "myHeader" forIndexPath : indexPath ] ;
-           header.dateLabel.text = [NSString stringWithFormat:@"第%@天",self.trace.myDay];
-        header.songNameLabel.text = self.trace.songName;
-        [header.traceImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:self.trace.pictureUrlForTrace width:self.view.frame.size.width height:240] ];
-        [header.markLabel setText:self.trace.note];
+        if (self.header) {
+            self.musicBt = self.header.musicBt;
+            return self.header;
+        }
+        TraceHeaderView* header = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "myHeader" forIndexPath : indexPath ] ;
+        [header initViewWithTrace:self.trace];
         self.musicBt = header.musicBt;
+        self.progressBar = header.progressBar;
+        self.progressBar.delegate = header;
         if (self.isInView) {
             [self reLoadMusic];
         }
+        self.header = header;
         return header;
-    } else if ( kind == UICollectionElementKindSectionFooter ) {
-         QuestionHeaderView*  reusableview= [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionFooter withReuseIdentifier : @ "myFooter" forIndexPath : indexPath ] ;
-        if (indexPath.section>0) {
-           
-            NSString* subject = [[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"subject"];
-            //        reusableview.dateLabel setText:
-            [reusableview.dateLabel setText:subject];
-        }
-        return reusableview;
-
     }
     return nil;
 }

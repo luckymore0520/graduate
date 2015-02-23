@@ -12,6 +12,9 @@
 #import "CoreDataHelper.h"
 #import "Trace.h"
 #import "UIImageView+LBBlurredImage.h"
+#import "QuestionBook.h"
+#import "MGetMsgCount.h"
+#import "MMsgCount.h"
 @interface OtherFuncVCViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
@@ -30,6 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _monthArr = [NSArray arrayWithObjects:@"Jan",@"Feb",@"Mar",@"Apr",@"May",@"Jun",@"Jul",@"Aug",@"Sep",@"Oct",@"Nov",@"Dec", nil];
+    [_dotLabelForEssence setHidden:YES];
+    [_dotLabelForSquare setHidden:YES];
+    [_dotImageForEssence setHidden:YES];
+    [_dotImageForSquare setHidden:YES];
     
     NSString* today = [ToolUtils getCurrentDate];
     NSArray* seperateDate = [today componentsSeparatedByString:@"-"];
@@ -48,7 +55,7 @@
         [self.backImageView setImage:[UIImage imageNamed:@"首页1.png"]];
     } else {
         Trace* trace = [array firstObject];
-        
+        [self.sentenceLabel setText:trace.content];
         [self.originImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [self.backImageView setContentMode:UIViewContentModeScaleAspectFill];
             [self.backImageView setImageToBlur:image blurRadius:8 completionBlock:nil];
@@ -57,10 +64,48 @@
         }];
     }
 
+    [[[MGetMsgCount alloc]init]load:self];
+    
     // Do any additional setup after loading the view.
 }
 
+
+-(void)dispos:(NSDictionary *)data functionName:(NSString *)names
+{
+    if ([names isEqual:@"MGetMsgCount"]) {
+        MMsgCount* msg = [MMsgCount objectWithKeyValues:data];
+        if (msg.essence_.integerValue>0) {
+            [_dotLabelForEssence setHidden:NO];
+            [_dotImageForEssence setHidden:NO];
+            [_dotLabelForEssence setText:[NSString stringWithFormat:@"%d",msg.essence_.integerValue]];
+            if (msg.essence_.integerValue>=10) {
+                [_dotImageForEssence setImage:[UIImage imageNamed:@"大红点"]];
+            } else {
+                [_dotImageForEssence setImage:[UIImage imageNamed:@"小红点2"]];
+            }
+        }
+        
+        
+        if (msg.square_.integerValue>0) {
+            [_dotLabelForSquare setHidden:NO];
+            [_dotImageForSquare setHidden:NO];
+            [_dotLabelForSquare setText:[NSString stringWithFormat:@"%d",msg.square_.integerValue]];
+            if (msg.square_.integerValue>=10) {
+                [_dotImageForSquare setImage:[UIImage imageNamed:@"大红点"]];
+            } else {
+                [_dotImageForSquare setImage:[UIImage imageNamed:@"小红点2"]];
+            }
+        }
+    }
+}
 - (IBAction)goToPrint:(id)sender {
+    if ([[QuestionBook getInstance]getMySubjects].count<4) {
+        [ToolUtils showMessage:@"请先设置科目"];
+        UIViewController* setSubject = [self.storyboard instantiateViewControllerWithIdentifier:@"setSubject"];
+        [self.navigationController pushViewController:setSubject animated:YES];
+        return;
+        
+    }
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
     
     UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"print"];
@@ -81,6 +126,12 @@
 
 }
 - (IBAction)goToBackUp:(id)sender {
+    if ([[QuestionBook getInstance]getMySubjects].count<4) {
+        [ToolUtils showMessage:@"请先设置科目"];
+        UIViewController* setSubject = [self.storyboard instantiateViewControllerWithIdentifier:@"setSubject"];
+        [self.navigationController pushViewController:setSubject animated:YES];
+        return;
+    }
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
     
     UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"backUp"];

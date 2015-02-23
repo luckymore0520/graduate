@@ -24,6 +24,7 @@
 #import "MFootprint.h"
 #import "MMainList.h"
 #import "WKNavigationViewController.h"
+#import "LoginVC.h"
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,ApiDelegate>
 
 @end
@@ -32,15 +33,26 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [ToolUtils setIgnoreNetwork:NO];
     [self initDeviceid];
-    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
-//   RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
-    WKNavigationViewController* unv = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
-    [unv setNavigationBarHidden:YES];
-    [_window setRootViewController:unv];
+    if (![ToolUtils getFirstUse]) {
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+        MediaPlayVC* _rootVC = (MediaPlayVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"media"];
+        WKNavigationViewController* unv = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
+        [unv setNavigationBarHidden:YES];
+        [_window setRootViewController:unv];
+        [ToolUtils setFirstUse:@"NO"];
+    } else if ([ToolUtils getHasLogin]){
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+        RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+        [_window setRootViewController:_rootVC];
+    } else {
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+        LoginVC* _rootVC = (LoginVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"login"];
+        WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
+        [nav setNavigationBarHidden:YES];
+        [_window setRootViewController:nav];
+    }
     [_window makeKeyAndVisible];
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:WEIBOAPPKEY];
@@ -49,32 +61,15 @@
     [WXApi registerApp:@"wxd930ea5d5a258f4f" withDescription:@"demo 2.0"];
     [self initJPush:launchOptions];
     [self initUmen];
-
+    
     
     self.mediaPlayController = [MediaPlayController getInstance];
     self.book = [QuestionBook getInstance];
     [_book loadAllData];
     
-//    [self updateTraces];
-    [self initFont];
-    
     return YES;
 }
 
-
-
-- (void)initFont
-{
-
-    NSArray *familyNames = [UIFont familyNames];
-    for( NSString *familyName in familyNames ){
-        printf( "Family: %s \n", [familyName UTF8String] );
-        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
-        for( NSString *fontName in fontNames ){
-            printf( "\tFont: %s \n", [fontName UTF8String] );
-        }
-    }
-}
 
 
 - (void)initUmen

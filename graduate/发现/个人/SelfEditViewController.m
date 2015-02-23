@@ -126,7 +126,8 @@
         SelfHeaderCell* cell = [tableView dequeueReusableCellWithIdentifier:@"headerImg"];
         [cell.nickNameLabel setText:@"头像"];
         if (!self.head) {
-            [cell.headImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_user.headImg_ width:200 height:200] placeholderImage:nil];
+            UIImage* placeHolder = [UIImage imageNamed:_user.sex_.integerValue ==0?@"默认男头像":@"默认女头像"];
+            [cell.headImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_user.headImg_ width:200 height:200] placeholderImage:placeHolder];
 
         } else {
             [cell.headImg setImage:_head];

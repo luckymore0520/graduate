@@ -10,5 +10,6 @@
 #import "MEssence.h"
 @interface EssenceDetailViewController : BaseFuncVC
 @property (nonatomic,strong)MEssence* essence;
+- (void)addRightButton;
 
 @end

@@ -15,7 +15,6 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;//an AVAudioPlayer instance
 @property (assign, nonatomic) id <CircularProgressDelegate> delegate;
-
 - (id)initWithFrame:(CGRect)frame
           backColor:(UIColor *)backColor
       progressColor:(UIColor *)progressColor
@@ -30,6 +29,6 @@
 
 @protocol CircularProgressDelegate <NSObject>
 
-- (void)didUpdateProgressView;
+- (void)didUpdateProgressView:(CGFloat)progress;
 
 @end

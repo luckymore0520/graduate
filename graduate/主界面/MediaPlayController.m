@@ -22,6 +22,12 @@ MediaPlayController* mediaPlayController = nil;
     return mediaPlayController;
 }
 
+- (void)setProgressView:(CircularProgressView *)progressView
+{
+    _progressView = progressView;
+    progressView.player = self.audioplayer;
+}
+
 
 -(void)prepareToPlayWithUrl:(NSURL*)url
 {
@@ -38,23 +44,33 @@ MediaPlayController* mediaPlayController = nil;
 
 - (void)play
 {
-    [self.progressView play];
-//    [self.audioplayer play];
+    if (self.progressView) {
+        [self.progressView play];
+
+    } else {
+        [self.audioplayer play];
+    }
     mediaPlayController.state = PLAY;
 }
 
 - (void) pause
 {
-    [self.progressView pause];
-//    [self.audioplayer pause];
+    if (self.progressView) {
+        [self.progressView pause];
+    } else {
+        [self.audioplayer pause];
+    }
     mediaPlayController.state = PAUSE;
 
 }
 
 - (void)stop
 {
-    [self.progressView revert];
-//    [self.audioplayer stop];
+    if (self.progressView) {
+        [self.progressView revert];
+    } else {
+        [self.audioplayer stop];
+    }
     mediaPlayController.state = STOP;
     
 }

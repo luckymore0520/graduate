@@ -14,8 +14,8 @@
 @interface QuestionBook : NSObject<ApiDelegate>
 @property (nonatomic,strong) NSMutableArray* allQuestions;
 @property (nonatomic,strong) NSMutableArray* subjects;
-@property (nonatomic) NSInteger needUpload;
-
+@property (nonatomic,assign) NSInteger needUpload;
+@property (nonatomic,assign)NSInteger needSign;
 +(QuestionBook *)getInstance;
 - (void)loadAllData;
 - (Question*)insertQuestionFromServer:(MQuestion*)currentQuestion day:(NSInteger)day;

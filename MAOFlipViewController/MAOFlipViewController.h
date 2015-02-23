@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MAOFlipTransition.h"
-
+#import "WKNavigationViewController.h"
 @class MAOFlipViewController;
 
 @protocol MAOFlipViewControllerDelegate <NSObject>
@@ -21,6 +21,6 @@
 @interface MAOFlipViewController : UIViewController
 @property (nonatomic, weak) id<MAOFlipViewControllerDelegate> delegate;
 @property (nonatomic)NSInteger flipState;
-@property (nonatomic) UINavigationController *flipNavigationController;
+@property (nonatomic) WKNavigationViewController *flipNavigationController;
 - (void)pushViewController:(UIViewController*)controller;
 @end

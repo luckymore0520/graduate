@@ -8,7 +8,7 @@
 
 #import "BackUpViewController.h"
 #import "QuestionBook.h"
-@interface BackUpViewController ()
+@interface BackUpViewController ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UILabel *percentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
@@ -56,6 +56,7 @@
     int hasBackUp = _total-_need;
     [_progressLabel setText:[NSString stringWithFormat:@"您已备份%d份笔记，还有%d份未备份",hasBackUp,_need]];
     [self setProgress:_total hasBackUp:hasBackUp];
+    
 }
 
 
@@ -69,7 +70,11 @@
 
 - (void)setProgress:(int)total hasBackUp:(int)hasBackUp
 {
+    
     int percent = hasBackUp/(total+0.0)*100;
+    if (total==0) {
+        percent = 100;
+    }
     [_percentLabel setText:[NSString stringWithFormat:@"%d%@",percent,@"%"]];
     CGFloat offSet;
     offSet = (total-hasBackUp)/(total+0.0)* _progressView.frame.size.width;
@@ -105,13 +110,24 @@
         [_backUpingLabel setHidden:NO];
         [ToolUtils setIgnoreNetwork:YES];
         [[QuestionBook getInstance]updateQuestions];
-        
     }
 }
 - (IBAction)goBack:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (!self.backUpingLabel.hidden) {
+        [[[UIAlertView alloc]initWithTitle:@"放弃备份" message:@"您将要放弃备份，这可能使您的笔记不全而无法使用足迹打印等功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"放弃", nil] show];
+
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 
 /*

@@ -11,6 +11,8 @@
 #import "CoreDataHelper.h"
 #import "MSign.h"
 #import "MReturn.h"
+
+
 @implementation SignVC
 
 - (void)viewDidLoad
@@ -37,17 +39,19 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-
-- (IBAction)sign:(id)sender {
-    
+- (void)onSignSuccess
+{
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
     NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
     for (Sign* sign in signList) {
         if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
+            sign.reviewCount = [NSNumber numberWithInteger:sign.reviewCount.integerValue+self.reviewCount];
+            NSError* error;
+            [helper.managedObjectContext save:&error];
             [self.navigationController popToRootViewControllerAnimated:YES];
             return;
         }
     }
-    CoreDataHelper* helper = [CoreDataHelper getInstance];
     Sign* sign = (Sign*)[NSEntityDescription insertNewObjectForEntityForName:@"Sign" inManagedObjectContext:helper.managedObjectContext];
     sign.subject = self.subject;
     sign.myDay = [NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue];
@@ -55,6 +59,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
     sign.date = destDateString;
+    sign.reviewCount = [NSNumber numberWithInteger:self.reviewCount];
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
@@ -63,11 +68,38 @@
         [ToolUtils showMessage:@"打卡成功"];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-
+    
     [[[MSign alloc]init]load:self type:self.type subject:self.subject date:sign.date];
+}
+- (IBAction)sign:(id)sender {
+    CoreDataHelper* helper = [CoreDataHelper getInstance];
+    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    for (Sign* sign in signList) {
+        if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
+            sign.reviewCount = [NSNumber numberWithInteger:sign.reviewCount.integerValue+self.reviewCount];
+            NSError* error;
+            [helper.managedObjectContext save:&error];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            return;
+        }
+    }
+    [self.maskBackView setHidden:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
+    }];
+    
     
     
 }
+
+- (IBAction)cancelShare:(id)sender {
+    [self.maskBackView setHidden:YES];
+    [self onSignSuccess];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0,0);
+    }];
+}
+
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {

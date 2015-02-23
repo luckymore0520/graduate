@@ -7,6 +7,9 @@
 //
 
 #import "EssenceDetailWebViewController.h"
+#import "MEssenceDetail.h"
+#import "MEssenceCollect.h"
+#import "MEssence.h"
 #define GESTURE_STATE_START 1
 #define GESTURE_STATE_END 2
 #define GESTURE_STATE_MOVE 3
@@ -15,6 +18,10 @@
 @property (nonatomic,strong) NSString* imgURL;
 @property (nonatomic,strong)NSTimer* time;
 @property (nonatomic)int gesState;
+@property (nonatomic,strong) MEssence* essence;
+@property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
+
 @end
 
 
@@ -35,47 +42,22 @@ document.ontouchend=function(event){\
 document.location=\"myweb:touch:end\";};";
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self setTitle:@"帖子详情"];
     [self.webView setDelegate:self];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
-    [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(timer) userInfo:nil repeats:NO];
-
+    if (self.url) {
+        [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
+    }
+    [[[MEssenceDetail alloc]init]load:self id:self.postId];
     // Do any additional setup after loading the view.
 }
 
-
-- (void)timer
+- (void)initViews
 {
     
-    
-    
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.webView setDelegate:self];
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.webView setDelegate:nil];
-}
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -83,16 +65,56 @@ document.location=\"myweb:touch:end\";};";
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([names isEqualToString:@"MEssenceDetail"])
+    {
+        self.essence = [MEssence objectWithKeyValues:data];
+        if (self.essence.isCollected_.integerValue==1) {
+            [self.essenceCollectButton setSelected:YES];
+        }
+    } else if ([names isEqualToString:@"MEssenceCollect"])
+    {
+        if (self.essenceCollectButton.selected) {
+            [ToolUtils showToast:@"收藏成功" toView:self.view];
+            
+        } else {
+            [ToolUtils showToast:@"已取消收藏" toView:self.view];
+        }
+    }
 }
-*/
+
+- (void)addMask
+{
+    if (!self.maskView) {
+        self.maskView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+        [self.maskView setAlpha:0.5];
+        [self.maskView setBackgroundColor:[UIColor blackColor]];
+        [self.view addSubview:self.maskView];
+    }
+    [self.maskView setHidden:NO];
+}
+
+
+- (IBAction)collect:(id)sender {
+    [[[MEssenceCollect alloc]init]load:self id:self.essence.id_ type:self.essenceCollectButton.selected?0:1];
+    [self.essenceCollectButton setSelected:!self.essenceCollectButton.selected];
+}
+- (IBAction)cancelShare:(id)sender {
+    
+    [self removeMask];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, 0);
+    }];
+}
+
+- (IBAction)share:(id)sender {
+    [self addMask];
+    [self.view bringSubviewToFront:self.shareView];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -self.shareView.frame.size.height);
+    }];
+}
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
@@ -203,4 +225,16 @@ document.location=\"myweb:touch:end\";};";
     
 }
 
+
+- (void)addRightButton
+{
+    [self addRightButton:@"更多精华" action:@selector(showMore) img:nil];
+}
+
+- (void)showMore
+{
+    BaseFuncVC* more = (BaseFuncVC*)[self.storyboard instantiateViewControllerWithIdentifier:@"essenceRoot"];
+    [self.navigationController pushViewController:more
+                                         animated:YES];
+}
 @end

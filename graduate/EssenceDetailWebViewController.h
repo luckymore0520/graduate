@@ -10,6 +10,8 @@
 #import "BaseFuncVC.h"
 @interface EssenceDetailWebViewController:BaseFuncVC
 @property (nonatomic,strong)NSURL* url;
+@property (nonatomic,strong)NSString* postId;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-- (void)timer;
+- (void)addRightButton;
+
 @end

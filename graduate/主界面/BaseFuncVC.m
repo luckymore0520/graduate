@@ -9,8 +9,10 @@
 #import "BaseFuncVC.h"
 #import "MobClick.h"
 #define DEFAULTBACKICON @"1-返回键"
+#import "WKNavigationViewController.h"
+#import "LoginVC.h"
 @interface BaseFuncVC ()
-
+@property (nonatomic,assign)BOOL hasJumpedAway;
 @end
 
 @implementation BaseFuncVC
@@ -57,8 +59,11 @@
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.scale = 1;
     [self initViews];
+    _hasJumpedAway = NO;
     // Do any additional setup after loading the view.
 }
+
+
 
 - (void)initViews
 {
@@ -86,6 +91,7 @@
     }
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -104,6 +110,7 @@
     
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
+
 
 - (void) keyboardWasShown:(NSNotification *) notif
 {
@@ -158,7 +165,7 @@
     if (controller.state!=PLAY) {
         [controller prepareToPlayWithUrl:path];
         [controller play];
-        [self.musicBt setTitle:@"暂停" forState:UIControlStateNormal];
+        [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
         [self.musicBt setTag:controller.state];
     } else {
         [self.musicBt setImage:[UIImage imageNamed:@"3停止键"] forState:UIControlStateNormal];
@@ -206,6 +213,7 @@
     switch (self.musicBt.tag) {
         case READY:
             if (self.musicUrl) {
+                
                 [[MediaPlayController getInstance]play];
                 [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
                 [_musicBt setTag:PLAY];
@@ -213,7 +221,6 @@
             } else if (!self.musicUrl) {
                 [self downloadMusic];
                 return;
-                
             }
             break;
         case PLAY:
@@ -224,8 +231,7 @@
         case SHOULDSTOP:
             [[MediaPlayController getInstance]stop];
             [self.musicBt setImage:[UIImage imageNamed:@"2播放键"] forState:UIControlStateNormal];
-//            [self loadMusic:self.musicUrl];
-            [_controller prepareToPlayWithUrl:self.musicUrl];
+            [[MediaPlayController getInstance]prepareToPlayWithUrl:self.musicUrl];
             [_musicBt setTag:READY];
             break;
         default:
@@ -246,8 +252,12 @@
     } else {
         frame = textField.frame;
     }
+    
     int offset = frame.origin.y - (self.view.frame.size.height - MAX(keyboardHeight, 240));//键盘高度216
     NSLog(@"offset is %d",offset);
+    if (textField.inputAccessoryView) {
+        offset = offset+ textField.inputAccessoryView.frame.size.height;
+    }
     NSTimeInterval animationDuration = 0.30f;
     if (offset>0&& textField.frame.origin.y > offset) {
         [UIView animateWithDuration:animationDuration animations:^{
@@ -320,6 +330,20 @@
     NSLog(@"%@",names);
     [self waitingEnd];
     [ToolUtils showMessage:alert];
+    if ([alert isEqualToString:@"登录验证失败"]&&!self.hasJumpedAway) {
+        self.hasJumpedAway = YES;
+        [ToolUtils setHasLogin:NO];
+        [ToolUtils setUserId:nil];
+        [ToolUtils setVerify:nil];
+        [ToolUtils setUserInfo:nil];
+        [ToolUtils setUserInfomation:nil];
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+        LoginVC* _rootVC = (LoginVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"login"];
+        WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
+        [nav setNavigationBarHidden:YES];
+        [[[UIApplication sharedApplication].delegate window] setRootViewController:nav];
+    }
+    
 }
 
 - (void)showError:(NSError *)error functionName:(NSString *)names
@@ -332,11 +356,12 @@
 
 - (void)addRightButton:(NSString*)title action:(SEL)action img:(NSString*)img
 {
-    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, title==nil?44:70, 44)];
     if (title) {
         [button setTitle:title forState:UIControlStateNormal];
     }
-    
+    button.titleLabel.textAlignment = UITextAlignmentRight;
+    button.titleLabel.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16.0];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if (img) {
         [button setImage:[UIImage imageNamed:img] forState:UIControlStateNormal];

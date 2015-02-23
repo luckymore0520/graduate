@@ -31,11 +31,9 @@
 
     
     
-    self.title = @"滑动切换视图";
-    self.slideSwitchView.tabItemNormalColor = [QCSlideSwitchView colorFromHexRGB:@"868686"];
-    self.slideSwitchView.tabItemSelectedColor = [QCSlideSwitchView colorFromHexRGB:@"bb0b15"];
-    self.slideSwitchView.shadowImage = [[UIImage imageNamed:@"red_line_and_shadow.png"]
-                                        stretchableImageWithLeftCapWidth:59.0f topCapHeight:0.0f];
+    self.title = @"我的足迹";
+    self.slideSwitchView.tabItemNormalColor = [QCSlideSwitchView colorFromHexRGB:@"333333"];
+    self.slideSwitchView.tabItemSelectedColor = [QCSlideSwitchView colorFromHexRGB:@"1f76dc"];
     self.slideSwitchView.slideSwitchViewDelegate = self;
     
     
@@ -48,7 +46,7 @@
     NSMutableArray* futureDays = [[NSMutableArray alloc]init];
     
     for (Trace* trace in _traceList) {
-        if (trace.myDay.integerValue>[ToolUtils getCurrentDay].integerValue) {
+        if (trace.myDay.integerValue>=[ToolUtils getCurrentDay].integerValue) {
             [futureDays addObject:trace];
         }
     }
@@ -69,21 +67,29 @@
         traceVC.trace = trace;
         traceVC.myDelegate = self;
         [_traceVCs addObject:traceVC];
-        traceVC.title = [NSString stringWithFormat:@"第%i天",trace.myDay.integerValue];
+        traceVC.title = [NSString stringWithFormat:@"My %i Day",trace.myDay.integerValue];
     }
     
-    
-    
+    if (self.traceVCs.count>0) {
+        MyTraceVC* traceVC = [self.traceVCs lastObject];
+        traceVC.title = @"Yesterday";
+    } else {
+        UIViewController* first = [self.storyboard instantiateViewControllerWithIdentifier:@"traceFirst"];
+        [first setTitle:@"Yesterday"];
+        [self.traceVCs addObject:first];
+    }
     [self.slideSwitchView buildUI];
+    
+    [self.slideSwitchView selectVCAtIndex:self.traceVCs.count-1];
 }
 
 
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)initViews
 {
-   
-//    [self reloadViewControllers];
+    
 }
+
 
 
 - (void)didReceiveMemoryWarning {
@@ -94,12 +100,12 @@
 
 - (NSUInteger)numberOfTab:(QCSlideSwitchView *)view
 {
-    // you can set the best you can do it ;
     return _traceVCs.count;
 }
 
 - (UIViewController *)slideSwitchView:(QCSlideSwitchView *)view viewOfTab:(NSUInteger)number
 {
+
     return [_traceVCs objectAtIndex:number];
 }
 
@@ -111,9 +117,11 @@
 
 - (void)slideSwitchView:(QCSlideSwitchView *)view didselectTab:(NSUInteger)number
 {
-
-    MyTraceVC* myTrace =  (MyTraceVC*)[_traceVCs objectAtIndex:number];
-    [myTrace reLoadMusic];
+    if (self.traceVCs.count>1) {
+        MyTraceVC* myTrace =  (MyTraceVC*)[_traceVCs objectAtIndex:number];
+        myTrace.isInView = YES;
+        [myTrace reLoadMusic];
+    }
 }
 
 

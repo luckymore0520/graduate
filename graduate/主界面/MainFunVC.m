@@ -7,7 +7,8 @@
 //
 
 #import "MainFunVC.h"
-#import "ArticleDetailVC.h"
+#import "EssenceDetailViewController.h"
+#import "EssenceDetailWebViewController.h"
 #import "CoreDataHelper.h"
 #import "Trace.h"
 
@@ -16,7 +17,6 @@
 #import "MIndex.h"
 #import "MMain.h"
 #import "MIndexPost.h"
-#import "MPost.h"
 #import "MMainList.h"
 #import "MyTraceList.h"
 #import "CircularProgressView.h"
@@ -29,7 +29,7 @@
 @property (nonatomic,strong)MMain* main;
 
 @property (weak, nonatomic) IBOutlet UIView *bottomVIew;
-@property (nonatomic,strong)MPost* recommandPost;
+@property (nonatomic,strong)MEssence* recommandPost;
 //鸡汤
 @property (weak, nonatomic) IBOutlet UILabel *sentenceLabel;
 //推荐
@@ -60,7 +60,7 @@
 
 -  (void)viewWillAppear:(BOOL)animated
 {
-    if ([ToolUtils getFirstUse]&&_main==nil) {
+    if (_main==nil) {
         //判断是否过了一天
         NSString* lastDate = [ToolUtils getCurrentDate];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -121,9 +121,6 @@
     
     //alloc CircularProgressView instance
     self.progressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(16, 13, 47.5, 47.5) backColor:backColor progressColor:progressColor lineWidth:2 audioPath:nil];
-    //set CircularProgressView delegate
-    self.progressView.delegate = self;
-    //add CircularProgressView
     [self.bottomVIew addSubview:self.progressView];
 }
 
@@ -276,7 +273,7 @@
         }
     } else if ([names isEqualToString:@"MIndexPost"])
     {
-        _recommandPost = [MPost objectWithKeyValues:data];
+        _recommandPost = [MEssence objectWithKeyValues:data];
 //        NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:_recommandPost.title_];
 //        NSRange contentRange = {0,[content length]};
 //        [content addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:contentRange];
@@ -349,16 +346,27 @@
 #pragma mark -ButtonAction
 //前往推荐帖子详情
 - (IBAction)goToDetail:(id)sender {
-    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Articles" bundle:nil];
-    UINavigationController* _rootVC = (UINavigationController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"navi"];
-#warning 此处需要设置详情页面的信息
-    ArticleDetailVC* _detailVC = (ArticleDetailVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"detail"];
-    [_rootVC pushViewController:_detailVC animated:NO];
-    [self presentViewController:_rootVC animated:YES completion:^{
-        
-    }];
+    [self.navigationController.navigationBar setHidden:NO];
+    UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
+    if (self.recommandPost) {
+        if (self.recommandPost.hasDownload_.integerValue==1) {
+            EssenceDetailViewController* detail = (EssenceDetailViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"essenceDetail"];
+            detail.essence = self.recommandPost;
+            [detail addRightButton];
+            [self.navigationController pushViewController:detail animated:YES];
+        } else {
+            EssenceDetailWebViewController* detail = (EssenceDetailWebViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"essenceWeb"];
+            detail.url = [NSURL URLWithString:self.recommandPost.url_];
+            detail.postId = self.recommandPost.id_;
+            [detail addRightButton];
+            [self.navigationController pushViewController:detail animated:YES];
+        }
+    }
 }
 - (IBAction)share:(id)sender {
+    if (!self.shareView.hidden) {
+        return;
+    }
     [self.shareView setHidden:NO];
     CGFloat height = self.shareView.frame.size.height;
     CGRect frame = self.shareView.frame;
@@ -370,13 +378,13 @@
 
 
 - (IBAction)closeShare:(id)sender {
-    [self.shareView setHidden:YES];
     CGFloat height = self.shareView.frame.size.height;
     CGRect frame = self.shareView.frame;
     frame.origin.y = frame.origin.y +height;
     [UIView animateWithDuration:0.3 animations:^{
         self.shareView.frame = frame;
     } completion:^(BOOL finished) {
+        [self.shareView setHidden:YES];
     }] ;
     
 }

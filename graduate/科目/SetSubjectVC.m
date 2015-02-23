@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet ButtonGroup *mathGroup;
 @property (weak, nonatomic) IBOutlet UIButton *completeButton;
 @property (weak, nonatomic) IBOutlet UILabel *major2Label;
+@property (weak, nonatomic) IBOutlet UIView *major2Line;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong)MUser* user;
 @end
@@ -144,9 +145,11 @@
         if (index==3) {
             [_major2Field setHidden:NO];
             [_major2Label setHidden:NO];
+            [_major2Line setHidden:NO];
         } else {
             [_major2Field setHidden:YES];
             [_major2Label setHidden:YES];
+            [_major2Line setHidden:YES];
         }
     }
     

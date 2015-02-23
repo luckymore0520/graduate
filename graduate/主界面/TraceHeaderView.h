@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface TraceHeaderView : UICollectionReusableView
+#import "Trace.h"
+#import "CircularProgressView.h"
+@interface TraceHeaderView : UICollectionReusableView<CircularProgressDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *musicBt;
 @property (weak, nonatomic) IBOutlet UIImageView *traceImg;
 @property (weak, nonatomic) IBOutlet UILabel *markLabel;
 @property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *singerNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *staticsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet CircularProgressView *progressBar;
+@property (weak, nonatomic) IBOutlet UIView *progressContent;
 
+- (void)initViewWithTrace:(Trace*)trace;
 @end

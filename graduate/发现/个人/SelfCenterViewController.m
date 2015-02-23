@@ -12,6 +12,8 @@
 #import "MUser.h"
 #import "MUpdateUserInfo.h"
 #import "MReturn.h"
+#import "WKNavigationViewController.h"
+#import "LoginVC.h"
 #define HEADIMG 200
 @interface SelfCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -145,9 +147,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 100;
+        return 90;
     }
-    return 59;
+    return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -178,6 +180,11 @@
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section
 {
     return 15;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
 }
 /*
 #pragma mark - Navigation
@@ -275,9 +282,11 @@
         [ToolUtils setHasLogin:NO];
         [ToolUtils setUserId:nil];
         [ToolUtils setVerify:nil];
-
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                    }];
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+        LoginVC* _rootVC = (LoginVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"login"];
+        WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
+        [nav setNavigationBarHidden:YES];
+        [[[UIApplication sharedApplication].delegate window] setRootViewController:nav];
     }
 }
 

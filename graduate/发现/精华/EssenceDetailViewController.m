@@ -13,6 +13,8 @@
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
 @interface EssenceDetailViewController ()<UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *essenceShareLabel;
+@property (weak, nonatomic) IBOutlet UIView *maskBackView;
 @property (weak, nonatomic) IBOutlet UILabel *essenceTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *essenceTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *essenceSizeLabel;
@@ -26,6 +28,7 @@
 @property (nonatomic,strong)UIView* editView;
 @property (nonatomic,strong)UIAlertView* emailAlert;
 @property (nonatomic,strong)UIAlertView* shareAlert;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (nonatomic,strong)NSArray* typeList;
 @end
 
@@ -46,6 +49,17 @@
 }
 
 
+- (void)addRightButton
+{
+    [self addRightButton:@"更多精华" action:@selector(showMore) img:nil];
+}
+
+- (void)showMore
+{
+    BaseFuncVC* more = (BaseFuncVC*)[self.storyboard instantiateViewControllerWithIdentifier:@"essenceRoot"];
+    [self.navigationController pushViewController:more
+                                         animated:YES];
+}
 - (void)loadData
 {
     [self.essenceTitleLabel setText:self.essence.title_];
@@ -63,6 +77,9 @@
     }
     if (self.essence.isCollected_.integerValue==1) {
         [self.essenceCollectButton setSelected:YES];
+    }
+    if (self.essence.needShare_.integerValue==1) {
+        [self.essenceShareLabel setHidden:NO];
     }
 }
 
@@ -91,10 +108,20 @@
     [[[MEssenceCollect alloc]init]load:self id:self.essence.id_ type:self.essenceCollectButton.selected?0:1];
     [self.essenceCollectButton setSelected:!self.essenceCollectButton.selected];
 }
-- (IBAction)share:(id)sender {
-    
-}
 
+- (IBAction)cancelShare:(id)sender {
+    [_maskBackView setHidden:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, 0);
+    }];
+
+}
+- (IBAction)share:(id)sender {
+    [_maskBackView setHidden:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, -self.shareView.frame.size.height);
+    }];
+}
 
 - (IBAction)download:(id)sender {
     if (!_user.email_||_user.email_.length==0) {

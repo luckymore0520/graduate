@@ -68,6 +68,7 @@
  * @result 颜色对象
  */
 + (UIColor *)colorFromHexRGB:(NSString *)inColorString;
+- (void)selectVCAtIndex:(NSInteger)index;
 - (UIViewController*) currentVC;
 @end
 

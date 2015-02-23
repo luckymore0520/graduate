@@ -15,6 +15,7 @@
 #import "MJPhoto.h"
 
 @interface ReviewVC : BaseFuncVC<UIScrollViewDelegate,MJPhotoViewDelegate>
+@property (nonatomic,strong)NSString* reviewType;
 @property (weak, nonatomic) IBOutlet UIView *backMaskView;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;

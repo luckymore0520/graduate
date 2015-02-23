@@ -38,10 +38,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)initViews
-{
-    
-}
+
 
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

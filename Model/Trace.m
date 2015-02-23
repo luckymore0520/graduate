@@ -24,4 +24,7 @@
 @dynamic pictureUrlForTrace;
 @dynamic pictureUrlForSubject;
 @dynamic musicFile;
+@dynamic addCount;
+@dynamic reviewCount;
+@dynamic signCount;
 @end
