@@ -201,7 +201,6 @@
         UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
         NSString* totalPage =[NSString stringWithFormat:@"/%d", self.questionList.count];
         NSString* currentPage = [NSString stringWithFormat:@"%d",self.currentPage+1];
-        NSLog(@"length~~~%lf",width-totalPage.length*10+currentPage.length*15);
         CGRect pageTitleFrame = CGRectMake(width-totalPage.length*10-currentPage.length*15-15, 26, totalPage.length*10+currentPage.length*15, 45);
         
         NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",currentPage,totalPage]];
@@ -282,7 +281,7 @@
     [self.bottomContainerView addSubview:textBackView];
     [self.bottomContainerView addSubview:titlePageLabel];
     if (!showAll&&originRemark.length>=40) {
-        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10, 80, labelsize.height/2+10);
+        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10+titleHeight, 80, labelsize.height/2+10);
         UIButton* showAllBt = [[UIButton alloc]initWithFrame:showAllBtFrame];
         [showAllBt setImage:[UIImage imageNamed:@"查看全部"] forState:UIControlStateNormal];
         [_bottomContainerView addSubview:showAllBt];

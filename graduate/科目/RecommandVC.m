@@ -19,7 +19,7 @@
     [super viewDidLoad];
     [self.scrollView setPagingEnabled:YES];
     self.scrollView.delegate = self;
-    self.bottomHeight = 0;
+    self.bottomHeight = 40;
     [self setTitle:@"今日推荐"];
     self.hasTitle = YES;
     [self.navigationController setNavigationBarHidden:YES animated:NO];

@@ -64,10 +64,13 @@
 
 - (void)updateProgressCircle{
     //update progress value
+    if (!self.player) {
+        return;
+    }
     self.progress = (float) (self.player.currentTime / self.player.duration);
     [self setNeedsDisplay];
 
-    if (self.delegate) {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(didUpdateProgressView:)]) {
         [self.delegate didUpdateProgressView:self.progress];
     }
 }
@@ -79,6 +82,8 @@
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(updateProgressCircle) userInfo:nil repeats:YES];
         [self.timer fire];
         [self.player play];
+    } else {
+        [self.timer fire];
     }
 }
 
@@ -96,6 +101,10 @@
     [self updateProgressCircle];
 }
 
+- (void)remove
+{
+    [self.timer invalidate];
+}
 #pragma mark AVAudioPlayerDelegate method
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
     if (flag) {

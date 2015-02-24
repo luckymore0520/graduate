@@ -46,6 +46,7 @@
 @property (nonatomic,strong)NSMutableArray* mainList;
 @property (weak, nonatomic) IBOutlet UIView *middleTextView;
 @property (nonatomic,strong)CircularProgressView* progressView;
+@property (nonatomic,assign)BOOL firstShow;
 //播放按钮在父类中控制
 @end
 
@@ -55,7 +56,7 @@
     [super viewDidLoad];
     [self addCircle];
     [self adjustView];
-
+    _firstShow = YES;
 }
 
 -  (void)viewWillAppear:(BOOL)animated
@@ -98,6 +99,11 @@
         [[[MIndex alloc]init]load:self date:nil type:1 days:0];
         MIndexPost* post = [[MIndexPost alloc]init];
         [post load:self date:nil];
+    }
+    if (_firstShow) {
+        _firstShow = NO;
+    } else {
+        [self loadMusic:self.musicUrl progressView:self.progressView];
     }
 }
 

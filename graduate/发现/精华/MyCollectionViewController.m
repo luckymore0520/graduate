@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.myEssences = [[NSMutableArray alloc]init];
+    [self setTitle:@"我的收藏"];
     self.typeArray = @[@"资料",@"资讯",@"真题"];
     // Do any additional setup after loading the view.
 }

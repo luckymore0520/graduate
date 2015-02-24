@@ -89,6 +89,9 @@
     for (UITextField* field in self.textFields) {
         field.delegate = self;
     }
+    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden];
+    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden];
+
 }
 
 

@@ -236,7 +236,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5973322A-E8A0-4D62-9AD7-4B17AC373357" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="22850D73-CEF5-4C45-B4EC-0C5DBD751DF5" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                             </subviews>
@@ -7058,9 +7058,7 @@
         <image name="1文字引导键" width="6" height="10"/>
         <image name="2" width="166" height="165"/>
         <image name="2-开始体验" width="125" height="39"/>
-        <image name="2播放键" width="14" height="19"/>
-        <image name="3-背景" width="375" height="667"/>
-        <image name="5973322A-E8A0-4D62-9AD7-4B17AC373357" width="166" height="165">
+        <image name="22850D73-CEF5-4C45-B4EC-0C5DBD751DF5" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -8939,6 +8937,8 @@ AbXZAAG15gABtesAAbXtAAG17wABtfQAAbX8AAG1/wABtgQAAbYMAAG2DwABtiEAAbYkAAG2KQAAAAAA
 AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
 </mutableData>
         </image>
+        <image name="2播放键" width="14" height="19"/>
+        <image name="3-背景" width="375" height="667"/>
         <image name="5微信" width="60" height="94"/>
         <image name="6朋友圈" width="60" height="94"/>
         <image name="7qq" width="60" height="94"/>

@@ -23,7 +23,7 @@
 - (void)play;
 - (void)pause;
 - (void)revert;
-
+- (void)remove;
 
 @end
 

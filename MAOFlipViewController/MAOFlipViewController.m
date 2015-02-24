@@ -54,13 +54,17 @@
 
 - (void)pushViewController:(UIViewController*)controller
 {
-    [self.flipInteraction setView:controller.view];
+    if ([self isMainPage:controller]) {
+        [self.flipInteraction setView:controller.view];
+    }
     [self.flipNavigationController pushViewController:controller animated:NO];
 }
 
 - (void)interactionPopBeganAtPoint:(CGPoint)point
 {
-    [self.flipNavigationController popViewControllerAnimated:YES];
+    if ([self isMainPage:[self.flipNavigationController topViewController]]) {
+        [self.flipNavigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (UIViewController*)nextViewController

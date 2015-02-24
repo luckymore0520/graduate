@@ -269,6 +269,12 @@
     return nil;
 }
 
+
+- (void)dealloc
+{
+    [[MediaPlayController getInstance].progressView remove];
+    [[MediaPlayController getInstance]setProgressView:nil];
+}
 /*
 #pragma mark - Navigation
 

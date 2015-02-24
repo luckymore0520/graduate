@@ -426,7 +426,6 @@
             }
         }
         [self.myQuestions removeObjectsInArray:shoudRemoveDic];
-
         NSMutableString* questionIds = [[NSMutableString alloc]init];
         for (Question* question in self.selectedArray) {
             question.img = @"";
@@ -436,11 +435,10 @@
             [questionIds appendFormat:@"%@,",question.questionid];
             if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
                 [[QuestionBook getInstance]deleteQuestion:question];
+            } else {
+                [[[QuestionBook getInstance].allQuestions objectAtIndex:question.type.integerValue-1] removeObject:question];
             }
         }
-        
-        
-        
         
         [[QuestionBook getInstance]save];
         
