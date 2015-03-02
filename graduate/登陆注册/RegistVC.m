@@ -56,7 +56,7 @@
 - (IBAction)repeat:(id)sender {
     if([ToolUtils checkTel:self.phoneTextfield.text showAlert:NO])
     {
-        
+        [self.codeField becomeFirstResponder];
         [self startTime];
         //    if ([self.timeBt.text isEqualToString:@"重发"]) {
         MGetMobileVerify* verify = [[MGetMobileVerify alloc]init];

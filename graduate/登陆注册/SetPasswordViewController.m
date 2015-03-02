@@ -101,10 +101,14 @@
         NSString* password = [ToolUtils md5:self.setPasswordField.text];
         if (self.isReset) {
             [pc load:self password:password nickname:nil sex:-1];
-
+            
         } else {
             [pc load:self password:password nickname:_nickField.text sex:[_setBtGroup selectedIndex]];
-
+            MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+            user.nickname_ = _nickField.text;
+            user.sex_ = [NSNumber numberWithInt:[_setBtGroup selectedIndex]];
+            user.hasPassword_ = @1;
+            [ToolUtils setUserInfomation:user.keyValues];
         }
     }
 }

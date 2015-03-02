@@ -223,6 +223,8 @@
 		7D6A53BA1A6B5BDA00355923 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53B81A6B5BDA00355923 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */; };
 		7D6A53C01A6B5C5B00355923 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6A53BF1A6B5C5B00355923 /* UIKit.framework */; };
+		7D82A5ED1A9F79A30003F5A5 /* JTSlideShadowAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D82A5EC1A9F79A30003F5A5 /* JTSlideShadowAnimation.m */; };
+		7D9027D31A9DD95A00410B0C /* FlipPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D9027D21A9DD95A00410B0C /* FlipPresentAnimation.m */; };
 		7DA994BD1A7878FE00A879CF /* MJArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994AB1A7878FE00A879CF /* MJArgument.m */; };
 		7DA994BE1A7878FE00A879CF /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994AE1A7878FE00A879CF /* MJIvar.m */; };
 		7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA994B01A7878FE00A879CF /* MJMember.m */; };
@@ -278,10 +280,10 @@
 		7DDA294C1A7B2144003F77C3 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29411A7B2144003F77C3 /* AFURLRequestSerialization.m */; };
 		7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29431A7B2144003F77C3 /* AFURLResponseSerialization.m */; };
 		7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29451A7B2144003F77C3 /* AFURLSessionManager.m */; };
-		7DDA29541A7B4D77003F77C3 /* 泡沫.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */; };
 		7DDA29571A7B660B003F77C3 /* MIndexPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29561A7B660B003F77C3 /* MIndexPost.m */; };
 		7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29591A7B66EA003F77C3 /* MPost.m */; };
 		7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */; };
+		7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3C2411AA4BE980068812D /* WKUILabel.m */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
 /* End PBXBuildFile section */
 
@@ -685,6 +687,10 @@
 		7D6A53BC1A6B5BEE00355923 /* ToolUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolUtils.h; sourceTree = "<group>"; };
 		7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolUtils.m; sourceTree = "<group>"; };
 		7D6A53BF1A6B5C5B00355923 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7D82A5EB1A9F79A30003F5A5 /* JTSlideShadowAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSlideShadowAnimation.h; sourceTree = "<group>"; };
+		7D82A5EC1A9F79A30003F5A5 /* JTSlideShadowAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSlideShadowAnimation.m; sourceTree = "<group>"; };
+		7D9027D11A9DD95A00410B0C /* FlipPresentAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlipPresentAnimation.h; path = Tools/FlipPresentAnimation.h; sourceTree = "<group>"; };
+		7D9027D21A9DD95A00410B0C /* FlipPresentAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlipPresentAnimation.m; path = Tools/FlipPresentAnimation.m; sourceTree = "<group>"; };
 		7DA994AA1A7878FE00A879CF /* MJArgument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJArgument.h; sourceTree = "<group>"; };
 		7DA994AB1A7878FE00A879CF /* MJArgument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJArgument.m; sourceTree = "<group>"; };
 		7DA994AC1A7878FE00A879CF /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
@@ -783,13 +789,14 @@
 		7DDA29431A7B2144003F77C3 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		7DDA29441A7B2144003F77C3 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		7DDA29451A7B2144003F77C3 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "泡沫.mp3"; sourceTree = "<group>"; };
 		7DDA29551A7B660B003F77C3 /* MIndexPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MIndexPost.h; path = Frame/ApiTools/MIndexPost.h; sourceTree = "<group>"; };
 		7DDA29561A7B660B003F77C3 /* MIndexPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MIndexPost.m; path = Frame/ApiTools/MIndexPost.m; sourceTree = "<group>"; };
 		7DDA29581A7B66EA003F77C3 /* MPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPost.h; path = Frame/Model/MPost.h; sourceTree = "<group>"; };
 		7DDA29591A7B66EA003F77C3 /* MPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPost.m; path = Frame/Model/MPost.m; sourceTree = "<group>"; };
 		7DE7ACDD1A7FB09700D23449 /* QCSlideSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCSlideSwitchView.h; sourceTree = "<group>"; };
 		7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCSlideSwitchView.m; sourceTree = "<group>"; };
+		7DF3C2401AA4BE980068812D /* WKUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKUILabel.h; path = Tools/WKUILabel.h; sourceTree = "<group>"; };
+		7DF3C2411AA4BE980068812D /* WKUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKUILabel.m; path = Tools/WKUILabel.m; sourceTree = "<group>"; };
 		7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1074,16 +1081,16 @@
 				7D4E06161A75E9DA001709DB /* RecordVC.h */,
 				7D4E06171A75E9DA001709DB /* RecordVC.m */,
 				7D4E06191A75EDEC001709DB /* ReviewQuestionVC.h */,
+				7D2432451A7CD8E900C00F64 /* SubjectCell.h */,
 				7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */,
+				7DBD86641A7259DB00205576 /* SubjectVC.h */,
 				7D4E06121A7524C2001709DB /* ReviewVC.h */,
 				7D4E06131A7524C2001709DB /* ReviewVC.m */,
 				7D4E058A1A74C636001709DB /* SetSubjectVC.h */,
 				7D4E058B1A74C636001709DB /* SetSubjectVC.m */,
 				7D5DBB2B1A81C1FA0078B99C /* SignVC.h */,
 				7D5DBB2C1A81C1FA0078B99C /* SignVC.m */,
-				7D2432451A7CD8E900C00F64 /* SubjectCell.h */,
 				7D2432461A7CD8E900C00F64 /* SubjectCell.m */,
-				7DBD86641A7259DB00205576 /* SubjectVC.h */,
 				7DBD86651A7259DB00205576 /* SubjectVC.m */,
 			);
 			name = "科目";
@@ -1092,12 +1099,16 @@
 		7D4E058D1A74C6BD001709DB /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				7D9027D11A9DD95A00410B0C /* FlipPresentAnimation.h */,
+				7D9027D21A9DD95A00410B0C /* FlipPresentAnimation.m */,
 				7D4E058E1A74C73A001709DB /* ButtonGroup.h */,
 				7D4E058F1A74C73A001709DB /* ButtonGroup.m */,
 				7D44452E1A90C17B00A4BE04 /* UIColor+Graduate.h */,
 				7D44452F1A90C17B00A4BE04 /* UIColor+Graduate.m */,
 				7D4445341A945EF600A4BE04 /* WKUITextField.h */,
 				7D4445351A945EF600A4BE04 /* WKUITextField.m */,
+				7DF3C2401AA4BE980068812D /* WKUILabel.h */,
+				7DF3C2411AA4BE980068812D /* WKUILabel.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1357,7 +1368,6 @@
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
-				7DDA294F1A7B35AD003F77C3 /* 泡沫.mp3 */,
 				7DBD866B1A72632600205576 /* myVideo.m4v */,
 				7DBD866A1A72631A00205576 /* Resource */,
 				7D6A51B61A6B570300355923 /* ThirdParty */,
@@ -1428,6 +1438,7 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7D82A5EA1A9F79A30003F5A5 /* JTSlideShadowAnimation */,
 				7DD43AF01A9762C900A4FBA5 /* IQActionSheetPickerView */,
 				7D0A87FD1A872A0D001A33F7 /* ImageEffects */,
 				7D0A87F81A85ED2A001A33F7 /* CircularProgressView.h */,
@@ -1472,6 +1483,15 @@
 				7D6A53BD1A6B5BEE00355923 /* ToolUtils.m */,
 			);
 			path = ToolUtils;
+			sourceTree = "<group>";
+		};
+		7D82A5EA1A9F79A30003F5A5 /* JTSlideShadowAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				7D82A5EB1A9F79A30003F5A5 /* JTSlideShadowAnimation.h */,
+				7D82A5EC1A9F79A30003F5A5 /* JTSlideShadowAnimation.m */,
+			);
+			path = JTSlideShadowAnimation;
 			sourceTree = "<group>";
 		};
 		7DA994A91A7878FE00A879CF /* MJExtension */ = {
@@ -1840,7 +1860,6 @@
 				7D0A87FC1A85F4A5001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Resources */,
 				7D2432991A7DD18F00C00F64 /* camera_line.png in Resources */,
 				7D2432A31A7DD18F00C00F64 /* flashing_off.png in Resources */,
-				7DDA29541A7B4D77003F77C3 /* 泡沫.mp3 in Resources */,
 				7D2432A61A7DD18F00C00F64 /* flashing_on@2x.png in Resources */,
 				7D2432AC1A7DD18F00C00F64 /* switch_camera@2x.png in Resources */,
 				7D2432A21A7DD18F00C00F64 /* flashing_auto@2x.png in Resources */,
@@ -1943,6 +1962,7 @@
 				7DD43AF61A9762C900A4FBA5 /* IQActionSheetViewController.m in Sources */,
 				7D5DBB1D1A80C2B00078B99C /* Trace.m in Sources */,
 				7D5DBBA81A847E2B0078B99C /* EssenceDetailViewController.m in Sources */,
+				7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */,
 				7D4E05E81A74EF7B001709DB /* MJPhotoBrowser.m in Sources */,
 				7DA994C11A7878FE00A879CF /* MJType.m in Sources */,
 				7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */,
@@ -1962,6 +1982,7 @@
 				7DA994E91A7A165C00A879CF /* MUpdateUserInfo.m in Sources */,
 				7DDA294C1A7B2144003F77C3 /* AFURLRequestSerialization.m in Sources */,
 				7D2432321A7C991200C00F64 /* MQuestionRecommand.m in Sources */,
+				7D9027D31A9DD95A00410B0C /* FlipPresentAnimation.m in Sources */,
 				7D5DBBA51A8469650078B99C /* MEssenceDownload.m in Sources */,
 				7D2432501A7D113300C00F64 /* QuestionHeaderView.m in Sources */,
 				7D2432B81A7DD18F00C00F64 /* SCCommon.m in Sources */,
@@ -1997,6 +2018,7 @@
 				7D5DBB781A836DD90078B99C /* MessageListViewController.m in Sources */,
 				7D5DBB8D1A83A2F60078B99C /* MCommentPublish.m in Sources */,
 				7DA994EC1A7A29C500A879CF /* MIndex.m in Sources */,
+				7D82A5ED1A9F79A30003F5A5 /* JTSlideShadowAnimation.m in Sources */,
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
 				7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */,
 				7DA994C21A7878FE00A879CF /* MJTypeEncoding.m in Sources */,
@@ -2243,7 +2265,7 @@
 					"$(SRCROOT)/graduate/ccpsdk",
 				);
 				INFOPLIST_FILE = graduate/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2258,7 +2280,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aee48020-876a-4077-bed4-c0f0c47c052e";
+				PROVISIONING_PROFILE = "8ab0a29d-449a-4c10-86ea-d2b32650ca4b";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -2284,7 +2306,7 @@
 					"$(SRCROOT)/graduate/ccpsdk",
 				);
 				INFOPLIST_FILE = graduate/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2299,7 +2321,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aee48020-876a-4077-bed4-c0f0c47c052e";
+				PROVISIONING_PROFILE = "8ab0a29d-449a-4c10-86ea-d2b32650ca4b";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
