@@ -39,7 +39,16 @@
 - (void)save:(id)sender {
     if (_head) {
         [self waiting:@"正在上传头像..."];
+        BOOL set = NO;
+        if (![ToolUtils ignoreNetwork]) {
+            [ToolUtils setIgnoreNetwork:YES];
+            set = YES;
+        }
         [[[MImgUpload alloc]init]load:self img:_head name:@""];
+        if (set) {
+            [ToolUtils setIgnoreNetwork:NO];
+        }
+
     } else {
         [self waiting:@"正在保存..."];
         _user.nickname_ = ((SelfOtherCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]]).nickNameField.text;

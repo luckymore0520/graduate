@@ -15,6 +15,7 @@
 @interface MyCollectionViewController ()
 @property (nonatomic,strong)NSMutableArray* myEssences;
 @property (nonatomic,strong)NSArray* typeArray;
+@property (nonatomic,assign)BOOL firstAppear;
 @end
 
 @implementation MyCollectionViewController
@@ -24,6 +25,7 @@
     self.myEssences = [[NSMutableArray alloc]init];
     [self setTitle:@"我的收藏"];
     self.typeArray = @[@"资料",@"资讯",@"真题"];
+    _firstAppear = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -33,6 +35,16 @@
     MMyEssences* myEssences = [[MMyEssences alloc]init];
     myEssences = (MMyEssences*)[myEssences setPage:page limit:pageCount];
     [myEssences load:self];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (_firstAppear) {
+        _firstAppear = NO;
+    } else {
+        [self.myEssences removeAllObjects];
+        [self loadData]; 
+    }
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
@@ -99,6 +111,7 @@
         EssenceDetailWebViewController* nextVC = (EssenceDetailWebViewController*)segue.destinationViewController;
         MEssence* essence = (MEssence*)sender;
         nextVC.url = [NSURL URLWithString:essence.url_];
+        nextVC.postId = essence.id_;
     }
 }
 

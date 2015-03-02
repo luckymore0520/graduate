@@ -15,6 +15,8 @@
 @interface MAOFlipViewController ()<FlipInteactionDelegate, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
 @property (nonatomic) MAOFlipInteraction *flipInteraction;
 @property (nonatomic) MAOFlipTransition *flipTransition;
+@property (nonatomic) BOOL firstShow;
+@property (nonatomic,strong)UIViewController* snapVC;
 @end
 
 @implementation MAOFlipViewController
@@ -25,20 +27,51 @@
     UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
     if (c) {
         //ジェスチャーイベント設定
+        UIViewController *snapVC = [self.delegate flipViewController:self contentIndex:0];
         self.flipInteraction = MAOFlipInteraction.new;
         self.flipInteraction.delegate = self;
-        [self.flipInteraction setView:c.view];
         self.flipNavigationController = [[WKNavigationViewController alloc]initWithRootViewController:c];
+        UIViewController* nextVC = [self nextViewController];
+        [self.flipNavigationController pushViewController:nextVC animated:NO];
+        [self.flipInteraction setView:nextVC.view];
         self.flipNavigationController.delegate = self;
         [self.flipNavigationController.navigationBar setHidden:YES];
         [self addChildViewController:self.flipNavigationController];
         self.flipNavigationController.view.frame = self.view.frame;
         [self.view addSubview:self.flipNavigationController.view];
         [self.flipNavigationController didMoveToParentViewController:self];
+        [self.view addSubview:snapVC.view];
+        [self addChildViewController:snapVC];
+        self.snapVC = snapVC;
     }
+    _firstShow = YES;
 }
 
-
+- (void) viewWillAppear:(BOOL)animated
+{
+    self.snapVC.view.frame = self.view.frame;
+}
+- (void) viewDidAppear:(BOOL)animated
+{
+    if (_firstShow) {
+        _firstShow = NO;
+        double delayInSeconds = 1.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [UIView animateWithDuration:0.3
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
+                                 self.snapVC.view.transform = CGAffineTransformMakeTranslation(0, -self.view.frame.size.height);
+                             } completion:^(BOOL finished) {
+                                 [self.snapVC.view removeFromSuperview];
+                                 [self.snapVC removeFromParentViewController];
+                                 
+                             }
+             ];
+        });
+    }
+}
 
 #pragma mark - FlipInteractionDelegate
 //画面遷移開始
@@ -52,13 +85,16 @@
     [self.flipNavigationController pushViewController:c animated:YES];
 }
 
-- (void)pushViewController:(UIViewController*)controller
+- (void)pushViewController:(UIViewController*)controller animated:(BOOL)animated
 {
+    self.flipTransition.ignoreContext  = YES;
     if ([self isMainPage:controller]) {
         [self.flipInteraction setView:controller.view];
     }
-    [self.flipNavigationController pushViewController:controller animated:NO];
+    [self.flipNavigationController pushViewController:controller animated:animated];
 }
+
+
 
 - (void)interactionPopBeganAtPoint:(CGPoint)point
 {
@@ -111,9 +147,14 @@
     if ([toVC class]==[SubjectVC class]) {
         ((SubjectVC*)toVC).parentVC =  self;
     }
+    if ([toVC class]==[OtherFuncVCViewController class]) {
+        [((OtherFuncVCViewController*)toVC).backImageView setHidden:NO];
+    }
     [navigationController setNavigationBarHidden:[self isMainPage:toVC]];
     if ([self isMainPage:toVC]&&[self isMainPage:fromVC]) {
-        self.flipTransition = [[MAOFlipTransition alloc]init];
+        if (!self.flipTransition) {
+            self.flipTransition = [[MAOFlipTransition alloc]init];
+        }
         if (operation == UINavigationControllerOperationPush) {
             UIViewController *c = [self.delegate flipViewController:self contentIndex:0];
             if (c) {

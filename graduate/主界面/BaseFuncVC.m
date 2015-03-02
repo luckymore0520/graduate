@@ -13,14 +13,15 @@
 #import "LoginVC.h"
 @interface BaseFuncVC ()
 @property (nonatomic,assign)BOOL hasJumpedAway;
+@property (nonatomic,strong)FlipPresentAnimation* presentAnimation;
 @end
 
 @implementation BaseFuncVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _presentAnimation = [FlipPresentAnimation new];
     keyboardHeight = MAX([[ToolUtils getKeyboardHeight] floatValue], 240);
-    [self registerForKeyboardNotifications];
     if([self.navigationController.navigationBar
         respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){
         [self.navigationController.navigationBar  setBackgroundImage:[[UIImage imageNamed:@"7-台头"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]   forBarMetrics:UIBarMetricsDefault];
@@ -60,6 +61,7 @@
     self.scale = 1;
     [self initViews];
     _hasJumpedAway = NO;
+    [self registerForKeyboardNotifications];
     // Do any additional setup after loading the view.
 }
 
@@ -67,17 +69,18 @@
 
 - (void)initViews
 {
-    if (self.view.frame.size.width<350) {
+    if (self.scale==1&&self.view.frame.size.width<350) {
         self.scale = 0.854;
-        self.view.transform = CGAffineTransformMakeScale(0.854, 0.854);
+        self.view.transform = CGAffineTransformMakeScale(self.scale, self.scale);
     }
 }
 
 -(void)closeSelf{
-    if([self.navigationController viewControllers].count>0){
+    if([self.navigationController viewControllers].count>1){
         [self.navigationController popViewControllerAnimated:YES];
     }else{
-        [[self.navigationItem.leftBarButtonItems objectAtIndex:0] hidesBackButton];
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        }];
     }
 }
 
@@ -91,7 +94,7 @@
     }
     [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden];
     [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden];
-
+    [self registerForKeyboardNotifications];
 }
 
 
@@ -104,16 +107,21 @@
     [self.waitingView setHidden:YES];
     [self.waitingView removeFromSuperview];
     self.waitingView = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 
 - (void) registerForKeyboardNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 - (void) keyboardWasShown:(NSNotification *) notif
 {
@@ -128,7 +136,6 @@
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
-    
     NSValue *value = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     NSLog(@"keyboardWasHidden keyBoard:%f", keyboardSize.height);
@@ -150,97 +157,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)loadMusic:(NSURL*)path
-{
-    if (path==nil) {
-        [self.musicBt setImage:[UIImage imageNamed:@"3停止键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:SHOULDSTOP];
-        return;
-    }
-    self.musicUrl = path;
-    MediaPlayController* controller = [MediaPlayController getInstance];
-    self.controller = controller;
-    if ([controller.url.absoluteString isEqualToString:path.absoluteString]) {
-        [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:controller.state];
-        return;
-    }
-    if (controller.state!=PLAY) {
-        [controller prepareToPlayWithUrl:path];
-        [controller play];
-        [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:controller.state];
-    } else {
-        [self.musicBt setImage:[UIImage imageNamed:@"3停止键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:SHOULDSTOP];
-    }
-    
-}
-
-- (void)loadMusic:(NSURL*)path progressView:(CircularProgressView*)progress
-{
-    if (path==nil) {
-        
-        [self.musicBt setImage:[UIImage imageNamed:@"3停止键"] forState:UIControlStateNormal];
-        
-        [self.musicBt setTag:SHOULDSTOP];
-        return;
-    }
-    self.musicUrl = path;
-    MediaPlayController* controller = [MediaPlayController getInstance];
-    self.controller = controller;
-    self.controller.progressView = progress;
-    if ([controller.url.absoluteString isEqualToString:path.absoluteString]) {
-        [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:controller.state];
-        return;
-    }
-    if (controller.state!=PLAY) {
-        [controller prepareToPlayWithUrl:path];
-        [controller play];
-        [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:controller.state];
-    } else {
-        [self.musicBt setImage:[UIImage imageNamed:@"3停止键"] forState:UIControlStateNormal];
-        [self.musicBt setTag:SHOULDSTOP];
-    }
-
-}
-- (void)downloadMusic
-{
-    
-}
-- (IBAction)controlMusic:(id)sender {
-    
-    
-    switch (self.musicBt.tag) {
-        case READY:
-            if (self.musicUrl) {
-                
-                [[MediaPlayController getInstance]play];
-                [self.musicBt setImage:[UIImage imageNamed:@"4-暂停键"] forState:UIControlStateNormal];
-                [_musicBt setTag:PLAY];
-
-            } else if (!self.musicUrl) {
-                [self downloadMusic];
-                return;
-            }
-            break;
-        case PLAY:
-            [[MediaPlayController getInstance]pause];
-            [self.musicBt setImage:[UIImage imageNamed:@"2播放键"] forState:UIControlStateNormal];
-            [_musicBt setTag:READY];
-            break;
-        case SHOULDSTOP:
-            [[MediaPlayController getInstance]stop];
-            [self.musicBt setImage:[UIImage imageNamed:@"2播放键"] forState:UIControlStateNormal];
-            [[MediaPlayController getInstance]prepareToPlayWithUrl:self.musicUrl];
-            [_musicBt setTag:READY];
-            break;
-        default:
-            break;
-    }
-}
 
 
 
@@ -262,7 +178,8 @@
         offset = offset+ textField.inputAccessoryView.frame.size.height;
     }
     NSTimeInterval animationDuration = 0.30f;
-    if (offset>0&& textField.frame.origin.y > offset) {
+    CGFloat y = [self.view convertRect:textField.frame toView:nil].origin.y-self.navigationController.navigationBar.frame.size.height-20;
+    if (offset>0&&  y > offset) {
         [UIView animateWithDuration:animationDuration animations:^{
             self.view.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0.0, -offset);
         }];
@@ -356,6 +273,25 @@
 }
 
 
+- (void)addLeftButton:(NSString*)title action:(SEL)action img:(NSString*)img
+{
+    
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, title==nil?44:70, 44)];
+    if (title) {
+        [button setTitle:title forState:UIControlStateNormal];
+    }
+    button.titleLabel.textAlignment = UITextAlignmentRight;
+    button.titleLabel.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16.0];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    if (img) {
+        [button setImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
+        
+    }
+    
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = myAddButton;
+}
 
 - (void)addRightButton:(NSString*)title action:(SEL)action img:(NSString*)img
 {
@@ -382,7 +318,9 @@
 {
     [self addMask];
     if (!self.waitingView) {
-        CGRect frame = CGRectMake(110, 200, 100, 100);
+        CGFloat width = [[UIScreen mainScreen]bounds].size.width;
+        CGFloat height = [[UIScreen mainScreen]bounds].size.height;
+        CGRect frame = CGRectMake((width-100)/2, (height-100)/2, 100, 100);
         self.waitingView = [[[NSBundle mainBundle] loadNibNamed:@"WaitingView" owner:self options:nil] firstObject];
         self.waitingView.layer.cornerRadius=15;
         [self.waitingView setClipsToBounds:YES];
@@ -420,4 +358,18 @@
 //    [self.maskView removeFromSuperview];
 }
 
+
+#pragma mark -UIViewControllerTransitionDelegate
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    self.presentAnimation.presenting = YES;
+    return self.presentAnimation;
+}
+
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    self.presentAnimation.presenting = NO;
+    return self.presentAnimation;
+}
 @end

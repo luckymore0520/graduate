@@ -76,8 +76,27 @@
     
 }
 
+- (void)initViews
+{
+    CGFloat height = [[UIScreen mainScreen]bounds].size.height;
+    [super initViews];
+    if (height<500) {
+        self.usernameView.transform
+        = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -30);
+        self.passwordView.transform
+        = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -40);
+        self.loginBt.transform
+        = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -50);
+        self.registBt.transform
+        = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -60);
+        self.forgetBt.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, -10, -100);
+
+    }
+    
+}
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     if ([ToolUtils getHasLogin]) {
         [self gotoMainMenu];
     }
@@ -114,6 +133,7 @@
 }//前往主界面
 - (void)gotoMainMenu
 {
+    [self waitingEnd];
     [self.waitingView setHidden:YES];
     [self.maskView setHidden:YES];
     [ToolUtils setHasLogin:YES];
@@ -210,29 +230,24 @@
             NSDictionary* userinfo = [ToolUtils getUserInfo];
             MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
             [updateUserInfo load:self nickname:[userinfo objectForKey:@"nickname"] headImg:ret.msg_ sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
-            
-            
         } else {
             [self gotoMainMenu];
         }
-        
     } else if ([names isEqualToString:@"download"])
     {
-        
         NSURL* url = [data objectForKey:@"path"];
         NSData* img = [NSData dataWithContentsOfURL:url];
         MImgUpload* upLoad = [[MImgUpload alloc]init];
         [ToolUtils setIgnoreNetwork:YES];
         [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
         [ToolUtils setIgnoreNetwork:NO];
-        
     } else if ([names isEqualToString:@"MUpdateUserInfo"])
     {
         NSDictionary* userinfo = [ToolUtils getUserInfo];
         MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-        user.nickname_ = [userinfo objectForKey:@"username"];;
+        user.nickname_ = [userinfo objectForKey:@"nickname"];;
         user.sex_ = [NSNumber numberWithInt:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1];
-        MReturn* ret = [MReturn objectWithKeyValues:data];
+        [ToolUtils setUserInfomation:[user keyValues]];
         [self gotoMainMenu];
     }
 }
@@ -278,7 +293,7 @@
     MLogin* login = [[MLogin alloc]init];
     [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
     if (userInfo) {
-        
+        [self waiting:@"Loading"];
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId =[userInfo objectForKey:@"figureurl_qq_1"];
@@ -341,5 +356,27 @@
     }
 }
 
+
+#pragma mark -textFieldDelegate
+//开始编辑
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    CGRect frame;
+    frame= _loginBt.frame;
+    int offset = frame.origin.y - (self.view.frame.size.height - MAX(keyboardHeight, 240));//键盘高度216
+    NSLog(@"offset is %d",offset);
+    if (textField.inputAccessoryView) {
+        offset = offset+ textField.inputAccessoryView.frame.size.height;
+    }
+    NSTimeInterval animationDuration = 0.30f;
+    if (offset>0) {
+        [UIView animateWithDuration:animationDuration animations:^{
+            self.view.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0.0, -offset);
+        }];
+    }
+    [self addMaskBt];
+    
+    return YES;
+}
 
 @end

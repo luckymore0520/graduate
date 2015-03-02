@@ -52,6 +52,13 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)initViews
+{
+    if ([[UIScreen mainScreen]bounds].size.height<500) {
+        self.scale = 0.75;
+    }
+    [super initViews];
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];

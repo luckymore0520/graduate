@@ -86,8 +86,7 @@
                                                 <exclude reference="ebP-sZ-OKW"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="10" y="27" width="301" height="30"/>
+                                        <variation key="heightClass=regular-widthClass=compact">
                                             <mask key="constraints">
                                                 <include reference="cgm-fQ-xL4"/>
                                                 <exclude reference="ebP-sZ-OKW"/>
@@ -110,9 +109,6 @@
                                         <state key="normal" image="搜索图标触发">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="319" y="32" width="17" height="22"/>
-                                        </variation>
                                         <connections>
                                             <action selector="searchResult:" destination="WX0-LT-jcR" eventType="touchUpInside" id="2Jo-Z5-aFh"/>
                                         </connections>

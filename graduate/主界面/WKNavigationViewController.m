@@ -25,17 +25,19 @@
 }
 
 
-- (BOOL) shouldAutorotate
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(BOOL)shouldAutorotate
 {
     return NO;
 }
-- (NSUInteger)supportedInterfaceOrientations
+
+-(NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
-}
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return UIInterfaceOrientationPortrait;
 }
 /*
 #pragma mark - Navigation

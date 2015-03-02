@@ -26,8 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
     // Do any additional setup after loading the view.
 }
 
@@ -43,6 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [self.tableView reloadData];
 }
@@ -55,6 +56,7 @@
         UIImage* placeHolder = [UIImage imageNamed:_user.sex_.integerValue ==0?@"默认男头像":@"默认女头像"];
         [cell.headImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_user.headImg_ width:HEADIMG height:HEADIMG] placeholderImage:placeHolder];
         [cell.nickNameLabel setText:_user.nickname_];
+        [cell.genderImgView setImage:[UIImage imageNamed:_user.sex_.integerValue==0?@"个人中心-男生图标":@"个人中心-女生图标"]];
         [cell.userIdLabel setText:[NSString stringWithFormat:@"研大大ID:%@",_user.account_]];
         
         return cell;
@@ -226,17 +228,32 @@
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
         [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
+        
     }
     self.editTextView.placeholder = @"请设置您的电子邮箱，以便接收下载的资料";
+    if (self.user.email_&&self.user.email_.length>0) {
+        self.editTextView.text = self.user.email_;
+    }
     [self.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
-    CGRect frame = _editView.frame;
+}
+
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+    CGRect frame = self.editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-MAX(keyboardHeight, 240));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
     } completion:^(BOOL finished) {
     }];
-    
 }
+
 
 
 - (void) keyboardWasHidden:(NSNotification *) notif

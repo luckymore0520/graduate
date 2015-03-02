@@ -33,30 +33,6 @@
 
 
 
-- (void)reLoadMusic
-{
-    if (self.trace.songUrl) {
-        NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        if (self.progressBar) {
-            [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl ] progressView:self.progressBar];
-        } else {
-            [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:self.trace.songUrl]];
-        }
-        
-    } else {
-        if (self.progressBar) {
-             [self loadMusic:nil progressView:self.progressBar] ;
-        } else {
-            [self loadMusic:nil] ;
-        }
-    }
-}
-
-- (void)downloadMusic
-{
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"下载歌曲" message:@"您未下载该歌曲，点击确定下载后自动播放" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定"   , nil];
-    [alert show];
-}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -85,7 +61,7 @@
     if (total>=self.trace.addCount.integerValue) {
         self.trace.addCount = [NSNumber numberWithInteger:total];
     }
-    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     int signCount = 0;
     for (Sign* sign in signList) {
         if (sign.myDay.integerValue<=self.trace.myDay.integerValue) {
@@ -120,36 +96,9 @@
         self.myQuestions =
         [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
         
-    } else if ([names isEqualToString:@"download"])
-    {
-        
-        NSURL* url = [data objectForKey:@"path"];
-        if (url) {
-            [self saveMusic:[data objectForKey:@"fileid"] musicUrl:[data objectForKey:@"filename"]];
-        }
-    }
+    } 
 }
 
-- (void)saveMusic:(NSString*)musicTitle musicUrl:(NSString*)musicUrl
-{
-    NSError* error;
-    self.trace.songUrl = musicUrl;
-    CoreDataHelper* helper = [CoreDataHelper getInstance];
-    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"songName=%@",musicTitle] tableName:@"Trace"];
-    for (Trace* trace in array) {
-        trace.songUrl = musicUrl;
-        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful! Music:%@",musicTitle);
-            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-            [self loadMusic:[documentsDirectoryURL URLByAppendingPathComponent:musicUrl]];
-            self.isInView = YES;
-        }
-    }
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -192,6 +141,12 @@
             [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150]];
         } else {
             [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+        }
+        if (question.is_highlight.integerValue==1) {
+            [cell setIsStar:YES];
+            [cell.stateImg setHidden:NO];
+        } else {
+            [cell.stateImg setHidden:YES];
         }
         return cell;
     }
@@ -251,30 +206,15 @@
 {
     
     if ( kind == UICollectionElementKindSectionHeader && indexPath.section==0 ) {
-        if (self.header) {
-            self.musicBt = self.header.musicBt;
-            return self.header;
-        }
         TraceHeaderView* header = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "myHeader" forIndexPath : indexPath ] ;
         [header initViewWithTrace:self.trace];
-        self.musicBt = header.musicBt;
-        self.progressBar = header.progressBar;
-        self.progressBar.delegate = header;
-        if (self.isInView) {
-            [self reLoadMusic];
-        }
-        self.header = header;
         return header;
     }
     return nil;
 }
 
 
-- (void)dealloc
-{
-    [[MediaPlayController getInstance].progressView remove];
-    [[MediaPlayController getInstance]setProgressView:nil];
-}
+
 /*
 #pragma mark - Navigation
 

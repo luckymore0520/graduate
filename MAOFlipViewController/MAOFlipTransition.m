@@ -39,27 +39,18 @@
 // This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext
 {
-    
-    
     UIViewController* toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController* fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     [[transitionContext containerView] addSubview:toViewController.view];
-
-    
-    
-    
-    
     if (self.presenting) {
             __block CGRect toRect = toViewController.view.frame;
             CGFloat originY = toRect.origin.y;
             toRect.origin.y += toRect.size.height;
             toViewController.view.frame = toRect;
-            
             [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
                 CGRect fromRect = fromViewController.view.frame;
                 fromRect.origin.y -= fromRect.size.height;
                 fromViewController.view.frame = fromRect;
-                
                 toRect.origin.y = originY;
                 toViewController.view.frame = toRect;
             } completion:^(BOOL finished) {
@@ -68,7 +59,6 @@
     }
     else {
         [self.interaction setView:[transitionContext containerView]];
-//        [[transitionContext containerView] insertSubview:toViewController.view belowSubview:fromViewController.view];
             __block CGRect toRect = toViewController.view.frame;
             CGFloat originY = toRect.origin.y;
             toRect.origin.y -= toRect.size.height;
@@ -78,7 +68,6 @@
                 CGRect fromRect = fromViewController.view.frame;
                 fromRect.origin.y += fromRect.size.height;
                 fromViewController.view.frame = fromRect;
-                
                 toRect.origin.y = originY;
                 toViewController.view.frame = toRect;
             } completion:^(BOOL finished) {

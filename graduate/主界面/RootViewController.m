@@ -19,7 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.childrenVCs = [NSArray arrayWithObjects:@"MainFun",@"Subject",@"Other", nil];
-    // Do any additional setup after loading the view, typically from a nib.
     self.flipViewController = [[MAOFlipViewController alloc]init];
     self.flipViewController.flipState  = FLIPUPANDDOWN;
     self.flipViewController.delegate = self;
@@ -49,7 +48,20 @@
 }
 
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 
+-(BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 /*
 #pragma mark - Navigation

@@ -84,7 +84,7 @@ QuestionBook* questionBook = nil;
             }
         }
     }
-    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     for (Sign* sign in signList) {
         if (!sign.isUpload.boolValue) {
             self.needUpload++;
@@ -108,7 +108,7 @@ QuestionBook* questionBook = nil;
             }
         }
         
-        NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+        NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
         
         for (Sign* sign in signList) {
             if (!sign.isUpload.boolValue) {

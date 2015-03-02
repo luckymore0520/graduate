@@ -22,5 +22,5 @@
 @property (nonatomic, weak) id<MAOFlipViewControllerDelegate> delegate;
 @property (nonatomic)NSInteger flipState;
 @property (nonatomic) WKNavigationViewController *flipNavigationController;
-- (void)pushViewController:(UIViewController*)controller;
+- (void)pushViewController:(UIViewController*)controller animated:(BOOL)animated;
 @end

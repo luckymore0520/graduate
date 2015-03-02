@@ -17,8 +17,8 @@
 @interface ChatCenterDetailViewController ()<UIActionSheetDelegate>
 @property (nonatomic,strong)NSMutableArray* commentList;
 @property (nonatomic,strong)UIView* editView;
+@property (weak, nonatomic) IBOutlet UILabel *replyLabel;
 @property (nonatomic,strong)UIPlaceHolderTextView* editTextView;
-@property (nonatomic,strong)NSString* selectFloor;
 @property (weak, nonatomic) IBOutlet UIView *shareView;
 @end
 
@@ -30,6 +30,9 @@
     self.commentList = [[NSMutableArray alloc]init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    if (self.replyNickname) {
+        self.replyLabel.text = [NSString stringWithFormat:@"回复%@:",self.replyNickname];
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -182,11 +185,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 134+[ChatCenterPostCell getHeight:self.post.content_ hasConstraint:NO];
+        return 134+[ChatCenterPostCell getHeight:self.post.content_ hasConstraint:NO]*1.2;
     } else if (indexPath.section==1)
     {
         MComment* comment = [self.commentList objectAtIndex:indexPath.row];
-        return 80+[ChatCenterPostCell getHeight:comment.content_ hasConstraint:NO];
+        return 80+[ChatCenterPostCell getHeight:comment.content_ hasConstraint:NO]*1.2;
     }
     return 0;
 }
@@ -194,21 +197,26 @@
 {
     if (indexPath.section==0) {
         ChatCenterPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"square" forIndexPath:indexPath];
-        [cell.postAltasImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_post.headimg_ width:100 height:100] placeholderImage:nil];
+        UIImage* placeHolder = [UIImage imageNamed:_post.sex_.integerValue ==0?@"默认男头像":@"默认女头像"];
+
+        [cell.postAltasImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_post.headimg_ width:100 height:100] placeholderImage:placeHolder];
         [cell.postContextLabel setText:_post.content_];
         [cell.postNickNameLabel setText:_post.nickname_.length==0?@"   ":_post.nickname_];
         [cell.postIntervalLabel setText:_post.time_];
         [cell.postTitleLabel setText:_post.title_];
-        
+        [cell.postSexImageView setImage:[UIImage imageNamed:_post.sex_.integerValue==0?@"男生图标":@"广场女生图标" ]];
         return cell;
     } else if (indexPath.section==1){
+        
         ChatCenterPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reply" forIndexPath:indexPath];
         MComment *comment = [self.commentList objectAtIndex:indexPath.row];
-        [cell.postAltasImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:comment.headimg_ width:100 height:100] placeholderImage:nil];
+        UIImage* placeHolder = [UIImage imageNamed:comment.sex_.integerValue ==0?@"默认男头像":@"默认女头像"];
+        [cell.postAltasImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:comment.headimg_ width:100 height:100] placeholderImage:placeHolder];
         [cell.postContextLabel setText:comment.content_];
         [cell.postNickNameLabel setText:comment.nickname_.length==0?@"   ":comment.nickname_];
         [cell.postIntervalLabel setText:comment.time_];
         [cell.replyBt setTag:indexPath.row];
+        [cell.postSexImageView setImage:[UIImage imageNamed:comment.sex_.integerValue==0?@"男生图标":@"广场女生图标" ]];
         return cell;
     }
     return nil;
@@ -260,18 +268,29 @@
         MComment* comment = [self.commentList objectAtIndex:tag];
         _editTextView.text = [NSString stringWithFormat:@"回复%@:",comment.nickname_];
         self.selectFloor = comment.id_;
+    } else if (self.replyNickname){
+        _editTextView.text = [NSString stringWithFormat:@"回复%@:",self.replyNickname];
+        self.replyNickname = nil;
+        [self.replyLabel setText:@""];
     } else {
         _editTextView.text = @"";
-
     }
+    [_editTextView becomeFirstResponder];
+}
 
-    [self.editTextView becomeFirstResponder];
-    CGRect frame = _editView.frame;
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+    CGRect frame = self.editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
         self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
     } completion:^(BOOL finished) {
-        //        [self.keyboardBt setHidden:NO];
     }];
 }
 
@@ -291,6 +310,7 @@
     
     MCommentPublish* publish = [[MCommentPublish alloc]init];
     [publish load:self postid:_post.id_ content:self.editTextView.text replyid:self.selectFloor];
+    self.selectFloor = nil;
     [self.editTextView resignFirstResponder];
 }
 

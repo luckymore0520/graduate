@@ -9,5 +9,6 @@
 #import "BaseFuncVC.h"
 
 @interface OtherFuncVCViewController : BaseFuncVC
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 
 @end

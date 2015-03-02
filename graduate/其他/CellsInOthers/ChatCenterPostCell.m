@@ -23,7 +23,7 @@
 + (CGFloat)getHeight:(NSString*) content hasConstraint:(BOOL)hasConstraint
 {
     UIFont *font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:14.0];
-    CGSize size = CGSizeMake([[UIScreen mainScreen]applicationFrame].size.width,2000);
+    CGSize size = CGSizeMake([[UIScreen mainScreen]applicationFrame].size.width-44,2000);
     CGSize labelsize = [content sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
     if (hasConstraint) {
         CGSize oneLineSize = [@"a line" sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];

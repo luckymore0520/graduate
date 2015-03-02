@@ -9,7 +9,6 @@
 #import "WaitingView.h"
 #import "UIImage+GIF.h"
 @implementation WaitingView
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -20,15 +19,18 @@
 }
 - (void)drawRect:(CGRect)rect
 {
-    self.layer.cornerRadius = 10;
     [self start];
 }
 
 
 - (void)start
 {
-    [self.loading startAnimating];
-    
+    self.animation = [JTSlideShadowAnimation new];
+    self.animation.animatedView = self.loadingImg;
+    [self.animation start];
+    JTSlideShadowAnimation* another = [JTSlideShadowAnimation new];
+    another.animatedView = self.msgLbel;
+    [another start];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -8,10 +8,13 @@
 
 #import "ModifySubjectVC.h"
 #import "MUser.h"
+#import "MUpdateSubject.h"
 @implementation ModifySubjectVC
 - (IBAction)save:(id)sender {
-    
-    
+    if (_majorField&&!_majorField.hidden&&_majorField.text.length==0) {
+        [ToolUtils showMessage:@"专业课不能为空"];
+        return;
+    }
     UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"确认修改课程" message:@"原有笔记会存在" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
    
@@ -121,6 +124,8 @@
         
         [ToolUtils setUserInfomation:user.keyValues];
         
+        MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];
+        [updateSubject load:self subjectMath:user.subjectMath_ subjectMajor1:user.subjectMajor1_ subjectMajor2:user.subjectMajor2_ subjectEng:user.subjectEng_];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

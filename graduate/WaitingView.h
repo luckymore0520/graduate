@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTSlideShadowAnimation.h"
 
 @interface WaitingView : UIView
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loading;
 @property (weak, nonatomic) IBOutlet UILabel *msgLbel;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImg;
-
+@property (nonatomic,strong)JTSlideShadowAnimation* animation;
 @end

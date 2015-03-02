@@ -109,18 +109,12 @@
     return [_traceVCs objectAtIndex:number];
 }
 
-//- (void)slideSwitchView:(QCSlideSwitchView *)view panLeftEdge:(UIPanGestureRecognizer *)panParam
-//{
-//    QCViewController *drawerController = (QCViewController *)self.navigationController.mm_drawerController;
-//    [drawerController panGestureCallback:panParam];
-//}
 
 - (void)slideSwitchView:(QCSlideSwitchView *)view didselectTab:(NSUInteger)number
 {
     if (self.traceVCs.count>1) {
         MyTraceVC* myTrace =  (MyTraceVC*)[_traceVCs objectAtIndex:number];
         myTrace.isInView = YES;
-        [myTrace reLoadMusic];
     }
 }
 

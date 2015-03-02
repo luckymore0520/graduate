@@ -52,6 +52,10 @@
 
 
 - (IBAction)save:(id)sender {
+    if (!self.questionList||self.questionList.count==0) {
+        [ToolUtils showError:@"今日推荐为空" toView:self.view];
+        return;
+    }
     UIButton* button = (UIButton*)sender;
     [button setSelected:!button.isSelected];
     MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
@@ -164,7 +168,13 @@
         int index= round(scrollView.contentOffset.x/scrollView.frame.size.width);
         if (self.currentPage!=index) {
             self.currentPage = index;
+            
             MQuestion* question = [self.questionList objectAtIndex:index];
+            if (question.isAd_.integerValue==1) {
+                [self.collectBt setHidden:YES];
+            } else {
+                [self.collectBt setHidden:NO];
+            }
             [self addBottomView:question.remark_ showAll:NO];
         }
     }

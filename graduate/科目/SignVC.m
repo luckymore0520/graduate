@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad
 {
-    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     int days = signList.count+1;
     for (Sign* sign in signList) {
         if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
@@ -36,19 +36,21 @@
 
 - (void)backToMain
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 
 - (void)onSignSuccess
 {
     CoreDataHelper* helper = [CoreDataHelper getInstance];
-    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     for (Sign* sign in signList) {
         if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
             sign.reviewCount = [NSNumber numberWithInteger:sign.reviewCount.integerValue+self.reviewCount];
             NSError* error;
             [helper.managedObjectContext save:&error];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            }];
             return;
         }
     }
@@ -59,6 +61,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
     sign.date = destDateString;
+    sign.userid = [ToolUtils getUserid];
     sign.reviewCount = [NSNumber numberWithInteger:self.reviewCount];
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
@@ -66,20 +69,22 @@
         NSLog(@"Error:%@",error);
     }else{
         [ToolUtils showMessage:@"打卡成功"];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        }];    }
+    self.sign = sign;
     [[[MSign alloc]init]load:self type:self.type subject:self.subject date:sign.date];
 }
 - (IBAction)sign:(id)sender {
     CoreDataHelper* helper = [CoreDataHelper getInstance];
-    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     for (Sign* sign in signList) {
         if ([sign.myDay isEqualToString:[NSString stringWithFormat:@"%d", [ToolUtils getCurrentDay].integerValue]]) {
             sign.reviewCount = [NSNumber numberWithInteger:sign.reviewCount.integerValue+self.reviewCount];
             NSError* error;
             [helper.managedObjectContext save:&error];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                
+            }];
             return;
         }
     }
@@ -103,10 +108,12 @@
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
-    
     if ([names isEqualToString:@"MSign"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
+            self.sign.isUpload = @YES;
+            NSError* error;
+            [[CoreDataHelper getInstance].managedObjectContext save:&error];
             NSLog(@"打卡,同步服务器成功");
         }
     }

@@ -10,7 +10,7 @@
 #import "MPostPublish.h"
 #import "MReturn.h"
 #define HEIGHTOFLINE 18.5
-@interface ChatCenterPublishViewController ()<UITextViewDelegate>
+@interface ChatCenterPublishViewController ()<UITextViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UITextView *contentArea;
 
@@ -33,7 +33,7 @@
 - (IBAction)resignAll:(id)sender {
     [_titleField resignFirstResponder];
     [_contentArea resignFirstResponder];
-    self.view.transform = CGAffineTransformMakeScale(self.scale, self.scale);
+    self.view.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, 0);
 }
 
 - (void)publish
@@ -87,4 +87,18 @@
 }
 */
 
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 0;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self resignAll:nil];
+}
 @end

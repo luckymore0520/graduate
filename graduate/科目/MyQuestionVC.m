@@ -43,6 +43,7 @@
     self.selectModel = NO;
     self.selectedArray  = [[NSMutableArray alloc]init];
     [self.navigationController setNavigationBarHidden:NO];
+    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
 }
 
 
@@ -323,7 +324,7 @@
     [cell.selectView setHidden:YES];
     Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
     if (question.is_recommand.integerValue==0) {
-        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:130 height:130]];
+        [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:130 height:130] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     } else {
         [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
     }
@@ -349,6 +350,11 @@
     if (!self.selectModel) {
         RecordVC* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
         detailVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+        [detailVC.questionList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            MQuestion* a = (MQuestion*)obj1;
+            MQuestion* b = (MQuestion*)obj2;
+            return a.myDay_.integerValue < b.myDay_.integerValue;
+        }];
         Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         detailVC.currentQuestionId = question.questionid;
         [self.navigationController pushViewController:detailVC animated:YES];

@@ -29,6 +29,7 @@
     [self setTitle:@"广场"];
     _firstAppear = YES;
     _postArray = [[NSMutableArray alloc]init];
+    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
        // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -106,6 +107,7 @@
             for (MPost* currentPost in self.postArray) {
                 if ([post.id_ isEqualToString:currentPost.id_]) {
                     has = YES;
+                    currentPost.commentCount_ = post.commentCount_;
                     break;
                 }
             }
@@ -172,12 +174,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatCenterPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"square" forIndexPath:indexPath];
     MPost *post = [self.postArray objectAtIndex:indexPath.section];
-    [cell.postAltasImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:post.headimg_ width:100 height:100] placeholderImage:nil];
+    UIImage* placeHolder = [UIImage imageNamed:post.sex_.integerValue ==0?@"默认男头像":@"默认女头像"];
+    [cell.postAltasImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:post.headimg_ width:100 height:100] placeholderImage:placeHolder];
     [cell.postContextLabel setText:post.content_];
     [cell.postNickNameLabel setText:post.nickname_.length==0?@"   ":post.nickname_];
     [cell.postRepliedLabel setText:[NSString stringWithFormat:@"%d",post.commentCount_.integerValue]];
     [cell.postTitleLabel setText:post.title_];
     [cell.postIntervalLabel setText:post.time_];
+    [cell.postSexImageView setImage:[UIImage imageNamed:post.sex_.integerValue==0?@"男生图标":@"广场女生图标" ]];
     return cell;
 }
 

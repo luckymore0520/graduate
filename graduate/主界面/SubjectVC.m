@@ -98,12 +98,12 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tableview reloadData];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
         [self.redDot setHidden:YES];
     } else {
         [self.redDot setHidden:NO];
-
     }
 }
 
@@ -170,15 +170,16 @@ CGFloat angle;
     BOOL hasEnd = self.totalLabel.text.integerValue==total
                 &&self.totalNewLabel.text.integerValue==totalNew
     &&self.cardLabel.text.integerValue==sign;
-   
+
     if (!hasEnd) {
         self.totalLabel.text = [NSString stringWithFormat:@"%d",MIN(self.totalLabel.text.integerValue+1,total)];
         self.totalNewLabel.text = [NSString stringWithFormat:@"%d",MIN(self.totalNewLabel.text.integerValue+1,totalNew)];
         self.cardLabel.text = [NSString stringWithFormat:@"%d",MIN(self.cardLabel.text.integerValue+1,sign)];
-        [self performSelector:@selector(animationLabel:) withObject:statics afterDelay:0.02];
+        [self performSelector:@selector(animationLabel:) withObject:statics afterDelay:(40.0/total)*0.02];
     }
     
 }
+
 - (void)calculateTotal
 {
     NSInteger total = 0;
@@ -187,9 +188,10 @@ CGFloat angle;
         total+=subject.total;
         totalNew+=subject.newAdd;
     }
-    NSArray* signList = [CoreDataHelper query:nil tableName:@"Sign"];
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     [self animationLabel:@[[NSNumber numberWithInteger:total],[NSNumber numberWithInteger:totalNew],[NSNumber numberWithInteger:signList.count]]];
 }
+
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MQuesRecommend"]) {
@@ -258,7 +260,11 @@ CGFloat angle;
 
 - (void)initSubject
 {
-    self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects] ];
+    self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
+    if (![ToolUtils connectToInternet]) {
+        [self calculateTotal];
+        [self.tableview reloadData];
+    }
     [[[MQuesCountStatus alloc]init]load:self];
 }
 
@@ -311,14 +317,7 @@ CGFloat angle;
     if ([segue.identifier isEqualToString:@"recommand"]) {
         RecommandVC* vc = (RecommandVC*)[segue destinationViewController];
         vc.questionList = [NSMutableArray arrayWithArray:self.recommandList];
-    } else if ([segue.identifier isEqualToString:@"myQuestion"]) {
-        MyQuestionVC* vc = (MyQuestionVC*)segue.destinationViewController;
-        vc.type = ((Subject*)sender).type;
-        vc.shoudUpdate = ((Subject*)sender).shoudUpdate;
-        vc.subject = ((Subject*)sender).name;
-        
-        
-    }
+    } 
 }
 
 
@@ -347,7 +346,7 @@ CGFloat angle;
         [cell.nameLabel setText:subject.name];
         [cell.totalLabel setText:[NSString stringWithFormat:@"%d篇/",subject.total]];
        [cell.addLabel setText:[NSString stringWithFormat:@"%d篇新增",subject.newAdd]];
-        
+        [cell.arrow setHidden:NO];
         cell.delegate = self;
         if (self.subjects.count<4) {
             [cell.totalLabel setHidden:YES];
@@ -384,9 +383,19 @@ CGFloat angle;
     
     if (self.subjects.count==4) {
         Subject* subject = [_subjects objectAtIndex:indexPath.row];
-        [self performSegueWithIdentifier:@"myQuestion" sender:subject];
         
+        MyQuestionVC* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"myQuestions"];
+        vc.type = subject.type;
+        vc.shoudUpdate = subject.shoudUpdate;
+        vc.subject = subject.name;
+        vc.title = [NSString stringWithFormat:@"%@列表",subject.name];
+        WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:vc];
+        nav.transitioningDelegate = self;
+        [self.navigationController presentViewController:nav animated:YES completion:^{
+            
+        }];
         
+
     } else {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
 
@@ -402,19 +411,26 @@ CGFloat angle;
     if (scrollView.contentSize.height - scrollView.contentOffset.y<=110) {
         if (!_isPresenting) {
             _isPresenting = YES;
-            UIViewController* controller = [self.parentVC.delegate flipViewController:self.parentVC contentIndex:2];
+            BaseFuncVC* controller = (BaseFuncVC*)[self.parentVC.delegate flipViewController:self.parentVC contentIndex:2];
             UIView *sourceSnapshot = [controller.view snapshotViewAfterScreenUpdates:YES];
-            CGRect frame = self.navigationController.view.frame;
-            frame.origin.y = frame.origin.y+frame.size.height;
-            
-            [sourceSnapshot setFrame:frame];
+            UIImageView* background = [[UIImageView alloc]initWithFrame:sourceSnapshot.frame];
+            [background setImage:[UIImage imageNamed:@"首页1"]];
+
             [self.navigationController.view addSubview:sourceSnapshot];
-            [UIView animateWithDuration:0.5f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                sourceSnapshot.transform = CGAffineTransformMakeTranslation(0, -sourceSnapshot.frame.size.height);
-                
+            sourceSnapshot.transform = CGAffineTransformMake(0.8,0,0,0.8, 0,sourceSnapshot.frame.size.height);
+            [self.navigationController.view addSubview:background];
+            [self.navigationController.view bringSubviewToFront:sourceSnapshot];
+            background.transform = CGAffineTransformMake(1,0,0,1, 0,sourceSnapshot.frame.size.height);
+            [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                background.transform = CGAffineTransformMake(1,0,0,1, 0,0);
+            } completion:^(BOOL finished) {
+            }];
+            [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                sourceSnapshot.transform = CGAffineTransformMake(0.8,0,0,0.8, 0,0);
             } completion:^(BOOL finished) {
                 [sourceSnapshot removeFromSuperview];
-                [self.parentVC pushViewController:controller];
+                [background removeFromSuperview];
+                [self.parentVC pushViewController:controller animated:NO];
                 _isPresenting = NO;
             }];
         }
@@ -490,7 +506,7 @@ CGFloat angle;
         CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 110);
         
         _editTextView = [[UIPlaceHolderTextView alloc]initWithFrame:textFrame];
-        [_editTextView setPlaceholder:@"日记不能超过46个字"];
+        [_editTextView setPlaceholder:@"日记不能超过42个字"];
         [_editTextView setText:self.dailyNoteLabel.text];
         _editTextView.layer.borderWidth = 1;
         _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
@@ -514,14 +530,7 @@ CGFloat angle;
     }
     [self.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
-    CGRect frame = _editView.frame;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-    } completion:^(BOOL finished) {
-        //        [self.keyboardBt setHidden:NO];
-    }];
-    
+      
 }
 
 -(void)cancelEdit
@@ -531,8 +540,8 @@ CGFloat angle;
 
 -(void)saveRemark
 {
-    if (self.editTextView.text.length>46) {
-        [ToolUtils showMessage:@"日记不能超过46个字"];
+    if (self.editTextView.text.length>42) {
+        [ToolUtils showMessage:@"日记不能超过42个字"];
         return;
     }
     [self.editTextView resignFirstResponder];
@@ -557,7 +566,6 @@ CGFloat angle;
         trace = [array firstObject];
     }
     trace.note = self.editTextView.text;
-    
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
@@ -567,6 +575,23 @@ CGFloat angle;
     }
     
     
+    
+}
+
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+    CGRect frame = self.editView.frame;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+    } completion:^(BOOL finished) {
+    }];
 }
 
 

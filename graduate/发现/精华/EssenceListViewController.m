@@ -148,8 +148,8 @@
         [cell.essenceIsVipLabel setHidden:!essence.needShare_.boolValue];
         if (self.type==1||self.type==2) {
             
-        } else if (essence.type_){
-            [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.type_.integerValue]]];
+        } else if (essence.resType_){
+            [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.resType_.integerValue]]];
 
         }
         return cell;
@@ -227,14 +227,21 @@
     self.editTextView.placeholder = @"请设置您的电子邮箱，以便接收下载的资料";
     [self.parentVC.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
-    CGRect frame = _editView.frame;
+}
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+    CGRect frame = self.editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(MAX(keyboardHeight, 240)));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-MAX(keyboardHeight,240));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
     } completion:^(BOOL finished) {
-        //        [self.keyboardBt setHidden:NO];
     }];
-    
 }
 
 

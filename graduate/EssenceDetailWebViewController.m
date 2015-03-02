@@ -47,10 +47,15 @@ document.location=\"myweb:touch:end\";};";
     [super viewDidLoad];
     [self setTitle:@"帖子详情"];
     [self.webView setDelegate:self];
+    
     if (self.url) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
     }
-    [[[MEssenceDetail alloc]init]load:self id:self.postId];
+    if (self.postId) {
+        [[[MEssenceDetail alloc]init]load:self id:self.postId];
+    }
+    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
+    [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.
 }
 

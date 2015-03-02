@@ -45,7 +45,11 @@
     if (_user.email_.length>0) {
         [self.essenceDownloadBt setTitle:[NSString stringWithFormat:@"下载至%@",_user.email_] forState:UIControlStateNormal];
     }
+    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
+
     _essenceDownloadBt.layer.cornerRadius = 5;
+    [self.navigationController setNavigationBarHidden:NO];
+
 }
 
 
@@ -160,50 +164,58 @@
 
 - (void)editEmail
 {
+    [self addMask];
     if (!_editView) {
-        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 200);
+        CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 120);
         _editView = [[UIView alloc]initWithFrame:frame];
-        [self.view addSubview:_editView];
-        
-        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 50);
+        _editView.backgroundColor = [UIColor whiteColor];
+        [self.navigationController.view addSubview:_editView];
+        CGRect textFrame = CGRectMake(0, 50, SC_DEVICE_SIZE.width, 70);
         
         _editTextView = [[UITextField alloc]initWithFrame:textFrame];
-        _editTextView.font = [UIFont systemFontOfSize:12];
+        _editTextView.layer.borderWidth = 1;
+        _editTextView.keyboardType = UIKeyboardTypeEmailAddress;
+        _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
+        _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];
+        _editTextView.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
         [_editView addSubview:_editTextView];
-        
-        
-        
-        
-        CGRect leftBtFrame = CGRectMake(5, 0, 50, 50);
+        CGRect leftBtFrame = CGRectMake(15, 5, 40, 40);
         UIButton* cancelButton = [[UIButton alloc]initWithFrame:leftBtFrame];
         [cancelButton addTarget:self action:@selector(cancelEdit) forControlEvents:UIControlEventTouchUpInside];
         [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-        [cancelButton.titleLabel setTextColor:[UIColor blueColor]];
-        [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cancelButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:cancelButton];
         
-        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 50, 50);
+        CGRect rightBtFrame = CGRectMake(SC_DEVICE_SIZE.width-55, 5, 40, 40);
         UIButton* saveButton = [[UIButton alloc]initWithFrame:rightBtFrame];
         [saveButton addTarget:self action:@selector(saveEmail) forControlEvents:UIControlEventTouchUpInside];
         [saveButton setTitle:@"保存" forState:UIControlStateNormal];
-        [saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [saveButton setTitleColor: [UIColor colorWithRed:31/255.0 green:118/255.0 blue:220/255.0 alpha:1] forState:UIControlStateNormal];
         [_editView addSubview:saveButton];
     }
     self.editTextView.placeholder = @"请设置您的电子邮箱，以便接收下载的资料";
     [self.editView setBackgroundColor:[UIColor whiteColor]];
     [self.editTextView becomeFirstResponder];
-    CGRect frame = _editView.frame;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        NSLog(@"%lf",-frame.size.height-(MAX(keyboardHeight,240)));
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(MAX(keyboardHeight, 240)));
-    } completion:^(BOOL finished) {
-    }];
-    
 }
 
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+    CGRect frame = self.editView.frame;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+    } completion:^(BOOL finished) {
+    }];
+}
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
+    [self removeMask];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {

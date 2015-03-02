@@ -36,7 +36,7 @@
     }
     _need = book.needUpload;
     int hasBackUp = _total-_need;
-    [_progressLabel setText:[NSString stringWithFormat:@"您已备份%d份笔记，还有%d份未备份",hasBackUp,_need]];
+    [_progressLabel setText:[NSString stringWithFormat:@"您已备份%d份笔记，还有%d份未备份",hasBackUp,_need<=0?0:_need]];
     [self setProgress:_total hasBackUp:hasBackUp];
     self.backUpButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.backUpButton.layer.borderWidth = 1;
@@ -54,11 +54,18 @@
     QuestionBook* book = [QuestionBook getInstance];
     _need = book.needUpload;
     int hasBackUp = _total-_need;
-    [_progressLabel setText:[NSString stringWithFormat:@"您已备份%d份笔记，还有%d份未备份",hasBackUp,_need]];
+    [_progressLabel setText:[NSString stringWithFormat:@"您已备份%d份笔记，还有%d份未备份",hasBackUp,_need<=0?0:_need]];
     [self setProgress:_total hasBackUp:hasBackUp];
     
 }
 
+- (void)initViews
+{
+    if ([[UIScreen mainScreen]bounds].size.height<500) {
+        self.scale = 0.75;
+    }
+    [super initViews];
+}
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,7 +82,7 @@
     if (total==0) {
         percent = 100;
     }
-    [_percentLabel setText:[NSString stringWithFormat:@"%d%@",percent,@"%"]];
+    [_percentLabel setText:[NSString stringWithFormat:@"%d%@",percent>=100?100:percent,@"%"]];
     CGFloat offSet;
     offSet = (total-hasBackUp)/(total+0.0)* _progressView.frame.size.width;
     _waveView.transform = CGAffineTransformMakeTranslation(0, offSet);

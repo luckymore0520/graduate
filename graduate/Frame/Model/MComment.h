@@ -40,4 +40,7 @@
 @property (retain,nonatomic) NSMutableArray *unknownFields;
 
 @property (retain,nonatomic) NSNumber *memoizedSize;
+
+@property (retain,nonatomic) NSNumber *sex_;
+
 @end

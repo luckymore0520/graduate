@@ -291,7 +291,7 @@ static const NSUInteger kTagOfRightSideButton = 999;
         margin = [[UIScreen mainScreen]bounds].size.width/3;
     }
     if (_viewArray.count==1) {
-        margin= margin*2;
+        return;
     }
     //如果 当前显示的最后一个tab文字超出右边界
     if (sender.frame.origin.x - _topScrollView.contentOffset.x > self.bounds.size.width - (margin+sender.bounds.size.width)) {

@@ -487,7 +487,10 @@
     [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"token"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
-
++(void)showError:(NSString*)msg toView:(UIView*)view
+{
+    [MBProgressHUD showError:msg toView:view];
+}
 +(void)showToast:(NSString*)msg toView:(UIView*)view
 
 {

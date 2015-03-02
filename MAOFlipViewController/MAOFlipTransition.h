@@ -12,5 +12,6 @@
 #define FLIPRIGHTANDRIGHT 2
 @interface MAOFlipTransition : NSObject<UIViewControllerAnimatedTransitioning>
 @property (nonatomic, assign) BOOL presenting;
+@property (nonatomic,assign) BOOL ignoreContext;
 @property (nonatomic,weak ) MAOFlipInteraction* interaction;
 @end

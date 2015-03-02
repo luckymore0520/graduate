@@ -26,7 +26,6 @@
     // Do any additional setup after loading the view.
 }
 
-
 - (void)loadData
 {
     MCommentsToMe* commentToMe = [[MCommentsToMe alloc]init];
@@ -53,6 +52,7 @@
             for (MComment* currentComment in self.commentList) {
                 if ([currentComment.id_ isEqualToString:comment.id_]) {
                     has = YES;
+                    currentComment.isNew_ = comment.isNew_;
                     break;
                 }
             }
@@ -103,7 +103,6 @@
     if (comment.isNew_.integerValue==0) {
         [cell.contentLabel setTextColor:[UIColor colorOfGrayText]];
         [cell.stateLabel setTextColor:[UIColor colorOfGrayText]];
-
     }
     return cell;
 }
@@ -113,6 +112,8 @@
     MComment* comment = [self.commentList objectAtIndex:indexPath.row];
     ChatCenterDetailViewController* nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"centerDetail"];
     nextVC.postId = comment.pid_;
+    nextVC.replyNickname = comment.nickname_;
+    nextVC.selectFloor = comment.userid_;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

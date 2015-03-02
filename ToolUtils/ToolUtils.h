@@ -97,5 +97,6 @@
 +(BOOL)ignoreNetwork;
 +(void)setIgnoreNetwork:(BOOL)ignore;
 +(void)showToast:(NSString*)msg toView:(UIView*)view;
++(void)showError:(NSString*)msg toView:(UIView*)view;
 +(void)showMessage:(NSString *)message title:(NSString*)title;
 @end

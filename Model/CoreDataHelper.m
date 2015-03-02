@@ -99,7 +99,7 @@ CoreDataHelper* coreDataHelper = nil;
     if (mutableFetchResult==nil) {
         NSLog(@"Error:%@",error);
     }
-    NSLog(@"The count of entry: %i",[mutableFetchResult count]);
+    NSLog(@"The count of %@ entry: %i",tableName,[mutableFetchResult count]);
     return mutableFetchResult;
 }
 

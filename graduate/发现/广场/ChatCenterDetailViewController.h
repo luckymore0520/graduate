@@ -11,4 +11,6 @@
 @interface ChatCenterDetailViewController : RefreshTableViewController
 @property (nonatomic,strong)MPost* post;
 @property (nonatomic,strong)NSString* postId;
+@property (nonatomic,strong)NSString* selectFloor;
+@property (nonatomic,strong)NSString* replyNickname;
 @end
