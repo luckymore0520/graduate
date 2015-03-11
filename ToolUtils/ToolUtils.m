@@ -494,7 +494,11 @@
 +(void)showToast:(NSString*)msg toView:(UIView*)view
 
 {
-    [MBProgressHUD showSuccess:msg toView:view];
+    if (view.superview) {
+        [MBProgressHUD showSuccess:msg toView:view.superview];
+    } else {
+        [MBProgressHUD showSuccess:msg toView:view];
+    }
 }
 ////检查网络连接类型
 //-(void)checkNetworktype:(id)sender{

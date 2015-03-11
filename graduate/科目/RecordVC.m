@@ -10,7 +10,7 @@
 #import "MQuesDelete.h"
 #import "MReturn.h"
 
-@interface RecordVC ()<UIScrollViewDelegate>
+@interface RecordVC ()<UIScrollViewDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
 
@@ -44,58 +44,8 @@
 
 - (IBAction)delete:(id)sender {
     
-    
-    
-    MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
-    MQuesDelete* delete = [[MQuesDelete alloc]init];
-    [delete load:self id:currentQuestion.id_];
-    
-    QuestionBook* book = [QuestionBook getInstance];
-    Question* question = [book getQuestionByMQuestion:currentQuestion];
-    
-    if (question.is_recommand.integerValue==1) {
-        [ToolUtils deleteFile:question.questionid];
-    }
-    
-    if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
-        [[QuestionBook getInstance]deleteQuestion:question];
-    } else {
-        question.img = @"";
-        [book save];
-        [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
-    }
-    if (self.questionList.count==1) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        QuestionView* removeView = [self.questionViews objectAtIndex:self.currentPage];
-        if (self.currentPage+1==self.questionViews.count) {
-            self.currentPage--;
-            [self.questionList removeObject:currentQuestion];
-            self.scrollView.contentSize=CGSizeMake(self.scrollView.frame.size.width*self.questionList.count, 0);
-            self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width*self.currentPage, 0);
-            [removeView removeFromSuperview];
-            
-            
-            
-        } else {
-            for (int i = self.currentPage+1 ;i < self.questionViews.count;i++)
-            {
-                QuestionView* questionView = [self.questionViews objectAtIndex:i];
-                CGRect frame = questionView.frame;
-                frame.origin.x = frame.origin.x-self.scrollView.frame.size.width;
-                questionView.frame = frame;
-                [self.questionList removeObject:currentQuestion];
-                [self.questionViews removeObject:removeView];
-                [removeView removeFromSuperview];
-                self.scrollView.contentSize = CGSizeMake(self.questionViews.count*self.scrollView.frame.size.width, 0);
-
-            }
-        }
-
-    }
-    
-    
-     
+    UIActionSheet* actionSheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除照片" otherButtonTitles:nil, nil] ;
+    [actionSheet showInView:self.view];     
 }
 
 - (void)photoViewSingleTap:(MJPhotoView *)photoView
@@ -117,7 +67,60 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
+#pragma mark -ActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
+        MQuesDelete* delete = [[MQuesDelete alloc]init];
+        [delete load:self id:currentQuestion.id_];
+        
+        QuestionBook* book = [QuestionBook getInstance];
+        Question* question = [book getQuestionByMQuestion:currentQuestion];
+        
+        if (question.is_recommand.integerValue==1) {
+            [ToolUtils deleteFile:question.questionid];
+        }
+        
+        if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
+            [[QuestionBook getInstance]deleteQuestion:question];
+        } else {
+            question.img = @"";
+            [book save];
+            [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
+        }
+        if (self.questionList.count==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            QuestionView* removeView = [self.questionViews objectAtIndex:self.currentPage];
+            if (self.currentPage+1==self.questionViews.count) {
+                self.currentPage--;
+                [self.questionList removeObject:currentQuestion];
+                self.scrollView.contentSize=CGSizeMake(self.scrollView.frame.size.width*self.questionList.count, 0);
+                self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width*self.currentPage, 0);
+                [removeView removeFromSuperview];
+                
+                
+                
+            } else {
+                for (int i = self.currentPage+1 ;i < self.questionViews.count;i++)
+                {
+                    QuestionView* questionView = [self.questionViews objectAtIndex:i];
+                    CGRect frame = questionView.frame;
+                    frame.origin.x = frame.origin.x-self.scrollView.frame.size.width;
+                    questionView.frame = frame;
+                    [self.questionList removeObject:currentQuestion];
+                    [self.questionViews removeObject:removeView];
+                    [removeView removeFromSuperview];
+                    self.scrollView.contentSize = CGSizeMake(self.questionViews.count*self.scrollView.frame.size.width, 0);
+                    
+                }
+            }
+            
+        }
 
+    }
+}
 
 - (void)addBottomView:(NSString *)remark showAll:(BOOL)showAll
 {

@@ -37,6 +37,7 @@
         //iOS7，需要plist里设置 View controller-based status bar appearance 为NO
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }
+    
 }
 
 - (void)dealloc {
@@ -72,43 +73,27 @@
 }
 
 
-#define CAN_ROTATE  0
 
-#pragma mark -------------rotate---------------
-//<iOS6
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOrientationChange object:nil];
-#if CAN_ROTATE
-    return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-#else
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-#endif
-}
-
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
 //iOS6+
 - (BOOL)shouldAutorotate
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationOrientationChange object:nil];
-#if CAN_ROTATE
-    return YES;
-#else
     return NO;
-#endif
 }
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAllButUpsideDown;
-}
-
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
 {
-//    return [UIApplication sharedApplication].statusBarOrientation;
 	return UIInterfaceOrientationPortrait;
 }
-#endif
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 @end

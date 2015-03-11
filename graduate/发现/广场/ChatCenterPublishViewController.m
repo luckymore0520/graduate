@@ -46,6 +46,10 @@
         [ToolUtils showMessage:@"内容不能为空"];
         return;
     }
+    if (self.titleField.text.length > 20) {
+        [ToolUtils showMessage:@"标题不得超过20字"];
+        return;
+    }
     [self waiting:@"正在发布..."];
     [self resignAll:nil];
     [[[MPostPublish alloc]init]load:self content:self.contentArea.text title:self.titleField.text];
@@ -57,7 +61,7 @@
         [self waitingEnd];
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
-            [ToolUtils showToast:@"发布成功" toView:self.view];
+            [ToolUtils showToast:@"发布成功" toView:self.navigationController.view];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [ToolUtils showMessage:@"发布失败，请重试"];

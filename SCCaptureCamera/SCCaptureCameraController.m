@@ -12,7 +12,7 @@
 #import "SVProgressHUD.h"
 
 #import "SCNavigationController.h"
-
+#import <CoreMotion/CoreMotion.h>
 //static void * CapturingStillImageContext = &CapturingStillImageContext;
 //static void * RecordingContext = &RecordingContext;
 //static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDeviceAuthorizedContext;
@@ -45,6 +45,7 @@
 @interface SCCaptureCameraController ()<UIImagePickerControllerDelegate> {
     int alphaTimes;
     CGPoint currTouchPoint;
+    int orientation;
 }
 
 @property (nonatomic, strong) SCCaptureSessionManager *captureManager;
@@ -64,7 +65,7 @@
 
 @property (nonatomic, strong) SCSlider *scSlider;
 @property (nonatomic,strong)UIImage* selectedImage;
-
+@property (nonatomic,strong)CMMotionManager* motionManager;
 
 //@property (nonatomic) id runtimeErrorHandlingObserver;
 //@property (nonatomic) BOOL lockInterfaceRotation;
@@ -130,16 +131,26 @@
     [_captureManager.session startRunning];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
-
+    
+    _motionManager = [[CMMotionManager alloc]init];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [self.motionManager startAccelerometerUpdatesToQueue: queue
+                                             withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+                                                 
+                                                 NSLog(@"X = %.04f, Y = %.04f, Z = %.04f",accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                                                 if (accelerometerData.acceleration.x < -0.5) {
+                                                     orientation = 3;
+                                                 } else if (accelerometerData.acceleration.x > 0.5)
+                                                 {
+                                                     orientation = 4;
+                                                 } else
+                                                 {
+                                                     orientation = 1;
+                                                 }
+                                             }];
 #if SWITCH_SHOW_DEFAULT_IMAGE_FOR_NONE_CAMERA
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [SVProgressHUD showErrorWithStatus:@"设备不支持拍照功能"];
-//        
-//        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CAMERA_TOPVIEW_HEIGHT, self.view.frame.size.width, self.view.frame.size.width)];
-//        imgView.clipsToBounds = YES;
-//        imgView.contentMode = UIViewContentModeScaleAspectFill;
-//        imgView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"meizi" ofType:@"jpg"]];
-//        [self.view addSubview:imgView];
     }
 #endif
 }
@@ -161,7 +172,6 @@
 {
     UIDeviceOrientation orient = [UIDevice currentDevice].orientation;
     [self animationWithOrient:orient];
-    
 }
 
 
@@ -169,38 +179,13 @@
     [super viewWillAppear:animated];
 }
 
-//- (void)viewWillAppear:(BOOL)animated {
-//	dispatch_async(_captureManager.sessionQueue, ^{
-//		[self addObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:SessionRunningAndDeviceAuthorizedContext];
-//		[self addObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:CapturingStillImageContext];
-//		[self addObserver:self forKeyPath:@"movieFileOutput.recording" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:RecordingContext];
-//		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:[_captureManager.inputDevice device]];
-//
-//		WEAKSELF_SC
-//		[self setRuntimeErrorHandlingObserver:[[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureSessionRuntimeErrorNotification object:_captureManager.session queue:nil usingBlock:^(NSNotification *note) {
-//			SCCaptureCameraController *strongSelf = weakSelf_SC;
-//			dispatch_async(strongSelf.captureManager.sessionQueue, ^{
-//				// Manually restarting the session since it must have been stopped due to an error.
-//				[strongSelf.captureManager.session startRunning];
-//			});
-//		}]];
-//		[_captureManager.session startRunning];
-//	});
-//}
-//
-//- (void)viewDidDisappear:(BOOL)animated
-//{
-//	dispatch_async(_captureManager.sessionQueue, ^{
-//		[_captureManager.session stopRunning];
-//
-//		[[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:[_captureManager.inputDevice device]];
-//		[[NSNotificationCenter defaultCenter] removeObserver:[self runtimeErrorHandlingObserver]];
-//
-//		[self removeObserver:self forKeyPath:@"sessionRunningAndDeviceAuthorized" context:SessionRunningAndDeviceAuthorizedContext];
-//		[self removeObserver:self forKeyPath:@"stillImageOutput.capturingStillImage" context:CapturingStillImageContext];
-//		[self removeObserver:self forKeyPath:@"movieFileOutput.recording" context:RecordingContext];
-//	});
-//}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self animationWithOrient:orientation];
+    [_motionManager stopAccelerometerUpdates];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -676,7 +661,7 @@ void c_slideAlpha() {
 {
     [picker dismissViewControllerAnimated:YES completion:^{
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        self.selectedImage = [self useImage:image];
+        self.selectedImage = image;
         SCNavigationController *nav = (SCNavigationController*)self.navigationController;
         if ([nav.scNaigationDelegate respondsToSelector:@selector(didTakePicture:image:)]) {
             [nav.scNaigationDelegate didTakePicture:nav image:self.selectedImage];
@@ -686,15 +671,6 @@ void c_slideAlpha() {
     
     //your code 0
  }
-
-- (UIImage *)useImage:(UIImage *)image {
-      CGSize newSize = CGSizeMake(SC_DEVICE_SIZE.width*2,SC_DEVICE_SIZE.height*2);
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 
 
 

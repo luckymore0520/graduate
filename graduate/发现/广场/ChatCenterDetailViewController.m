@@ -42,6 +42,7 @@
 }
 - (IBAction)share:(id)sender {
     [self addMask];
+    [self addMaskAtNavigation];
     [self.view bringSubviewToFront:_shareView];
     [UIView animateWithDuration:0.3 animations:^{
         _shareView.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, -_shareView.frame.size.height);
@@ -62,6 +63,7 @@
 
 - (IBAction)cancelShare:(id)sender {
     [self removeMask];
+    [self removeMaskAtNavigation];
     [UIView animateWithDuration:0.3 animations:^{
         _shareView.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0, 0);
     }];
@@ -185,11 +187,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 134+[ChatCenterPostCell getHeight:self.post.content_ hasConstraint:NO]*1.2;
+        return 150+[ChatCenterPostCell getHeight:self.post.content_ hasConstraint:NO];
     } else if (indexPath.section==1)
     {
         MComment* comment = [self.commentList objectAtIndex:indexPath.row];
-        return 80+[ChatCenterPostCell getHeight:comment.content_ hasConstraint:NO]*1.2;
+        return 80+[ChatCenterPostCell getHeight:comment.content_ hasConstraint:NO];
     }
     return 0;
 }

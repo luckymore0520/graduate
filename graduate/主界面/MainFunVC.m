@@ -105,9 +105,7 @@
 {
     if ([names isEqualToString:@"MIndex"]) {
         MMainList* mainList = [MMainList objectWithKeyValues:data];
-        if (!_main) {
-            _main = [mainList.index_ firstObject];
-        }
+        _main = [mainList.index_ firstObject];
         [self initView];
         [ToolUtils setCurrentDay:_main.days_];
         _mainList = mainList.index_;

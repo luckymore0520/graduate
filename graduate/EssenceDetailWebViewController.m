@@ -54,7 +54,6 @@ document.location=\"myweb:touch:end\";};";
     if (self.postId) {
         [[[MEssenceDetail alloc]init]load:self id:self.postId];
     }
-    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
     [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.
 }

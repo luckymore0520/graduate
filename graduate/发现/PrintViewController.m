@@ -43,12 +43,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setTitle:@"打印"];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     _sendBt.layer.borderColor = [UIColor whiteColor].CGColor;
     _sendBt.layer.borderWidth = 1;
     _sendBt.layer.cornerRadius = 5;
     [self setSubject];
     [self setDate];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -61,7 +63,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES];
     [[QuestionBook getInstance] calculateNeedUpload];
     if ([QuestionBook getInstance].needUpload>0) {
         [self.backupView setHidden:NO];
@@ -71,6 +72,7 @@
         [self.printView setHidden:NO];
     }
     [self setButton];
+    [self.navigationController.navigationBar  setBackgroundImage:[[UIImage imageNamed:@"green"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]   forBarMetrics:UIBarMetricsDefault];
 }
 - (void)setDate
 {

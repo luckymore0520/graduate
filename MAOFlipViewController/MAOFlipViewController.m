@@ -31,6 +31,7 @@
         self.flipInteraction = MAOFlipInteraction.new;
         self.flipInteraction.delegate = self;
         self.flipNavigationController = [[WKNavigationViewController alloc]initWithRootViewController:c];
+        [self.flipNavigationController setNavigationBarHidden:YES];
         UIViewController* nextVC = [self nextViewController];
         [self.flipNavigationController pushViewController:nextVC animated:NO];
         [self.flipInteraction setView:nextVC.view];

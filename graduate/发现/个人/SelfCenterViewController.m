@@ -27,8 +27,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
-    // Do any additional setup after loading the view.
 }
 
 - (void)initViews

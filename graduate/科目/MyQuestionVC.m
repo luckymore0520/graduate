@@ -43,7 +43,6 @@
     self.selectModel = NO;
     self.selectedArray  = [[NSMutableArray alloc]init];
     [self.navigationController setNavigationBarHidden:NO];
-    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
 }
 
 
@@ -127,9 +126,9 @@
             [cell setSelect:NO];
         }
     }
-    
     [self.reviewBtView setHidden:!self.reviewBtView.hidden];
     [self.selectView setHidden:!self.selectView.hidden];
+    [self cancelTransfer:nil];
     self.selectModel = !self.selectModel;
     UIButton* button = (UIButton*)sender;
     [button setSelected:!button.selected];
@@ -231,6 +230,9 @@
     
 }
 - (IBAction)ensureTransfer:(id)sender {
+    if ([self.transferView selectedIndex]==-1) {
+        return;
+    }
     [UIView animateWithDuration:0.5 animations:^{
         self.transferView.transform = CGAffineTransformMakeTranslation(0, 0);
     }];

@@ -27,6 +27,7 @@
 #import "CoreDataHelper.h"
 #import "Trace.h"
 #import "UIPlaceHolderTextView.h"
+#import "MUploadDiary.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
 @property (weak, nonatomic) IBOutlet UIImageView *rollImage;
@@ -552,7 +553,6 @@ CGFloat angle;
         self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
 
     }
-    
     NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
     CoreDataHelper* helper= [CoreDataHelper getInstance];
@@ -573,9 +573,7 @@ CGFloat angle;
     }else{
         NSLog(@"Save successful! 日记~~~~~~~~~");
     }
-    
-    
-    
+    [[[MUploadDiary alloc]init]load:self id:trace.myDay content:trace.note date:trace.date];
 }
 
 

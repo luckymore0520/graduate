@@ -76,32 +76,9 @@ MyTraceList* tracelist = nil;
             }];
             [self saveDay:main musicUrl:nil];
         }
-    } else if ([names isEqualToString:@"download"])
-    {
-        
-        NSURL* url = [data objectForKey:@"path"];
-        if (url) {
-            [self saveMusic:[data objectForKey:@"fileid"] musicUrl:[data objectForKey:@"filename"]];
-        }
     }
 }
 
-
-- (void)saveMusic:(NSString*)musicTitle musicUrl:(NSString*)musicUrl
-{
-    NSError* error;
-    CoreDataHelper* helper = [CoreDataHelper getInstance];
-    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"songName=%@",musicTitle] tableName:@"Trace"];
-    for (Trace* trace in array) {
-        trace.songUrl = musicUrl;
-        BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
-        if (!isSaveSuccess) {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful! Music:%@",musicTitle);
-        }
-    }
-}
 
 - (void)saveDay:(MMain*)myDay musicUrl:(NSString*)url
 {
@@ -129,13 +106,6 @@ MyTraceList* tracelist = nil;
         NSLog(@"Error:%@",error);
     }else{
         NSLog(@"Save successful!");
-        ApiHelper* api = [[ApiHelper alloc]init];
-        api.fileId = music.title_;
-        if ([ToolUtils getCurrentDay].intValue==myDay.days_.intValue) {
-            [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
-        } else if ([ToolUtils connectedToNetWork]) {
-            [api download:self url:[ToolUtils getImageUrlWtihString:music.file_].absoluteString];
-        }
     }
 }
 

@@ -44,14 +44,12 @@
     self.typeArray = @[@3,@1,@0,@2];
     [self.slideSwitchView buildUI];
     [self addRightButton:nil action:@selector(search) img:@"搜索图标"];
-    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
-
     self.searchTextField.layer.borderColor = [UIColor colorOfBorder].CGColor;
     self.searchTextField.delegate = self;
     self.searchTextField.layer.borderWidth = 1;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textChange:) name:UITextFieldTextDidChangeNotification object:nil];
     _state = BROWNSE;
-    
+    [self setExtraCellLineHidden:self.searchTable];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -179,6 +177,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.searchArray.count == 0 ) {
+        self.searchTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    } else {
+        self.searchTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
     return self.searchArray.count;
 }
 
@@ -189,4 +192,10 @@
 }
 
 
+- (void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+}
 @end

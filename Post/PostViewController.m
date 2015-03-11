@@ -13,7 +13,11 @@
 #import "MImgUpload.h"
 #import "MUploadQues.h"
 #import "MReturn.h"
+#import <CoreMotion/CoreMotion.h>
 @interface PostViewController ()<ButtonGroupDelegate>
+{
+    int orientation;
+}
 @property (nonatomic, strong) UIView *topContainerView;//顶部view
 @property (nonatomic,strong)UIView* bottomContainerView;
 @property (nonatomic, strong) UIButton *topLbl;//顶部的标题
@@ -26,6 +30,7 @@
 @property (nonatomic,strong)Question* question;
 @property (nonatomic,strong)UITextView* markLabel;
 @property (nonatomic,strong)UIView* labelView;
+@property (nonatomic,strong)CMMotionManager* motionManager;
 @end
 
 @implementation PostViewController
@@ -68,17 +73,41 @@
         imgView.contentMode = UIViewContentModeScaleAspectFill;
         imgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         imgView.center = self.view.center;
+        _postImage = imgView.image;
         [self.view addSubview:imgView];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    _motionManager = [[CMMotionManager alloc]init];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [self.motionManager startAccelerometerUpdatesToQueue: queue
+                                             withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+                                                 
+                                                 NSLog(@"X = %.04f, Y = %.04f, Z = %.04f",accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                                                 if (accelerometerData.acceleration.x < -0.5) {
+                                                     orientation = 3;
+                                                 } else if (accelerometerData.acceleration.x > 0.5)
+                                                 {
+                                                     orientation = 4;
+                                                 }
+                                                 {
+                                                     orientation = 1;
+                                                 }
+                                             }];
 
     
     [self addTopViewWithText:@"重拍"];
     [self addbottomContainerView];
     [self addCameraMenuView];
     [self addSubjectView];
-    [self animationWithOrient:[UIDevice currentDevice].orientation];
+    [self orientChange:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self animationWithOrient:orientation];
+    [_motionManager stopAccelerometerUpdates];
 }
 
 - (void)orientChange:(NSNotification *)noti
@@ -86,10 +115,7 @@
 {
     UIDeviceOrientation orient = [UIDevice currentDevice].orientation;
     [self animationWithOrient:orient];
-    
 }
-
-
 
 - (void)animationWithOrient:(UIDeviceOrientation)orient
 {
@@ -296,9 +322,7 @@
         NSLog(@"Save successful! Insert A New Question");
         [[QuestionBook getInstance]insertNewQuestion:question];
         [[[MImgUpload alloc]init]load:self img:_postImage name:fileName];
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        }];
-     
+        [self backBtnPressed:nil];
     }
 }
 

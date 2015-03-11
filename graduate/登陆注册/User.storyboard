@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -43,14 +44,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="64y-9O-4LJ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名/手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="osf-s7-SLW">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="osf-s7-SLW">
                                         <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="Znb-jk-YRW"/>
                                         </constraints>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="Znb-jk-YRW"/>
@@ -201,7 +202,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="登录主页_15" translatesAutoresizingMaskIntoConstraints="NO" id="Fz3-I8-scB" userLabel="密码图片">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     </imageView>
-                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kIc-g2-N9m" userLabel="lineForUser">
+                                    <view alpha="0.30000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kIc-g2-N9m" userLabel="lineForUser">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -608,16 +609,18 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HUf-l7-Ppa" userLabel="验证码按钮">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="FGT-1g-lHh"/>
                                     <constraint firstAttribute="height" constant="40" id="MYj-Xp-2Y2"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="40" id="O37-ys-oQz"/>
                                     <constraint firstAttribute="width" constant="178" id="Xx9-4G-siW"/>
                                 </constraints>
-                                <state key="normal" title="      " image="3-获取验证码常态按钮">
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="      " backgroundImage="3-获取验证码常态按钮">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <state key="disabled" image="2-获取验证码初始状态"/>
+                                <state key="disabled" backgroundImage="2-获取验证码初始状态"/>
                                 <state key="highlighted" image="4-获取验证码触发状态"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -630,10 +633,10 @@
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="205" y="117" width="178" height="40"/>
                                     <mask key="constraints">
-                                        <include reference="FGT-1g-lHh"/>
+                                        <exclude reference="FGT-1g-lHh"/>
                                         <include reference="MYj-Xp-2Y2"/>
-                                        <include reference="O37-ys-oQz"/>
-                                        <include reference="Xx9-4G-siW"/>
+                                        <exclude reference="O37-ys-oQz"/>
+                                        <exclude reference="Xx9-4G-siW"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -670,7 +673,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="15" y="215" width="368" height="44"/>
                                     <mask key="constraints">
-                                        <include reference="4ZW-Wl-ntg"/>
+                                        <exclude reference="4ZW-Wl-ntg"/>
                                         <include reference="oKV-76-PMK"/>
                                     </mask>
                                 </variation>
@@ -695,10 +698,16 @@
                             <constraint firstItem="HUf-l7-Ppa" firstAttribute="top" secondItem="lld-pv-VIB" secondAttribute="bottom" constant="10" id="Te6-Dp-SNo"/>
                             <constraint firstItem="Gb4-lB-ZTd" firstAttribute="bottom" secondItem="OQz-sc-TjK" secondAttribute="bottomMargin" id="VGu-WL-RQA"/>
                             <constraint firstItem="YDF-AC-nuF" firstAttribute="leading" secondItem="OQz-sc-TjK" secondAttribute="leadingMargin" constant="-1" id="XdA-ju-6NT"/>
-                            <constraint firstItem="73Y-VF-efP" firstAttribute="centerX" secondItem="HUf-l7-Ppa" secondAttribute="centerX" constant="0.5" id="bQG-n8-5KO"/>
+                            <constraint firstItem="73Y-VF-efP" firstAttribute="centerX" secondItem="HUf-l7-Ppa" secondAttribute="centerX" constant="0.5" id="bQG-n8-5KO">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="WOo-po-c46" firstAttribute="top" secondItem="lld-pv-VIB" secondAttribute="bottom" constant="10" id="bu9-DA-222"/>
                             <constraint firstItem="7Cl-3N-AhM" firstAttribute="top" secondItem="lld-pv-VIB" secondAttribute="bottom" constant="10" id="g2M-v9-PNu"/>
                             <constraint firstItem="7Cl-3N-AhM" firstAttribute="leading" secondItem="OQz-sc-TjK" secondAttribute="leadingMargin" constant="7" id="g5h-Yd-xxY"/>
+                            <constraint firstItem="HUf-l7-Ppa" firstAttribute="trailing" secondItem="lld-pv-VIB" secondAttribute="trailing" id="h63-NX-PJO"/>
+                            <constraint firstItem="HUf-l7-Ppa" firstAttribute="centerX" secondItem="73Y-VF-efP" secondAttribute="centerX" constant="-0.5" id="hWB-Bb-s7D">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="gPW-mg-QxD" secondAttribute="trailing" constant="1" id="nkz-U0-HFf"/>
                             <constraint firstItem="Gb4-lB-ZTd" firstAttribute="leading" secondItem="WOo-po-c46" secondAttribute="trailing" id="o0g-a9-e7I"/>
                             <constraint firstItem="Gb4-lB-ZTd" firstAttribute="top" secondItem="OQz-sc-TjK" secondAttribute="topMargin" id="p0S-4s-YYU"/>
@@ -737,6 +746,8 @@
                                 <exclude reference="G7k-dR-jah"/>
                                 <exclude reference="TRH-Py-btn"/>
                                 <exclude reference="Te6-Dp-SNo"/>
+                                <exclude reference="h63-NX-PJO"/>
+                                <exclude reference="hWB-Bb-s7D"/>
                                 <exclude reference="nkz-U0-HFf"/>
                                 <exclude reference="sor-5A-mLy"/>
                                 <exclude reference="u1A-hQ-oAJ"/>
@@ -761,7 +772,7 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="1rz-2d-XCl"/>
-                                <include reference="bQG-n8-5KO"/>
+                                <exclude reference="bQG-n8-5KO"/>
                                 <include reference="g2M-v9-PNu"/>
                                 <include reference="g5h-Yd-xxY"/>
                                 <include reference="bu9-DA-222"/>
@@ -777,6 +788,8 @@
                                 <include reference="G7k-dR-jah"/>
                                 <include reference="TRH-Py-btn"/>
                                 <include reference="Te6-Dp-SNo"/>
+                                <include reference="h63-NX-PJO"/>
+                                <include reference="hWB-Bb-s7D"/>
                                 <include reference="nkz-U0-HFf"/>
                                 <include reference="sor-5A-mLy"/>
                                 <include reference="u1A-hQ-oAJ"/>

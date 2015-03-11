@@ -11,6 +11,7 @@
 #import "MAOFlipViewController.h"
 @interface RootViewController ()<MAOFlipViewControllerDelegate>
 @property(nonatomic,strong) NSArray* childrenVCs;
+@property(nonatomic,strong) NSMutableArray* childrenViewControllers;
 @property (nonatomic) MAOFlipViewController *flipViewController;
 @end
 
@@ -19,6 +20,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.childrenVCs = [NSArray arrayWithObjects:@"MainFun",@"Subject",@"Other", nil];
+    self.childrenViewControllers = [[NSMutableArray alloc]init];
+    for (NSString* str in _childrenVCs) {
+        UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:str];
+        [_childrenViewControllers addObject:vc];
+    }
     self.flipViewController = [[MAOFlipViewController alloc]init];
     self.flipViewController.flipState  = FLIPUPANDDOWN;
     self.flipViewController.delegate = self;
@@ -37,9 +43,10 @@
 #pragma mark - MAOFlipViewControllerDelegate
 - (UIViewController*)flipViewController:(MAOFlipViewController *)flipViewController contentIndex:(NSUInteger)contentIndex
 {
-    //新規作成
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:[self.childrenVCs objectAtIndex:contentIndex]];
-    return vc;
+    if (contentIndex==0) {
+        return [self.storyboard instantiateViewControllerWithIdentifier:_childrenVCs[0]];
+    }
+    return _childrenViewControllers[contentIndex];
 }
 
 - (NSUInteger)numberOfFlipViewControllerContents

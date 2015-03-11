@@ -38,6 +38,7 @@
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
 }
 
+
 - (void)initViews
 {
     
@@ -140,7 +141,7 @@
         MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
         [cell.essenceTitleLabel setText:essence.title_];
         [cell.essenceSourceLabel setText:[NSString stringWithFormat:@"来自网友%@的分享",essence.source_]];
-        [cell.essenceTimeLabel setText:[NSString stringWithFormat:@"|%@",essence.time_]];
+        [cell.essenceTimeLabel setText:[NSString stringWithFormat:@"| %@",essence.time_]];
         [cell.essenceDownloadBt setTag:indexPath.row];
         if (essence.hasDownload_.integerValue == 0) {
             [cell.essenceDownloadBt setHidden:YES];

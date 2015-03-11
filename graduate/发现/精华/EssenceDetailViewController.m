@@ -45,11 +45,8 @@
     if (_user.email_.length>0) {
         [self.essenceDownloadBt setTitle:[NSString stringWithFormat:@"下载至%@",_user.email_] forState:UIControlStateNormal];
     }
-    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
-
     _essenceDownloadBt.layer.cornerRadius = 5;
     [self.navigationController setNavigationBarHidden:NO];
-
 }
 
 

@@ -46,9 +46,14 @@
          [self.backUpButton setTitle:@"开始备份" forState:UIControlStateNormal];
     }
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProgress) name:@"backup" object:nil];
+    [self setTitle:@"备份"];
+    [self addRightButton:@"设置" action:@selector(goToSetting) img:nil];
 }
 
-
+- (void) goToSetting
+{
+    [self performSegueWithIdentifier:@"setting" sender:nil];
+}
 - (void)updateProgress
 {
     QuestionBook* book = [QuestionBook getInstance];
@@ -71,7 +76,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController.navigationBar  setBackgroundImage:[[UIImage imageNamed:@"blue"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]   forBarMetrics:UIBarMetricsDefault];
 }
 
 

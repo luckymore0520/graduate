@@ -38,22 +38,13 @@
         if([self.navigationController respondsToSelector:@selector(backIcons)]){
             _backIcons=[self.navigationController performSelector:@selector(backIcons)];
         }
-        if([self.navigationController viewControllers].count>1){
-            UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
-            NSString *iconname=DEFAULTBACKICON;
-            if(_backIcons!=nil && _backIcons.count>0){
-                if ([self.navigationController viewControllers].count-2<_backIcons.count) {
-                    iconname=[_backIcons objectAtIndex:[self.navigationController viewControllers].count-2];
-                }else{
-                    iconname=[_backIcons objectAtIndex:_backIcons.count-1 ];
-                }
-            }
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",iconname]] forState:UIControlStateNormal];
-            [button addTarget:self action:@selector(closeSelf) forControlEvents:UIControlEventTouchUpInside];
-            UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-            NSArray *myButtonArray = [[NSArray alloc] initWithObjects: myAddButton, nil];
-            self.navigationItem.leftBarButtonItems = myButtonArray;
-        }
+        UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(-10, 0, 10, 20)];
+        NSString *iconname=DEFAULTBACKICON;
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",iconname]] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(closeSelf) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        NSArray *myButtonArray = [[NSArray alloc] initWithObjects: myAddButton, nil];
+        self.navigationItem.leftBarButtonItem = myAddButton;
     }
     [self.navigationController.navigationBar setAlpha:1];
     [self.navigationController.navigationBar setTranslucent:NO];
@@ -61,7 +52,6 @@
     self.scale = 1;
     [self initViews];
     _hasJumpedAway = NO;
-    [self registerForKeyboardNotifications];
     // Do any additional setup after loading the view.
 }
 
@@ -92,8 +82,6 @@
     for (UITextField* field in self.textFields) {
         field.delegate = self;
     }
-    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden];
-    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden];
     [self registerForKeyboardNotifications];
 }
 
@@ -107,6 +95,10 @@
     [self.waitingView setHidden:YES];
     [self.waitingView removeFromSuperview];
     self.waitingView = nil;
+}
+
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
@@ -114,14 +106,9 @@
 - (void) registerForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
 
 - (void) keyboardWasShown:(NSNotification *) notif
 {
@@ -295,11 +282,11 @@
 
 - (void)addRightButton:(NSString*)title action:(SEL)action img:(NSString*)img
 {
-    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, title==nil?44:70, 44)];
+    
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, title==nil?20:44, 44)];
     if (title) {
         [button setTitle:title forState:UIControlStateNormal];
     }
-    button.titleLabel.textAlignment = UITextAlignmentRight;
     button.titleLabel.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16.0];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if (img) {
@@ -351,11 +338,27 @@
     [self.maskView setHidden:NO];
 }
 
+- (void)addMaskAtNavigation
+{
+    if (!self.navigationMaskView) {
+        CGRect frame = [[UIScreen mainScreen]bounds];
+        frame.size.height = 64;
+        self.navigationMaskView = [[UIView alloc]initWithFrame:frame];
+        [self.navigationMaskView setAlpha:0.5];
+        [self.navigationMaskView setBackgroundColor:[UIColor blackColor]];
+        [self.navigationController.view addSubview:self.navigationMaskView];
+    }
+    [self.navigationMaskView setHidden:NO];
+}
+
+- (void)removeMaskAtNavigation
+{
+    [self.navigationMaskView setHidden:YES];
+}
 
 - (void)removeMask
 {
     [self.maskView setHidden:YES];
-//    [self.maskView removeFromSuperview];
 }
 
 

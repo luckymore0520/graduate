@@ -9,7 +9,7 @@
 #import "FeedBackViewController.h"
 #import "MFeedback.h"
 #import "MReturn.h"
-@interface FeedBackViewController ()<UITextViewDelegate,UIAlertViewDelegate>
+@interface FeedBackViewController ()<UITextViewDelegate,UIAlertViewDelegate,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *submitBt;
 @property (weak, nonatomic) IBOutlet UITextView *textArea;
 @property (weak, nonatomic) IBOutlet UITextField *contactField;
@@ -25,7 +25,6 @@
     
     
     self.textArea.layer.borderWidth = 1;
-    self.textArea.layer.cornerRadius = 10;
     self.textArea.delegate = self;
     
     self.contactField.layer.borderColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:1].CGColor;
@@ -107,5 +106,9 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_contactField resignFirstResponder];
+    [_textArea resignFirstResponder];
+}
 @end

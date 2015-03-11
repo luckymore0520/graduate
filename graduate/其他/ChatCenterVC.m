@@ -29,7 +29,6 @@
     [self setTitle:@"广场"];
     _firstAppear = YES;
     _postArray = [[NSMutableArray alloc]init];
-    [self addLeftButton:nil action:@selector(closeSelf) img:@"1-返回键"];
        // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -46,7 +45,7 @@
 -(void) addRightButton:(NSInteger)number
 {
     if (!self.msgBt) {
-        self.msgBt  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        self.msgBt  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 44)];
     }
 
     if (number>0) {
@@ -102,24 +101,27 @@
 {
     if ([names isEqualToString:@"MPosts"]) {
         MPostList* list = [MPostList objectWithKeyValues:data];
-        for (MPost* post in list.list_) {
-            BOOL has = NO;
-            for (MPost* currentPost in self.postArray) {
-                if ([post.id_ isEqualToString:currentPost.id_]) {
-                    has = YES;
-                    currentPost.commentCount_ = post.commentCount_;
-                    break;
+        if (self.postArray.count==0) {
+            self.postArray = list.list_;
+        } else {
+            for (MPost* post in list.list_) {
+                BOOL has = NO;
+                for (MPost* currentPost in self.postArray) {
+                    if ([post.id_ isEqualToString:currentPost.id_]) {
+                        has = YES;
+                        currentPost.commentCount_ = post.commentCount_;
+                        break;
+                    }
+                }
+                if (!has) {
+                    if (page==1) {
+                        [self.postArray insertObject:post atIndex:0];
+                    } else {
+                        [self.postArray addObject:post];
+                    }
                 }
             }
-            if (!has) {
-                if (page==1) {
-                    [self.postArray insertObject:post atIndex:0];
-                } else {
-                    [self.postArray addObject:post];
-                }
-            }
-            
-           
+  
         }
         if (page==1) {
             [self doneWithView:_header];

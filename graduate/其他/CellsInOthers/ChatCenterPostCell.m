@@ -24,12 +24,12 @@
 {
     UIFont *font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:14.0];
     CGSize size = CGSizeMake([[UIScreen mainScreen]applicationFrame].size.width-44,2000);
-    CGSize labelsize = [content sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+    CGSize labelsize = [content sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
     if (hasConstraint) {
-        CGSize oneLineSize = [@"a line" sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByCharWrapping];
+        CGSize oneLineSize = [@"a line" sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
         return oneLineSize.height*3<=labelsize.height?oneLineSize.height*3:labelsize.height;
     }
-    return labelsize.height;
+    return labelsize.height+10;
    
 }
 

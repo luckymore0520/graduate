@@ -130,6 +130,9 @@
         QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
         if (indexPath.row==0) {
             NSString* subject = [[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"subject"];
+            if (subject.length>3) {
+                subject = [subject substringToIndex:2];
+            }
             [cell.titleLabel setText:subject];
         }
         return cell;

@@ -145,6 +145,10 @@
     {
         [self waitingEnd];
         MUser* user = [MUser objectWithKeyValues:data];
+        if (user.nickname_&&user.nickname_.length>0) {
+            self.type = FORGET;
+            [ToolUtils showMessage:@"该手机号已注册，你可以直接修改密码"];
+        }
         [ToolUtils setUserInfomation:user.keyValues];
         [self performSegueWithIdentifier:@"setDetail" sender:nil];
     }

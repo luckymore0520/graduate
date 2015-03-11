@@ -22,6 +22,7 @@
 @property (nonatomic,strong)NSArray* textFields;
 @property (nonatomic,strong)NSArray* keyButtons;
 @property (nonatomic,strong)UIView* maskView;
+@property (nonatomic,strong)UIView* navigationMaskView;
 @property (strong, nonatomic) NSArray *backIcons;
 @property (nonatomic,strong)WaitingView* waitingView;
 
@@ -32,6 +33,10 @@
 -(void)closeSelf;
 - (void)addMask;
 - (void)removeMask;
+
+- (void)addMaskAtNavigation;
+- (void)removeMaskAtNavigation;
+
 - (void)downloadMusic;
 - (void) waiting:(NSString*)msg;
 - (void) waitingEnd;
