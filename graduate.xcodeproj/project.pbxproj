@@ -156,7 +156,6 @@
 		7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB161A8084A80078B99C /* MQuestionCount.m */; };
 		7D5DBB1A1A80B4350078B99C /* TraceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB191A80B4350078B99C /* TraceHeaderView.m */; };
 		7D5DBB1D1A80C2B00078B99C /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB1C1A80C2B00078B99C /* Trace.m */; };
-		7D5DBB211A8103890078B99C /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */; };
 		7D5DBB241A81BF300078B99C /* Sign.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB231A81BF300078B99C /* Sign.m */; };
 		7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB261A81BF5A0078B99C /* MSign.m */; };
 		7D5DBB2A1A81BFED0078B99C /* MUploadDiary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5DBB291A81BFED0078B99C /* MUploadDiary.m */; };
@@ -286,6 +285,7 @@
 		7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */; };
 		7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3C2411AA4BE980068812D /* WKUILabel.m */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
+		B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AD83621AB3FDA200117C8C /* UIPlaceHolderTextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -566,8 +566,6 @@
 		7D5DBB191A80B4350078B99C /* TraceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TraceHeaderView.m; path = "主界面/TraceHeaderView.m"; sourceTree = "<group>"; };
 		7D5DBB1B1A80C2B00078B99C /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trace.h; path = Model/Trace.h; sourceTree = SOURCE_ROOT; };
 		7D5DBB1C1A80C2B00078B99C /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trace.m; path = Model/Trace.m; sourceTree = SOURCE_ROOT; };
-		7D5DBB1F1A8103890078B99C /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
-		7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		7D5DBB221A81BF300078B99C /* Sign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sign.h; path = Model/Sign.h; sourceTree = SOURCE_ROOT; };
 		7D5DBB231A81BF300078B99C /* Sign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Sign.m; path = Model/Sign.m; sourceTree = SOURCE_ROOT; };
 		7D5DBB251A81BF5A0078B99C /* MSign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSign.h; path = Frame/ApiTools/MSign.h; sourceTree = "<group>"; };
@@ -800,6 +798,8 @@
 		7DF3C2401AA4BE980068812D /* WKUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKUILabel.h; path = Tools/WKUILabel.h; sourceTree = "<group>"; };
 		7DF3C2411AA4BE980068812D /* WKUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKUILabel.m; path = Tools/WKUILabel.m; sourceTree = "<group>"; };
 		7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B1AD83611AB3FDA200117C8C /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = PlaceHolderTextView/UIPlaceHolderTextView.h; sourceTree = SOURCE_ROOT; };
+		B1AD83621AB3FDA200117C8C /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = PlaceHolderTextView/UIPlaceHolderTextView.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1248,8 +1248,8 @@
 		7D5DBB1E1A8103890078B99C /* PlaceHolderTextView */ = {
 			isa = PBXGroup;
 			children = (
-				7D5DBB1F1A8103890078B99C /* UIPlaceHolderTextView.h */,
-				7D5DBB201A8103890078B99C /* UIPlaceHolderTextView.m */,
+				B1AD83611AB3FDA200117C8C /* UIPlaceHolderTextView.h */,
+				B1AD83621AB3FDA200117C8C /* UIPlaceHolderTextView.m */,
 			);
 			name = PlaceHolderTextView;
 			path = ../../git/MobileNJU/MobileNJU/ThirdParty/PlaceHolderTextView;
@@ -1829,9 +1829,11 @@
 				TargetAttributes = {
 					7D6A51861A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = KQ5836GK89;
 					};
 					7D6A519F1A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = KQ5836GK89;
 						TestTargetID = 7D6A51861A69610600355923;
 					};
 				};
@@ -2039,6 +2041,7 @@
 				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
 				7D5DBB871A83898F0078B99C /* ChatCenterDetailViewController.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
+				B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */,
 				7D4E05EA1A74EF7B001709DB /* MJPhotoProgressView.m in Sources */,
 				7D2432B31A7DD18F00C00F64 /* SCCaptureCameraController.m in Sources */,
 				7D2432131A7B785500C00F64 /* OtherViewController.m in Sources */,
@@ -2117,7 +2120,6 @@
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,
 				7D4E05CA1A74EF71001709DB /* UIImage+WebP.m in Sources */,
-				7D5DBB211A8103890078B99C /* UIPlaceHolderTextView.m in Sources */,
 				7D24324D1A7D06F000C00F64 /* Question.m in Sources */,
 				7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */,
 				7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */,
@@ -2209,7 +2211,7 @@
 				OTHER_LDFLAGS = "-fobjc-arc";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -2247,7 +2249,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -2256,7 +2258,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2269,7 +2272,7 @@
 					"$(SRCROOT)/graduate/ccpsdk",
 				);
 				INFOPLIST_FILE = graduate/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2284,10 +2287,10 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aee48020-876a-4077-bed4-c0f0c47c052e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -2296,8 +2299,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2310,7 +2313,7 @@
 					"$(SRCROOT)/graduate/ccpsdk",
 				);
 				INFOPLIST_FILE = graduate/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2325,10 +2328,10 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aee48020-876a-4077-bed4-c0f0c47c052e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -2336,6 +2339,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2347,6 +2352,7 @@
 				INFOPLIST_FILE = graduateTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/graduate.app/graduate";
 			};
 			name = Debug;
@@ -2355,6 +2361,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2362,6 +2370,7 @@
 				INFOPLIST_FILE = graduateTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/graduate.app/graduate";
 			};
 			name = Release;
