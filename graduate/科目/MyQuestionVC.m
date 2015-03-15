@@ -25,12 +25,16 @@
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 @property (weak, nonatomic) IBOutlet UIView *reviewBtView;
 @property (weak, nonatomic) IBOutlet ButtonGroup *transferView;
-
+@property (strong,nonatomic) NSMutableArray* questionsToShow;
 @property (weak, nonatomic) IBOutlet UIButton *subjectBt1;
 @property (weak, nonatomic) IBOutlet UIButton *subjectBt2;
 @property (weak, nonatomic) IBOutlet UIButton *subjectBt3;
 @property (nonatomic,strong)NSMutableArray* subjects;
 @property (nonatomic)BOOL selectModel;
+@property (weak, nonatomic) IBOutlet UIButton *selectAllButton;
+@property (weak, nonatomic) IBOutlet UIButton *selectUnReviewButton;
+@property (weak, nonatomic) IBOutlet UIButton *selectImportantButton;
+@property (weak, nonatomic) IBOutlet UIButton *selectReviewdButton;
 @end
 
 @implementation MyQuestionVC
@@ -46,12 +50,6 @@
 }
 
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:NO];
-
-}
 - (void)viewDidAppear:(BOOL)animated
 {
     
@@ -64,8 +62,6 @@
     [self initSubjects];
     CGRect frame = self.view.frame;
     NSLog(@"%lf",frame.origin.y);
-    [self.navigationController setNavigationBarHidden:NO];
-
 }
 
 
@@ -115,12 +111,17 @@
     UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = myAddButton;
 }
+- (IBAction)showSelectedType:(UIButton *)sender {
+    [sender setSelected:!sender.selected];
+    [self loadData];
+    [self.photoView reloadData];
+}
 
-- (void) selectPhotos:(id)sender
+- (void)selectPhotos:(id)sender
 {
     [self.selectedArray removeAllObjects];
-    for (int i = 0 ; i < self.myQuestions.count; i++) {
-        for (int j = 0 ; j < [[[self.myQuestions objectAtIndex:i] objectForKey:@"array"] count]; j++) {
+    for (int i = 0 ; i < self.questionsToShow.count; i++) {
+        for (int j = 0 ; j < [[[self.questionsToShow objectAtIndex:i] objectForKey:@"array"] count]; j++) {
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:j inSection:i];
             QuestionCell* cell = (QuestionCell*)[self.photoView cellForItemAtIndexPath:indexPath];
             [cell setSelect:NO];
@@ -132,18 +133,11 @@
     self.selectModel = !self.selectModel;
     UIButton* button = (UIButton*)sender;
     [button setSelected:!button.selected];
-    
-    
 }
 - (void)loadData
 {
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
-    [self.myQuestions sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSString* a = [obj1 objectForKey:@"day"];
-        NSString* b = [obj2 objectForKey:@"day"];
-        return  b.integerValue > a.integerValue;
-    }];
     if (self.shoudUpdate) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -154,6 +148,52 @@
         NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
         [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
     }
+    self.questionsToShow = [[NSMutableArray alloc]init];
+    for (NSDictionary* dic in self.myQuestions) {
+        for (Question* question in dic[@"array"]) {
+            BOOL shoudShow = NO;
+            if (_selectAllButton.selected) {
+                shoudShow = YES;
+            } else {
+                if (_selectReviewdButton.selected) {
+                    if (question.review_time.integerValue>0) {
+                        shoudShow = YES;
+                    }
+                }
+                if (_selectUnReviewButton.selected) {
+                    if (question.review_time.integerValue==0) {
+                        shoudShow = YES;
+                    }
+                }
+            }
+            if (_selectImportantButton.selected) {
+                if (question.is_highlight.integerValue==1) {
+                    shoudShow = YES;
+                } else {
+                    shoudShow = NO;
+                }
+            }
+            if (shoudShow) {
+                BOOL hadDay = NO;
+                for (NSDictionary* dicToShow in self.questionsToShow) {
+                    if ([dicToShow[@"day"] isEqualToString:dic[@"day"]]) {
+                        [dicToShow[@"array"] addObject:question];
+                        hadDay = YES;
+                        break;
+                    }
+                }
+                if (!hadDay) {
+                    NSDictionary* day = @{@"day":question.myDay,@"array":[[NSMutableArray alloc]initWithObjects:question, nil]};
+                    [self.questionsToShow addObject:day];
+                }
+            }
+        }
+    }
+    [self.questionsToShow sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSString* a = [obj1 objectForKey:@"day"];
+        NSString* b = [obj2 objectForKey:@"day"];
+        return  b.integerValue > a.integerValue;
+    }];
 }
 
 
@@ -206,6 +246,10 @@
 
 
 - (IBAction)reviewModelAction:(id)sender {
+    if (self.myQuestions.count==0) {
+        [ToolUtils showToast:@"题目为空，无法复习" toView:self.view];
+        return;
+    }
     [self performSegueWithIdentifier:@"reviewMyQuestion" sender:sender];
 }
 
@@ -216,18 +260,13 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.transferView.transform = CGAffineTransformMakeTranslation(0, -self.transferView.frame.size.height);
     }];
-    
-    
-    
-    
-    
 }
+
+
 - (IBAction)cancelTransfer:(id)sender {
     [UIView animateWithDuration:0.3 animations:^{
         self.transferView.transform = CGAffineTransformMakeTranslation(0, 0);
     }];
-    
-    
 }
 - (IBAction)ensureTransfer:(id)sender {
     if ([self.transferView selectedIndex]==-1) {
@@ -236,27 +275,15 @@
     [UIView animateWithDuration:0.5 animations:^{
         self.transferView.transform = CGAffineTransformMakeTranslation(0, 0);
     }];
-    
-    
-    
-    
-    
     Subject* subject = [self.subjects objectAtIndex:[self.transferView selectedIndex]];
-
     QuestionBook* book = [QuestionBook getInstance];
-    
     [[book.allQuestions objectAtIndex:self.type-1]removeObjectsInArray:self.selectedArray];
     [[book.allQuestions objectAtIndex:subject.type-1]addObjectsFromArray:self.selectedArray];
     
-    
-    
-    
-    
-    
     for (Question* question in self.selectedArray) {
         question.subject = subject.name;
-        question.type = [NSNumber numberWithInt:subject.type];
-        question.isUpload = NO;
+        question.type = [NSNumber numberWithInteger:subject.type];
+        question.isUpload = @NO;
     }
     NSMutableArray* shoudRemoveDic = [[NSMutableArray alloc]init];
     for (NSDictionary* dic in self.myQuestions) {
@@ -267,16 +294,11 @@
         }
     }
     [self.myQuestions removeObjectsInArray:shoudRemoveDic];
-    
-    
-    
     [self.photoView reloadData];
-
     [book save];
-    
-    
     [book updateQuestions];
 }
+
 
 - (IBAction)delete:(id)sender {
     
@@ -306,8 +328,8 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (section<self.myQuestions.count) {
-        NSMutableArray* arr = [[self.myQuestions objectAtIndex:section]objectForKey:@"array"];
+    if (section<self.questionsToShow.count) {
+        NSMutableArray* arr = [[self.questionsToShow objectAtIndex:section]objectForKey:@"array"];
         return arr.count;
     }
     return 0;
@@ -315,7 +337,7 @@
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.myQuestions.count;
+    return self.questionsToShow.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -324,7 +346,7 @@
     static NSString * CellIdentifier = @"picture";
     QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     [cell.selectView setHidden:YES];
-    Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+    Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
     if (question.is_recommand.integerValue==0) {
         [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:130 height:130] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     } else {
@@ -335,6 +357,12 @@
         [cell.stateImg setHidden:NO];
     } else {
         [cell.stateImg setHidden:YES];
+    }
+    [cell setSelect:NO];
+    for (Question* selectedQuestion in self.selectedArray) {
+        if ([selectedQuestion.questionid isEqualToString:question.questionid]) {
+            [cell setSelect:YES];
+        }
     }
     return cell;
 }
@@ -363,7 +391,7 @@
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         
     } else {
-        Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+        Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         QuestionCell* cell = (QuestionCell*)[self.photoView cellForItemAtIndexPath:indexPath];
 
         if ([self.selectedArray indexOfObject:question]== NSNotFound) {
@@ -375,9 +403,6 @@
             NSLog(@"在里面");
             [cell setSelect:NO];
         }
-        
-        
-        
         
     }
 //    [self performSegueWithIdentifier:@"showDetail" sender:indexPath];
@@ -393,7 +418,7 @@
         reusableview = [ collectionView dequeueReusableSupplementaryViewOfKind : UICollectionElementKindSectionHeader withReuseIdentifier : @ "HeaderView" forIndexPath : indexPath ] ;
         if (indexPath.section<self.myQuestions.count) {
         
-            Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:0];
+            Question* question = [[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:0];
             if (question.myDay.integerValue == [[ToolUtils getCurrentDay] integerValue]) {
                 [reusableview.dateLabel setText:[NSString stringWithFormat:@"今日 第%@天",question.myDay]];
                 [reusableview.dateLabel setTextColor:[UIColor redColor]];

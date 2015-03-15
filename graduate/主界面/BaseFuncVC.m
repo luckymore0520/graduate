@@ -88,6 +88,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [super viewWillDisappear:animated];
     [self.maskView setHidden:YES];
     self.maskView = nil;

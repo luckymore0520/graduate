@@ -53,7 +53,7 @@
             currentDay = currentDay + timeDiff/86400;
             [ToolUtils setCurrentDay:[NSNumber numberWithInteger:currentDay]];
         }
-        NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
+        NSString* myDay = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
         NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
         if (array.count==0) {
             [_imgView setImage:[UIImage imageNamed:@"首页1.png"]];
@@ -85,9 +85,9 @@
     _sentenceLabel.frame = CGRectMake(_sentenceLabel.frame.origin.x, _sentenceLabel.frame.origin.y, size.width, size.height);
     if (_main.daysLeft_.integerValue<10) {
         
-        [_remainDayLabel setText:[NSString stringWithFormat:@"0%d",_main.daysLeft_.integerValue]];
+        [_remainDayLabel setText:[NSString stringWithFormat:@"0%ld",_main.daysLeft_.integerValue]];
     } else {
-        [_remainDayLabel setText:[NSString stringWithFormat:@"%d",_main.daysLeft_.integerValue]];
+        [_remainDayLabel setText:[NSString stringWithFormat:@"%ld",_main.daysLeft_.integerValue]];
     }
     [self.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_main.img_] placeholderImage:[UIImage imageNamed:@"首页1.png"]];
 }
@@ -110,7 +110,7 @@
         [ToolUtils setCurrentDay:_main.days_];
         _mainList = mainList.index_;
         for (MMain* main in mainList.index_) {
-            NSString* myDay = [NSString stringWithFormat:@"%d",main.days_.integerValue];
+            NSString* myDay = [NSString stringWithFormat:@"%ld",main.days_.integerValue];
             NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
             [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.img_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 NSLog(@"下图完成 首页图");
@@ -137,7 +137,7 @@
                 traceOfToday.songName = music.title_;
                 traceOfToday.pictureUrl =main.img_;
                 traceOfToday.myDay = [NSString
-                                      stringWithFormat:@"%d",main.days_.integerValue];
+                                      stringWithFormat:@"%ld",main.days_.integerValue];
                 traceOfToday.remainday = main.daysLeft_;
                 traceOfToday.pictureUrlForSubject = main.imgGn_;
                 traceOfToday.pictureUrlForTrace = main.imgZj_;
@@ -172,7 +172,7 @@
     trace.pictureUrl =myDay.img_;
     trace.content = myDay.content_;
     trace.myDay = [NSString
-                        stringWithFormat:@"%d",myDay.days_.integerValue];
+                        stringWithFormat:@"%ld",myDay.days_.integerValue];
     trace.remainday = myDay.daysLeft_;
     trace.pictureUrlForSubject = myDay.imgGn_;
     trace.pictureUrlForTrace = myDay.imgZj_;

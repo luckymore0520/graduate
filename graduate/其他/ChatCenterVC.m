@@ -190,6 +190,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     MPost* post = [self.postArray objectAtIndex:indexPath.section];
     ChatCenterDetailViewController* nextVC = (ChatCenterDetailViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"centerDetail"];
     nextVC.post = post;

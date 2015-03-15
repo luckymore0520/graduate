@@ -9,6 +9,7 @@
 #import "SubjectVC.h"
 #import "ToolUtils.h"
 #import "MQuestionRecommand.h"
+#import "MyQuestionRootViewController.h"
 #import "RecommandVC.h"
 #import "QuestionBook.h"
 #import "MQuestionList.h"
@@ -165,17 +166,17 @@ CGFloat angle;
 
 - (void)animationLabel:(NSArray*)statics
 {
-    int total = [[statics firstObject] integerValue];
-    int totalNew = [statics[1] integerValue];
-    int sign = [statics[2]integerValue];
-    BOOL hasEnd = self.totalLabel.text.integerValue==total
+    NSInteger total = [[statics firstObject] integerValue];
+    NSInteger totalNew = [statics[1] integerValue];
+    NSInteger sign = [statics[2]integerValue];
+    NSInteger hasEnd = self.totalLabel.text.integerValue==total
                 &&self.totalNewLabel.text.integerValue==totalNew
     &&self.cardLabel.text.integerValue==sign;
 
     if (!hasEnd) {
-        self.totalLabel.text = [NSString stringWithFormat:@"%d",MIN(self.totalLabel.text.integerValue+1,total)];
-        self.totalNewLabel.text = [NSString stringWithFormat:@"%d",MIN(self.totalNewLabel.text.integerValue+1,totalNew)];
-        self.cardLabel.text = [NSString stringWithFormat:@"%d",MIN(self.cardLabel.text.integerValue+1,sign)];
+        self.totalLabel.text = [NSString stringWithFormat:@"%ld",MIN(self.totalLabel.text.integerValue+1,total)];
+        self.totalNewLabel.text = [NSString stringWithFormat:@"%ld",MIN(self.totalNewLabel.text.integerValue+1,totalNew)];
+        self.cardLabel.text = [NSString stringWithFormat:@"%ld",MIN(self.cardLabel.text.integerValue+1,sign)];
         [self performSelector:@selector(animationLabel:) withObject:statics afterDelay:(40.0/total)*0.02];
     }
     
@@ -345,8 +346,8 @@ CGFloat angle;
         [cell.imgView setImage:[UIImage imageNamed:[self.subjectImgList objectAtIndex:subject.type-1]]];
         [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:100.0f];
         [cell.nameLabel setText:subject.name];
-        [cell.totalLabel setText:[NSString stringWithFormat:@"%d篇/",subject.total]];
-       [cell.addLabel setText:[NSString stringWithFormat:@"%d篇新增",subject.newAdd]];
+        [cell.totalLabel setText:[NSString stringWithFormat:@"%ld篇/",subject.total]];
+       [cell.addLabel setText:[NSString stringWithFormat:@"%ld篇新增",subject.newAdd]];
         [cell.arrow setHidden:NO];
         cell.delegate = self;
         if (self.subjects.count<4) {
@@ -384,26 +385,17 @@ CGFloat angle;
     
     if (self.subjects.count==4) {
         Subject* subject = [_subjects objectAtIndex:indexPath.row];
-        
-        MyQuestionVC* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"myQuestions"];
-        vc.type = subject.type;
-        vc.shoudUpdate = subject.shoudUpdate;
-        vc.subject = subject.name;
-        vc.title = [NSString stringWithFormat:@"%@列表",subject.name];
+        MyQuestionRootViewController* vc = [[MyQuestionRootViewController alloc]initWithNibName:NSStringFromClass([MyQuestionRootViewController class]) bundle:nil];
+        vc.subject = subject;
         WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:vc];
         nav.transitioningDelegate = self;
         [self.navigationController presentViewController:nav animated:YES completion:^{
             
         }];
-        
-
     } else {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
 
     }
-    
-    
-    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -553,7 +545,7 @@ CGFloat angle;
         self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
 
     }
-    NSString* myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
+    NSString* myDay = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
     CoreDataHelper* helper= [CoreDataHelper getInstance];
     Trace* trace;

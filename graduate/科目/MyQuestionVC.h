@@ -14,4 +14,5 @@
 @property (nonatomic)BOOL shoudUpdate;
 @property (nonatomic)NSString* subject;
 - (void)updateQuestions;
+- (void) selectPhotos:(id)sender;
 @end

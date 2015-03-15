@@ -238,6 +238,7 @@
 - (void)editRemark:(id)sender
 {
     [self addMask];
+    [self addMaskAtNavigation];
     if (!_editView) {
         CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 160);
         _editView = [[UIView alloc]initWithFrame:frame];
@@ -327,6 +328,7 @@
         
     }];
     [self removeMask];
+    [self removeMaskAtNavigation];
 }
 
 @end

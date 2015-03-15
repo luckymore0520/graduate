@@ -83,6 +83,10 @@
 		7D2432D51A7E453F00C00F64 /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432CE1A7E453F00C00F64 /* SWUtilityButtonTapGestureRecognizer.m */; };
 		7D2432D61A7E453F00C00F64 /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432D01A7E453F00C00F64 /* SWUtilityButtonView.m */; };
 		7D2432D91A7E4A2300C00F64 /* ModifySubjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */; };
+		7D2F92A01AB57FC600D4B18F /* MyQuestionRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F929E1AB57FC600D4B18F /* MyQuestionRootViewController.m */; };
+		7D2F92A11AB57FC600D4B18F /* MyQuestionRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F929F1AB57FC600D4B18F /* MyQuestionRootViewController.xib */; };
+		7D2F92A41AB5C5A900D4B18F /* UIImage+Graduate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A31AB5C5A900D4B18F /* UIImage+Graduate.m */; };
+		7D2F92A71AB5E88000D4B18F /* MSignCountStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A61AB5E88000D4B18F /* MSignCountStatus.m */; };
 		7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */; };
 		7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333D1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m */; };
 		7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4033401A9B435600BDD1D5 /* MQuesPrint.m */; };
@@ -142,7 +146,6 @@
 		7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06101A751593001709DB /* MyQuestionVC.m */; };
 		7D4E06141A7524C2001709DB /* ReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06131A7524C2001709DB /* ReviewVC.m */; };
 		7D4E06181A75E9DA001709DB /* RecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06171A75E9DA001709DB /* RecordVC.m */; };
-		7D4E061B1A75EDEC001709DB /* ReviewQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */; };
 		7D4E061F1A75F1DC001709DB /* MyTraceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E061D1A75F1DC001709DB /* MyTraceVC.m */; };
 		7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06261A76068A001709DB /* YZSwipeBetweenViewController.m */; };
 		7D4E062A1A760834001709DB /* TraceRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4E06291A760834001709DB /* TraceRootVC.m */; };
@@ -423,6 +426,13 @@
 		7D2432D01A7E453F00C00F64 /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
 		7D2432D71A7E4A2300C00F64 /* ModifySubjectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModifySubjectVC.h; path = "科目/ModifySubjectVC.h"; sourceTree = "<group>"; };
 		7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModifySubjectVC.m; path = "科目/ModifySubjectVC.m"; sourceTree = "<group>"; };
+		7D2F929D1AB57FC600D4B18F /* MyQuestionRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyQuestionRootViewController.h; path = "科目/MyQuestionRootViewController.h"; sourceTree = "<group>"; };
+		7D2F929E1AB57FC600D4B18F /* MyQuestionRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyQuestionRootViewController.m; path = "科目/MyQuestionRootViewController.m"; sourceTree = "<group>"; };
+		7D2F929F1AB57FC600D4B18F /* MyQuestionRootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyQuestionRootViewController.xib; path = "科目/MyQuestionRootViewController.xib"; sourceTree = "<group>"; };
+		7D2F92A21AB5C5A900D4B18F /* UIImage+Graduate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Graduate.h"; path = "Tools/UIImage+Graduate.h"; sourceTree = "<group>"; };
+		7D2F92A31AB5C5A900D4B18F /* UIImage+Graduate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Graduate.m"; path = "Tools/UIImage+Graduate.m"; sourceTree = "<group>"; };
+		7D2F92A51AB5E88000D4B18F /* MSignCountStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSignCountStatus.h; path = Frame/ApiTools/MSignCountStatus.h; sourceTree = "<group>"; };
+		7D2F92A61AB5E88000D4B18F /* MSignCountStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSignCountStatus.m; path = Frame/ApiTools/MSignCountStatus.m; sourceTree = "<group>"; };
 		7D4033391A9B39EB00BDD1D5 /* BackUpSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingViewController.h; path = "发现/备份/BackUpSettingViewController.h"; sourceTree = "<group>"; };
 		7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackUpSettingViewController.m; path = "发现/备份/BackUpSettingViewController.m"; sourceTree = "<group>"; };
 		7D40333C1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingTableViewCell.h; path = "发现/备份/BackUpSettingTableViewCell.h"; sourceTree = "<group>"; };
@@ -538,8 +548,6 @@
 		7D4E06131A7524C2001709DB /* ReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviewVC.m; path = "科目/ReviewVC.m"; sourceTree = "<group>"; };
 		7D4E06161A75E9DA001709DB /* RecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordVC.h; path = "科目/RecordVC.h"; sourceTree = "<group>"; };
 		7D4E06171A75E9DA001709DB /* RecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecordVC.m; path = "科目/RecordVC.m"; sourceTree = "<group>"; };
-		7D4E06191A75EDEC001709DB /* ReviewQuestionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviewQuestionVC.h; path = "科目/ReviewQuestionVC.h"; sourceTree = "<group>"; };
-		7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviewQuestionVC.m; path = "科目/ReviewQuestionVC.m"; sourceTree = "<group>"; };
 		7D4E061C1A75F1DC001709DB /* MyTraceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTraceVC.h; path = "主界面/MyTraceVC.h"; sourceTree = "<group>"; };
 		7D4E061D1A75F1DC001709DB /* MyTraceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTraceVC.m; path = "主界面/MyTraceVC.m"; sourceTree = "<group>"; };
 		7D4E06251A76068A001709DB /* YZSwipeBetweenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSwipeBetweenViewController.h; sourceTree = "<group>"; };
@@ -1083,9 +1091,7 @@
 				7D4E05921A74D869001709DB /* RecommandVC.m */,
 				7D4E06161A75E9DA001709DB /* RecordVC.h */,
 				7D4E06171A75E9DA001709DB /* RecordVC.m */,
-				7D4E06191A75EDEC001709DB /* ReviewQuestionVC.h */,
 				7D2432451A7CD8E900C00F64 /* SubjectCell.h */,
-				7D4E061A1A75EDEC001709DB /* ReviewQuestionVC.m */,
 				7DBD86641A7259DB00205576 /* SubjectVC.h */,
 				7D4E06121A7524C2001709DB /* ReviewVC.h */,
 				7D4E06131A7524C2001709DB /* ReviewVC.m */,
@@ -1095,6 +1101,9 @@
 				7D5DBB2C1A81C1FA0078B99C /* SignVC.m */,
 				7D2432461A7CD8E900C00F64 /* SubjectCell.m */,
 				7DBD86651A7259DB00205576 /* SubjectVC.m */,
+				7D2F929D1AB57FC600D4B18F /* MyQuestionRootViewController.h */,
+				7D2F929E1AB57FC600D4B18F /* MyQuestionRootViewController.m */,
+				7D2F929F1AB57FC600D4B18F /* MyQuestionRootViewController.xib */,
 			);
 			name = "科目";
 			sourceTree = "<group>";
@@ -1112,6 +1121,8 @@
 				7D4445351A945EF600A4BE04 /* WKUITextField.m */,
 				7DF3C2401AA4BE980068812D /* WKUILabel.h */,
 				7DF3C2411AA4BE980068812D /* WKUILabel.m */,
+				7D2F92A21AB5C5A900D4B18F /* UIImage+Graduate.h */,
+				7D2F92A31AB5C5A900D4B18F /* UIImage+Graduate.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1277,8 +1288,8 @@
 		7D5DBB311A8310310078B99C /* 个人 */ = {
 			isa = PBXGroup;
 			children = (
-				7D5DBB321A83104D0078B99C /* SelfCenterViewController.h */,
 				7D5DBB331A83104D0078B99C /* SelfCenterViewController.m */,
+				7D5DBB321A83104D0078B99C /* SelfCenterViewController.h */,
 				7D5DBB351A83108D0078B99C /* SelfHeaderCell.h */,
 				7D5DBB361A83108D0078B99C /* SelfHeaderCell.m */,
 				7D5DBB381A8310A00078B99C /* SelfOtherCell.h */,
@@ -1646,6 +1657,8 @@
 				7D4445321A91907100A4BE04 /* MPostReport.m */,
 				7D40333F1A9B435600BDD1D5 /* MQuesPrint.h */,
 				7D4033401A9B435600BDD1D5 /* MQuesPrint.m */,
+				7D2F92A51AB5E88000D4B18F /* MSignCountStatus.h */,
+				7D2F92A61AB5E88000D4B18F /* MSignCountStatus.m */,
 			);
 			name = ApiTools;
 			sourceTree = "<group>";
@@ -1829,11 +1842,11 @@
 				TargetAttributes = {
 					7D6A51861A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = KQ5836GK89;
+						DevelopmentTeam = 2GRZFYGA77;
 					};
 					7D6A519F1A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = KQ5836GK89;
+						DevelopmentTeam = 2GRZFYGA77;
 						TestTargetID = 7D6A51861A69610600355923;
 					};
 				};
@@ -1898,6 +1911,7 @@
 				7D24329C1A7DD18F00C00F64 /* camera_line_h@2x.png in Resources */,
 				7D2432B11A7DD18F00C00F64 /* touch_focus_x.png in Resources */,
 				7D2432AF1A7DD18F00C00F64 /* touch_focus.png in Resources */,
+				7D2F92A11AB57FC600D4B18F /* MyQuestionRootViewController.xib in Resources */,
 				7D5DBBBE1A8494E60078B99C /* read_me.txt in Resources */,
 				7D5DBB521A8356000078B99C /* SquareStoryboard.storyboard in Resources */,
 				7D2432AD1A7DD18F00C00F64 /* switch_camera_h.png in Resources */,
@@ -1926,12 +1940,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D2F92A41AB5C5A900D4B18F /* UIImage+Graduate.m in Sources */,
 				7D0A87F21A85D462001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Sources */,
 				7D44BC1D1A85A59600094D15 /* AvenirNextLTPro-UltLt.otf in Sources */,
 				7D4E058C1A74C636001709DB /* SetSubjectVC.m in Sources */,
 				7D4E05C61A74EF71001709DB /* SDWebImagePrefetcher.m in Sources */,
 				7D5DBB621A8356540078B99C /* MJRefreshHeaderView.m in Sources */,
 				7D4E05CD1A74EF71001709DB /* UIView+WebCacheOperation.m in Sources */,
+				7D2F92A01AB57FC600D4B18F /* MyQuestionRootViewController.m in Sources */,
 				7D0A87FA1A85ED2A001A33F7 /* CircularProgressView.m in Sources */,
 				7D4E05BE1A74EF71001709DB /* MKAnnotationView+WebCache.m in Sources */,
 				7D2432971A7DD18F00C00F64 /* PostViewController.m in Sources */,
@@ -2060,7 +2076,6 @@
 				7DA994DA1A7A031F00A879CF /* MRegister.m in Sources */,
 				7DD888F41A6ACB4700D198DD /* LoginVC.m in Sources */,
 				7D2432B51A7DD18F00C00F64 /* SCNavigationController.m in Sources */,
-				7D4E061B1A75EDEC001709DB /* ReviewQuestionVC.m in Sources */,
 				7D2432D41A7E453F00C00F64 /* SWTableViewCell.m in Sources */,
 				7D44BC0D1A84BF4400094D15 /* MyTraceList.m in Sources */,
 				7D5DBB4A1A834BDF0078B99C /* FeedBackViewController.m in Sources */,
@@ -2087,6 +2102,7 @@
 				7D2432291A7C764200C00F64 /* MMainList.m in Sources */,
 				7D5DBB9F1A8460D80078B99C /* MEssence.m in Sources */,
 				7D4E05C71A74EF71001709DB /* UIButton+WebCache.m in Sources */,
+				7D2F92A71AB5E88000D4B18F /* MSignCountStatus.m in Sources */,
 				7D4E05801A749CE4001709DB /* MediaPlayController.m in Sources */,
 				7D4445331A91907100A4BE04 /* MPostReport.m in Sources */,
 				7D2432D61A7E453F00C00F64 /* SWUtilityButtonView.m in Sources */,
@@ -2209,7 +2225,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-fobjc-arc";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8d3ab847-1963-44ce-800d-9cca6547ee3e";
 				SDKROOT = iphoneos8.1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
@@ -2246,7 +2262,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-fobjc-arc";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8d3ab847-1963-44ce-800d-9cca6547ee3e";
 				SDKROOT = iphoneos8.1;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -2287,7 +2303,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8d3ab847-1963-44ce-800d-9cca6547ee3e";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -2328,7 +2344,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8d3ab847-1963-44ce-800d-9cca6547ee3e";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";

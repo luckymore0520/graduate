@@ -7,6 +7,7 @@
 //
 
 #import "EssenceListViewController.h"
+#import "MEssenceCollect.h"
 #import "EssenceListCell.h"
 #import "ButtonGroup.h"
 #import "MGetEssenceList.h"
@@ -17,7 +18,7 @@
 #import "MEssenceDownload.h"
 #import "EssenceDetailViewController.h"
 #import "EssenceDetailWebViewController.h"
-@interface EssenceListViewController ()<ButtonGroupDelegate,UIAlertViewDelegate>
+@interface EssenceListViewController ()<ButtonGroupDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 
 @property (nonatomic,strong)NSMutableArray* essenceList;
 @property (nonatomic,strong)UIView* editView;
@@ -85,6 +86,10 @@
     } else if ([names isEqualToString:@"MEssenceDownload"])
     {
         [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
+    } else if ([names isEqualToString:@"MEssenceCollect"])
+    {
+        [ToolUtils showToast:@"收藏成功" toView:self.view];
+        self.selectEssence.isCollected_ = @1;
     }
 }
 
@@ -95,26 +100,9 @@
 
 - (IBAction)download:(id)sender {
     UIButton* button = (UIButton*)sender;
-    MEssence* essence = [self.essenceList objectAtIndex:button.tag];
-    self.selectEssence = essence;
-    if (!_user.email_||_user.email_.length==0) {
-        if (!self.emailAlert) {
-            _emailAlert = [[UIAlertView alloc]initWithTitle:@"设置邮箱" message:@"下载前请先设置邮箱" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        }
-        [_emailAlert show];
-        return;
-    } else if (essence.isDownloaded_.integerValue==1||essence.needShare_.integerValue==0) {
-         [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
-    } else {
-        if (!self.shareAlert) {
-            _shareAlert = [[UIAlertView alloc]initWithTitle:@"先分享，再下载" message:@"因为是星级帖，所以要先分享后再下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"分享", nil];
-        }
-        [_shareAlert show];
-    }
-    
-    
-    
-    
+    self.selectEssence = [self.essenceList objectAtIndex:button.tag];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"发送至邮箱",@"保存至我的收藏", nil];
+    [actionSheet showInView:self.view];
     
 }
 
@@ -161,6 +149,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (tableView==self.tableView) {
         MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
         if (essence.hasDownload_.integerValue==1) {
@@ -176,7 +165,33 @@
     }
 }
 
-
+#pragma mark -UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        MEssence* essence = self.selectEssence;
+        if (!_user.email_||_user.email_.length==0) {
+            if (!self.emailAlert) {
+                _emailAlert = [[UIAlertView alloc]initWithTitle:@"设置邮箱" message:@"下载前请先设置邮箱" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            }
+            [_emailAlert show];
+            return;
+        } else if (essence.isDownloaded_.integerValue==1||essence.needShare_.integerValue==0) {
+            [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+        } else {
+            if (!self.shareAlert) {
+                _shareAlert = [[UIAlertView alloc]initWithTitle:@"先分享，再下载" message:@"因为是星级帖，所以要先分享后再下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"分享", nil];
+            }
+            [_shareAlert show];
+        }
+    } else {
+        if (self.selectEssence.isCollected_) {
+            [ToolUtils showToast:@"您已收藏该资料" toView:self.view];
+            return;
+        }
+        [[[MEssenceCollect alloc]init]load:self id:self.selectEssence.id_ type:1];
+    }
+}
 
 #pragma mark -AlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

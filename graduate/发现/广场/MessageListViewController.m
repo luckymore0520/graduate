@@ -109,6 +109,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     MComment* comment = [self.commentList objectAtIndex:indexPath.row];
     ChatCenterDetailViewController* nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"centerDetail"];
     nextVC.postId = comment.pid_;

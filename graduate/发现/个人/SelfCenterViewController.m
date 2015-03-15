@@ -92,10 +92,6 @@
                                            [cell.cellImgView setImage:[UIImage imageNamed:@"我的收藏"]];
                                            break;
                                        case 1:
-                                           [cell.cellNameLabel setText:@"检测更新"];
-                                           [cell.cellImgView setImage:[UIImage imageNamed:@"检测更新"]];
-                                           break;
-                                       case 2:
                                            [cell.cellImgView setImage:[UIImage imageNamed:@"关于我们"]];
                                            [cell.cellNameLabel setText:@"关于我们"];
                                            break;
@@ -115,7 +111,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section==0) {
         [self performSegueWithIdentifier:@"editSelfInfo" sender:nil];
     } else if (indexPath.section==1)
@@ -147,9 +143,9 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section==0) {
-        return 90;
+        return 100;
     }
-    return 50;
+    return 59;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -163,7 +159,7 @@
         case 2:
             return 1;
         case 3:
-            return 3;
+            return 2;
         case 4:
             return 1;
         default:
@@ -182,10 +178,13 @@
     return 15;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return 0;
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 15)];
+    return view;
 }
+
+
 /*
 #pragma mark - Navigation
 

@@ -12,8 +12,8 @@
 - (void)setSelect:(BOOL) select;
 {
     [self.selectView setHidden:!select];
-    if (_isStar) {
-        [self.stateImg setHidden:select];
-    }
+//    if (_isStar) {
+//        [self.stateImg setHidden:select];
+//    }
 }
 @end

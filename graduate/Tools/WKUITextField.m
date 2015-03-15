@@ -11,11 +11,11 @@
 @implementation WKUITextField
 // placeholder position
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    return CGRectInset( bounds , 20 , 20 );
+    return CGRectInset( bounds , 10 , 0 );
 }
 
 // text position
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-    return CGRectInset( bounds , 20 , 20 );
+    return CGRectInset( bounds , 10 , 0 );
 }
 @end

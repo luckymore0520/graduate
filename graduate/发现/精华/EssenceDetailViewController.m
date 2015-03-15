@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *essenceShowTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *essenceUploadLabel;
 @property (weak, nonatomic) IBOutlet UIButton *essenceDownloadBt;
-@property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
+@property (weak, nonatomic) IBOutlet UICollectionView *videoCollectionView;
 @property (nonatomic,strong)MUser* user;
 @property (nonatomic,strong)UITextField* editTextView;
 @property (nonatomic,strong)UIView* editView;
@@ -70,18 +70,19 @@
         [self.essenceSizeLabel setText:self.essence.resSize_];
     }
     if (self.essence.browseTimes_) {
-        [self.essenceShowTimeLabel setText:[NSString stringWithFormat:@"%d次",self.essence.browseTimes_.integerValue]];
-        
+        [self.essenceShowTimeLabel setText:[NSString stringWithFormat:@"%ld次",(long)self.essence.browseTimes_.integerValue]];
     }
     if (self.essence.downloadTimes_) {
-         [self.essenceDownloadTimeLabel setText:[NSString stringWithFormat:@"%d次",self.essence.downloadTimes_.integerValue]];
-    }
-    if (self.essence.isCollected_.integerValue==1) {
-        [self.essenceCollectButton setSelected:YES];
+         [self.essenceDownloadTimeLabel setText:[NSString stringWithFormat:@"%ld次",(long)self.essence.downloadTimes_.integerValue]];
     }
     if (self.essence.needShare_.integerValue==1) {
+        self.essenceShareLabel.text = @"这是研友辛辛苦苦找的哦！为了帮助更多研伴，请先分享哦！";
         [self.essenceShareLabel setHidden:NO];
     }
+    if (self.essence.type_ == 0) {
+        
+    }
+    [self.view layoutIfNeeded];
 }
 
 
@@ -96,18 +97,16 @@
         [self loadData];
     } else if ([names isEqualToString:@"MEssenceCollect"])
     {
-        if (self.essenceCollectButton.selected) {
-            [ToolUtils showToast:@"收藏成功" toView:self.view];
-
-        } else {
-            [ToolUtils showToast:@"已取消收藏" toView:self.view];
-
-        }
+        [ToolUtils showToast:@"收藏成功" toView:self.view];
     }
 }
 - (IBAction)collect:(id)sender {
-    [[[MEssenceCollect alloc]init]load:self id:self.essence.id_ type:self.essenceCollectButton.selected?0:1];
-    [self.essenceCollectButton setSelected:!self.essenceCollectButton.selected];
+    if (self.essence.isCollected_) {
+        [ToolUtils showToast:@"您已收藏该资料" toView:self.view];
+        return;
+    }
+    self.essence.isCollected_ = @YES;
+    [[[MEssenceCollect alloc]init]load:self id:self.essence.id_ type:1];
 }
 
 - (IBAction)cancelShare:(id)sender {
@@ -162,6 +161,7 @@
 - (void)editEmail
 {
     [self addMask];
+    [self addMaskAtNavigation];
     if (!_editView) {
         CGRect frame = CGRectMake(0, SC_DEVICE_SIZE.height, SC_DEVICE_SIZE.width, 120);
         _editView = [[UIView alloc]initWithFrame:frame];
@@ -213,6 +213,7 @@
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
     [self removeMask];
+    [self removeMaskAtNavigation];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.editView.transform = CGAffineTransformMakeTranslation(0, 0);
     } completion:^(BOOL finished) {

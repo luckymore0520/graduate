@@ -43,20 +43,20 @@
     }
     return self;
 }
-- (UIImage*)brighten:(UIImage*)selectedImage
-{
-    CIFilter* _colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
-    CIImage* _image =[CIImage imageWithCGImage:selectedImage.CGImage];
-    [_colorControlsFilter setValue:_image forKey:@"inputImage"];
-    [_colorControlsFilter setValue:[NSNumber numberWithFloat:1.2] forKey:@"inputContrast"];
-    CIImage *outputImage= [_colorControlsFilter outputImage];//取得输出图像
-    CIContext *_context=[CIContext contextWithOptions:nil];//使用GPU渲染，推荐,但注意GPU的CIContext无法跨应用访问，例如直接在UIImagePickerController的完成方法中调用上下文处理就会自动降级为CPU渲染，所以推荐现在完成方法中保存图像，然后在主程序中调用
-    CGImageRef temp=[_context createCGImage:outputImage fromRect:[outputImage extent]];
-
-    UIImage* returnImage = [UIImage imageWithCGImage:temp];
-    CGImageRelease(temp);//释放CGImage对象
-    return returnImage;
-}
+//- (UIImage*)brighten:(UIImage*)selectedImage
+//{
+//    CIFilter* _colorControlsFilter = [CIFilter filterWithName:@"CIColorControls"];
+//    CIImage* _image =[CIImage imageWithCGImage:selectedImage.CGImage];
+//    [_colorControlsFilter setValue:_image forKey:@"inputImage"];
+//    [_colorControlsFilter setValue:[NSNumber numberWithFloat:1.2] forKey:@"inputContrast"];
+//    CIImage *outputImage= [_colorControlsFilter outputImage];//取得输出图像
+//    CIContext *_context=[CIContext contextWithOptions:nil];//使用GPU渲染，推荐,但注意GPU的CIContext无法跨应用访问，例如直接在UIImagePickerController的完成方法中调用上下文处理就会自动降级为CPU渲染，所以推荐现在完成方法中保存图像，然后在主程序中调用
+//    CGImageRef temp=[_context createCGImage:outputImage fromRect:[outputImage extent]];
+//
+//    UIImage* returnImage = [UIImage imageWithCGImage:temp];
+//    CGImageRelease(temp);//释放CGImage对象
+//    return returnImage;
+//}
 
 - (void)initViews
 {
@@ -67,13 +67,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     if (_postImage) {
-        UIImageView *imgView = [[UIImageView alloc] initWithImage:[self brighten:_postImage]];
-        
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:_postImage];
         imgView.clipsToBounds = YES;
         imgView.contentMode = UIViewContentModeScaleAspectFill;
         imgView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         imgView.center = self.view.center;
-        _postImage = imgView.image;
         [self.view addSubview:imgView];
     }
     
@@ -307,8 +305,8 @@
     question.img = fileName;
     question.userid = [ToolUtils getUserid];
     question.review_time = 0;
-    question.is_master = NO;
-    question.isUpload = NO;
+    question.is_master = @NO;
+    question.isUpload = @NO;
     question.review_time = [NSNumber numberWithInt:0];
     question.myDay = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue];
     question.create_time = [ToolUtils getCurrentDate];
