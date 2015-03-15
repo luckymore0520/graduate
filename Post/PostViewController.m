@@ -115,6 +115,16 @@
     [self animationWithOrient:orient];
 }
 
+-(UIImage*) OriginImage:(UIImage *)image scaleToSize:(CGSize)size
+{
+    UIGraphicsBeginImageContext(size);  //size 为CGSize类型，即你所需要的图片尺寸
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;   //返回的就是已经改变的图片
+}
+
+
 - (void)animationWithOrient:(UIDeviceOrientation)orient
 {
     NSArray* angle = @[@0,@0,@M_PI,@M_PI_2,@-M_PI_2,@0,@0];
@@ -293,10 +303,16 @@
     
     NSString* fileName  = [[NSString stringWithFormat:@"%@%@.png",[ToolUtils getUserid],[dateFormatter stringFromDate:[NSDate date]]]stringByReplacingOccurrencesOfString:@" " withString:@""];
     [ToolUtils save:data name:fileName];
+    
+    
+    NSString* thumbNailFileName = [[NSString stringWithFormat:@"%@%@_thumb.png",[ToolUtils getUserid],[dateFormatter stringFromDate:[NSDate date]]]stringByReplacingOccurrencesOfString:@" " withString:@""];
+    UIImage *image = [self OriginImage:_postImage scaleToSize:CGSizeMake(130, 130)];
+    [ToolUtils save:UIImageJPEGRepresentation(image, 1) name:thumbNailFileName];
     NSError* error;
     CoreDataHelper* helper = [CoreDataHelper getInstance];
     Question* question=(Question *)[NSEntityDescription insertNewObjectForEntityForName:@"Question" inManagedObjectContext:helper.managedObjectContext];
     Subject* subject =[_subjects objectAtIndex:[_subjectView selectedIndex]];
+    question.thumb_img = thumbNailFileName;
     question.questionid = fileName;
     question.subject = subject.name;
     question.type = [NSNumber numberWithInteger :subject.type];

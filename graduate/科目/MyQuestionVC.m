@@ -17,6 +17,7 @@
 #import "MQuesDelete.h"
 #import "Subject.h"
 #import "ButtonGroup.h"
+#import "UIImage+Resize.h"
 @interface MyQuestionVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *photoView;
 @property (nonatomic,strong)NSMutableArray* selectedArray;
@@ -350,7 +351,13 @@
     if (question.is_recommand.integerValue==0) {
         [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:130 height:130] placeholderImage:[UIImage imageNamed:@"placeholder"]];
     } else {
-        [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+        UIImage* image;
+        if (question.thumb_img) {
+            image = [UIImage imageWithData:[ToolUtils loadData:question.thumb_img]];
+        } else {
+            image = [UIImage imageWithData:[ToolUtils loadData:question.questionid]];
+        }
+        [cell.imgView setImage:image];
     }
     if (question.is_highlight.integerValue==1) {
         [cell setIsStar:YES];
@@ -385,7 +392,7 @@
             MQuestion* b = (MQuestion*)obj2;
             return a.myDay_.integerValue < b.myDay_.integerValue;
         }];
-        Question* question = [[[self.myQuestions objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+        Question* question = [[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         detailVC.currentQuestionId = question.questionid;
         [self.navigationController pushViewController:detailVC animated:YES];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -479,6 +486,7 @@
         [delete load:self id:questionIds];
         
         [self.selectedArray removeAllObjects];
+        [self loadData];
         [self.photoView reloadData];
 
     }
