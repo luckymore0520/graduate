@@ -113,6 +113,12 @@
     self.navigationItem.rightBarButtonItem = myAddButton;
 }
 - (IBAction)showSelectedType:(UIButton *)sender {
+    if (sender != self.selectAllButton) {
+        [self.selectAllButton setSelected:NO];
+    } else {
+        [_selectReviewdButton setSelected:NO];
+        [_selectUnReviewButton setSelected:NO];
+    }
     [sender setSelected:!sender.selected];
     [self loadData];
     [self.photoView reloadData];
@@ -168,9 +174,7 @@
                 }
             }
             if (_selectImportantButton.selected) {
-                if (question.is_highlight.integerValue==1) {
-                    shoudShow = YES;
-                } else {
+                if (question.is_highlight.integerValue!=1) {
                     shoudShow = NO;
                 }
             }
