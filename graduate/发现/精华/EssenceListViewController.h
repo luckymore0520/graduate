@@ -12,5 +12,6 @@
 @property (nonatomic,assign)NSInteger type;
 @property (nonatomic,weak)BaseFuncVC* parentVC;
 @property (nonatomic,strong)NSString* key;
+@property (nonatomic,assign)BOOL isMyCollection;
 - (void)reloadData;
 @end

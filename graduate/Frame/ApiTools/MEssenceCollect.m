@@ -11,6 +11,6 @@
 @implementation MEssenceCollect
 - (ApiHelper *)load:(id<ApiDelegate>)delegate id:(NSString *)essenceId type:(NSInteger)type
 {
-    return [self load:@"MEssenceCollect" params:[NSDictionary dictionaryWithObjectsAndKeys:essenceId,@"id",[NSString stringWithFormat:@"%d",type],@"type", nil] delegate:delegate];
+    return [self load:@"MEssenceCollect" params:[NSDictionary dictionaryWithObjectsAndKeys:essenceId,@"id",[NSString stringWithFormat:@"%ld",(long)type],@"type", nil] delegate:delegate];
 }
 @end

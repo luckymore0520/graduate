@@ -89,6 +89,8 @@
 		7D2F92A71AB5E88000D4B18F /* MSignCountStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A61AB5E88000D4B18F /* MSignCountStatus.m */; };
 		7D2F92AA1AB72F6900D4B18F /* MMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A91AB72F6900D4B18F /* MMedia.m */; };
 		7D2F92AD1AB73C3300D4B18F /* EssenceMediaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92AC1AB73C3300D4B18F /* EssenceMediaCell.m */; };
+		7D2F92B11AB743E000D4B18F /* MyCollectionRootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */; };
+		7D2F92B21AB743E000D4B18F /* MyCollectionRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */; };
 		7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */; };
 		7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333D1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m */; };
 		7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4033401A9B435600BDD1D5 /* MQuesPrint.m */; };
@@ -439,6 +441,9 @@
 		7D2F92A91AB72F6900D4B18F /* MMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMedia.m; path = Frame/Model/MMedia.m; sourceTree = "<group>"; };
 		7D2F92AB1AB73C3300D4B18F /* EssenceMediaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EssenceMediaCell.h; path = "发现/精华/EssenceMediaCell.h"; sourceTree = "<group>"; };
 		7D2F92AC1AB73C3300D4B18F /* EssenceMediaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EssenceMediaCell.m; path = "发现/精华/EssenceMediaCell.m"; sourceTree = "<group>"; };
+		7D2F92AE1AB743E000D4B18F /* MyCollectionRootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCollectionRootView.h; path = "发现/精华/MyCollectionRootView.h"; sourceTree = "<group>"; };
+		7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCollectionRootView.m; path = "发现/精华/MyCollectionRootView.m"; sourceTree = "<group>"; };
+		7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyCollectionRootView.xib; path = "发现/精华/MyCollectionRootView.xib"; sourceTree = "<group>"; };
 		7D4033391A9B39EB00BDD1D5 /* BackUpSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingViewController.h; path = "发现/备份/BackUpSettingViewController.h"; sourceTree = "<group>"; };
 		7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackUpSettingViewController.m; path = "发现/备份/BackUpSettingViewController.m"; sourceTree = "<group>"; };
 		7D40333C1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingTableViewCell.h; path = "发现/备份/BackUpSettingTableViewCell.h"; sourceTree = "<group>"; };
@@ -1372,6 +1377,9 @@
 				7D4445381A94D1C300A4BE04 /* EssenceRootViewController.m */,
 				7D2F92AB1AB73C3300D4B18F /* EssenceMediaCell.h */,
 				7D2F92AC1AB73C3300D4B18F /* EssenceMediaCell.m */,
+				7D2F92AE1AB743E000D4B18F /* MyCollectionRootView.h */,
+				7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */,
+				7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */,
 			);
 			name = "精华";
 			sourceTree = "<group>";
@@ -1896,6 +1904,7 @@
 				7DBD86751A72690700205576 /* myVideo.m4v in Resources */,
 				7D2432AA1A7DD18F00C00F64 /* shot_h@2x.png in Resources */,
 				7D5DBB5E1A8356540078B99C /* MJRefresh.bundle in Resources */,
+				7D2F92B21AB743E000D4B18F /* MyCollectionRootView.xib in Resources */,
 				7D2432A51A7DD18F00C00F64 /* flashing_on.png in Resources */,
 				7D2432AE1A7DD18F00C00F64 /* switch_camera_h@2x.png in Resources */,
 				7D4E05E41A74EF7B001709DB /* MBProgressHUD.bundle in Resources */,
@@ -2090,6 +2099,7 @@
 				7D2432D41A7E453F00C00F64 /* SWTableViewCell.m in Sources */,
 				7D44BC0D1A84BF4400094D15 /* MyTraceList.m in Sources */,
 				7D5DBB4A1A834BDF0078B99C /* FeedBackViewController.m in Sources */,
+				7D2F92B11AB743E000D4B18F /* MyCollectionRootView.m in Sources */,
 				7D24323B1A7CB88200C00F64 /* GraduateModel.xcdatamodeld in Sources */,
 				7D4E05771A748EFB001709DB /* MAOFlipInteraction.m in Sources */,
 				7D6A518D1A69610600355923 /* main.m in Sources */,

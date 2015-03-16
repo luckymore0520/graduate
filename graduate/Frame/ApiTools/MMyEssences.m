@@ -13,4 +13,13 @@
 {
     return [self load:@"MMyEssences" params:nil delegate:delegate];
 }
+
+- (ApiHelper *)load:(id<ApiDelegate>)delegate resType:(NSString *)resType
+{
+    NSDictionary* dic = nil;
+    if (resType!=nil) {
+        dic = @{@"resType":resType};
+    }
+    return [self load:@"MMyEssences" params:dic delegate:delegate];
+}
 @end

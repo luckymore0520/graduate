@@ -14,7 +14,9 @@
 #import "MReturn.h"
 #import "WKNavigationViewController.h"
 #import "LoginVC.h"
+#import "MyCollectionRootView.h"
 #define HEADIMG 200
+
 @interface SelfCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong) MUser* user;
@@ -132,9 +134,10 @@
     } else if (indexPath.section==3)
     {
         if (indexPath.row==0) {
-            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
-            UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"myCollection"];
-            [self.navigationController pushViewController:nextVC animated:YES];
+//            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
+//            UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"myCollection"];
+            MyCollectionRootView* myCollection = [[MyCollectionRootView alloc]initWithNibName:NSStringFromClass([MyCollectionRootView class]) bundle:nil];
+            [self.navigationController pushViewController:myCollection animated:YES];
         }
     }
     

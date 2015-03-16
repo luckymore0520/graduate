@@ -10,12 +10,14 @@
 #import "MyQuestionVC.h"
 #import "ButtonGroup.h"
 #import "UIImage+Graduate.h"
+#import "MyCollectionRootView.h"
 @interface MyQuestionRootViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *myNoteButton;
 @property (weak, nonatomic) IBOutlet UIButton *myCollectionButton;
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
 @property (weak, nonatomic) IBOutlet UIView *myNoteView;
 @property (strong,nonatomic) MyQuestionVC* myQuestionVC;
+@property (strong,nonatomic) MyCollectionRootView* myCollection;
 @property (weak, nonatomic) IBOutlet ButtonGroup *buttonGroupView;
 
 @end
@@ -33,8 +35,14 @@
     _myQuestionVC.shoudUpdate = self.subject.shoudUpdate;
     _myQuestionVC.subject = self.subject.name;
     _myQuestionVC.view.frame = self.myNoteView.frame;
+    
+    _myCollection = [[MyCollectionRootView alloc]initWithNibName:NSStringFromClass([MyCollectionRootView class]) bundle:nil];
+    _myCollection.view.frame = self.myNoteView.frame;
+    [self.view addSubview:_myCollection.view];
     [self.view addSubview:_myQuestionVC.view];
     [self addChildViewController:_myQuestionVC];
+    [self addChildViewController:_myCollection];
+    [self selectButton:self.myNoteButton];
 }
 
 - (void)initViews
@@ -72,6 +80,15 @@
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+- (IBAction)selectButton:(id)sender {
+    if (sender == self.myNoteButton) {
+        [self.myQuestionVC.view setHidden:NO];
+        [self.myCollection.view setHidden:YES];
+    } else {
+        [self.myQuestionVC.view setHidden:YES];
+        [self.myCollection.view setHidden:NO];
     }
 }
 

@@ -58,6 +58,9 @@
                                     <state key="selected">
                                         <color key="titleColor" red="0.1647058824" green="0.12941176469999999" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="selectButton:" destination="-1" eventType="touchUpInside" id="B5D-fS-oER"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sbr-MJ-0kP">
                                     <rect key="frame" x="0.0" y="0.0" width="65" height="32"/>
@@ -69,6 +72,9 @@
                                     <state key="selected">
                                         <color key="titleColor" red="0.16470588235294117" green="0.12941176470588237" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="selectButton:" destination="-1" eventType="touchUpInside" id="aBp-IA-TjD"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

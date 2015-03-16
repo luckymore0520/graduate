@@ -9,6 +9,7 @@
 #import "ApiHelper.h"
 
 @interface MMyEssences : ApiHelper
-- (ApiHelper *)load:(id<ApiDelegate>)delegate;
+- (ApiHelper *)load:(id<ApiDelegate>)delegate ;
+- (ApiHelper *)load:(id<ApiDelegate>)delegate resType:(NSString*)resType;
 
 @end

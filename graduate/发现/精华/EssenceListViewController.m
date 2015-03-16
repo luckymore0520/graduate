@@ -11,6 +11,7 @@
 #import "EssenceListCell.h"
 #import "ButtonGroup.h"
 #import "MGetEssenceList.h"
+#import "MMyEssences.h"
 #import "MEssenceList.h"
 #import "MUpdateUserInfo.h"
 #import "MUser.h"
@@ -54,16 +55,28 @@
 
 - (void)loadData
 {
+    if (_isMyCollection) {
+        MMyEssences* myEssence = [[MMyEssences alloc]init];
+        myEssence = (MMyEssences*)[myEssence setPage:page limit:pageCount];
 
-    MGetEssenceList* getEssenceList = [[MGetEssenceList alloc]init];
-    getEssenceList = (MGetEssenceList*)[getEssenceList setPage:page limit:pageCount];
-    [getEssenceList load:self type:self.type key:_key];
+        if (self.type==-1) {
+            [myEssence load:self];
+        } else {
+            [myEssence load:self resType:[NSString stringWithFormat:@"%ld",(long)self.type]];
+
+        }
+    } else {
+        MGetEssenceList* getEssenceList = [[MGetEssenceList alloc]init];
+        getEssenceList = (MGetEssenceList*)[getEssenceList setPage:page limit:pageCount];
+        [getEssenceList load:self type:self.type key:_key];
+    }
+   
 }
 
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
-    if ([names isEqualToString:@"MEssenceList"]) {
+    if ([names isEqualToString:@"MEssenceList"]||[names isEqualToString:@"MMyEssences"]) {
         MEssenceList* essences = [MEssenceList objectWithKeyValues:data];
         for (MEssence* essence in essences.essence_) {
             BOOL has = NO;
@@ -136,8 +149,10 @@
         }
         [cell.essenceIsVipLabel setHidden:!essence.needShare_.boolValue];
         [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.resType_.integerValue]]];
+        if (_isMyCollection) {
+            [cell.essenceDownloadBt setHidden:YES];
+        }
         return cell;
-
     } 
     return nil;
 }
@@ -150,6 +165,7 @@
         if (essence.hasDownload_.integerValue==1) {
             EssenceDetailViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceDetail"];
             detail.essence = essence;
+            detail.isMyCollection = self.isMyCollection;
             [self.parentVC.navigationController pushViewController:detail animated:YES];
         } else {
             EssenceDetailWebViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];

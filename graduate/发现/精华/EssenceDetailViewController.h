@@ -11,6 +11,7 @@
 @interface EssenceDetailViewController : BaseFuncVC
 @property (nonatomic,strong)MEssence* essence;
 @property (nonatomic,weak)BaseFuncVC* fatherVC;
+@property (nonatomic,assign)BOOL isMyCollection;
 - (void)addRightButton;
 
 @end

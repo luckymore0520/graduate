@@ -14,6 +14,7 @@
 #import "MEssenceCollect.h"
 #import "EssenceMediaCell.h"
 @interface EssenceDetailViewController ()<UIAlertViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *essenceShareLabel;
 @property (weak, nonatomic) IBOutlet UIView *maskBackView;
@@ -50,6 +51,10 @@
     }
     _essenceDownloadBt.layer.cornerRadius = 5;
     [self.navigationController setNavigationBarHidden:NO];
+    if (_isMyCollection) {
+        [_essenceDownloadBt setHidden:YES];
+        [_essenceCollectButton setHidden:YES];
+    }
 }
 
 
@@ -107,7 +112,7 @@
     }
 }
 - (IBAction)collect:(id)sender {
-    if (self.essence.isCollected_) {
+    if (self.essence.isCollected_.boolValue) {
         [ToolUtils showToast:@"您已收藏该资料" toView:self.view];
         return;
     }

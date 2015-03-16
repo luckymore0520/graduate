@@ -853,7 +853,6 @@
                                             </variation>
                                             <connections>
                                                 <action selector="collect:" destination="6CP-I8-g3B" eventType="touchUpInside" id="HMA-04-WDc"/>
-                                                <action selector="download:" destination="6CP-I8-g3B" eventType="touchUpInside" id="Zgp-Vc-ICo"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资料类别" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sUU-PI-zLO">
@@ -1497,6 +1496,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="essenceCollectButton" destination="76g-Zj-oH5" id="V72-EF-xbc"/>
                         <outlet property="essenceDownloadBt" destination="ONo-Tc-oLK" id="Ra5-Fz-bJI"/>
                         <outlet property="essenceDownloadTimeLabel" destination="2sp-oW-YFj" id="YlE-at-nAE"/>
                         <outlet property="essenceShareLabel" destination="9NJ-W7-Ugy" id="m72-MJ-95M"/>
