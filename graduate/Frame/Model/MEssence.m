@@ -9,5 +9,8 @@
 #import "MEssence.h"
 
 @implementation MEssence
-
+- (NSDictionary *)objectClassInArray
+{
+    return @{@"media_" : [MMedia class]};
+}
 @end

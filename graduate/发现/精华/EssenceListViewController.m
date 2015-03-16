@@ -135,12 +135,7 @@
             [cell.essenceDownloadBt setHidden:YES];
         }
         [cell.essenceIsVipLabel setHidden:!essence.needShare_.boolValue];
-        if (self.type==1||self.type==2) {
-            
-        } else if (essence.resType_){
-            [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.resType_.integerValue]]];
-
-        }
+        [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.resType_.integerValue]]];
         return cell;
 
     } 

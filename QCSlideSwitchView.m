@@ -8,7 +8,7 @@
 
 
 #import "QCSlideSwitchView.h"
-
+#import "UIColor+Graduate.h"
 static const CGFloat kHeightOfTopScrollView = 44.0f;
 static const CGFloat kWidthOfButtonMargin = 0.0f;
 static const NSUInteger kTagOfRightSideButton = 999;
@@ -204,8 +204,11 @@ static const NSUInteger kTagOfRightSideButton = 999;
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             CGRect frame = CGRectMake(i*width, 0, width, kHeightOfTopScrollView);
             button.frame = frame;
-            [button setImage:[UIImage imageNamed:_buttonNormalImages[i]] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:_buttonSelectedImages[i]] forState:UIControlStateSelected];
+//            [button setImage:[UIImage imageNamed:_buttonNormalImages[i]] forState:UIControlStateNormal];
+//            [button setImage:[UIImage imageNamed:_buttonSelectedImages[i]] forState:UIControlStateSelected];
+            [button setTitle:_buttonNormalImages[i] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithHex:0x333333] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithHex:0x429dd7] forState:UIControlStateSelected];
             [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
             [button setTag:i+100];
             if (i == 0) {

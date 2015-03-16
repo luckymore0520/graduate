@@ -37,11 +37,11 @@
     self.slideSwitchView.tabItemSelectedColor = [QCSlideSwitchView colorFromHexRGB:@"bb0b15"];
     self.slideSwitchView.shadowImage = [[UIImage imageNamed:@"red_line_and_shadow.png"]
                                         stretchableImageWithLeftCapWidth:59.0f topCapHeight:0.0f];
-    self.slideSwitchView.buttonNormalImages = @[@"列表-最新",@"列表-资讯",@"列表-资料",@"列表-真题"];
-    self.slideSwitchView.buttonSelectedImages = @[@"最新触发",@"资讯触发",@"资料触发",@"真题触发"];
+    self.slideSwitchView.buttonNormalImages = @[@"英语",@"政治",@"数学",@"专业",@"真题"];
+//    self.slideSwitchView.buttonSelectedImages = @[@"最新触发",@"资讯触发",@"资料触发",@"真题触发"];
     self.slideSwitchView.slideSwitchViewDelegate = self;
     self.slideSwitchView.shadowColor = [UIColor colorWithHex:0x429dd7];
-    self.typeArray = @[@3,@1,@0,@2];
+    self.typeArray = @[@1,@2,@3,@4,@5];
     [self.slideSwitchView buildUI];
     [self addRightButton:nil action:@selector(search) img:@"搜索图标"];
     self.searchTextField.layer.borderColor = [UIColor colorOfBorder].CGColor;
@@ -148,7 +148,7 @@
 
 - (NSUInteger)numberOfTab:(QCSlideSwitchView *)view
 {
-    return 4;
+    return 5;
 }
 
 - (UIViewController *)slideSwitchView:(QCSlideSwitchView *)view viewOfTab:(NSUInteger)number

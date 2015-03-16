@@ -87,6 +87,8 @@
 		7D2F92A11AB57FC600D4B18F /* MyQuestionRootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F929F1AB57FC600D4B18F /* MyQuestionRootViewController.xib */; };
 		7D2F92A41AB5C5A900D4B18F /* UIImage+Graduate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A31AB5C5A900D4B18F /* UIImage+Graduate.m */; };
 		7D2F92A71AB5E88000D4B18F /* MSignCountStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A61AB5E88000D4B18F /* MSignCountStatus.m */; };
+		7D2F92AA1AB72F6900D4B18F /* MMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92A91AB72F6900D4B18F /* MMedia.m */; };
+		7D2F92AD1AB73C3300D4B18F /* EssenceMediaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92AC1AB73C3300D4B18F /* EssenceMediaCell.m */; };
 		7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */; };
 		7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333D1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m */; };
 		7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4033401A9B435600BDD1D5 /* MQuesPrint.m */; };
@@ -433,6 +435,10 @@
 		7D2F92A31AB5C5A900D4B18F /* UIImage+Graduate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Graduate.m"; path = "Tools/UIImage+Graduate.m"; sourceTree = "<group>"; };
 		7D2F92A51AB5E88000D4B18F /* MSignCountStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSignCountStatus.h; path = Frame/ApiTools/MSignCountStatus.h; sourceTree = "<group>"; };
 		7D2F92A61AB5E88000D4B18F /* MSignCountStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSignCountStatus.m; path = Frame/ApiTools/MSignCountStatus.m; sourceTree = "<group>"; };
+		7D2F92A81AB72F6900D4B18F /* MMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMedia.h; path = Frame/Model/MMedia.h; sourceTree = "<group>"; };
+		7D2F92A91AB72F6900D4B18F /* MMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMedia.m; path = Frame/Model/MMedia.m; sourceTree = "<group>"; };
+		7D2F92AB1AB73C3300D4B18F /* EssenceMediaCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EssenceMediaCell.h; path = "发现/精华/EssenceMediaCell.h"; sourceTree = "<group>"; };
+		7D2F92AC1AB73C3300D4B18F /* EssenceMediaCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EssenceMediaCell.m; path = "发现/精华/EssenceMediaCell.m"; sourceTree = "<group>"; };
 		7D4033391A9B39EB00BDD1D5 /* BackUpSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingViewController.h; path = "发现/备份/BackUpSettingViewController.h"; sourceTree = "<group>"; };
 		7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackUpSettingViewController.m; path = "发现/备份/BackUpSettingViewController.m"; sourceTree = "<group>"; };
 		7D40333C1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingTableViewCell.h; path = "发现/备份/BackUpSettingTableViewCell.h"; sourceTree = "<group>"; };
@@ -1364,6 +1370,8 @@
 				7D5DBBB01A848D6F0078B99C /* MyCollectionViewController.m */,
 				7D4445371A94D1C300A4BE04 /* EssenceRootViewController.h */,
 				7D4445381A94D1C300A4BE04 /* EssenceRootViewController.m */,
+				7D2F92AB1AB73C3300D4B18F /* EssenceMediaCell.h */,
+				7D2F92AC1AB73C3300D4B18F /* EssenceMediaCell.m */,
 			);
 			name = "精华";
 			sourceTree = "<group>";
@@ -1582,6 +1590,8 @@
 				7D44BC121A84EAC100094D15 /* MKeys.m */,
 				7D46BDD61A98B17000F58613 /* MMsgCount.h */,
 				7D46BDD71A98B17000F58613 /* MMsgCount.m */,
+				7D2F92A81AB72F6900D4B18F /* MMedia.h */,
+				7D2F92A91AB72F6900D4B18F /* MMedia.m */,
 			);
 			name = InterfaceModel;
 			sourceTree = "<group>";
@@ -2039,6 +2049,7 @@
 				7D4445361A945EF600A4BE04 /* WKUITextField.m in Sources */,
 				7D5DBB781A836DD90078B99C /* MessageListViewController.m in Sources */,
 				7D5DBB8D1A83A2F60078B99C /* MCommentPublish.m in Sources */,
+				7D2F92AD1AB73C3300D4B18F /* EssenceMediaCell.m in Sources */,
 				7DA994EC1A7A29C500A879CF /* MIndex.m in Sources */,
 				7D82A5ED1A9F79A30003F5A5 /* JTSlideShadowAnimation.m in Sources */,
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
@@ -2133,6 +2144,7 @@
 				7DA994EF1A7A2A6100A879CF /* MMain.m in Sources */,
 				7D5DBB0E1A8080FF0078B99C /* MUpdateSubject.m in Sources */,
 				7DA994E31A7A0D8B00A879CF /* MLogin.m in Sources */,
+				7D2F92AA1AB72F6900D4B18F /* MMedia.m in Sources */,
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,
 				7D4E05CA1A74EF71001709DB /* UIImage+WebP.m in Sources */,

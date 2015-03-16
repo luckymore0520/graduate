@@ -12,7 +12,9 @@
 #import "MUpdateUserInfo.h"
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
-@interface EssenceDetailViewController ()<UIAlertViewDelegate>
+#import "EssenceMediaCell.h"
+@interface EssenceDetailViewController ()<UIAlertViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *essenceShareLabel;
 @property (weak, nonatomic) IBOutlet UIView *maskBackView;
 @property (weak, nonatomic) IBOutlet UILabel *essenceTitleLabel;
@@ -23,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *essenceUploadLabel;
 @property (weak, nonatomic) IBOutlet UIButton *essenceDownloadBt;
 @property (weak, nonatomic) IBOutlet UICollectionView *videoCollectionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *videoCollectionViewHeight;
 @property (nonatomic,strong)MUser* user;
 @property (nonatomic,strong)UITextField* editTextView;
 @property (nonatomic,strong)UIView* editView;
@@ -79,9 +82,12 @@
         self.essenceShareLabel.text = @"这是研友辛辛苦苦找的哦！为了帮助更多研伴，请先分享哦！";
         [self.essenceShareLabel setHidden:NO];
     }
-    if (self.essence.type_ == 0) {
-        
+    if (self.essence.media_.count==0) {
+        _videoCollectionViewHeight.constant = 0;
+    } else {
+        _videoCollectionViewHeight.constant = (self.essence.media_.count/5+1)*50-15;
     }
+    
     [self.view layoutIfNeeded];
 }
 
@@ -111,6 +117,7 @@
 
 - (IBAction)cancelShare:(id)sender {
     [_maskBackView setHidden:YES];
+    [self removeMaskAtNavigation];
     [UIView animateWithDuration:0.3 animations:^{
         self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, 0);
     }];
@@ -118,6 +125,7 @@
 }
 - (IBAction)share:(id)sender {
     [_maskBackView setHidden:NO];
+    [self addMaskAtNavigation];
     [UIView animateWithDuration:0.3 animations:^{
         self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, -self.shareView.frame.size.height);
     }];
@@ -255,6 +263,33 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -UICollectionViewDatasource
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    EssenceMediaCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([EssenceMediaCell class]) forIndexPath:indexPath];
+    if (indexPath.row<10) {
+        [cell.numberButton setTitle:[NSString stringWithFormat:@"0%ld",(long)indexPath.row+1] forState:UIControlStateNormal];
+    } else {
+        [cell.numberButton setTitle:[NSString stringWithFormat:@"%ld",(long)indexPath.row+1] forState:UIControlStateNormal];
+    }
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.essence.media_.count;
 }
 
 /*

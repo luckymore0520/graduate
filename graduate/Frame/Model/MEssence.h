@@ -7,8 +7,10 @@
 //
 
 #import "BaseModel.h"
-
+#import "MMedia.h"
 @interface MEssence : BaseModel
+@property (retain,nonatomic) NSNumber *bitField0_;
+
 @property (copy,nonatomic) NSString *id_;
 
 @property (copy,nonatomic) NSString *title_;
@@ -40,4 +42,20 @@
 @property (retain,nonatomic) NSNumber *browseTimes_;
 
 @property (retain,nonatomic) NSNumber *downloadTimes_;
+
+@property (retain,nonatomic) NSNumber *subjectType_;
+
+@property (copy,nonatomic) NSString *subjectName_;
+
+@property (retain,nonatomic) NSMutableArray *media_;
+
+@property (copy,nonatomic) NSString *shareUrl_;
+
+@property (retain,nonatomic) NSNumber *memoizedIsInitialized;
+
+@property (retain,nonatomic) NSNumber *memoizedSerializedSize;
+
+@property (retain,nonatomic) NSMutableArray *unknownFields;
+
+@property (retain,nonatomic) NSNumber *memoizedSize;
 @end

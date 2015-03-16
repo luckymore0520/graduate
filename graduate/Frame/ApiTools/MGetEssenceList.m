@@ -12,7 +12,7 @@
 - (ApiHelper *)load:(id<ApiDelegate>)delegate type:(NSInteger)type key:(NSString*)key
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc]init];
-    [params setObject:[NSString stringWithFormat:@"%d",type] forKey:@"type"];
+    [params setObject:[NSString stringWithFormat:@"%ld",type] forKey:@"subType"];
     if (key) {
         [params setObject:key forKey:@"key"];
     }
