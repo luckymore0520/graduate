@@ -44,4 +44,5 @@
 
 @property (retain,nonatomic) NSNumber *sex_;
 
+@property (copy,nonatomic) NSString *sharedUrl_;
 @end
