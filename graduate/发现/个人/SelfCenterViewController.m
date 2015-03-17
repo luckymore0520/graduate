@@ -94,9 +94,14 @@
                                            [cell.cellImgView setImage:[UIImage imageNamed:@"我的收藏"]];
                                            break;
                                        case 1:
+                                           [cell.cellImgView setImage:[UIImage imageNamed:@"个人-联系我们"]];
+                                           [cell.cellNameLabel setText:@"联系我们"];
+                                           break;
+                                       case 2:
                                            [cell.cellImgView setImage:[UIImage imageNamed:@"关于我们"]];
                                            [cell.cellNameLabel setText:@"关于我们"];
                                            break;
+                                     
                                        default:
                                            break;
                                    }
@@ -138,6 +143,11 @@
 //            UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"myCollection"];
             MyCollectionRootView* myCollection = [[MyCollectionRootView alloc]initWithNibName:NSStringFromClass([MyCollectionRootView class]) bundle:nil];
             [self.navigationController pushViewController:myCollection animated:YES];
+        } else if (indexPath.row == 1)
+        {
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+            SelfCenterViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"feedback"];
+            [self.navigationController pushViewController:nextVC animated:YES];
         }
     }
     
@@ -162,7 +172,7 @@
         case 2:
             return 1;
         case 3:
-            return 2;
+            return 3;
         case 4:
             return 1;
         default:
