@@ -9,6 +9,8 @@
 #import "EssenceMediaCell.h"
 #import "UIImage+Graduate.h"
 #import "UIColor+Graduate.h"
+#import <MediaPlayer/MPMoviePlayerViewController.h>
+#import "EssenceDetailWebViewController.h"
 @implementation EssenceMediaCell
 - (void)awakeFromNib
 {
@@ -26,6 +28,14 @@
     [_numberButton setSelected:selected];
 }
 
+- (IBAction)playMedia:(id)sender {
+//    MPMoviePlayerViewController* controller = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL URLWithString:_media.url_]];
+//    [self.viewController presentMoviePlayerViewControllerAnimated:controller];
+    EssenceDetailWebViewController* detail = [self.viewController.storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
+    detail.url = [NSURL URLWithString:_media.url_];
+    [self.viewController.navigationController pushViewController:detail animated:YES];
+
+}
 
 
 @end

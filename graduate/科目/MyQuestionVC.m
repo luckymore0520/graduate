@@ -138,8 +138,6 @@
     [self.selectView setHidden:!self.selectView.hidden];
     [self cancelTransfer:nil];
     self.selectModel = !self.selectModel;
-    UIButton* button = (UIButton*)sender;
-    [button setSelected:!button.selected];
 }
 - (void)loadData
 {

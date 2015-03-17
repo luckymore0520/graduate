@@ -19,6 +19,7 @@
 #import "MEssenceDownload.h"
 #import "EssenceDetailViewController.h"
 #import "EssenceDetailWebViewController.h"
+#import "MyCollectionRootView.h"
 @interface EssenceListViewController ()<ButtonGroupDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 
 @property (nonatomic,strong)NSMutableArray* essenceList;
@@ -27,8 +28,10 @@
 @property (nonatomic,strong)MUser* user;
 @property (nonatomic,strong)UIAlertView* emailAlert;
 @property (nonatomic,strong)UIAlertView* shareAlert;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong)MEssence* selectEssence;
 @property (nonatomic,strong)NSArray* typeArray;
+@property (nonatomic)BOOL selectedAll;
 @end
 
 @implementation EssenceListViewController
@@ -40,6 +43,11 @@
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
 }
 
+- (void)setSelectedMode:(BOOL)selectedMode
+{
+    _selectedMode = selectedMode;
+    [self.tableView reloadData];
+}
 
 - (void)initViews
 {
@@ -151,7 +159,11 @@
         [cell.essenceTypeImage setImage:[UIImage imageNamed:_typeArray[essence.resType_.integerValue]]];
         if (_isMyCollection) {
             [cell.essenceDownloadBt setHidden:YES];
+            [cell setSelectedMode:_selectedMode];
+            cell.delegate = self.parentVC;
+            [cell setSelect:_selectedAll];
         }
+        cell.essenceId = essence.id_;
         return cell;
     } 
     return nil;
@@ -170,12 +182,21 @@
         } else {
             EssenceDetailWebViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
             detail.url = [NSURL URLWithString:essence.url_];
+            [detail setTitle:@"帖子详情"];
+
             detail.postId = essence.id_;
             [self.parentVC.navigationController pushViewController:detail animated:YES];
         }
     }
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_selectedMode) {
+        return nil;
+    }
+    return indexPath;
+}
 #pragma mark -UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -196,7 +217,7 @@
             [_shareAlert show];
         }
     } else {
-        if (self.selectEssence.isCollected_) {
+        if (self.selectEssence.isCollected_.boolValue) {
             [ToolUtils showToast:@"您已收藏该资料" toView:self.view];
             return;
         }
@@ -308,6 +329,14 @@
         }
     } else {
         [ToolUtils showMessage:@"邮箱格式不合法,请输入正确的邮箱"];
+    }
+}
+
+- (void)selectAll:(BOOL)isAll{
+    _selectedAll = isAll;
+    [self.tableView reloadData];
+    for (MEssence* essence in self.essenceList) {
+        [((MyCollectionRootView*)self.parentVC) selectCollection:essence.id_ isSelected:isAll];
     }
 }
 

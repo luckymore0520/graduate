@@ -271,10 +271,6 @@
 }
 
 #pragma mark -UICollectionViewDatasource
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -284,6 +280,8 @@
     } else {
         [cell.numberButton setTitle:[NSString stringWithFormat:@"%ld",(long)indexPath.row+1] forState:UIControlStateNormal];
     }
+    cell.viewController = self;
+    cell.media = self.essence.media_[indexPath.row];
     return cell;
 }
 

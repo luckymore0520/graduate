@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *mediaView;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (nonatomic,strong)MPMoviePlayerController* moviePlayer;
+@property (weak, nonatomic) IBOutlet UIButton *jumpButton;
 @property (nonatomic,strong)LoginVC* rootVC;
 @end
 
@@ -47,14 +48,13 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    
-    NSString *thePath=[[NSBundle mainBundle] pathForResource:@"myVideo" ofType:@"m4v"];
+    NSString *thePath=[[NSBundle mainBundle] pathForResource:@"Movie" ofType:@"mp4"];
     NSLog(@"%@",thePath);
     NSURL *theurl=[NSURL fileURLWithPath:thePath];
     self.moviePlayer=[[MPMoviePlayerController alloc] initWithContentURL:theurl];
     [self.moviePlayer.view setFrame:self.mediaView.frame];
     [self.moviePlayer prepareToPlay];
-    [self.moviePlayer setShouldAutoplay:NO]; // And other options you can look through the documentation.
+    [self.moviePlayer setShouldAutoplay:YES]; // And other options you can look through the documentation.
     [self.mediaView addSubview:self.moviePlayer.view];
 //    [self.moviePlayer setFullscreen:YES];
     [self.moviePlayer.view setUserInteractionEnabled:NO];
@@ -62,10 +62,17 @@
     for (UIView* type in [self.moviePlayer.backgroundView subviews]) {
         NSLog(@"%@",type.class);
     }
-    
-//    [[self.moviePlayer.backgroundView.superview subviews]objectAtIndex:2];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
     [self.moviePlayer play];
 
+}
+- (IBAction)showJumpButton:(id)sender {
+    [_jumpButton setHidden:NO];
+}
+
+-(void) movieFinish:(id)object
+{
+    [_nextButton setHidden:NO];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
