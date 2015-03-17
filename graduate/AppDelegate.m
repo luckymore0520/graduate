@@ -25,6 +25,7 @@
 #import "MMainList.h"
 #import "WKNavigationViewController.h"
 #import "LoginVC.h"
+#import "EssenceDetailViewController.h"
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,ApiDelegate>
 
 @end
@@ -57,8 +58,8 @@
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:WEIBOAPPKEY];
     
-    
-    [WXApi registerApp:@"wxd930ea5d5a258f4f" withDescription:@"demo 2.0"];
+
+    [WXApi registerApp:[ToolUtils weixinAppkey] withDescription:@"研大大"];
     [self initJPush:launchOptions];
     [self initUmen];
     
@@ -86,7 +87,6 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
-        
         [APService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                        UIUserNotificationTypeSound |
                                                        UIUserNotificationTypeAlert)
@@ -234,7 +234,6 @@
         badge = 0;
         [application setApplicationIconBadgeNumber:badge];
     }
-
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -243,11 +242,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-
+    
     NSLog(@"source application:%@",url.absoluteString);
     if ([sourceApplication isEqualToString:@"com.tencent.mqq"]) {
         return [TencentOAuth HandleOpenURL:url];
-
     } else if ([sourceApplication isEqualToString:@"com.sina.weibo"]){
         return [WeiboSDK handleOpenURL:url delegate:self];
     } else
@@ -258,24 +256,23 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    return [TencentOAuth HandleOpenURL:url];
+
+   // [QQApiInterface handleOpenURL:url delegate:(id)[EssenceDetailViewController class]];
+    return [TencentOAuth HandleOpenURL:url] || [WXApi handleOpenURL:url delegate:self];
+//    if (YES == [TencentOAuth CanHandleOpenURL:url])
+//    {
+//        return [TencentOAuth HandleOpenURL:url];
+//    }
+//    return YES;
+
+//    return YES;
 }
 
-
+//微博回调
 - (void)didReceiveWeiboResponse:(WBBaseResponse *)response
 {
     if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
-//        NSString *title = NSLocalizedString(@"认证结果", nil);
-//        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-//                                                        message:message
-//                                                       delegate:nil
-//                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
-//                                              otherButtonTitles:nil];
-//        NSString* weiboToken = [(WBAuthorizeResponse *)response accessToken];
-//
-        
         NSString* weiboId = [(WBAuthorizeResponse *)response userID];
         if (!weiboId) {
             return;
@@ -283,31 +280,43 @@
         [ToolUtils setIdentify:weiboId];
         [ToolUtils setToken:[(WBAuthorizeResponse *)response accessToken]];
         
-        
-        NSLog(@"%@ Token",[ToolUtils getToken]);
+        NSLog(@"%@ Token---%@",[ToolUtils getToken],weiboId);
         [ToolUtils setUserInfo:nil];
         
-        
-        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"weiboLogin" object:nil];
-        
-//        [alert show];
-    }
+    }else if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
+    {
+        if(response.statusCode == 0){
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"shareSuccess" object:nil];
+        }    }
 
 }
 
+//微信回调
 -(void) onResp:(BaseResp*)resp
 {
     if([resp isKindOfClass:[SendAuthResp class]])
     {
         SendAuthResp *temp = (SendAuthResp*)resp;
-        
         NSString *strTitle = [NSString stringWithFormat:@"Auth结果"];
-        NSString *strMsg = [NSString stringWithFormat:@"code:%@,state:%@,errcode:%d", temp.code, temp.state, temp.errCode];
+        //NSString *strMsg = [NSString stringWithFormat:@"code:%@,state:%@,errcode:%d", temp.copy, temp.state, temp.errCode];
+        if (temp.errCode== 0) {
+            NSString *code = temp.code;
+            NSLog(@"code%@",code);
+            [ToolUtils setWeixinCode:temp.code];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"weixinLogin" object:nil];
+        }
+    }else if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        if(resp.errCode == 0){
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"shareSuccess" object:nil];
+        }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
     }
 }
+
+
+
+
 
 @end

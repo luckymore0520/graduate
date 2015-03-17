@@ -11,6 +11,7 @@
 #define DEFAULTBACKICON @"1-返回键"
 #import "WKNavigationViewController.h"
 #import "LoginVC.h"
+
 @interface BaseFuncVC ()
 @property (nonatomic,assign)BOOL hasJumpedAway;
 @property (nonatomic,strong)FlipPresentAnimation* presentAnimation;
@@ -376,4 +377,12 @@
     self.presentAnimation.presenting = NO;
     return self.presentAnimation;
 }
+
++(NSString *)getShareImgUrl
+{
+    return @"http://s2.smartjiangsu.com/graduate-logo.jpg";
+}
+
+
+
 @end

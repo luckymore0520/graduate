@@ -12,7 +12,8 @@
 #import "MUpdateUserInfo.h"
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
-@interface EssenceDetailViewController ()<UIAlertViewDelegate>
+
+@interface EssenceDetailViewController ()<UIAlertViewDelegate,QQApiInterfaceDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *essenceShareLabel;
 @property (weak, nonatomic) IBOutlet UIView *maskBackView;
 @property (weak, nonatomic) IBOutlet UILabel *essenceTitleLabel;
@@ -47,8 +48,15 @@
     }
     _essenceDownloadBt.layer.cornerRadius = 5;
     [self.navigationController setNavigationBarHidden:NO];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
 
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)addRightButton
 {
@@ -109,11 +117,16 @@
     [[[MEssenceCollect alloc]init]load:self id:self.essence.id_ type:1];
 }
 
-- (IBAction)cancelShare:(id)sender {
+-(void)hideShareView
+{
     [_maskBackView setHidden:YES];
     [UIView animateWithDuration:0.3 animations:^{
         self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, 0);
     }];
+}
+
+- (IBAction)cancelShare:(id)sender {
+    [self hideShareView];
 
 }
 - (IBAction)share:(id)sender {
@@ -247,14 +260,175 @@
     } else {
         [ToolUtils showMessage:@"邮箱格式不合法,请输入正确的邮箱"];
     }
-    
-    
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -sharebuttons
+
+- (IBAction)qqShare:(UIButton *)sender {
+    TencentOAuth *_tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"222222" andDelegate:self];
+//    //分享跳转URL
+     NSString *url = @"http://www.baidu.com";
+//    //分享图预览图URL地址
+    NSString *previewImageUrl = [BaseFuncVC getShareImgUrl];
+    QQApiNewsObject *newsObj = [QQApiNewsObject
+                                objectWithURL:[NSURL URLWithString:url]
+                                title: [self getShareTitle]
+                                description:[self getShareTitle]
+                                previewImageURL:[NSURL URLWithString:previewImageUrl]];
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+    //将内容分享到qq
+    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    //[self handleSendResult:sent];
+    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self handleSendResult:sent];
+//        });
+//    });
+    
+    //将内容分享到qzone
+    //QQApiSendResultCode sent = [QQApiInterface SendReqToQZone:req];
+    
+    //    TCAddShareDic *params = [TCAddShareDic dictionary];
+    //    params.paramTitle = @"腾讯内部addShare接口测试";
+    //    params.paramComment = @"风云乔帮主";
+    //    params.paramSummary =  @"乔布斯被认为是计算机与娱乐业界的标志性人物，同时人们也把他视作麦金塔计算机、iPod、iTunes、iPad、iPhone等知名数字产品的缔造者，这些风靡全球亿万人的电子产品，深刻地改变了现代通讯、娱乐乃至生活的方式。";
+    //    params.paramImages = @"http://img1.gtimg.com/tech/pics/hv1/95/153/847/55115285.jpg";
+    //    params.paramUrl = @"http://www.qq.com";
+    //    [_tencentOAuth addShareWithParams:params];
+    //    if(![_tencentOAuth addShareWithParams:params]){
+    //        [self showInvalidTokenOrOpenIDMessage];
+    //    }
+
+}
+
+- (IBAction)friendsShare:(UIButton *)sender {
+    [self sendWeixinShare:sender scene:WXSceneTimeline];
+}
+- (IBAction)weixinShare:(UIButton *)sender {
+    [self sendWeixinShare:sender scene:WXSceneSession];
+}
+
+-(void)sendWeixinShare:(UIButton *)sender scene:(int)scene
+{
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = [self getShareTitle];
+    message.description = [self getShareTitle];
+    [message setThumbImage:[UIImage imageNamed:[BaseFuncVC getShareImgUrl]]];
+    
+    WXWebpageObject *ext = [WXWebpageObject object];
+    ext.webpageUrl = @"http://tech.qq.com/zt2012/tmtdecode/252.htm";
+    
+    message.mediaObject = ext;
+    
+    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+    req.bText = NO;
+    req.message = message;
+    req.scene = scene;
+    [WXApi sendReq:req];
+}
+
+
+
+- (IBAction)weiboShare:(UIButton *)sender {
+   // AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
+    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+    authRequest.redirectURI = KREDIRECTURL;
+    authRequest.scope = @"all";
+    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:[self messageToShareForWeibo] authInfo:authRequest access_token:[ToolUtils getToken]];
+    request.userInfo = @{@"ShareMessageFrom": @"EssenceDetailViewController",
+                         @"Other_Info_1": [NSNumber numberWithInt:123],
+                         @"Other_Info_2": @[@"obj1", @"obj2"],
+                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+    //    request.shouldOpenWeiboAppInstallPageIfNotInstalled = NO;
+    [WeiboSDK sendRequest:request];
+}
+
+- (WBMessageObject *)messageToShareForWeibo
+{
+    WBMessageObject *message = [WBMessageObject message];
+    
+    WBWebpageObject *webpage = [WBWebpageObject object];
+    webpage.objectID = @"identifier1";
+    webpage.title = NSLocalizedString([self getShareTitle], nil);
+    webpage.description = [NSString stringWithFormat:NSLocalizedString(webpage.title, nil), [[NSDate date] timeIntervalSince1970]];
+    webpage.thumbnailData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[BaseFuncVC getShareImgUrl] ofType:@"jpg"]];
+    webpage.webpageUrl = @"http://sina.cn?a=1";
+    message.mediaObject = webpage;
+    return message;
+}
+
+-(void)processShareSuccess{
+    [self hideShareView];
+    self.essence.hasDownload_ = @1;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alert show];
+}
+
+-(NSString *)getShareTitle
+{
+    return [NSString stringWithFormat:@"%@",self.essence.title_];
+}
+
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    //[self processShareSuccess];
 }
 
 /*
@@ -266,5 +440,14 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+-(void)onReq:(QQBaseReq *)req
+{
+}
+- (void)onResp:(QQBaseResp *)resp
+{
+    NSLog(@"过来了");
+}
+- (void)isOnlineResponse:(NSDictionary *)response
+{
+}
 @end

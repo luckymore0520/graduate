@@ -44,6 +44,10 @@
 + (NSString*)getToken;
 + (void)setToken:(NSString*)token;
 
+//微信code
++ (NSString*)getWeixinCode;
++ (void)setWeixinCode:(NSString*)weixinCode;
+
 //是否第一次使用，若第一次使用 返回的应该为nil
 + (NSString*)getFirstUse;
 + (void)setFirstUse:(NSString*)firstUse;
@@ -99,4 +103,7 @@
 +(void)showToast:(NSString*)msg toView:(UIView*)view;
 +(void)showError:(NSString*)msg toView:(UIView*)view;
 +(void)showMessage:(NSString *)message title:(NSString*)title;
+//第三方服务信息
++(NSString *)weixinAppkey;
++(NSString *)weixinSecretKey;
 @end

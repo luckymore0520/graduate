@@ -62,6 +62,7 @@
     self.textFields = [NSArray arrayWithObjects:_passwordField,_usernameField,nil];
     self.keyButtons = [NSArray arrayWithObjects:_loginBt, nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(handleWeiboLogin) name:@"weiboLogin" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(handleWeixinLogin) name:@"weixinLogin" object:nil];
     
          // Do any additional setup after loading the view.
 }
@@ -110,27 +111,7 @@
 }
 
 
-- (void)handleWeiboLogin
-{
-    MLogin* login = [[MLogin alloc]init];
-    isThirdParty = YES;
-    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
-    [self waiting:@"正在获取个人信息"];
-    [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:@"77238273", @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
-        [self waitingEnd];
-        NSLog(@"获取成功");
-        WeiboUser* user = (WeiboUser*)result;
-        ApiHelper* api = [[ApiHelper alloc]init];
-        api.fileId =user.avatarHDUrl;
-        [ToolUtils setIgnoreNetwork:YES];
-        [api download:self url:user.avatarHDUrl];
-        [ToolUtils setIgnoreNetwork:NO];
-        isThirdParty = YES;
-        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
-    }];
-    
-   
-}//前往主界面
+//前往主界面
 - (void)gotoMainMenu
 {
     [self waitingEnd];
@@ -168,6 +149,7 @@
     req.scope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact"; // @"post_timeline,sns"
     req.state = @"xxx";
     req.openID = @"0c806938e2413ce73eef92cc3";
+    
     [WXApi sendAuthReq:req viewController:self delegate:[[UIApplication sharedApplication]delegate]];
 }
 
@@ -206,7 +188,6 @@
     
 }
 - (IBAction)register:(id)sender {
-    
     [self performSegueWithIdentifier:@"register" sender:@"regist"];
 }
 
@@ -285,10 +266,94 @@
     }
 }
 
+
+#pragma mark -loginHandler
+
+- (void)handleWeiboLogin
+{
+    MLogin* login = [[MLogin alloc]init];
+    isThirdParty = YES;
+    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
+    [self waiting:@"正在获取个人信息"];
+    [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:@"77238273", @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
+        NSLog(@"%@", error);
+        [self waitingEnd];
+        NSLog(@"获取成功");
+        WeiboUser* user = (WeiboUser*)result;
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId =user.avatarHDUrl;
+        [ToolUtils setIgnoreNetwork:YES];
+        [api download:self url:user.avatarHDUrl];
+        [ToolUtils setIgnoreNetwork:NO];
+        isThirdParty = YES;
+        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
+    }];
+    
+    
+}
+
+- (void)handleWeixinLogin
+{
+    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%@&secret=%@&code=%@&grant_type=authorization_code",[ToolUtils weixinAppkey],[ToolUtils weixinSecretKey],[ToolUtils getWeixinCode]];
+    //NSLog(@"%@",url);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *zoneUrl = [NSURL URLWithString:url];
+        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+        //NSLog(@"%@",zoneStr);
+        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (data) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                NSString *token = [dic objectForKey:@"access_token"];
+                NSString *openid = [dic objectForKey:@"openid"];
+                [ToolUtils setIdentify:openid];
+                [ToolUtils setToken:token];
+                [self getWeixinUserInfo];
+            }
+        });
+    });
+}
+                       
+-(void)getWeixinUserInfo
+{
+    //获取个人信息
+    NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",[ToolUtils getToken],[ToolUtils getIdentify]];
+    [self waiting:@"正在获取个人信息"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *zoneUrl = [NSURL URLWithString:url];
+        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MLogin* login = [[MLogin alloc]init];
+            isThirdParty = YES;
+            [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
+            if (data) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                
+                ApiHelper* api = [[ApiHelper alloc]init];
+                api.fileId = [dic objectForKey:@"headimgurl"];
+                
+                [ToolUtils setIgnoreNetwork:YES];
+                [api download:self url:[dic objectForKey:@"headimgurl"]];
+                //[self waitingEnd];
+                [ToolUtils setIgnoreNetwork:NO];
+                isThirdParty = YES;
+                
+                [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[dic objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
+                //                self.nickname.text = [dic objectForKey:@"nickname"];
+//                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
+//                [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
+
+            }
+            });
+        
+        });
+}
+                       
 - (void)getUserInfoResponse:(APIResponse *)response
 {
     NSDictionary* userInfo =response.jsonResponse;
-    NSLog(@"%@",[userInfo objectForKey:@"nickname"]) ;
+    NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
     [ToolUtils setUserInfo:userInfo];
     MLogin* login = [[MLogin alloc]init];
     [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
@@ -303,6 +368,7 @@
         isThirdParty = YES;
     }
 }
+                       
 
 - (void)tencentDidNotLogin:(BOOL)cancelled
 {
