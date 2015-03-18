@@ -78,6 +78,8 @@
 +(NSDictionary*)getUserInfomation;
 +(void)setUserInfomation:(NSDictionary*)userInfo;
 
++(BOOL)getNotFirstLogin;
++(void)setNotFirstLogin:(BOOL)firstLogin;
 +(BOOL)getHasLogin;
 +(void)setHasLogin:(BOOL)hasLogin;
 

@@ -64,6 +64,7 @@
 @property (nonatomic)BOOL firstOpen;
 @property (nonatomic,strong)NSArray* subjectImgList;
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
+@property (weak, nonatomic) IBOutlet UIControl *bootView;
 
 @end
 CGFloat angle;
@@ -85,10 +86,17 @@ CGFloat angle;
     self.firstOpen = YES;
     [self reloadData];
     [self.view bringSubviewToFront:self.centerLine];
-
+    if (![ToolUtils getNotFirstLogin]) {
+        [self.bootView setHidden:NO];
+        [ToolUtils setNotFirstLogin:YES];
+    }
 
 }
 
+#pragma mark - ButtonAction
+- (IBAction)onBootViewTouchedDown:(id)sender {
+    [self.bootView setHidden:YES];
+}
 
 - (IBAction)onClickImage:(id)sender
 {

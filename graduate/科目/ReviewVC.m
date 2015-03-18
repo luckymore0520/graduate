@@ -33,6 +33,7 @@
     [self.navigationController setNavigationBarHidden:NO];
 
 }
+
 - (void)initViews
 {
     
@@ -42,6 +43,7 @@
 -(void)closeSelf{
     [[[UIAlertView alloc]initWithTitle:@"退出复习" message:@"再坚持一下吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] show];
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
@@ -53,8 +55,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self loadQuestions];
-    [self setTitle:[NSString stringWithFormat:@"%@(%d/%d)",self.reviewType,self.currentPage,self.questionList.count]];
-
+    [self setTitle:[NSString stringWithFormat:@"%@(%ld/%ld)",self.reviewType,self.currentPage,self.questionList.count]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -146,7 +147,6 @@
     QuestionBook* book = [QuestionBook getInstance];
     [book review:[self.questionList objectAtIndex:self.currentPage] isMaster:YES];
     [self pageChange:nil];
-#warning 此处需要调用已掌握的接口
 }
 
 //未掌握
@@ -154,8 +154,6 @@
     QuestionBook* book = [QuestionBook getInstance];
     [book review:[self.questionList objectAtIndex:self.currentPage] isMaster:NO];
     [self pageChange:nil];
-#warning 此处需要调用未掌握的接口
-
 }
 
 
@@ -187,7 +185,7 @@
     CGFloat width = frame.size.width;
     
     UILabel* titleLabel;
-    UILabel* titlePageLabel;
+//    UILabel* titlePageLabel;
     if (self.hasTitle) {
         UIFont* titleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
         CGRect titleFrame = CGRectMake(15, 23, width-100, 45);
@@ -198,20 +196,20 @@
         
         
         
-        UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
-        NSString* totalPage =[NSString stringWithFormat:@"/%d", self.questionList.count];
-        NSString* currentPage = [NSString stringWithFormat:@"%d",self.currentPage+1];
-        CGRect pageTitleFrame = CGRectMake(width-totalPage.length*10-currentPage.length*15-15, 26, totalPage.length*10+currentPage.length*15, 45);
-        
-        NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",currentPage,totalPage]];
-        NSRange currentRange = {0,[currentPage length]};
-        [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:19] range:currentRange];
-        [content addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:currentRange];
-        NSRange totalRange = {[currentPage length],[totalPage length]};
-        [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16] range:totalRange];
-        [content addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] range:totalRange];
-        titlePageLabel = [[UILabel alloc]initWithFrame:pageTitleFrame];
-        [titlePageLabel setAttributedText:content];
+//        UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
+//        NSString* totalPage =[NSString stringWithFormat:@"/%ld", self.questionList.count];
+//        NSString* currentPage = [NSString stringWithFormat:@"%ld",self.currentPage+1];
+//        CGRect pageTitleFrame = CGRectMake(width-totalPage.length*10-currentPage.length*15-15, 26, totalPage.length*10+currentPage.length*15, 45);
+//        
+//        NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@%@",currentPage,totalPage]];
+//        NSRange currentRange = {0,[currentPage length]};
+//        [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:19] range:currentRange];
+//        [content addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:currentRange];
+//        NSRange totalRange = {[currentPage length],[totalPage length]};
+//        [content addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16] range:totalRange];
+//        [content addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1] range:totalRange];
+//        titlePageLabel = [[UILabel alloc]initWithFrame:pageTitleFrame];
+//        [titlePageLabel setAttributedText:content];
 
     }
     
@@ -276,10 +274,8 @@
         [self.bottomContainerView setBackgroundColor:[UIColor clearColor]];
 
     }
-    
     [self.bottomContainerView addSubview:titleLabel];
     [self.bottomContainerView addSubview:textBackView];
-    [self.bottomContainerView addSubview:titlePageLabel];
     if (!showAll&&originRemark.length>=40) {
         CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10+titleHeight, 80, labelsize.height/2+10);
         UIButton* showAllBt = [[UIButton alloc]initWithFrame:showAllBtFrame];
@@ -287,11 +283,7 @@
         [_bottomContainerView addSubview:showAllBt];
         [showAllBt addTarget:self action:@selector(showAll) forControlEvents:UIControlEventTouchUpInside];
     }
-
-    
     [self.view addSubview:self.bottomContainerView];
-  
-    
     [self.markLabel setEditable:NO];
     [self.view bringSubviewToFront:self.collectBt];
     MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
