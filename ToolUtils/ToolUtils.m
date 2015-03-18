@@ -487,6 +487,18 @@
     [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"token"];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
+
++ (NSString*)getWeixinCode
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"weixinCode"];
+    
+}
++ (void)setWeixinCode:(NSString *)weixinCode
+{
+    [[NSUserDefaults standardUserDefaults]setObject:weixinCode forKey:@"weixinCode"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
 +(void)showError:(NSString*)msg toView:(UIView*)view
 {
     [MBProgressHUD showError:msg toView:view];
@@ -525,4 +537,12 @@
 //        connectionKind = @"没有网络链接";
 //    }
 //}
++(NSString *)weixinAppkey
+{
+    return @"wx94e1ad5c4ece12a3";
+}
++(NSString *)weixinSecretKey
+{
+    return @"905e00558f9ce2d0ee020d1ff4240473";
+}
 @end

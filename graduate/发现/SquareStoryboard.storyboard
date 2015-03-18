@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -471,12 +471,18 @@
                                                     <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="18"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="15" y="15" width="250" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未读" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGK-U8-L4L">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="17"/>
                                                     <color key="textColor" red="0.25882352941176473" green="0.61568627450980395" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="273" y="15" width="34" height="20"/>
+                                                    </variation>
                                                 </label>
                                                 <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ydf-8u-fgF">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -489,7 +495,8 @@
                                                             <exclude reference="vnp-mX-1Sv"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="15" y="49" width="305" height="1"/>
                                                         <mask key="constraints">
                                                             <include reference="vnp-mX-1Sv"/>
                                                         </mask>
@@ -1544,7 +1551,9 @@
                             <constraint firstItem="HDe-LH-qJ9" firstAttribute="top" secondItem="egB-GV-OMM" secondAttribute="bottom" id="oKb-UL-eF8"/>
                             <constraint firstItem="Ec9-NI-xyF" firstAttribute="top" secondItem="HDe-LH-qJ9" secondAttribute="bottom" id="peA-7b-xgW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HDe-LH-qJ9" secondAttribute="trailing" constant="-16" id="xmf-2j-AW5"/>
-                            <constraint firstItem="Knl-bs-7jZ" firstAttribute="top" secondItem="Ec9-NI-xyF" secondAttribute="bottom" id="yDT-4y-chI"/>
+                            <constraint firstItem="Knl-bs-7jZ" firstAttribute="top" secondItem="Ec9-NI-xyF" secondAttribute="bottom" id="yDT-4y-chI">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-200"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">

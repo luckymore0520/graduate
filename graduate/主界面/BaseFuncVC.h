@@ -44,4 +44,5 @@
 - (void)initViews;
 - (void)resignAll;
 - (void)addMaskBt;
++(NSString *)getShareImgUrl;
 @end
