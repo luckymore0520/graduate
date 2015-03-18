@@ -10,9 +10,7 @@
 #import "MEssence.h"
 #import "ShareApiUtil.h"
 @interface EssenceDetailViewController : BaseFuncVC<QQApiInterfaceDelegate>
-{
-    TencentOAuth *_tencentOAuth;
-}
+
 @property (nonatomic,strong)MEssence* essence;
 @property (nonatomic,weak)BaseFuncVC* fatherVC;
 @property (nonatomic,assign)BOOL isMyCollection;

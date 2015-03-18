@@ -12,6 +12,8 @@
 
 +(void)qqShare:(NSString *)title description:(NSString *)description imageUrl:(NSString *)imageUrl shareUrl:(NSString *)shareUrl from:(id)from
 {
+    TencentOAuth *_tencentOAuth = [[TencentOAuth alloc]initWithAppId:[ToolUtils qqAppid] andDelegate:nil];
+
     //    //分享图预览图URL地址
     QQApiNewsObject *newsObj = [QQApiNewsObject
                                 objectWithURL:[NSURL URLWithString:shareUrl]
@@ -21,7 +23,6 @@
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
     //将内容分享到qq
     QQApiSendResultCode sent = [QQApiInterface sendReq:req];
-    [self handleSendResult:sent];
     //将内容分享到qzone
     //QQApiSendResultCode sent = [QQApiInterface SendReqToQZone:req];
 }

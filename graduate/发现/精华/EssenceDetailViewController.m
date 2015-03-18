@@ -57,18 +57,6 @@
     }
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    [self initTencent];
-}
-//初始化腾讯第三方登陆
-- (void) initTencent
-{
-    if (!_tencentOAuth) {
-        _tencentOAuth = [[TencentOAuth alloc]initWithAppId:[ToolUtils qqAppid] andDelegate:nil];
-    }
-}
-
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
