@@ -545,4 +545,12 @@
 {
     return @"905e00558f9ce2d0ee020d1ff4240473";
 }
++(NSString *)qqAppid
+{
+    return @"222222";
+}
++(NSString *)weiboAppid
+{
+    return @"77238273";
+}
 @end

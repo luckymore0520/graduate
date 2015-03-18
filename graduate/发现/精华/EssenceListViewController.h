@@ -13,5 +13,7 @@
 @property (nonatomic,weak)BaseFuncVC* parentVC;
 @property (nonatomic,strong)NSString* key;
 @property (nonatomic,assign)BOOL isMyCollection;
+@property (nonatomic,assign)BOOL selectedMode;
 - (void)reloadData;
+- (void)selectAll:(BOOL)isAll;
 @end

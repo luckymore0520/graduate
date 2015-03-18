@@ -8,6 +8,7 @@
 
 #import "BaseFuncVC.h"
 #import "Sign.h"
+#import "ShareApiUtil.h"
 @interface SignVC : BaseFuncVC
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
 @property (weak, nonatomic) IBOutlet UIButton *signButton;
@@ -17,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (nonatomic,strong) Sign* sign;
 @property (weak, nonatomic) IBOutlet UIView *maskBackView;
+@property (strong,nonatomic)NSString *sharedUrl;
 
 @end

@@ -33,6 +33,7 @@
     if (self.replyNickname) {
         self.replyLabel.text = [NSString stringWithFormat:@"回复%@:",self.replyNickname];
     }
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -40,6 +41,7 @@
 {
     
 }
+
 - (IBAction)share:(id)sender {
     [self addMask];
     [self addMaskAtNavigation];
@@ -62,6 +64,11 @@
 }
 
 - (IBAction)cancelShare:(id)sender {
+    [self hideShareView];
+}
+
+-(void)hideShareView
+{
     [self removeMask];
     [self removeMaskAtNavigation];
     [UIView animateWithDuration:0.3 animations:^{
@@ -330,5 +337,118 @@
     [self removeMask];
     [self removeMaskAtNavigation];
 }
+#pragma mark -sharebuttons
+
+- (IBAction)qqShare:(UIButton *)sender {
+    [ShareApiUtil qqShare:[self getShareTitle] description:[self getShareContent] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl] from:self];
+}
+
+- (IBAction)friendsShare:(UIButton *)sender {
+     [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareContent] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneTimeline];}
+
+- (IBAction)weixinShare:(UIButton *)sender {
+     [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareContent] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneSession];
+}
+
+
+- (IBAction)weiboShare:(UIButton *)sender {
+    [ShareApiUtil weiboShare:[self getShareTitle] description:[self getShareContent] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]];
+}
+
+
+-(void)processShareSuccess{
+    [self hideShareView];
+    [ShareApiUtil showShareSuccessAlert];
+}
+
+-(NSString *)getShareTitle
+{
+    return self.post.title_;
+}
+
+-(NSString *)getShareContent
+{
+    return self.post.content_;
+}
+
+-(NSString *)getShareUrl
+{
+    return self.post.sharedUrl_;
+}
+
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    //[self processShareSuccess];
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+-(void)onReq:(QQBaseReq *)req
+{
+}
+- (void)onResp:(QQBaseResp *)resp
+{
+    NSLog(@"过来了");
+}
+- (void)isOnlineResponse:(NSDictionary *)response
+{
+}
+
 
 @end

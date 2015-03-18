@@ -34,6 +34,12 @@
     self.navigationItem.leftBarButtonItem = myAddButton;
 }
 
+-(int)getSignDaysLocal
+{
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
+    return (int)signList.count;
+}
+
 - (void)backToMain
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
@@ -98,20 +104,25 @@
 }
 
 - (IBAction)cancelShare:(id)sender {
-    [self.maskBackView setHidden:YES];
+    [self hideShareView];
+    
+}
+
+-(void)hideShareView
+{
     [self onSignSuccess];
-    [UIView animateWithDuration:0.3 animations:^{
+    [self.maskBackView setHidden:YES];
+        [UIView animateWithDuration:0.3 animations:^{
         self.shareView.transform = CGAffineTransformMakeTranslation(0,0);
     }];
 }
-
-
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MSign"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
             self.sign.isUpload = @YES;
+            self.sharedUrl = ret.msg_;
             NSError* error;
             [[CoreDataHelper getInstance].managedObjectContext save:&error];
             NSLog(@"打卡,同步服务器成功");
@@ -119,4 +130,111 @@
     }
     
 }
+#pragma mark -sharebuttons
+
+- (IBAction)qqShare:(UIButton *)sender {
+    [ShareApiUtil qqShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl] from:self];
+}
+
+- (IBAction)friendsShare:(UIButton *)sender {
+     [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneTimeline];
+}
+- (IBAction)weixinShare:(UIButton *)sender {
+    [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneSession];
+}
+
+- (IBAction)weiboShare:(UIButton *)sender {
+   [ShareApiUtil weiboShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]];
+}
+
+
+-(void)processShareSuccess{
+    [self hideShareView];
+    [ShareApiUtil showShareSuccessAlert];
+}
+
+-(NSString *)getShareTitle
+{
+    return [NSString stringWithFormat:@"研大大打卡第%d",[self getSignDaysLocal]];
+}
+
+-(NSString *)getShareUrl
+{
+    return self.sharedUrl;
+}
+
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    //[self processShareSuccess];
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+-(void)onReq:(QQBaseReq *)req
+{
+}
+- (void)onResp:(QQBaseResp *)resp
+{
+    NSLog(@"过来了");
+}
+- (void)isOnlineResponse:(NSDictionary *)response
+{
+}
+
 @end

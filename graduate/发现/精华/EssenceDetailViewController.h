@@ -8,15 +8,11 @@
 
 #import "BaseFuncVC.h"
 #import "MEssence.h"
-#import <TencentOpenAPI/QQApiInterfaceObject.h>
-#import <TencentOpenAPI/QQApiInterface.h>
-#import <TencentOpenAPI/TencentOAuth.h>
-#import "WBHttpRequest+WeiboUser.h"
-#import "AppDelegate.h"
-#import "WeiboUser.h"
-#import "WXApi.h"
-#import "WXApiObject.h"
-@interface EssenceDetailViewController : BaseFuncVC
+#import "ShareApiUtil.h"
+@interface EssenceDetailViewController : BaseFuncVC<QQApiInterfaceDelegate>
+{
+    TencentOAuth *_tencentOAuth;
+}
 @property (nonatomic,strong)MEssence* essence;
 @property (nonatomic,weak)BaseFuncVC* fatherVC;
 @property (nonatomic,assign)BOOL isMyCollection;

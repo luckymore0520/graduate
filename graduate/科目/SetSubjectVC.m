@@ -110,13 +110,11 @@
             return;
         }
     }
-    
     _user.subjectMajor1_ = _major1Field.text;
     _user.subjectMajor2_ = _major2Field.text;
     _user.subjectMath_ = [_mathGroup selectedSubject];
     _user.subjectEng_ = [_englishGroup selectedSubject];
     [ToolUtils setUserInfomation:_user.keyValues];
-    
     MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];
     [updateSubject load:self subjectMath:_user.subjectMath_ subjectMajor1:_user.subjectMajor1_ subjectMajor2:_user.subjectMajor2_ subjectEng:_user.subjectEng_];
     

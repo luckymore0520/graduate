@@ -7,6 +7,7 @@
 //
 
 #import "RefreshTableViewController.h"
+#import "ShareApiUtil.h"
 #import "MPost.h"
 @interface ChatCenterDetailViewController : RefreshTableViewController
 @property (nonatomic,strong)MPost* post;

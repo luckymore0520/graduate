@@ -12,9 +12,7 @@
 @interface LoginVC : BaseFuncVC<TencentSessionDelegate>
 {
     BOOL isThirdParty;
-    TencentOAuth* _tencentOAuth;
+    TencentOAuth *_tencentOAuth;
     NSMutableArray* permissions;
-    
 }
-- (void) initTencent;
 @end

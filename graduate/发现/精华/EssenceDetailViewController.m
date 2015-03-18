@@ -13,7 +13,7 @@
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
 #import "EssenceMediaCell.h"
-@interface EssenceDetailViewController ()<UIAlertViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,QQApiInterfaceDelegate>
+@interface EssenceDetailViewController ()<UIAlertViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *essenceShareLabel;
@@ -57,7 +57,17 @@
     }
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self initTencent];
+}
+//初始化腾讯第三方登陆
+- (void) initTencent
+{
+    if (!_tencentOAuth) {
+        _tencentOAuth = [[TencentOAuth alloc]initWithAppId:[ToolUtils qqAppid] andDelegate:nil];
+    }
+}
 
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -282,10 +292,6 @@
 
 
 #pragma mark -UICollectionViewDatasource
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -295,6 +301,8 @@
     } else {
         [cell.numberButton setTitle:[NSString stringWithFormat:@"%ld",(long)indexPath.row+1] forState:UIControlStateNormal];
     }
+    cell.viewController = self;
+    cell.media = self.essence.media_[indexPath.row];
     return cell;
 }
 
@@ -309,92 +317,38 @@
 }
 #pragma mark -sharebuttons
 
-- (IBAction)qqShare:(UIButton *)sender {
-    TencentOAuth *_tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"222222" andDelegate:self];
-//    //分享跳转URL
-     NSString *url = @"http://www.baidu.com";
-//    //分享图预览图URL地址
-    NSString *previewImageUrl = [BaseFuncVC getShareImgUrl];
-    QQApiNewsObject *newsObj = [QQApiNewsObject
-                                objectWithURL:[NSURL URLWithString:url]
-                                title: [self getShareTitle]
-                                description:[self getShareTitle]
-                                previewImageURL:[NSURL URLWithString:previewImageUrl]];
-    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
-    //将内容分享到qq
-    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
-    
-    //将内容分享到qzone
-    //QQApiSendResultCode sent = [QQApiInterface SendReqToQZone:req];
-
+- (IBAction)qqShare:(UIButton *)sender
+{
+    [ShareApiUtil qqShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl] from:self];
 }
 
 - (IBAction)friendsShare:(UIButton *)sender {
-    [self sendWeixinShare:sender scene:WXSceneTimeline];
+    [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneTimeline];
 }
 - (IBAction)weixinShare:(UIButton *)sender {
-    [self sendWeixinShare:sender scene:WXSceneSession];
+    [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneSession];
 }
-
--(void)sendWeixinShare:(UIButton *)sender scene:(int)scene
-{
-    WXMediaMessage *message = [WXMediaMessage message];
-    message.title = [self getShareTitle];
-    message.description = [self getShareTitle];
-    [message setThumbImage:[UIImage imageNamed:[BaseFuncVC getShareImgUrl]]];
-    
-    WXWebpageObject *ext = [WXWebpageObject object];
-    ext.webpageUrl = @"http://tech.qq.com/zt2012/tmtdecode/252.htm";
-    
-    message.mediaObject = ext;
-    
-    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
-    req.bText = NO;
-    req.message = message;
-    req.scene = scene;
-    [WXApi sendReq:req];
-}
-
 
 
 - (IBAction)weiboShare:(UIButton *)sender {
    // AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
-    WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
-    authRequest.redirectURI = KREDIRECTURL;
-    authRequest.scope = @"all";
-    WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:[self messageToShareForWeibo] authInfo:authRequest access_token:[ToolUtils getToken]];
-    request.userInfo = @{@"ShareMessageFrom": @"EssenceDetailViewController",
-                         @"Other_Info_1": [NSNumber numberWithInt:123],
-                         @"Other_Info_2": @[@"obj1", @"obj2"],
-                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
-    //    request.shouldOpenWeiboAppInstallPageIfNotInstalled = NO;
-    [WeiboSDK sendRequest:request];
-}
-
-- (WBMessageObject *)messageToShareForWeibo
-{
-    WBMessageObject *message = [WBMessageObject message];
-    
-    WBWebpageObject *webpage = [WBWebpageObject object];
-    webpage.objectID = @"identifier1";
-    webpage.title = NSLocalizedString([self getShareTitle], nil);
-    webpage.description = [NSString stringWithFormat:NSLocalizedString(webpage.title, nil), [[NSDate date] timeIntervalSince1970]];
-    webpage.thumbnailData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[BaseFuncVC getShareImgUrl] ofType:@"jpg"]];
-    webpage.webpageUrl = @"http://sina.cn?a=1";
-    message.mediaObject = webpage;
-    return message;
+    [ShareApiUtil weiboShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]];
 }
 
 -(void)processShareSuccess{
     [self hideShareView];
     self.essence.hasDownload_ = @1;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alert show];
+    [ShareApiUtil showShareSuccessAlert];
 }
 
 -(NSString *)getShareTitle
 {
-    return [NSString stringWithFormat:@"%@",self.essence.title_];
+    return self.essence.title_;
+}
+
+-(NSString *)getShareUrl
+{
+    return self.essence.shareUrl_;
 }
 
 
@@ -462,6 +416,8 @@
 */
 -(void)onReq:(QQBaseReq *)req
 {
+    NSLog(@"过来了");
+
 }
 - (void)onResp:(QQBaseResp *)resp
 {

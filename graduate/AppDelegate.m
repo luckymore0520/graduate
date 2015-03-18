@@ -26,7 +26,7 @@
 #import "WKNavigationViewController.h"
 #import "LoginVC.h"
 #import "EssenceDetailViewController.h"
-@interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,ApiDelegate>
+@interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,QQApiInterfaceDelegate>
 
 @end
 
@@ -242,9 +242,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    
-    NSLog(@"source application:%@",url.absoluteString);
+    NSLog(@"source application:%@",sourceApplication);
+    NSLog(@"urls:%@",url.absoluteString);
     if ([sourceApplication isEqualToString:@"com.tencent.mqq"]) {
+        //[QQApiInterface handleOpenURL:url delegate:(id)[EssenceDetailViewController class]];
         return [TencentOAuth HandleOpenURL:url];
     } else if ([sourceApplication isEqualToString:@"com.sina.weibo"]){
         return [WeiboSDK handleOpenURL:url delegate:self];
@@ -258,7 +259,7 @@
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
 
    // [QQApiInterface handleOpenURL:url delegate:(id)[EssenceDetailViewController class]];
-    return [TencentOAuth HandleOpenURL:url] || [WXApi handleOpenURL:url delegate:self];
+    return [TencentOAuth HandleOpenURL:url] || [WXApi handleOpenURL:url delegate:self]|| [WeiboSDK handleOpenURL:url delegate:self];
 //    if (YES == [TencentOAuth CanHandleOpenURL:url])
 //    {
 //        return [TencentOAuth HandleOpenURL:url];
@@ -315,7 +316,10 @@
     }
 }
 
-
+-(void)onRespQQ:(QQBaseResp *)resp
+{
+    NSLog(@"dd0-0-0-0------d");
+}
 
 
 

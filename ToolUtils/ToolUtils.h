@@ -106,4 +106,7 @@
 //第三方服务信息
 +(NSString *)weixinAppkey;
 +(NSString *)weixinSecretKey;
++(NSString *)qqAppid;
++(NSString *)weiboAppid;
+
 @end

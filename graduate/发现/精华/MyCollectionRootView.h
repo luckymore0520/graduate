@@ -7,7 +7,8 @@
 //
 
 #import "BaseFuncVC.h"
-
-@interface MyCollectionRootView : BaseFuncVC
-
+#import "EssenceListCell.h"
+@interface MyCollectionRootView : BaseFuncVC<EssenceListCellDelegate>
+- (void)setSelectedMode:(BOOL)selectedMode;
+- (void)selectCollection:(NSString *)essenceId isSelected:(BOOL)isSelected;
 @end

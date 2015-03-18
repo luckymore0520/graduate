@@ -761,6 +761,10 @@
                                                 <exclude reference="9E5-tQ-CGn"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="friendsShare:" destination="UtJ-Sx-lo5" eventType="touchUpInside" id="Jpb-bN-711"/>
+                                            <action selector="qqShare:" destination="UtJ-Sx-lo5" eventType="touchUpInside" id="GT7-nh-4bl"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iaj-u5-jCF">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -780,12 +784,18 @@
                                                 <exclude reference="MTz-p6-ah5"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="weiboShare:" destination="UtJ-Sx-lo5" eventType="touchUpInside" id="Ynf-7Q-0vI"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4E-Vg-MZ5">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <state key="normal" image="广场-QQ">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="qqShare:" destination="UtJ-Sx-lo5" eventType="touchUpInside" id="nZ0-9H-nzf"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agQ-lC-dE2">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -836,6 +846,9 @@
                                                 <exclude reference="cDI-kd-24j"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="weixinShare:" destination="UtJ-Sx-lo5" eventType="touchUpInside" id="T6B-U6-osk"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -928,7 +941,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="HDe-LH-qJ9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <color key="separatorColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="square" rowHeight="200" id="99y-vZ-PZQ" userLabel="reply" customClass="ChatCenterPostCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1336,7 +1349,7 @@
                                                     <color key="textColor" red="0.69019607839999997" green="0.69019607839999997" blue="0.69019607839999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="15" y="54" width="370" height="49"/>
+                                                        <rect key="frame" x="15" y="54" width="290" height="49"/>
                                                     </variation>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnA-TH-Gch">
@@ -1344,6 +1357,9 @@
                                                     <state key="normal" image="广场-帖子详情_回复">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="248" y="18" width="49" height="22"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="comment:" destination="UtJ-Sx-lo5" eventType="touchUpInside" id="Iqj-co-ADC"/>
                                                     </connections>
@@ -1361,7 +1377,8 @@
                                                             <exclude reference="fkI-Sz-iEm"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="119" width="304" height="1"/>
                                                         <mask key="constraints">
                                                             <include reference="fkI-Sz-iEm"/>
                                                         </mask>
@@ -1552,7 +1569,7 @@
                             <constraint firstItem="Ec9-NI-xyF" firstAttribute="top" secondItem="HDe-LH-qJ9" secondAttribute="bottom" id="peA-7b-xgW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HDe-LH-qJ9" secondAttribute="trailing" constant="-16" id="xmf-2j-AW5"/>
                             <constraint firstItem="Knl-bs-7jZ" firstAttribute="top" secondItem="Ec9-NI-xyF" secondAttribute="bottom" id="yDT-4y-chI">
-                                <variation key="heightClass=regular-widthClass=compact" constant="-200"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                         </constraints>
                         <variation key="default">

@@ -72,9 +72,13 @@
 
 
 - (IBAction)selectMode:(id)sender {
+    UIButton* button = (UIButton*)sender;
+    [button setSelected:!button.selected];
+    [_myCollection setSelectedMode:button.selected];
     [_myQuestionVC selectPhotos:sender];
-    
 }
+
+
 - (IBAction)onBackButtonClicked:(id)sender {
     if (self.navigationController.childViewControllers.count==1) {
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];

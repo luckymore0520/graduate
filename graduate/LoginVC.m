@@ -130,7 +130,7 @@
 - (void) initTencent
 {
     if (!_tencentOAuth) {
-        _tencentOAuth = [[TencentOAuth alloc]initWithAppId:@"222222" andDelegate:self];
+        _tencentOAuth = [[TencentOAuth alloc]initWithAppId:[ToolUtils qqAppid] andDelegate:self];
     }
 }
 
@@ -139,7 +139,7 @@
 - (IBAction)login:(id)sender {
     permissions = [[NSMutableArray alloc]initWithObjects:kOPEN_PERMISSION_GET_USER_INFO,kOPEN_PERMISSION_GET_INFO,   nil];
     [_tencentOAuth authorize:permissions inSafari:NO];
-    [_tencentOAuth logout:self];
+    //[_tencentOAuth logout:self];
 }
 
 
@@ -149,11 +149,8 @@
     req.scope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact"; // @"post_timeline,sns"
     req.state = @"xxx";
     req.openID = @"0c806938e2413ce73eef92cc3";
-    
     [WXApi sendAuthReq:req viewController:self delegate:[[UIApplication sharedApplication]delegate]];
 }
-
-
 
 
 - (IBAction)weiboLogin:(id)sender {
@@ -206,7 +203,7 @@
         }
     } else if ([names isEqualToString:@"MImgUpload"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
-        NSLog(@"%@",ret.msg_);
+        NSLog(@"%@return msg",ret.msg_);
         if (ret.code_.integerValue==1) {
             NSDictionary* userinfo = [ToolUtils getUserInfo];
             MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
@@ -256,7 +253,8 @@
 
 - (void)tencentDidLogin
 {
-    NSLog(@"Success");      NSLog(@"%@",[_tencentOAuth openId]);
+    NSLog(@"Success");
+    NSLog(@"%@",[_tencentOAuth openId]);
     NSLog(@"%@",[_tencentOAuth accessToken]);
     [ToolUtils setIdentify:[_tencentOAuth openId]];
     if ([_tencentOAuth getUserInfo]) {
@@ -275,7 +273,7 @@
     isThirdParty = YES;
     [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
     [self waiting:@"正在获取个人信息"];
-    [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:@"77238273", @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
+    [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:[ToolUtils weiboAppid], @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
         NSLog(@"%@", error);
         [self waitingEnd];
         NSLog(@"获取成功");
@@ -319,41 +317,32 @@
     //获取个人信息
     NSString *url =[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=%@",[ToolUtils getToken],[ToolUtils getIdentify]];
     [self waiting:@"正在获取个人信息"];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURL *zoneUrl = [NSURL URLWithString:url];
-        NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
-        NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MLogin* login = [[MLogin alloc]init];
-            isThirdParty = YES;
-            [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
-            if (data) {
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                
-                ApiHelper* api = [[ApiHelper alloc]init];
-                api.fileId = [dic objectForKey:@"headimgurl"];
-                
-                [ToolUtils setIgnoreNetwork:YES];
-                [api download:self url:[dic objectForKey:@"headimgurl"]];
-                //[self waitingEnd];
-                [ToolUtils setIgnoreNetwork:NO];
-                isThirdParty = YES;
-                
-                [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[dic objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
-                //                self.nickname.text = [dic objectForKey:@"nickname"];
-//                self.wxHeadImg.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[dic objectForKey:@"headimgurl"]]]];
-//                [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
-
-            }
-            });
-        
-        });
+    NSURL *zoneUrl = [NSURL URLWithString:url];
+    NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
+    NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
+    MLogin* login = [[MLogin alloc]init];
+    isThirdParty = YES;
+    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
+    if (data) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        ApiHelper* api = [[ApiHelper alloc]init];
+        api.fileId = [dic objectForKey:@"headimgurl"];
+        NSLog(@"%@",api.fileId);
+        [ToolUtils setIgnoreNetwork:YES];
+        [api download:self url:[dic objectForKey:@"headimgurl"]];
+        //[self waitingEnd];
+        [ToolUtils setIgnoreNetwork:NO];
+        isThirdParty = YES;
+        NSLog(@"nickname---%@",[dic objectForKey:@"nickname"]);
+        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[dic objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
+    }
 }
-                       
+
 - (void)getUserInfoResponse:(APIResponse *)response
 {
     NSDictionary* userInfo =response.jsonResponse;
     NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
+    NSLog(@"%@",userInfo);
     [ToolUtils setUserInfo:userInfo];
     MLogin* login = [[MLogin alloc]init];
     [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];

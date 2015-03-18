@@ -21,6 +21,7 @@
 @property (nonatomic,strong) MEssence* essence;
 @property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
 @property (weak, nonatomic) IBOutlet UIView *shareView;
+@property (weak, nonatomic) IBOutlet UIButton *essenceShareButton;
 
 @end
 
@@ -45,7 +46,6 @@ document.location=\"myweb:touch:end\";};";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTitle:@"帖子详情"];
     [self.webView setDelegate:self];
     
     if (self.url) {
@@ -53,6 +53,9 @@ document.location=\"myweb:touch:end\";};";
     }
     if (self.postId) {
         [[[MEssenceDetail alloc]init]load:self id:self.postId];
+    } else {
+        [self.essenceCollectButton setHidden:YES];
+        [self.essenceShareButton setHidden:YES];
     }
     [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.

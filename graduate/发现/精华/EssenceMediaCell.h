@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MMedia.h"
 @interface EssenceMediaCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIButton *numberButton;
-
+@property (nonatomic,weak)UIViewController* viewController;
+@property (nonatomic,weak)MMedia* media;
 @end
