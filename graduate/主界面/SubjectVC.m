@@ -151,7 +151,7 @@ CGFloat angle;
 
 - (void)reloadData
 {
-    [[[MQuestionRecommand alloc]init]load:self];
+    [[[MQuestionRecommand alloc]init]load:self date:[ToolUtils getCurrentDate]];
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];

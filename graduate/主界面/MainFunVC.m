@@ -53,7 +53,7 @@
             currentDay = currentDay + timeDiff/86400;
             [ToolUtils setCurrentDay:[NSNumber numberWithInteger:currentDay]];
         }
-        NSString* myDay = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
+        NSString* myDay = [NSString stringWithFormat:@"%ld",(long)[ToolUtils getCurrentDay].integerValue];
         NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
         if (array.count==0) {
             [_imgView setImage:[UIImage imageNamed:@"首页1.png"]];
@@ -85,9 +85,9 @@
     _sentenceLabel.frame = CGRectMake(_sentenceLabel.frame.origin.x, _sentenceLabel.frame.origin.y, size.width, size.height);
     if (_main.daysLeft_.integerValue<10) {
         
-        [_remainDayLabel setText:[NSString stringWithFormat:@"0%ld",_main.daysLeft_.integerValue]];
+        [_remainDayLabel setText:[NSString stringWithFormat:@"0%ld",(long)_main.daysLeft_.integerValue]];
     } else {
-        [_remainDayLabel setText:[NSString stringWithFormat:@"%ld",_main.daysLeft_.integerValue]];
+        [_remainDayLabel setText:[NSString stringWithFormat:@"%ld",(long)_main.daysLeft_.integerValue]];
     }
     [self.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:_main.img_] placeholderImage:[UIImage imageNamed:@"首页1.png"]];
 }

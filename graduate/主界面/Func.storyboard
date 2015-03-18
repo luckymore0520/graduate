@@ -250,7 +250,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="527C35EB-874D-4F58-A322-17BC36B4F4D8" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20E278A1-FD62-4803-83D0-BAA87BEBBD32" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -2000,6 +2000,15 @@
                                             <rect key="frame" x="160" y="28" width="80" height="24"/>
                                         </variation>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmZ-1f-Rie">
+                                        <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="344" y="29" width="42" height="21"/>
+                                        </variation>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -2008,12 +2017,14 @@
                                     </constraint>
                                     <constraint firstAttribute="height" constant="64" id="AKm-Dz-4EQ"/>
                                     <constraint firstAttribute="trailing" secondItem="qF5-G8-3V4" secondAttribute="trailing" id="GxN-Vo-Hhh"/>
+                                    <constraint firstItem="bmZ-1f-Rie" firstAttribute="centerY" secondItem="t9V-NK-x5T" secondAttribute="centerY" constant="-0.5" id="OYv-7R-mHe"/>
                                     <constraint firstAttribute="centerX" secondItem="t9V-NK-x5T" secondAttribute="centerX" id="bsa-HF-h0u"/>
                                     <constraint firstAttribute="centerY" secondItem="1wo-ER-5vV" secondAttribute="centerY" id="cXj-7R-a0d">
                                         <variation key="heightClass=regular-widthClass=compact" constant="-8"/>
                                     </constraint>
                                     <constraint firstItem="qF5-G8-3V4" firstAttribute="top" secondItem="DKX-Jt-cXg" secondAttribute="top" id="iku-mB-GAH"/>
                                     <constraint firstItem="qF5-G8-3V4" firstAttribute="leading" secondItem="DKX-Jt-cXg" secondAttribute="leading" id="syO-13-gLY"/>
+                                    <constraint firstAttribute="trailing" secondItem="bmZ-1f-Rie" secondAttribute="trailing" constant="14" id="tIE-en-gdk"/>
                                     <constraint firstItem="1wo-ER-5vV" firstAttribute="leading" secondItem="DKX-Jt-cXg" secondAttribute="leading" constant="5" id="yNb-TI-Aw3">
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                     </constraint>
@@ -2026,17 +2037,20 @@
                                         <exclude reference="qF5-G8-3V4"/>
                                         <exclude reference="1wo-ER-5vV"/>
                                         <exclude reference="t9V-NK-x5T"/>
+                                        <exclude reference="bmZ-1f-Rie"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="AKm-Dz-4EQ"/>
-                                        <exclude reference="bsa-HF-h0u"/>
-                                        <exclude reference="yk0-Se-fhp"/>
                                         <exclude reference="cXj-7R-a0d"/>
                                         <exclude reference="yNb-TI-Aw3"/>
                                         <exclude reference="1nD-0J-gLn"/>
                                         <exclude reference="GxN-Vo-Hhh"/>
                                         <exclude reference="iku-mB-GAH"/>
                                         <exclude reference="syO-13-gLY"/>
+                                        <exclude reference="bsa-HF-h0u"/>
+                                        <exclude reference="yk0-Se-fhp"/>
+                                        <exclude reference="OYv-7R-mHe"/>
+                                        <exclude reference="tIE-en-gdk"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -2044,17 +2058,20 @@
                                         <include reference="qF5-G8-3V4"/>
                                         <include reference="1wo-ER-5vV"/>
                                         <include reference="t9V-NK-x5T"/>
+                                        <include reference="bmZ-1f-Rie"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="AKm-Dz-4EQ"/>
-                                        <include reference="bsa-HF-h0u"/>
-                                        <include reference="yk0-Se-fhp"/>
                                         <include reference="cXj-7R-a0d"/>
                                         <include reference="yNb-TI-Aw3"/>
                                         <exclude reference="1nD-0J-gLn"/>
                                         <include reference="GxN-Vo-Hhh"/>
                                         <include reference="iku-mB-GAH"/>
                                         <include reference="syO-13-gLY"/>
+                                        <include reference="bsa-HF-h0u"/>
+                                        <include reference="yk0-Se-fhp"/>
+                                        <include reference="OYv-7R-mHe"/>
+                                        <include reference="tIE-en-gdk"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -2213,6 +2230,7 @@
                         <outlet property="backMaskView" destination="x4b-vk-acg" id="Fl8-59-0TX"/>
                         <outlet property="backgroundImageView" destination="tca-lU-cDd" id="BMH-dJ-7e8"/>
                         <outlet property="collectBt" destination="dns-9h-tLX" id="p6I-hm-efs"/>
+                        <outlet property="dateLabel" destination="bmZ-1f-Rie" id="XPq-jn-pPM"/>
                         <outlet property="footMask" destination="1mz-32-gWQ" id="JiB-7B-Qhm"/>
                         <outlet property="headerView" destination="DKX-Jt-cXg" id="dBg-Sa-Upj"/>
                         <outlet property="scrollView" destination="RLg-hq-3cq" id="Lnp-kV-wk4"/>
@@ -7292,7 +7310,7 @@
     <resources>
         <image name="1-返回键" width="10" height="19"/>
         <image name="2-开始体验" width="125" height="39"/>
-        <image name="527C35EB-874D-4F58-A322-17BC36B4F4D8" width="166" height="165">
+        <image name="20E278A1-FD62-4803-83D0-BAA87BEBBD32" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

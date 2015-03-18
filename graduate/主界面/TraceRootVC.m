@@ -31,7 +31,7 @@
 
     
     
-    self.title = @"我的足迹";
+    self.title = @"我的研路";
     self.slideSwitchView.tabItemNormalColor = [QCSlideSwitchView colorFromHexRGB:@"333333"];
     self.slideSwitchView.tabItemSelectedColor = [QCSlideSwitchView colorFromHexRGB:@"1f76dc"];
     self.slideSwitchView.slideSwitchViewDelegate = self;

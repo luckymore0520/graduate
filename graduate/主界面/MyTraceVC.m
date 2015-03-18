@@ -51,7 +51,7 @@
     
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
-    int total = 0 ;
+    NSUInteger total = 0 ;
     for (NSDictionary* dic in self.myQuestions) {
         total = total + [[dic objectForKey:@"array"] count];
     }
@@ -110,7 +110,7 @@
     if (section==0) {
         return 0;
     }
-    int count = [[[self.myQuestions objectAtIndex:section-1] objectForKey:@"array"] count];
+    NSUInteger count = [[[self.myQuestions objectAtIndex:section-1] objectForKey:@"array"] count];
     if (count%(_phoneOfLine-1)==0) {
         return count/(_phoneOfLine-1)*_phoneOfLine;
     } else {

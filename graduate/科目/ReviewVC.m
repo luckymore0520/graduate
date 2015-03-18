@@ -277,7 +277,7 @@
     [self.bottomContainerView addSubview:titleLabel];
     [self.bottomContainerView addSubview:textBackView];
     if (!showAll&&originRemark.length>=40) {
-        CGRect showAllBtFrame = CGRectMake(width-80, labelsize.height/2+10+titleHeight, 80, labelsize.height/2+10);
+        CGRect showAllBtFrame = CGRectMake(width-90, labelsize.height/2+10+titleHeight, 80, labelsize.height/2+10);
         UIButton* showAllBt = [[UIButton alloc]initWithFrame:showAllBtFrame];
         [showAllBt setImage:[UIImage imageNamed:@"查看全部"] forState:UIControlStateNormal];
         [_bottomContainerView addSubview:showAllBt];

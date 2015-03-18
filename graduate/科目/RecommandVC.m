@@ -10,8 +10,11 @@
 
 @interface RecommandVC ()
 
-
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (nonatomic,strong)NSString* currentDay;
+@property (nonatomic)NSUInteger currentContent;
 @end
+
 
 @implementation RecommandVC
 
@@ -20,19 +23,34 @@
     [self.scrollView setPagingEnabled:YES];
     self.scrollView.delegate = self;
     self.bottomHeight = 40;
-    [self setTitle:@"今日推荐"];
+    [self setTitle:@"大神笔记"];
     self.hasTitle = YES;
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-
+    self.currentDay = [ToolUtils getCurrentDate];
+    self.currentContent = 0;
+    
+    if (self.currentDay) {
+        [self updateDateLabel:self.currentDay];
+    }
+ 
 }
 
+-(void) updateDateLabel:(NSString*)day
+{
+    if (day==nil) {
+        return;
+    }
+    day = [day stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+    NSArray* seperators = [day componentsSeparatedByString:@"-"];
+    [self.dateLabel setText:[NSString stringWithFormat:@"%@月%@日",seperators[1],seperators[2]]];
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     if (self.questionList) {
         [self initQuestions];
     } else {
-        [[[MQuestionRecommand alloc]init]load:self];
+        [[[MQuestionRecommand alloc]init]load:self date:self.currentDay];
     }
 }
 
@@ -99,8 +117,14 @@
         NSLog(@"%@",ret.msg_);
     } else if ([names isEqualToString:@"MQuesRecommend"])
     {
+        
         MQuestionList* questionList = [MQuestionList objectWithKeyValues:data];
-        self.questionList = questionList.list_;
+        if (self.questionList) {
+            self.currentContent = self.questionList.count;
+            [self.questionList addObjectsFromArray:questionList.list_];
+        } else {
+            self.questionList = questionList.list_;
+        }
         [self initQuestions];
     }
 }
@@ -113,13 +137,13 @@
 
 -(void)initQuestions
 {
+    
     self.questionViews = [[NSMutableArray alloc]init];
     CGSize pageScrollViewSize = self.view.frame.size;
     self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * self.questionList.count, 0);
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
     self.questionViews = [[NSMutableArray alloc]init];
-    for (int i = 0 ; i < self.questionList.count; i++) {
+    for (NSUInteger i = self.currentContent ; i < self.questionList.count; i++) {
         CGRect frame;
         frame.origin.x = self.view.frame.size.width * i;
         frame.origin.y = 0;
@@ -146,8 +170,6 @@
         [view setBackgroundColor:[UIColor clearColor]];
         [self.questionViews addObject:view];
     }
-    
-    
     if (self.currentQuestionId) {
         for (int i = 0  ; i < self.questionList.count ; i ++) {
             MQuestion* question = [self.questionList objectAtIndex:i];
@@ -175,7 +197,17 @@
             } else {
                 [self.collectBt setHidden:NO];
             }
+            [self updateDateLabel:question.createTime_];
             [self addBottomView:question.remark_ showAll:NO];
+        }
+        if (index == self.questionList.count-1) {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            NSDate *currentDay = [dateFormatter dateFromString:_currentDay];
+            NSTimeInterval secondsPerDay1 = 24*60*60;
+            NSDate *nextDay = [currentDay addTimeInterval:-secondsPerDay1];
+            _currentDay = [dateFormatter stringFromDate:nextDay];
+            [[[MQuestionRecommand alloc]init]load:self date:self.currentDay];
         }
     }
 }

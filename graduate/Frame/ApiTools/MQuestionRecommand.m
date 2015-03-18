@@ -9,8 +9,8 @@
 #import "MQuestionRecommand.h"
 
 @implementation MQuestionRecommand
-- (ApiHelper *)load:(id<ApiDelegate>)delegate
+- (ApiHelper *)load:(id<ApiDelegate>)delegate date:(NSString *)date
 {
-    return [self load:@"MQuesRecommend" params:nil delegate:delegate];
+    return [self load:@"MQuesRecommend" params:@{@"date":date} delegate:delegate];
 }
 @end

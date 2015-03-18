@@ -9,5 +9,5 @@
 #import "ApiHelper.h"
 
 @interface MQuestionRecommand : ApiHelper
-- (ApiHelper *)load:(id<ApiDelegate>)delegate;
+- (ApiHelper *)load:(id<ApiDelegate>)delegate date:(NSString*)date;
 @end
