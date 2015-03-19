@@ -163,8 +163,10 @@
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
     
     UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"backUp"];
-    [self.navigationController pushViewController:nextVC animated:YES];
-    
+    WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:nextVC];
+    nav.transitioningDelegate = self;
+    [self.navigationController presentViewController:nav animated:YES completion:^{
+    }];
 }
 - (IBAction)goToSquare:(id)sender {
     
