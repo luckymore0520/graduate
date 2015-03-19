@@ -11,6 +11,7 @@
 #import "MUpdateSubject.h"
 #import "MUser.h"
 #import "MReturn.h"
+#import "QuestionBook.h"
 @interface SetSubjectVC ()<UITextFieldDelegate,ButtonGroupDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet ButtonGroup *englishGroup;
 @property (weak, nonatomic) IBOutlet UIButton *Eng2Bt;
@@ -112,11 +113,17 @@
     }
     _user.subjectMajor1_ = _major1Field.text;
     _user.subjectMajor2_ = _major2Field.text;
-    _user.subjectMath_ = [_mathGroup selectedSubject];
+    if (_mathGroup.selectedIndex == 3) {
+        _user.subjectMath_ = nil;
+    } else
+    {
+        _user.subjectMath_ = [_mathGroup selectedSubject];
+    }
     _user.subjectEng_ = [_englishGroup selectedSubject];
     [ToolUtils setUserInfomation:_user.keyValues];
     MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];
     [updateSubject load:self subjectMath:_user.subjectMath_ subjectMajor1:_user.subjectMajor1_ subjectMajor2:_user.subjectMajor2_ subjectEng:_user.subjectEng_];
+    
 }
 
 #pragma mark -apidelegate

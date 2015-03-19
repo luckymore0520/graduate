@@ -70,7 +70,6 @@ QuestionBook* questionBook = nil;
     _allQuestions = [NSMutableArray arrayWithObjects:[self removeEmptyQuestions:_englishBook],[self removeEmptyQuestions:_politicBook],[self removeEmptyQuestions:_mathBook],[self removeEmptyQuestions:_major1Book],[self removeEmptyQuestions:_major2Book], nil];
     self.needUpload = 0;
     [self updateQuestions];
-    
 }
 
 - (void)calculateNeedUpload

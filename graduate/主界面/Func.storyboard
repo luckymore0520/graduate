@@ -250,7 +250,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="19CF4599-53C1-4165-9762-29C35F5AC36D" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9EBBD196-55BC-4754-B252-634D0B0F6764" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -7312,7 +7312,8 @@
     </scenes>
     <resources>
         <image name="1-返回键" width="10" height="19"/>
-        <image name="19CF4599-53C1-4165-9762-29C35F5AC36D" width="166" height="165">
+        <image name="2-开始体验" width="125" height="39"/>
+        <image name="9EBBD196-55BC-4754-B252-634D0B0F6764" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9191,7 +9192,6 @@ AbXZAAG15gABtesAAbXtAAG17wABtfQAAbX8AAG1/wABtgQAAbYMAAG2DwABtiEAAbYkAAG2KQAAAAAA
 AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
 </mutableData>
         </image>
-        <image name="2-开始体验" width="125" height="39"/>
         <image name="VIP" width="74" height="74"/>
         <image name="不太熟" width="187" height="60"/>
         <image name="不太熟触发" width="187" height="60"/>

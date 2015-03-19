@@ -124,9 +124,6 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.subjects) {
-        [self.tableview reloadData];
-    }
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
         [self.redDot setHidden:YES];

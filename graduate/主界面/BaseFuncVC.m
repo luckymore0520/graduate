@@ -156,7 +156,7 @@
     CGRect frame;
     if (_keyButtons.count>0) {
         UIButton* button = [_keyButtons firstObject];
-        frame= button.frame;
+        frame = [button convertRect:button.bounds toView:nil];
     } else {
         frame = textField.frame;
     }
