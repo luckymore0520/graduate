@@ -19,6 +19,7 @@
 @property (nonatomic,strong)MPMoviePlayerController* moviePlayer;
 @property (weak, nonatomic) IBOutlet UIButton *jumpButton;
 @property (nonatomic,strong)LoginVC* rootVC;
+@property (nonatomic,strong)NSTimer* timer;
 @end
 
 @implementation MediaPlayVC
@@ -59,9 +60,8 @@
     for (UIView* type in [self.moviePlayer.backgroundView subviews]) {
         NSLog(@"%@",type.class);
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
     [self.moviePlayer play];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
 }
 - (IBAction)showJumpButton:(id)sender {
     [_jumpButton setHidden:NO];

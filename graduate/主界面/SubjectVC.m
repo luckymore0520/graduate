@@ -90,7 +90,22 @@ CGFloat angle;
         [self.bootView setHidden:NO];
         [ToolUtils setNotFirstLogin:YES];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateImage) name:@"UPDATEIMAGE" object:nil];
+}
 
+- (void)updateImage
+{
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
+    if (array.count>0) {
+        Trace* trace = [array firstObject];
+        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
+        [self.dailyNoteLabel setText:trace.note];
+        if (trace.note.length<23) {
+            self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
+        } else {
+            self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
+        }
+    }
 }
 
 #pragma mark - ButtonAction
@@ -155,18 +170,7 @@ CGFloat angle;
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
-    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
-    if (array.count>0) {
-        Trace* trace = [array firstObject];
-        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
-        [self.dailyNoteLabel setText:trace.note];
-        if (trace.note.length<23) {
-            self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
-        } else {
-            self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
-            
-        }
-    }
+    [self updateImage];
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
 }
