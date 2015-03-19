@@ -270,6 +270,7 @@
     }];
 }
 - (IBAction)ensureTransfer:(id)sender {
+    [ToolUtils showToast:@"转移成功" toView:self.view];
     if ([self.transferView selectedIndex]==-1) {
         return;
     }
@@ -360,6 +361,22 @@
         }
     }
     [cell setSelectMode:_selectModel];
+    switch (question.orientation.integerValue) {
+        case 1:
+            cell.imgView.transform = CGAffineTransformMakeRotation(0);
+            break;
+        case 2:
+            cell.imgView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+            break;
+        case 3:
+            cell.imgView.transform = CGAffineTransformMakeRotation(M_PI);
+            break;
+        case 4:
+            cell.imgView.transform = CGAffineTransformMakeRotation(M_PI_2);
+            break;
+        default:
+            break;
+    }
     return cell;
 }
 
@@ -471,6 +488,8 @@
         [self.selectedArray removeAllObjects];
         [self loadData];
         [self.photoView reloadData];
+        [ToolUtils showToast:@"删除成功" toView:self.view];
+
     }
 }
 @end

@@ -98,7 +98,6 @@
     } else {
         _videoCollectionViewHeight.constant = (self.essence.media_.count/5+1)*50-15;
     }
-    
     [self.view layoutIfNeeded];
 }
 

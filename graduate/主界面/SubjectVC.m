@@ -65,7 +65,6 @@
 @property (nonatomic,strong)NSArray* subjectImgList;
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
 @property (weak, nonatomic) IBOutlet UIControl *bootView;
-
 @end
 CGFloat angle;
 @implementation SubjectVC
@@ -84,13 +83,15 @@ CGFloat angle;
     self.headView.layer.borderWidth = 3;
     _subjectImgList  = [NSArray arrayWithObjects:@"英语",@"政治",@"数学",@"专业课一",@"专业课二", nil];
     self.firstOpen = YES;
-    [self reloadData];
     [self.view bringSubviewToFront:self.centerLine];
     if (![ToolUtils getNotFirstLogin]) {
         [self.bootView setHidden:NO];
         [ToolUtils setNotFirstLogin:YES];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateImage) name:@"UPDATEIMAGE" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"UPDATEIMAGE" object:nil];
+    if (![ToolUtils connectToInternet]) {
+        [self reloadData];
+    }
 }
 
 - (void)updateImage
@@ -123,7 +124,9 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tableview reloadData];
+    if (self.subjects) {
+        [self.tableview reloadData];
+    }
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
         [self.redDot setHidden:YES];
@@ -155,7 +158,6 @@ CGFloat angle;
 - (void)viewDidAppear:(BOOL)animated
 {
     angle = 0;
-
     [self startAnimation];
     if (self.firstOpen) {
         self.firstOpen = NO;
@@ -227,7 +229,6 @@ CGFloat angle;
         for (Subject* subject in self.subjects) {
             total+=subject.total;
         }
-        
         if (total<count.totoalCount_.integerValue) {
             for (Subject* subject in self.subjects) {
                 switch (subject.type) {
@@ -256,9 +257,6 @@ CGFloat angle;
                 }
             }
         }
-        
-        
-        
         [self calculateTotal];
         [self.tableview reloadData];
     }
@@ -281,9 +279,6 @@ CGFloat angle;
     }
     [[[MQuesCountStatus alloc]init]load:self];
 }
-
-
-
 
 
 - (IBAction)startEdit:(id)sender {
@@ -317,7 +312,6 @@ CGFloat angle;
 - (IBAction)takePhoto:(id)sender {
     if (self.subjects.count<4) {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
-
     } else {
         SCNavigationController *nav = [[SCNavigationController alloc] init];
         nav.scNaigationDelegate = self;
@@ -382,6 +376,9 @@ CGFloat angle;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (!_subjects) {
+        return 0;
+    }
     if (_subjects.count<4) {
         return 2;
     } else {

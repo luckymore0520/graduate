@@ -37,7 +37,7 @@
     [super viewDidLoad];
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_major1Field,_major2Field, nil];
-    self.keyButtons = [NSArray arrayWithObjects:_completeButton, nil];
+    self.keyButtons = [NSArray arrayWithObjects:_completeButton,_major2Field, nil];
     
 }
 
