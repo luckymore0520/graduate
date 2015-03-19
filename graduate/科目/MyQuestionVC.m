@@ -300,9 +300,12 @@
         }
     }
     [self.myQuestions removeObjectsInArray:shoudRemoveDic];
-    [self.photoView reloadData];
     [book save];
     [book updateQuestions];
+    
+    [self.selectedArray removeAllObjects];
+    [self loadData];
+    [self.photoView reloadData];
 }
 
 

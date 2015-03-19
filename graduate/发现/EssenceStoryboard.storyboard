@@ -439,7 +439,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="essenceDownloadBt" destination="tIf-1A-aMa" id="mlV-sV-odb"/>
                                             <outlet property="essenceIsVipLabel" destination="X8R-ws-edD" id="HR7-gd-8Qx"/>
