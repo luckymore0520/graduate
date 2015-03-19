@@ -11,6 +11,11 @@
 @implementation MQuestionRecommand
 - (ApiHelper *)load:(id<ApiDelegate>)delegate date:(NSString *)date
 {
+    if (date == nil) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        date = [dateFormatter stringFromDate:[NSDate date]];
+    }
     return [self load:@"MQuesRecommend" params:@{@"date":date} delegate:delegate];
 }
 @end

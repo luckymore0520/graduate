@@ -337,13 +337,10 @@ CGFloat angle;
     con.postImage = image;
     [navigationController pushViewController:con animated:NO];
 }
-
 #pragma mark -tableViewDelegate
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SubjectCell* cell = (SubjectCell*)[tableView dequeueReusableCellWithIdentifier:@"subject"];
-    
     if (indexPath.row==_subjects.count) {
         [cell.nameLabel setText:@"添加课程"];
         [cell.totalLabel setText:@"添加考试课程"];
@@ -408,7 +405,6 @@ CGFloat angle;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    NSLog(@"%lf",);
     if (scrollView.contentSize.height - scrollView.contentOffset.y<=110) {
         if (!_isPresenting) {
             _isPresenting = YES;
@@ -551,7 +547,6 @@ CGFloat angle;
         self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
     } else {
         self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
-
     }
     NSString* myDay = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
@@ -561,7 +556,6 @@ CGFloat angle;
         trace = (Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
         trace.myDay = myDay;
         trace.user = [ToolUtils getUserid];
-        NSLog(@"..................此处照理不可能发生");
     } else {
         trace = [array firstObject];
     }

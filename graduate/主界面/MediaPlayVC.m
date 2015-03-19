@@ -39,11 +39,8 @@
 
 
 - (IBAction)goToLogin:(id)sender {
-    
-    
-    
+    [self.moviePlayer stop];
     [self.navigationController pushViewController:self.rootVC animated:YES];
-        
 }
 
 - (void) viewDidAppear:(BOOL)animated
