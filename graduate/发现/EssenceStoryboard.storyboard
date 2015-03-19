@@ -375,12 +375,16 @@
                                                 <constraint firstItem="px6-wi-RK7" firstAttribute="leading" secondItem="R7M-Mt-1Lr" secondAttribute="trailing" constant="4" id="ehf-Nn-5dC">
                                                     <variation key="heightClass=regular-widthClass=compact" constant="15"/>
                                                 </constraint>
-                                                <constraint firstItem="X8R-ws-edD" firstAttribute="centerY" secondItem="Gtq-gG-2Ob" secondAttribute="centerY" constant="0.5" id="m69-Ua-mwO"/>
+                                                <constraint firstItem="X8R-ws-edD" firstAttribute="centerY" secondItem="Gtq-gG-2Ob" secondAttribute="centerY" constant="0.5" id="m69-Ua-mwO">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
                                                 <constraint firstItem="px6-wi-RK7" firstAttribute="top" secondItem="I6Z-e2-caO" secondAttribute="topMargin" constant="2" id="qJd-Sr-rdJ"/>
                                                 <constraint firstAttribute="bottom" secondItem="1fv-sQ-mWD" secondAttribute="bottom" id="sTk-Ce-XKo">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="3"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="5"/>
                                                 </constraint>
-                                                <constraint firstItem="1fv-sQ-mWD" firstAttribute="centerY" secondItem="4QS-Dq-5qa" secondAttribute="centerY" constant="1" id="zni-Oa-eNT"/>
+                                                <constraint firstItem="1fv-sQ-mWD" firstAttribute="centerY" secondItem="4QS-Dq-5qa" secondAttribute="centerY" constant="1" id="zni-Oa-eNT">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                                </constraint>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
