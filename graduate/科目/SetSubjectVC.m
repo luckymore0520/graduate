@@ -117,10 +117,6 @@
     [ToolUtils setUserInfomation:_user.keyValues];
     MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];
     [updateSubject load:self subjectMath:_user.subjectMath_ subjectMajor1:_user.subjectMajor1_ subjectMajor2:_user.subjectMajor2_ subjectEng:_user.subjectEng_];
-    
-    
-#warning 此处调用设置科目的接口
-
 }
 
 #pragma mark -apidelegate
@@ -134,9 +130,8 @@
             [ToolUtils showMessage:@"网络请求失败，请重试"];
         }
     }
-    
-
 }
+
 - (void)selectIndex:(NSInteger)index name:(NSString *)buttonName
 {
     if ([buttonName isEqualToString:@"Math"]) {
@@ -150,10 +145,7 @@
             [_major2Line setHidden:YES];
         }
     }
-    
 }
-
-
 
 #pragma mark - TableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

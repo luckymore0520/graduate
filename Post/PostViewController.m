@@ -306,7 +306,7 @@
     
     
     NSString* thumbNailFileName = [[NSString stringWithFormat:@"%@%@_thumb.png",[ToolUtils getUserid],[dateFormatter stringFromDate:[NSDate date]]]stringByReplacingOccurrencesOfString:@" " withString:@""];
-    UIImage *image = [self OriginImage:_postImage scaleToSize:CGSizeMake(130, 130)];
+    UIImage *image = [self OriginImage:_postImage scaleToSize:CGSizeMake(130, _postImage.size.height/_postImage.size.width*130)];
     [ToolUtils save:UIImageJPEGRepresentation(image, 1) name:thumbNailFileName];
     NSError* error;
     CoreDataHelper* helper = [CoreDataHelper getInstance];

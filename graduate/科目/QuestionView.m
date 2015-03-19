@@ -12,7 +12,6 @@
 @implementation QuestionView
 - (void)rotate
 {
-
     switch (self.orientation.integerValue) {
         case 1:
             self.img = [UIImage imageWithCGImage:self.imageView.image.CGImage scale:1 orientation:UIImageOrientationLeft];
@@ -34,9 +33,9 @@
         default:
             break;
     }
-    self.orientation =[NSNumber numberWithInt: self.orientation.integerValue+1];
+    self.orientation =[NSNumber numberWithInteger: self.orientation.integerValue+1];
     if (self.orientation.integerValue>4) {
-        self.orientation = [NSNumber numberWithInt:self.orientation.integerValue-4];
+        self.orientation = [NSNumber numberWithInteger:self.orientation.integerValue-4];
     }
     self.myQuestion.orientation = self.orientation;
     [[QuestionBook getInstance]insertQuestionFromRecommand:self.myQuestion];

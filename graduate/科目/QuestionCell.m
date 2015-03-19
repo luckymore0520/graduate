@@ -11,9 +11,14 @@
 @implementation QuestionCell
 - (void)setSelect:(BOOL) select;
 {
-    [self.selectView setHidden:!select];
-//    if (_isStar) {
-//        [self.stateImg setHidden:select];
-//    }
+    [self.selectedButton setSelected:select];
+}
+
+-(void)setSelectMode:(BOOL)selectMode
+{
+    [self.selectView setHidden:!selectMode];
+    if (!selectMode) {
+        [self.selectedButton setSelected:NO];
+    }
 }
 @end

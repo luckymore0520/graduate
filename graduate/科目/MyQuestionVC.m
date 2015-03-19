@@ -139,6 +139,7 @@
     [self.selectView setHidden:!self.selectView.hidden];
     [self cancelTransfer:nil];
     self.selectModel = !self.selectModel;
+    [self.photoView reloadData];
 }
 - (void)loadData
 {
@@ -301,24 +302,12 @@
 
 
 - (IBAction)delete:(id)sender {
-    
-    
     if (_selectedArray.count==0) {
         return;
     }
-    
     UIActionSheet* actionsheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除笔记" otherButtonTitles:nil, nil];
     [actionsheet showInView:[UIApplication sharedApplication].keyWindow];
-    
-    
-    
-    
-
 }
-
-
-
-
 
 
 - (void)didReceiveMemoryWarning {
@@ -370,6 +359,7 @@
             [cell setSelect:YES];
         }
     }
+    [cell setSelectMode:_selectModel];
     return cell;
 }
 
@@ -382,7 +372,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (!self.selectModel) {
         RecordVC* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
         detailVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
@@ -399,7 +388,6 @@
     } else {
         Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         QuestionCell* cell = (QuestionCell*)[self.photoView cellForItemAtIndexPath:indexPath];
-
         if ([self.selectedArray indexOfObject:question]== NSNotFound) {
             [self.selectedArray addObject:question];
             NSLog(@"不在里面");
@@ -409,12 +397,9 @@
             NSLog(@"在里面");
             [cell setSelect:NO];
         }
-        
     }
-//    [self performSegueWithIdentifier:@"showDetail" sender:indexPath];
-    
-    
 }
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -478,7 +463,6 @@
                 [[[QuestionBook getInstance].allQuestions objectAtIndex:question.type.integerValue-1] removeObject:question];
             }
         }
-        
         [[QuestionBook getInstance]save];
         
         MQuesDelete* delete = [[MQuesDelete alloc]init];
@@ -487,7 +471,6 @@
         [self.selectedArray removeAllObjects];
         [self loadData];
         [self.photoView reloadData];
-
     }
 }
 @end

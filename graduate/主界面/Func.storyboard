@@ -250,7 +250,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="D51B9540-D6AF-4528-8693-3E4844AE45F1" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EBAD356E-2CD8-4BAE-BA61-EAFB44D58BAB" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -2308,57 +2308,39 @@
                                                 <view hidden="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sYQ-Wd-cBl">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="选择" translatesAutoresizingMaskIntoConstraints="NO" id="KME-N8-5fm">
-                                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                        </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="选中遮罩" translatesAutoresizingMaskIntoConstraints="NO" id="mR8-ru-CTR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BJ-Wd-W5G">
+                                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                                            <state key="normal" image="科目列表未选择">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <state key="selected" image="科目列表选中"/>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="mR8-ru-CTR" firstAttribute="leading" secondItem="sYQ-Wd-cBl" secondAttribute="leading" id="GmX-Wo-IX3"/>
-                                                        <constraint firstItem="KME-N8-5fm" firstAttribute="top" secondItem="sYQ-Wd-cBl" secondAttribute="top" constant="42" id="eLq-VG-MWe">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="8BJ-Wd-W5G" secondAttribute="trailing" id="TqE-F5-FJy">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="4"/>
                                                         </constraint>
-                                                        <constraint firstAttribute="bottom" secondItem="mR8-ru-CTR" secondAttribute="bottom" id="nKw-sM-ms1"/>
-                                                        <constraint firstItem="mR8-ru-CTR" firstAttribute="top" secondItem="sYQ-Wd-cBl" secondAttribute="top" id="rts-tv-qol"/>
-                                                        <constraint firstAttribute="trailing" secondItem="KME-N8-5fm" secondAttribute="trailing" id="vMD-h5-8Zb">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
-                                                        </constraint>
-                                                        <constraint firstAttribute="trailing" secondItem="mR8-ru-CTR" secondAttribute="trailing" id="vee-mh-1H2"/>
-                                                        <constraint firstAttribute="bottom" secondItem="KME-N8-5fm" secondAttribute="bottom" id="zVa-xS-3m0">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="2"/>
+                                                        <constraint firstItem="8BJ-Wd-W5G" firstAttribute="top" secondItem="sYQ-Wd-cBl" secondAttribute="top" id="ihg-qj-fsm">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="4"/>
                                                         </constraint>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="subviews">
-                                                            <exclude reference="KME-N8-5fm"/>
-                                                            <exclude reference="mR8-ru-CTR"/>
+                                                            <exclude reference="8BJ-Wd-W5G"/>
                                                         </mask>
                                                         <mask key="constraints">
-                                                            <exclude reference="eLq-VG-MWe"/>
-                                                            <exclude reference="vMD-h5-8Zb"/>
-                                                            <exclude reference="zVa-xS-3m0"/>
-                                                            <exclude reference="GmX-Wo-IX3"/>
-                                                            <exclude reference="nKw-sM-ms1"/>
-                                                            <exclude reference="rts-tv-qol"/>
-                                                            <exclude reference="vee-mh-1H2"/>
+                                                            <exclude reference="TqE-F5-FJy"/>
+                                                            <exclude reference="ihg-qj-fsm"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="subviews">
-                                                            <include reference="KME-N8-5fm"/>
-                                                            <include reference="mR8-ru-CTR"/>
+                                                            <include reference="8BJ-Wd-W5G"/>
                                                         </mask>
                                                         <mask key="constraints">
-                                                            <include reference="eLq-VG-MWe"/>
-                                                            <include reference="vMD-h5-8Zb"/>
-                                                            <exclude reference="zVa-xS-3m0"/>
-                                                            <include reference="GmX-Wo-IX3"/>
-                                                            <include reference="nKw-sM-ms1"/>
-                                                            <include reference="rts-tv-qol"/>
-                                                            <include reference="vee-mh-1H2"/>
+                                                            <include reference="TqE-F5-FJy"/>
+                                                            <include reference="ihg-qj-fsm"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
@@ -2419,6 +2401,7 @@
                                         <connections>
                                             <outlet property="imgView" destination="Y3T-nD-Gtc" id="3nU-GF-xr2"/>
                                             <outlet property="selectView" destination="sYQ-Wd-cBl" id="pc8-KP-aNo"/>
+                                            <outlet property="selectedButton" destination="8BJ-Wd-W5G" id="QL6-m6-Onn"/>
                                             <outlet property="stateImg" destination="5yS-6u-3LY" id="hno-9m-X68"/>
                                         </connections>
                                     </collectionViewCell>
@@ -7304,7 +7287,7 @@
     <resources>
         <image name="1-返回键" width="10" height="19"/>
         <image name="2-开始体验" width="125" height="39"/>
-        <image name="D51B9540-D6AF-4528-8693-3E4844AE45F1" width="166" height="165">
+        <image name="EBAD356E-2CD8-4BAE-BA61-EAFB44D58BAB" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9229,6 +9212,8 @@ AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
         <image name="文字渐变蒙版" width="375" height="284"/>
         <image name="旋转" width="77" height="32"/>
         <image name="未选择" width="13" height="13"/>
+        <image name="科目列表未选择" width="21" height="21"/>
+        <image name="科目列表选中" width="21" height="21"/>
         <image name="笔记详情_05" width="19" height="19"/>
         <image name="精华" width="74" height="74"/>
         <image name="编辑图标" width="13" height="14"/>
@@ -9238,8 +9223,6 @@ AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
         <image name="转动条" width="104" height="104"/>
         <image name="转移到科目" width="105" height="40"/>
         <image name="选中" width="13" height="13"/>
-        <image name="选中遮罩" width="65" height="65"/>
-        <image name="选择" width="21" height="21"/>
         <image name="重点" width="77" height="32"/>
         <image name="重点触发效果" width="77" height="32"/>
         <image name="错题-删除图标" width="19" height="18"/>
