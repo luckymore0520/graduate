@@ -82,7 +82,6 @@
         // Custom initialization
         alphaTimes = -1;
         currTouchPoint = CGPointZero;
-        
         _cameraBtnSet = [[NSMutableSet alloc] init];
     }
     return self;

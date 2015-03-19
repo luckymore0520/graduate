@@ -113,12 +113,13 @@
     self.navigationItem.rightBarButtonItem = myAddButton;
 }
 - (IBAction)showSelectedType:(UIButton *)sender {
-    if (sender != self.selectAllButton) {
-        [self.selectAllButton setSelected:NO];
-    } else {
-        [_selectReviewdButton setSelected:NO];
-        [_selectUnReviewButton setSelected:NO];
+    if (sender.selected) {
+        return;
     }
+    [_selectAllButton setSelected:NO];
+    [_selectImportantButton setSelected:NO];
+    [_selectReviewdButton setSelected:NO];
+    [_selectUnReviewButton setSelected:NO];
     [sender setSelected:!sender.selected];
     [self loadData];
     [self.photoView reloadData];
@@ -159,21 +160,17 @@
             BOOL shoudShow = NO;
             if (_selectAllButton.selected) {
                 shoudShow = YES;
-            } else {
-                if (_selectReviewdButton.selected) {
-                    if (question.review_time.integerValue>0) {
-                        shoudShow = YES;
-                    }
+            } else if (_selectReviewdButton.selected) {
+                if (question.review_time.integerValue>0) {
+                    shoudShow = YES;
                 }
-                if (_selectUnReviewButton.selected) {
-                    if (question.review_time.integerValue==0) {
-                        shoudShow = YES;
-                    }
+            } else if (_selectUnReviewButton.selected) {
+                if (question.review_time.integerValue==0) {
+                    shoudShow = YES;
                 }
-            }
-            if (_selectImportantButton.selected) {
-                if (question.is_highlight.integerValue!=1) {
-                    shoudShow = NO;
+            } else if (_selectImportantButton.selected) {
+                if (question.is_highlight.integerValue==1) {
+                    shoudShow = YES;
                 }
             }
             if (shoudShow) {

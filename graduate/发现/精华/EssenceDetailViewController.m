@@ -13,6 +13,7 @@
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
 #import "EssenceMediaCell.h"
+
 @interface EssenceDetailViewController ()<UIAlertViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
