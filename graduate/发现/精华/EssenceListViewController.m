@@ -41,6 +41,9 @@
     self.essenceList = [[NSMutableArray alloc]init];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = view;
+
 }
 
 - (void)setSelectedMode:(BOOL)selectedMode

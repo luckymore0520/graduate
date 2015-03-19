@@ -66,6 +66,10 @@
 }
 
 
+- (void)initViews
+{
+    
+}
 
 - (void)initSubjects
 {
@@ -383,7 +387,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return CGSizeMake(65, 65);
+    return CGSizeMake(55, 55);
     
 }
 

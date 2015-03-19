@@ -102,15 +102,15 @@
     } else {
         self.scrollEnabled = NO;
         // 直接显示进度条
-        [_photoLoadingView showLoading];
-        [self addSubview:_photoLoadingView];
+//        [_photoLoadingView showLoading];
+//        [self addSubview:_photoLoadingView];
         
         __weak MJPhotoView *photoView = self;
-        __weak MJPhotoLoadingView *loading = _photoLoadingView;
-        [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            if (receivedSize > kMinProgress) {
-                loading.progress = (float)receivedSize/expectedSize;
-            }
+//        __weak MJPhotoLoadingView *loading = _photoLoadingView;
+        [_imageView sd_setImageWithURL:_photo.url placeholderImage:[UIImage imageNamed:@"placeholder"] options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//            if (receivedSize > kMinProgress) {
+//                loading.progress = (float)receivedSize/expectedSize;
+//            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
         }];

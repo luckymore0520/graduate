@@ -124,6 +124,10 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (!self.subjects) {
+        self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
+    }
+    [self.tableview reloadData];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
         [self.redDot setHidden:YES];
