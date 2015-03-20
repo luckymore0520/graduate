@@ -181,6 +181,10 @@
     
 }
 
+-(void)sendEmail
+{
+    [[[MEssenceDownload alloc]init]load:self id:_essence.id_ resid:_essence.resid_ email:_user.email_ isShared:@"1"];
+}
 
 - (void)editEmail
 {
@@ -327,8 +331,9 @@
 
 -(void)processShareSuccess{
     [self hideShareView];
-    self.essence.hasDownload_ = @1;
+    self.essence.isDownloaded_ = @1;
     [ShareApiUtil showShareSuccessAlert];
+    [self sendEmail];
 }
 
 -(NSString *)getShareTitle

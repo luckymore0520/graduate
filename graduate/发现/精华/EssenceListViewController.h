@@ -7,7 +7,7 @@
 //
 
 #import "RefreshTableViewController.h"
-
+#import "ShareApiUtil.h"
 @interface EssenceListViewController : RefreshTableViewController
 @property (nonatomic,assign)NSInteger type;
 @property (nonatomic,weak)BaseFuncVC* parentVC;

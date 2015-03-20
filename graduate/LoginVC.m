@@ -137,7 +137,7 @@
 
 #pragma mark buttonAction
 - (IBAction)login:(id)sender {
-    permissions = [[NSMutableArray alloc]initWithObjects:kOPEN_PERMISSION_GET_USER_INFO,kOPEN_PERMISSION_GET_INFO,   nil];
+    permissions = [[NSMutableArray alloc]initWithObjects:@"get_user_info", @"get_simple_userinfo", @"add_t",  nil];
     [_tencentOAuth authorize:permissions inSafari:NO];
     //[_tencentOAuth logout:self];
 }
@@ -346,9 +346,9 @@
 - (void)getUserInfoResponse:(APIResponse *)response
 {
     NSDictionary* userInfo =response.jsonResponse;
-    NSLog(@"%@",userInfo);
-    NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
 //    NSLog(@"%@",userInfo);
+//    NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
+    NSLog(@"%@",userInfo);
     [ToolUtils setUserInfo:userInfo];
     MLogin* login = [[MLogin alloc]init];
     [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];

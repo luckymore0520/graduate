@@ -20,6 +20,7 @@
 #import "EssenceDetailViewController.h"
 #import "EssenceDetailWebViewController.h"
 #import "MyCollectionRootView.h"
+
 @interface EssenceListViewController ()<ButtonGroupDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIView *maskBackView;
 
@@ -45,7 +46,14 @@
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
     UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.tableFooterView = view;
+     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setSelectedMode:(BOOL)selectedMode
@@ -178,7 +186,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (tableView==self.tableView) {
         MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
-        if (essence.hasDownload_.integerValue==1) {
+            if (essence.hasDownload_.integerValue==1) {
             EssenceDetailViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceDetail"];
             detail.essence = essence;
             detail.isMyCollection = self.isMyCollection;
@@ -214,7 +222,7 @@
             return;
         } else if (essence.isDownloaded_.integerValue==1||essence.needShare_.integerValue==0) {
             [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
-            [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+            [self sendEmail];
         } else {
             if (!self.shareAlert) {
                 _shareAlert = [[UIAlertView alloc]initWithTitle:@"先分享，再下载" message:@"因为是星级帖，所以要先分享后再下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"分享", nil];
@@ -230,22 +238,27 @@
     }
 }
 
--(void)showShareView
+-(void)hideShareView
 {
-    [self.maskBackView setHidden:NO];
-    [self.parentVC addMaskAtNavigation];
+    [_maskBackView setHidden:YES];
+    [self removeMaskAtNavigation];
     [UIView animateWithDuration:0.3 animations:^{
-        self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
+        self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, 0);
     }];
 }
 
 - (IBAction)cancelShare:(id)sender {
-    [self.maskBackView setHidden:YES];
-    [self.parentVC removeMaskAtNavigation];
+    [self hideShareView];
+    
+}
+- (void)showShareView{
+    [_maskBackView setHidden:NO];
+    [self addMaskAtNavigation];
     [UIView animateWithDuration:0.3 animations:^{
-        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+        self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, -self.shareView.frame.size.height);
     }];
 }
+
 
 
 #pragma mark -AlertViewDelegate
@@ -342,7 +355,7 @@
         
         [[[MUpdateUserInfo alloc]init]load:self nickname:_user.nickname_ headImg:_user.headImg_ sex:_user.sex_.integerValue email:_user.email_];
         if (self.selectEssence.isDownloaded_.integerValue==1||self.selectEssence.needShare_.integerValue==0) {
-            [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+            [self sendEmail];
         } else {
             if (!self.shareAlert) {
                 _shareAlert = [[UIAlertView alloc]initWithTitle:@"先分享，再下载" message:@"因为是星级帖，所以要先分享后再下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"分享", nil];
@@ -361,5 +374,130 @@
         [((MyCollectionRootView*)self.parentVC) selectCollection:essence.id_ isSelected:isAll];
     }
 }
+
+-(void)sendEmail
+{
+    NSLog(@"%@dd",self.selectEssence);
+    [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+}
+
+#pragma mark -sharebuttons
+
+- (IBAction)qqShare:(UIButton *)sender
+{
+//    self.essence.hasDownload_ = @1;
+    self.selectEssence.isDownloaded_ = @1;
+    [ShareApiUtil qqShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl] from:self];
+    [self hideShareView];
+}
+
+- (IBAction)friendsShare:(UIButton *)sender {
+    [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneTimeline];
+}
+- (IBAction)weixinShare:(UIButton *)sender {
+    [ShareApiUtil weixinShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]scene:WXSceneSession];
+}
+
+
+- (IBAction)weiboShare:(UIButton *)sender {
+    // AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [ShareApiUtil weiboShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl]];
+}
+
+-(void)processShareSuccess{
+    //[self sendEmail];
+    [self hideShareView];
+     self.selectEssence.isDownloaded_ = @1;
+     //[ShareApiUtil showShareSuccessAlert];
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//    [alert show];
+}
+
+-(NSString *)getShareTitle
+{
+    return self.selectEssence.title_;
+}
+
+-(NSString *)getShareUrl
+{
+    return self.selectEssence.hasDownload_.intValue ==1 ? self.selectEssence.shareUrl_ : self.selectEssence.url_;
+}
+
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //[msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    //[self processShareSuccess];
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+-(void)onReq:(QQBaseReq *)req
+{
+    NSLog(@"过来了");
+    
+}
+- (void)onResp:(QQBaseResp *)resp
+{
+    NSLog(@"过来了");
+}
+- (void)isOnlineResponse:(NSDictionary *)response
+{
+}
+
 
 @end
