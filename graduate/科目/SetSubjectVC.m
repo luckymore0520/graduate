@@ -101,7 +101,7 @@
 
 - (IBAction)complete:(id)sender {
     if ([_mathGroup selectedIndex]==3) {
-        if (_major1Field.text.length==0||_major1Field.text.length==0) {
+        if (_major1Field.text.length==0||_major2Field.text.length==0) {
             [ToolUtils showMessage:@"请填写两门专业课"];
             return;
         }

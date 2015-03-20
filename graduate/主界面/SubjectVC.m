@@ -329,13 +329,13 @@ CGFloat angle;
 }
 
 - (IBAction)takePhoto:(id)sender {
-//    if (self.subjects.count<4) {
+    if (self.subjects.count<4) {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
-//    } else {
-//        SCNavigationController *nav = [[SCNavigationController alloc] init];
-//        nav.scNaigationDelegate = self;
-//        [nav showCameraWithParentController:self];
-//    }
+    } else {
+        SCNavigationController *nav = [[SCNavigationController alloc] init];
+        nav.scNaigationDelegate = self;
+        [nav showCameraWithParentController:self];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -375,7 +375,9 @@ CGFloat angle;
         if (self.subjects.count<4) {
             [cell.totalLabel setHidden:YES];
             [cell.addLabel setHidden:YES];
-            
+        } else {
+            [cell.totalLabel setHidden:NO];
+            [cell.addLabel setHidden:NO];
         }
     }
     return cell;

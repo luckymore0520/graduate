@@ -133,7 +133,7 @@
                 [_delegate showAlert:@"网络请求错误，请重试" functionName:_name];
             }
         } else {
-            if (_delegate&&[_delegate respondsToSelector:@selector(showAlert:)]) {
+            if (_delegate&&[_delegate respondsToSelector:@selector(showAlert: functionName:)]) {
                 [_delegate showAlert:[resultDict objectForKey:@"errorMsg"] functionName:_name];
             }
         }

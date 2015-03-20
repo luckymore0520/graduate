@@ -26,24 +26,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIStoryboard *userSB ;
-    userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
-    self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
-    MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
-    [getWelcome load:self];
-    NSString *thePath=[[NSBundle mainBundle] pathForResource:@"Movie" ofType:@"mp4"];
-    NSURL *theurl=[NSURL fileURLWithPath:thePath];
-    self.moviePlayer=[[MPMoviePlayerController alloc] initWithContentURL:theurl];
-    [self.moviePlayer.view setFrame:self.mediaView.frame];
-    [self.moviePlayer prepareToPlay];
-    [self.moviePlayer setShouldAutoplay:YES]; // And other options you can look through the documentation.
-    [self.mediaView addSubview:self.moviePlayer.view];
-    [self.moviePlayer.view setUserInteractionEnabled:NO];
-    self.moviePlayer.controlStyle = MPMovieControlStyleNone;
-    [self.moviePlayer play];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(play) name:@"ENTERFOREGROUND" object:nil];
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+-(void)play
+{
+    [_moviePlayer play];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (!self.moviePlayer) {
+        UIStoryboard *userSB ;
+        userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+        self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
+        MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
+        [getWelcome load:self];
+        NSString *thePath=[[NSBundle mainBundle] pathForResource:@"Movie" ofType:@"mp4"];
+        NSURL *theurl=[NSURL fileURLWithPath:thePath];
+        self.moviePlayer=[[MPMoviePlayerController alloc] initWithContentURL:theurl];
+        [self.moviePlayer.view setFrame:self.mediaView.frame];
+        [self.moviePlayer prepareToPlay];
+        [self.moviePlayer setShouldAutoplay:YES]; // And other options you can look through the documentation.
+        [self.mediaView addSubview:self.moviePlayer.view];
+        [self.moviePlayer.view setUserInteractionEnabled:NO];
+        self.moviePlayer.controlStyle = MPMovieControlStyleNone;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
+    }
+    [self.moviePlayer play];
+}
 
 - (IBAction)goToLogin:(id)sender {
     [self.moviePlayer stop];

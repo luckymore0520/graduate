@@ -1701,8 +1701,8 @@
 			isa = PBXGroup;
 			children = (
 				7D4E05841A74AD99001709DB /* BaseFuncVC.m */,
-				7D0A87F31A85D989001A33F7 /* WaitingView.xib */,
 				7D0A87F41A85D989001A33F7 /* WaitingView.h */,
+				7D0A87F31A85D989001A33F7 /* WaitingView.xib */,
 				7D0A87F51A85D989001A33F7 /* WaitingView.m */,
 				7D4E05831A74AD99001709DB /* BaseFuncVC.h */,
 				7DBD867A1A72789600205576 /* Func.storyboard */,

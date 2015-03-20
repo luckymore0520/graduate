@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *backUpingLabel;
 @property(nonatomic)int total;
 @property(nonatomic)int need;
+@property (nonatomic,strong)NSTimer* timer;
+@property (nonatomic)NSInteger count;
 @end
 
 @implementation BackUpViewController
@@ -92,6 +94,7 @@
     offSet = (total-hasBackUp)/(total+0.0)* _progressView.frame.size.width;
     _waveView.transform = CGAffineTransformMakeTranslation(0, offSet);
     if (total==hasBackUp) {
+        [_timer invalidate];
         [ToolUtils setIgnoreNetwork:NO];
         [_backUpingLabel setHidden:YES];
         [_backUpButton setHidden:NO];
@@ -117,12 +120,24 @@
     if (_need==0) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
+        _count = 0;
+        _timer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
         [_backUpButton setHidden:YES];
         [_progressLabel setHidden:YES];
         [_backUpingLabel setHidden:NO];
         [ToolUtils setIgnoreNetwork:YES];
         [[QuestionBook getInstance]updateQuestions];
     }
+}
+
+- (void)updateLabel
+{
+    NSString* tip = @"正在为您备份，超压缩上传。一张图片只有几十K";
+    _count++;
+    for (int i = 0 ; i < _count%3 ; i++) {
+        tip = [tip stringByAppendingString:@"."];
+    }
+    [self.backUpingLabel setText:tip];
 }
 - (IBAction)goBack:(id)sender {
     if (!self.backUpingLabel.hidden) {
