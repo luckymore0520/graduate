@@ -15,6 +15,7 @@
 #import "QuestionBook.h"
 #import "MGetMsgCount.h"
 #import "MMsgCount.h"
+#import "VIPWebViewController.h"
 @interface OtherFuncVCViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yearLabel;
@@ -188,7 +189,14 @@
     }];
 }
 
-
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"vip webview"]){
+        VIPWebViewController *vwvc = (VIPWebViewController *)[segue destinationViewController];
+        vwvc.title= @"VIP";
+        vwvc.url = [NSURL URLWithString:[ToolUtils getContactUrl]];
+    }
+}
 
 /*
 #pragma mark - Navigation

@@ -292,6 +292,8 @@
 		7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */; };
 		7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3C2411AA4BE980068812D /* WKUILabel.m */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
+		B14080D61ABAFACC004BAF3F /* VIPWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14080D51ABAFACC004BAF3F /* VIPWebViewController.m */; };
+		B14080D91ABB23B0004BAF3F /* AboutUsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14080D81ABB23B0004BAF3F /* AboutUsWebViewController.m */; };
 		B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AD83621AB3FDA200117C8C /* UIPlaceHolderTextView.m */; };
 		B1DC6DE21AB95F340046D9C2 /* ShareApiUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DC6DE11AB95F340046D9C2 /* ShareApiUtil.m */; };
 		B1DC6DE51AB96BCF0046D9C2 /* ThirdPartyCallBackDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DC6DE41AB96BCF0046D9C2 /* ThirdPartyCallBackDelegate.m */; };
@@ -819,6 +821,10 @@
 		7DF3C2401AA4BE980068812D /* WKUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKUILabel.h; path = Tools/WKUILabel.h; sourceTree = "<group>"; };
 		7DF3C2411AA4BE980068812D /* WKUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKUILabel.m; path = Tools/WKUILabel.m; sourceTree = "<group>"; };
 		7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B14080D41ABAFACC004BAF3F /* VIPWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VIPWebViewController.h; path = "主界面/VIPWebViewController.h"; sourceTree = "<group>"; };
+		B14080D51ABAFACC004BAF3F /* VIPWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VIPWebViewController.m; path = "主界面/VIPWebViewController.m"; sourceTree = "<group>"; };
+		B14080D71ABB23B0004BAF3F /* AboutUsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsWebViewController.h; path = "发现/个人/AboutUsWebViewController.h"; sourceTree = "<group>"; };
+		B14080D81ABB23B0004BAF3F /* AboutUsWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutUsWebViewController.m; path = "发现/个人/AboutUsWebViewController.m"; sourceTree = "<group>"; };
 		B1AD83611AB3FDA200117C8C /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = PlaceHolderTextView/UIPlaceHolderTextView.h; sourceTree = SOURCE_ROOT; };
 		B1AD83621AB3FDA200117C8C /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = PlaceHolderTextView/UIPlaceHolderTextView.m; sourceTree = SOURCE_ROOT; };
 		B1DC6DE01AB95F340046D9C2 /* ShareApiUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareApiUtil.h; sourceTree = "<group>"; };
@@ -1317,6 +1323,8 @@
 				7D5DBB421A8340750078B99C /* SetPasswordForThirdPartyViewController.m */,
 				7D5DBB441A8346C10078B99C /* ModifyPasswordViewController.h */,
 				7D5DBB451A8346C10078B99C /* ModifyPasswordViewController.m */,
+				B14080D71ABB23B0004BAF3F /* AboutUsWebViewController.h */,
+				B14080D81ABB23B0004BAF3F /* AboutUsWebViewController.m */,
 			);
 			name = "个人";
 			sourceTree = "<group>";
@@ -1698,6 +1706,8 @@
 				7D4E05831A74AD99001709DB /* BaseFuncVC.h */,
 				7D4E05841A74AD99001709DB /* BaseFuncVC.m */,
 				7DBD867A1A72789600205576 /* Func.storyboard */,
+				B14080D41ABAFACC004BAF3F /* VIPWebViewController.h */,
+				B14080D51ABAFACC004BAF3F /* VIPWebViewController.m */,
 				7DBD86671A725EDB00205576 /* MainFunVC.h */,
 				7DBD86681A725EDB00205576 /* MainFunVC.m */,
 				7D4E057F1A749CE4001709DB /* MediaPlayController.m */,
@@ -2067,6 +2077,7 @@
 				7D0A88021A872A0D001A33F7 /* UIImage+ImageEffects.m in Sources */,
 				7D5DBB081A8075B80078B99C /* Reachability.m in Sources */,
 				7D4445361A945EF600A4BE04 /* WKUITextField.m in Sources */,
+				B14080D91ABB23B0004BAF3F /* AboutUsWebViewController.m in Sources */,
 				7D5DBB781A836DD90078B99C /* MessageListViewController.m in Sources */,
 				7D5DBB8D1A83A2F60078B99C /* MCommentPublish.m in Sources */,
 				7D2F92AD1AB73C3300D4B18F /* EssenceMediaCell.m in Sources */,
@@ -2130,6 +2141,7 @@
 				7D0A87F71A85D989001A33F7 /* WaitingView.m in Sources */,
 				7D2432D21A7E453F00C00F64 /* SWCellScrollView.m in Sources */,
 				7D5DBB3D1A83276E0078B99C /* SelfEditViewController.m in Sources */,
+				B14080D61ABAFACC004BAF3F /* VIPWebViewController.m in Sources */,
 				7D4E06271A76068A001709DB /* YZSwipeBetweenViewController.m in Sources */,
 				7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */,
 				7D2432291A7C764200C00F64 /* MMainList.m in Sources */,
@@ -2308,8 +2320,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Fei Yang (7RCFXNA42W)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Fei Yang (7RCFXNA42W)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2337,7 +2349,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "32a9cedf-2515-4532-88d6-35312a706e91";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -2349,8 +2361,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Fei Yang (7RCFXNA42W)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Fei Yang (7RCFXNA42W)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2378,7 +2390,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "32a9cedf-2515-4532-88d6-35312a706e91";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";

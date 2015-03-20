@@ -566,4 +566,34 @@
 {
     return @"77238273";
 }
+//默认日记内容  联系我们  关于我们的URL
++(NSString *)getDiaryDefault
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"diarydefault"];
+}
++(void)setDiaryDefault:(NSString *)content
+{
+    [[NSUserDefaults standardUserDefaults]setObject:content forKey:@"diarydefault"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
++(NSString *)getAboutUrl
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"abouturl"];
+}
++(void)setAboutUrl:(NSString *)url
+{
+    [[NSUserDefaults standardUserDefaults]setObject:url forKey:@"abouturl"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
++(NSString *)getContactUrl
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"contacturl"];
+}
++(void)setContactUrl:(NSString *)url
+{
+    [[NSUserDefaults standardUserDefaults]setObject:url forKey:@"contacturl"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
 @end

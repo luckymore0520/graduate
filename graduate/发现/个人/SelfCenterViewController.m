@@ -15,6 +15,7 @@
 #import "WKNavigationViewController.h"
 #import "LoginVC.h"
 #import "MyCollectionRootView.h"
+#import "AboutUsWebViewController.h"
 #define HEADIMG 200
 
 @interface SelfCenterViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
@@ -148,6 +149,10 @@
             UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
             SelfCenterViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"feedback"];
             [self.navigationController pushViewController:nextVC animated:YES];
+        }else if(indexPath.row == 2){
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
+            AboutUsWebViewController *abvc = [storyboard instantiateViewControllerWithIdentifier:@"aboutus"];
+            [self.navigationController pushViewController:abvc animated:YES];
         }
     }
     

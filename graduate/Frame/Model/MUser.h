@@ -42,4 +42,11 @@
 @property (copy,nonatomic) NSString *subjectMajor2_;
 
 @property (retain,nonatomic) NSNumber* hasPassword_;
+@property (copy,nonatomic) NSString *diaryDefault_;
+
+@property (copy,nonatomic) NSString *contactUrl_;
+
+@property (copy,nonatomic) NSString *aboutusUrl_;
+
+
 @end

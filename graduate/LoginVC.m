@@ -197,7 +197,12 @@
 {
     if ([names isEqualToString:@"MLogin"]) {
         MUser* user = [MUser objectWithKeyValues:data];
+        NSLog(@"%@",user);
         [ToolUtils setUserInfomation:user.keyValues];
+        //设置几个默认信息
+        [ToolUtils setDiaryDefault:user.diaryDefault_];
+        [ToolUtils setAboutUrl:user.aboutusUrl_];
+        [ToolUtils setContactUrl:user.contactUrl_];
         if (!isThirdParty) {
             [self gotoMainMenu];
         }
@@ -342,7 +347,7 @@
 {
     NSDictionary* userInfo =response.jsonResponse;
     NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
-    NSLog(@"%@",userInfo);
+//    NSLog(@"%@",userInfo);
     [ToolUtils setUserInfo:userInfo];
     MLogin* login = [[MLogin alloc]init];
     [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
