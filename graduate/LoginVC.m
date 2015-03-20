@@ -346,6 +346,7 @@
 - (void)getUserInfoResponse:(APIResponse *)response
 {
     NSDictionary* userInfo =response.jsonResponse;
+    NSLog(@"%@",userInfo);
     NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
 //    NSLog(@"%@",userInfo);
     [ToolUtils setUserInfo:userInfo];

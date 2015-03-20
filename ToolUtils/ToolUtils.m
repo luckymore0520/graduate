@@ -560,7 +560,7 @@
 }
 +(NSString *)qqAppid
 {
-    return @"222222";
+    return @"1104165369";
 }
 +(NSString *)weiboAppid
 {
