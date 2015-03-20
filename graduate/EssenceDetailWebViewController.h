@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
+#import "ShareApiUtil.h"
 @interface EssenceDetailWebViewController:BaseFuncVC
 @property (nonatomic,strong)NSURL* url;
 @property (nonatomic,strong)NSString* postId;

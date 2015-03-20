@@ -96,16 +96,24 @@ CGFloat angle;
 
 - (void)updateImage
 {
+    //这个用来查找最近的一条日记
+    NSArray* arrayNote = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=%@",[ToolUtils getUserid], @""] tableName:@"Trace"];
+    //NSLog(@"length of %d",array.count);
+    if (arrayNote.count>0) {
+        Trace* trace = [arrayNote firstObject];
+        if(trace.note.length){
+            [self setDiaryLabel:trace.note];
+        }else{
+            [self setDiaryLabel:[ToolUtils getDiaryDefault]];
+        }
+    }else{
+        [self setDiaryLabel:[ToolUtils getDiaryDefault]];
+    }
+    //这里用来设置背景图
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
     if (array.count>0) {
         Trace* trace = [array firstObject];
         [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
-        [self.dailyNoteLabel setText:trace.note];
-        if (trace.note.length<23) {
-            self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
-        } else {
-            self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
-        }
     }
 }
 
@@ -173,11 +181,22 @@ CGFloat angle;
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
-    [self updateImage];
+       [self updateImage];
+
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
 }
 
+-(void)setDiaryLabel:(NSString *)diary
+{
+    [self.dailyNoteLabel setText:diary];
+    if (diary.length<23) {
+        self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
+    } else {
+        self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
+        
+    }
+}
 
 - (void)animationLabel:(NSArray*)statics
 {
@@ -506,7 +525,9 @@ CGFloat angle;
         
         _editTextView = [[UIPlaceHolderTextView alloc]initWithFrame:textFrame];
         [_editTextView setPlaceholder:@"日记不能超过42个字"];
-        [_editTextView setText:self.dailyNoteLabel.text];
+        if(![[ToolUtils getDiaryDefault] isEqualToString:self.dailyNoteLabel.text]){
+            [_editTextView setText:self.dailyNoteLabel.text];
+        }
         _editTextView.layer.borderWidth = 1;
         _editTextView.layer.borderColor = [UIColor colorWithRed:194/255.0 green:194/255.0 blue:194/255.0 alpha:0.5].CGColor;
         _editTextView.font = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:16];

@@ -16,6 +16,7 @@
 @property (copy,nonatomic) NSString *img_;
 @property (copy,nonatomic) NSString *imgZj_;
 @property (copy,nonatomic) NSString *imgGn_;
+@property (copy,nonatomic) NSString *imgGn2_;
 @property (copy,nonatomic) NSString *diary_;
 @property (copy,nonatomic) NSString *date_;
 

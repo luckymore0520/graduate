@@ -32,6 +32,7 @@
     [button addTarget:self action:@selector(backToMain) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = myAddButton;
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
 
 -(int)getSignDaysLocal
@@ -74,9 +75,8 @@
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);
     }else{
-        [ToolUtils showMessage:@"打卡成功"];
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        }];    }
+        [ToolUtils showMessage:@"打卡成功，现在去分享吧"];
+          }
     self.sign = sign;
     [[[MSign alloc]init]load:self type:self.type subject:self.subject date:sign.date];
 }
@@ -94,13 +94,11 @@
             return;
         }
     }
-    [self.maskBackView setHidden:NO];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
-    }];
-    
-    
-    
+    [self onSignSuccess];
+//    [self.maskBackView setHidden:NO];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
+//    }];
 }
 
 - (IBAction)cancelShare:(id)sender {
@@ -110,7 +108,6 @@
 
 -(void)hideShareView
 {
-    [self onSignSuccess];
     [self.maskBackView setHidden:YES];
         [UIView animateWithDuration:0.3 animations:^{
         self.shareView.transform = CGAffineTransformMakeTranslation(0,0);
@@ -123,9 +120,14 @@
         if (ret.code_.integerValue==1) {
             self.sign.isUpload = @YES;
             self.sharedUrl = ret.msg_;
+            NSLog(@"%@",self.sharedUrl);
             NSError* error;
             [[CoreDataHelper getInstance].managedObjectContext save:&error];
             NSLog(@"打卡,同步服务器成功");
+            [self.maskBackView setHidden:NO];
+            [UIView animateWithDuration:0.3 animations:^{
+                self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
+            }];
         }
     }
     
@@ -151,11 +153,13 @@
 -(void)processShareSuccess{
     [self hideShareView];
     [ShareApiUtil showShareSuccessAlert];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    }];
 }
 
 -(NSString *)getShareTitle
 {
-    return [NSString stringWithFormat:@"研大大打卡第%d",[self getSignDaysLocal]];
+    return [NSString stringWithFormat:@"研大大打卡第%d天",[self getSignDaysLocal]];
 }
 
 -(NSString *)getShareUrl

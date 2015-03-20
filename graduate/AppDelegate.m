@@ -56,7 +56,7 @@
     }
     [_window makeKeyAndVisible];
     [WeiboSDK enableDebugMode:YES];
-    [WeiboSDK registerApp:WEIBOAPPKEY];
+    [WeiboSDK registerApp:[ToolUtils weiboAppid]];
     
 
     [WXApi registerApp:[ToolUtils weixinAppkey] withDescription:@"研大大"];

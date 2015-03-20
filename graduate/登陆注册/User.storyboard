@@ -476,8 +476,7 @@
                                         <exclude reference="sAa-ba-yT1"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="15" y="35" width="368" height="17"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="sAa-ba-yT1"/>
                                     </mask>
@@ -501,8 +500,7 @@
                                         <exclude reference="tfk-u4-UEP"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="15" y="67" width="368" height="40"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="Jki-8s-wzI"/>
                                         <include reference="flC-8j-9IM"/>
@@ -527,8 +525,7 @@
                                         <exclude reference="fSc-e8-OPa"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="23" y="67" width="360" height="40"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="3MR-sP-gOO"/>
                                         <include reference="Hym-i8-ZaR"/>
@@ -552,8 +549,7 @@
                                         <exclude reference="Dau-mH-cPp"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="16" y="117" width="184" height="40"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="74J-Wb-00i"/>
                                         <include reference="Dau-mH-cPp"/>
@@ -598,8 +594,7 @@
                                         <exclude reference="Mlz-xq-c0u"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="23" y="117" width="177" height="40"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="7Td-GS-els"/>
                                         <include reference="Mlz-xq-c0u"/>
@@ -629,8 +624,7 @@
                                         <exclude reference="Xx9-4G-siW"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="205" y="117" width="178" height="40"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="FGT-1g-lHh"/>
                                         <include reference="MYj-Xp-2Y2"/>
@@ -647,9 +641,6 @@
                                 <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="252" y="127" width="85" height="20"/>
-                                </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPW-mg-QxD">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -669,8 +660,7 @@
                                         <exclude reference="oKV-76-PMK"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="15" y="215" width="368" height="44"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="4ZW-Wl-ntg"/>
                                         <include reference="oKV-76-PMK"/>

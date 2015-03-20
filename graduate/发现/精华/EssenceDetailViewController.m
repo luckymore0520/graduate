@@ -90,6 +90,7 @@
          [self.essenceDownloadTimeLabel setText:[NSString stringWithFormat:@"%ld次",(long)self.essence.downloadTimes_.integerValue]];
     }
     if (self.essence.needShare_.integerValue==1) {
+        NSLog(@"");
         self.essenceShareLabel.text = @"这是研友辛辛苦苦找的哦！为了帮助更多研伴，请先分享哦！";
         [self.essenceShareLabel setHidden:NO];
     }
@@ -173,9 +174,9 @@
         }
     } else if (alertView == self.shareAlert)
     {
-        if (buttonIndex==1) {
-            [[[MEssenceDownload alloc]init]load:self id:self.essence.id_ resid:self.essence.resid_ email:_user.email_ isShared:@"1"];
-        }
+//        if (buttonIndex==1) {
+//            [[[MEssenceDownload alloc]init]load:self id:self.essence.id_ resid:self.essence.resid_ email:_user.email_ isShared:@"1"];
+//        }
     }
     
 }
@@ -307,6 +308,7 @@
 
 - (IBAction)qqShare:(UIButton *)sender
 {
+    self.essence.hasDownload_ = @1;
     [ShareApiUtil qqShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl] from:self];
 }
 

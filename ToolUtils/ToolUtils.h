@@ -105,6 +105,14 @@
 +(void)showToast:(NSString*)msg toView:(UIView*)view;
 +(void)showError:(NSString*)msg toView:(UIView*)view;
 +(void)showMessage:(NSString *)message title:(NSString*)title;
+//默认日记内容  联系我们  关于我们的URL
++(NSString *)getDiaryDefault;
++(void)setDiaryDefault:(NSString *)content;
++(NSString *)getAboutUrl;
++(void)setAboutUrl:(NSString *)url;
++(NSString *)getContactUrl;
++(void)setContactUrl:(NSString *)url;
+
 //第三方服务信息
 +(NSString *)weixinAppkey;
 +(NSString *)weixinSecretKey;
