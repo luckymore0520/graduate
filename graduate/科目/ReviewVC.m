@@ -320,6 +320,11 @@
         [self.view bringSubviewToFront:self.footToolView];
     }
     [self.isImportantBt setSelected:question.isHighlight_.boolValue];
+    if (question.remark_.length>0) {
+        [self.footMask setImage:[UIImage imageNamed:@"底部渐变蒙版有文字"]];
+    } else {
+        [self.footMask setImage:[UIImage imageNamed:@"文字渐变蒙版"]];
+    }
 }
 
 
