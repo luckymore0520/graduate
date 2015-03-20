@@ -290,6 +290,8 @@
         question.subject = subject.name;
         question.type = [NSNumber numberWithInteger:subject.type];
         question.isUpload = @NO;
+        question.myDay = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
+        question.create_time = [ToolUtils getCurrentDate];
     }
     NSMutableArray* shoudRemoveDic = [[NSMutableArray alloc]init];
     for (NSDictionary* dic in self.myQuestions) {
@@ -481,17 +483,11 @@
                 [ToolUtils deleteFile:question.questionid];
             }
             [questionIds appendFormat:@"%@,",question.questionid];
-            if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
-                [[QuestionBook getInstance]deleteQuestion:question];
-            } else {
-                [[[QuestionBook getInstance].allQuestions objectAtIndex:question.type.integerValue-1] removeObject:question];
-            }
+            [[QuestionBook getInstance]deleteQuestion:question];
         }
         [[QuestionBook getInstance]save];
-        
         MQuesDelete* delete = [[MQuesDelete alloc]init];
         [delete load:self id:questionIds];
-        
         [self.selectedArray removeAllObjects];
         [self loadData];
         [self.photoView reloadData];

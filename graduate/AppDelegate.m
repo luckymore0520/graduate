@@ -67,10 +67,9 @@
     self.mediaPlayController = [MediaPlayController getInstance];
     self.book = [QuestionBook getInstance];
     [_book loadAllData];
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
-
 
 
 - (void)initUmen

@@ -71,24 +71,17 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==0) {
+        [ToolUtils showToast:@"删除成功" toView:self.view];
         MQuestion* currentQuestion = [self.questionList objectAtIndex:self.currentPage];
         MQuesDelete* delete = [[MQuesDelete alloc]init];
         [delete load:self id:currentQuestion.id_];
         
         QuestionBook* book = [QuestionBook getInstance];
         Question* question = [book getQuestionByMQuestion:currentQuestion];
-        
         if (question.is_recommand.integerValue==1) {
             [ToolUtils deleteFile:question.questionid];
         }
-        
-        if (question.myDay.integerValue ==[[ToolUtils getCurrentDay] integerValue]) {
-            [[QuestionBook getInstance]deleteQuestion:question];
-        } else {
-            question.img = @"";
-            [book save];
-            [[book.allQuestions objectAtIndex:currentQuestion.type_.integerValue-1]removeObject:question];
-        }
+        [[QuestionBook getInstance]deleteQuestion:question];
         if (self.questionList.count==1) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {

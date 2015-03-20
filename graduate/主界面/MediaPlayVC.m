@@ -27,15 +27,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIStoryboard *userSB ;
-
     userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
-    
     self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
-
-        // Do any additional setup after loading the view.
-    
     MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
     [getWelcome load:self];
+    NSString *thePath=[[NSBundle mainBundle] pathForResource:@"Movie" ofType:@"mp4"];
+    NSURL *theurl=[NSURL fileURLWithPath:thePath];
+    self.moviePlayer=[[MPMoviePlayerController alloc] initWithContentURL:theurl];
+    [self.moviePlayer.view setFrame:self.mediaView.frame];
+    [self.moviePlayer prepareToPlay];
+    [self.moviePlayer setShouldAutoplay:YES]; // And other options you can look through the documentation.
+    [self.mediaView addSubview:self.moviePlayer.view];
+    [self.moviePlayer.view setUserInteractionEnabled:NO];
+    self.moviePlayer.controlStyle = MPMovieControlStyleNone;
+    [self.moviePlayer play];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
 }
 
 
@@ -44,25 +50,6 @@
     [self.navigationController pushViewController:self.rootVC animated:YES];
 }
 
-- (void) viewDidAppear:(BOOL)animated
-{
-    NSString *thePath=[[NSBundle mainBundle] pathForResource:@"Movie" ofType:@"mp4"];
-    NSLog(@"%@",thePath);
-    NSURL *theurl=[NSURL fileURLWithPath:thePath];
-    self.moviePlayer=[[MPMoviePlayerController alloc] initWithContentURL:theurl];
-    [self.moviePlayer.view setFrame:self.mediaView.frame];
-    [self.moviePlayer prepareToPlay];
-    [self.moviePlayer setShouldAutoplay:YES]; // And other options you can look through the documentation.
-    [self.mediaView addSubview:self.moviePlayer.view];
-//    [self.moviePlayer setFullscreen:YES];
-    [self.moviePlayer.view setUserInteractionEnabled:NO];
-    self.moviePlayer.controlStyle = MPMovieControlStyleNone;
-    for (UIView* type in [self.moviePlayer.backgroundView subviews]) {
-        NSLog(@"%@",type.class);
-    }
-    [self.moviePlayer play];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.moviePlayer];
-}
 - (IBAction)showJumpButton:(id)sender {
     [_jumpButton setHidden:NO];
 }
