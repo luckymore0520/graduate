@@ -266,15 +266,15 @@
        selectedImgStr:@""
                action:@selector(takePictureBtnPressed:)
            parentView:_bottomContainerView];
-    CGFloat rightBtnLength = 80;
-    [self buildButton:CGRectMake(0, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 80, 80)
+    CGFloat rightBtnLength = 120;
+    [self buildButton:CGRectMake(-20, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 120, 120)
          normalImgStr:@"我的相册"
       highlightImgStr:@""
        selectedImgStr:@""
                action:@selector(album)
            parentView:_bottomContainerView];
     
-    [self buildButton:CGRectMake(SC_DEVICE_SIZE.width-20-60, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 80, 80)
+    [self buildButton:CGRectMake(SC_DEVICE_SIZE.width-20-80, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 120, 120)
          normalImgStr:@"拍照取消"
       highlightImgStr:@""
        selectedImgStr:@""
@@ -349,7 +349,6 @@
     }
     [btn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     [parentView addSubview:btn];
-    
     return btn;
 }
 

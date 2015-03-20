@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Question" representedClassName="Question" syncable="YES">
         <attribute name="create_time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="img" optional="YES" attributeType="String" syncable="YES"/>
@@ -34,6 +34,7 @@
         <attribute name="myDay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pictureUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pictureUrlForFunc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pictureUrlForSubject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pictureUrlForTrace" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remainday" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -47,6 +48,6 @@
     <elements>
         <element name="Question" positionX="-63" positionY="54" width="128" height="270"/>
         <element name="Sign" positionX="-63" positionY="135" width="128" height="148"/>
-        <element name="Trace" positionX="-63" positionY="-18" width="128" height="283"/>
+        <element name="Trace" positionX="-63" positionY="-18" width="128" height="300"/>
     </elements>
 </model>

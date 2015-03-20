@@ -94,7 +94,6 @@
     offSet = (total-hasBackUp)/(total+0.0)* _progressView.frame.size.width;
     _waveView.transform = CGAffineTransformMakeTranslation(0, offSet);
     if (total==hasBackUp) {
-        [_timer invalidate];
         [ToolUtils setIgnoreNetwork:NO];
         [_backUpingLabel setHidden:YES];
         [_backUpButton setHidden:NO];
@@ -121,7 +120,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         _count = 0;
-        _timer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(updateLabel) userInfo:nil repeats:YES];
+        [self updateLabel];
         [_backUpButton setHidden:YES];
         [_progressLabel setHidden:YES];
         [_backUpingLabel setHidden:NO];
@@ -134,18 +133,18 @@
 {
     NSString* tip = @"正在为您备份，超压缩上传。一张图片只有几十K";
     _count++;
-    for (int i = 0 ; i < _count%3 ; i++) {
+    for (int i = 0 ; i < _count%5 ; i++) {
         tip = [tip stringByAppendingString:@"."];
     }
     [self.backUpingLabel setText:tip];
+    [self performSelector:@selector(updateLabel) withObject:nil afterDelay:1];
 }
+
 - (IBAction)goBack:(id)sender {
     if (!self.backUpingLabel.hidden) {
         [[[UIAlertView alloc]initWithTitle:@"放弃备份" message:@"您将要放弃备份，这可能使您的笔记不全而无法使用足迹打印等功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"放弃", nil] show];
-
     } else {
         [self.navigationController popViewControllerAnimated:YES];
-
     }
 }
 

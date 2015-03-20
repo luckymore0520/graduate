@@ -217,7 +217,8 @@ QuestionBook* questionBook = nil;
     question.is_master = currentQuestion.hasLearned_;
     question.isUpload = [NSNumber numberWithBool:YES];
     question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
-    question.myDay = [NSString stringWithFormat:@"%d",day];
+    question.myDay = [NSString stringWithFormat:@"%ld",day];
+    question.review_time = currentQuestion.reviewCount_;
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
@@ -325,7 +326,6 @@ QuestionBook* questionBook = nil;
 {
     NSMutableArray* arr = [_allQuestions objectAtIndex:type-1];
     NSMutableArray* resultArr = [[NSMutableArray alloc]init];
-    
     for (Question* question in arr) {
         BOOL has=NO;
         for (NSDictionary* dic in resultArr) {

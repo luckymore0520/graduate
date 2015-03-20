@@ -53,6 +53,9 @@
     self.scale = 1;
     [self initViews];
     _hasJumpedAway = NO;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     // Do any additional setup after loading the view.
 }
 

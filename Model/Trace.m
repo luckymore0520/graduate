@@ -23,6 +23,7 @@
 @dynamic date;
 @dynamic pictureUrlForTrace;
 @dynamic pictureUrlForSubject;
+@dynamic pictureUrlForFunc;
 @dynamic musicFile;
 @dynamic addCount;
 @dynamic reviewCount;
