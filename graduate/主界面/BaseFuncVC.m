@@ -311,12 +311,8 @@
 {
     [self addMask];
     if (!self.waitingView) {
-        CGFloat width = [[UIScreen mainScreen]bounds].size.width;
-        CGFloat height = [[UIScreen mainScreen]bounds].size.height;
-        CGRect frame = CGRectMake((width-100)/2, (height-100)/2, 100, 100);
+        CGRect frame = self.navigationController.view.bounds;
         self.waitingView = [[[NSBundle mainBundle] loadNibNamed:@"WaitingView" owner:self options:nil] firstObject];
-        self.waitingView.layer.cornerRadius=15;
-        [self.waitingView setClipsToBounds:YES];
         self.waitingView.frame = frame;
     }
     [self.navigationController.view addSubview:self.waitingView];

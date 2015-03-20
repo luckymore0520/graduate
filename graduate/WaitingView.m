@@ -17,21 +17,15 @@
     }
     return self;
 }
-- (void)drawRect:(CGRect)rect
+
+
+- (void)awakeFromNib
 {
-    [self start];
+    [super awakeFromNib];
+    [self.loadingImg setImage:[UIImage sd_animatedGIFNamed:@"loading"]];
 }
 
 
-- (void)start
-{
-    self.animation = [JTSlideShadowAnimation new];
-    self.animation.animatedView = self.loadingImg;
-    [self.animation start];
-    JTSlideShadowAnimation* another = [JTSlideShadowAnimation new];
-    another.animatedView = self.msgLbel;
-    [another start];
-}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
