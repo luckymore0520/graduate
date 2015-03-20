@@ -62,6 +62,7 @@
 
 - (IBAction)goToLogin:(id)sender {
     [self.moviePlayer stop];
+    self.moviePlayer = nil;
     [self.navigationController pushViewController:self.rootVC animated:YES];
 }
 
