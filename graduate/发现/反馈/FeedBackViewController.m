@@ -73,7 +73,7 @@
         [ToolUtils showMessage:@"不能提交空的内容哟！"];
         return;
     }
-    
+    [self waiting:@"正在提交"];
     [[[MFeedback alloc]init]load:self content:self.textArea.text contact:self.contactField.text];
     
     
@@ -81,6 +81,7 @@
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
+    [self waitingEnd];
     if ([names isEqualToString:@"MFeedback"]) {
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"谢谢" message:@"我们很重视您的意见，您的意见是我们前进的动力。" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];

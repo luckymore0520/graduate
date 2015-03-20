@@ -174,9 +174,9 @@
         }
     } else if (alertView == self.shareAlert)
     {
-//        if (buttonIndex==1) {
-//            [[[MEssenceDownload alloc]init]load:self id:self.essence.id_ resid:self.essence.resid_ email:_user.email_ isShared:@"1"];
-//        }
+        if (buttonIndex==1) {
+            [self share:nil];
+        }
     }
     
 }

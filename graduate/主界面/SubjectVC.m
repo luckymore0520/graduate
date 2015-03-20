@@ -181,8 +181,7 @@ CGFloat angle;
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
-       [self updateImage];
-
+    [self updateImage];
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
 }
@@ -330,13 +329,13 @@ CGFloat angle;
 }
 
 - (IBAction)takePhoto:(id)sender {
-    if (self.subjects.count<4) {
+//    if (self.subjects.count<4) {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
-    } else {
-        SCNavigationController *nav = [[SCNavigationController alloc] init];
-        nav.scNaigationDelegate = self;
-        [nav showCameraWithParentController:self];
-    }
+//    } else {
+//        SCNavigationController *nav = [[SCNavigationController alloc] init];
+//        nav.scNaigationDelegate = self;
+//        [nav showCameraWithParentController:self];
+//    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -21,6 +21,7 @@
 #import "EssenceDetailWebViewController.h"
 #import "MyCollectionRootView.h"
 @interface EssenceListViewController ()<ButtonGroupDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
+@property (weak, nonatomic) IBOutlet UIView *maskBackView;
 
 @property (nonatomic,strong)NSMutableArray* essenceList;
 @property (nonatomic,strong)UIView* editView;
@@ -30,6 +31,7 @@
 @property (nonatomic,strong)UIAlertView* shareAlert;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic,strong)MEssence* selectEssence;
+@property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (nonatomic,strong)NSArray* typeArray;
 @property (nonatomic)BOOL selectedAll;
 @end
@@ -228,6 +230,24 @@
     }
 }
 
+-(void)showShareView
+{
+    [self.maskBackView setHidden:NO];
+    [self.parentVC addMaskAtNavigation];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
+    }];
+}
+
+- (IBAction)cancelShare:(id)sender {
+    [self.maskBackView setHidden:YES];
+    [self.parentVC removeMaskAtNavigation];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, 0);
+    }];
+}
+
+
 #pragma mark -AlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -238,10 +258,9 @@
     } else if (alertView == self.shareAlert)
     {
         if (buttonIndex==1) {
-             [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+            [self showShareView];
         }
     }
-    
 }
 
 - (void)editEmail

@@ -191,6 +191,19 @@
     self.searchTextField.text = key;
 }
 
+- (void)addMaskAtNavigation
+{
+    if (!self.navigationMaskView) {
+        CGRect frame = [[UIScreen mainScreen]bounds];
+        frame.size.height = 108;
+        self.navigationMaskView = [[UIView alloc]initWithFrame:frame];
+        [self.navigationMaskView setAlpha:0.5];
+        [self.navigationMaskView setBackgroundColor:[UIColor blackColor]];
+        [self.navigationController.view addSubview:self.navigationMaskView];
+    }
+    [self.navigationMaskView setHidden:NO];
+}
+
 
 - (void)setExtraCellLineHidden: (UITableView *)tableView
 {

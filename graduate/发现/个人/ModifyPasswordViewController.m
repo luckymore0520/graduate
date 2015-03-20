@@ -47,17 +47,18 @@
     if (!([_passwordField.text isEqualToString:_confirmPasswordField.text])) {
         [ToolUtils showMessage:@"两次密码输入不一致"];
         return;
-        
     }
+    [self waiting:@"正在保存"];
     [[[MPasswdChange alloc]init]load:self password:[ToolUtils md5:self.passwordField.text] nickname:_user.nickname_ sex:_user.sex_.integerValue oldPassword:[ToolUtils md5:_oldPasswordField.text]];
-    
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
+    [self waitingEnd];
     if ([names isEqualToString:@"MPasswdChange"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
+            [ToolUtils showMessage:@"修改成功"];
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [ToolUtils showMessage:@"您输入的旧密码错误"];

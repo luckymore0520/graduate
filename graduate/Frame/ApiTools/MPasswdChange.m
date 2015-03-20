@@ -19,7 +19,7 @@
         [params setObject:password forKey:@"password"];
     }
     if (sex!=-1) {
-        [params setObject:[NSString stringWithFormat:@"%d",sex] forKey:@"sex"];
+        [params setObject:[NSString stringWithFormat:@"%ld",sex] forKey:@"sex"];
     }
     return [self load:@"MPasswdChange" params:params delegate:delegate];
 }
