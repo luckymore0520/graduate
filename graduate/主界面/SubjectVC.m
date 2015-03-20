@@ -293,11 +293,17 @@ CGFloat angle;
 - (void)initSubject
 {
     self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
-    if (![ToolUtils connectToInternet]) {
+    if (_firstOpen) {
+        if (![ToolUtils connectToInternet]) {
+            [self calculateTotal];
+            [self.tableview reloadData];
+        }
+        [[[MQuesCountStatus alloc]init]load:self];
+    } else {
         [self calculateTotal];
         [self.tableview reloadData];
     }
-    [[[MQuesCountStatus alloc]init]load:self];
+   
 }
 
 

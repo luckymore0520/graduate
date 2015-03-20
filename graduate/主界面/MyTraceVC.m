@@ -141,7 +141,7 @@
         QuestionCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
         Question* question = (Question*)[[[self.myQuestions objectAtIndex:indexPath.section-1]objectForKey:@"array"]objectAtIndex:indexPath.row/_phoneOfLine*(_phoneOfLine-1)+indexPath.row%_phoneOfLine-1];
         if (question.is_recommand.integerValue==0) {
-            [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150]];
+            [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150] placeholderImage:[UIImage imageNamed:@"placeholder"]] ;
         } else {
             [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
         }
