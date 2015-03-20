@@ -86,18 +86,18 @@
 {
     if ([names isEqualToString:@"MRecommendKeys"])
     {
-        
         MKeys* keys = [MKeys objectWithKeyValues:data];
         if (keys.key_.count>0) {
             self.searchArray = keys.key_;
+            [self.searchTable setHidden:NO];
             [self.searchTable reloadData];
         }
-        
     }
 }
 
 - (IBAction)cancelSearch:(id)sender {
     _state = BROWNSE;
+    self.slideSwitchView.transform = CGAffineTransformIdentity;
     ((EssenceListViewController*)[_slideSwitchView currentVC]).key = nil;
     [((EssenceListViewController*)[_slideSwitchView currentVC]) reloadData];
     [self.searchTextField resignFirstResponder];
@@ -108,6 +108,8 @@
         [self.navigationController setNavigationBarHidden:NO];
     }];
 }
+
+
 - (IBAction)searchResult:(id)sender {
     [_searchTextField resignFirstResponder];
     [_searchTable setHidden:YES];
@@ -125,9 +127,10 @@
     [self.navigationController setNavigationBarHidden:YES];
     [UIView animateWithDuration:0.3 animations:^{
         self.searchView.transform  = CGAffineTransformMakeTranslation(0, 64);
-//        [self.view setNeedsLayout];
+        self.slideSwitchView.transform = CGAffineTransformMakeTranslation(0, 20);
     } completion:^(BOOL finished) {
         [self.view bringSubviewToFront:self.searchView];
+        [self.view bringSubviewToFront:self.searchTable];
         [self.searchTextField becomeFirstResponder];
     }];
 }

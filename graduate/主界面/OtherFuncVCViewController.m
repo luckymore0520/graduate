@@ -57,11 +57,11 @@
 {
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue],[ToolUtils getUserid]] tableName:@"Trace"];
     if (array.count==0) {
-        [self.backImageView setImage:[UIImage imageNamed:@"首页1"]];
+        [self.backImageView setImage:[UIImage imageNamed:@"默认背景功能主页二"]];
     } else {
         Trace* trace = [array firstObject];
         [self.sentenceLabel setText:trace.content];
-        [self.originImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] placeholderImage:[UIImage imageNamed:@"首页1"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [self.originImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForFunc] placeholderImage:[UIImage imageNamed:@"默认背景功能主页二"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [self.backImageView setContentMode:UIViewContentModeScaleAspectFill];
             [self.backImageView setImageToBlur:image blurRadius:8 completionBlock:nil];
             [self.backImageView setClipsToBounds:YES];

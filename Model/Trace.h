@@ -28,5 +28,6 @@
 @property (nonatomic, retain) NSNumber * addCount;
 @property (nonatomic, retain) NSNumber * reviewCount;
 @property (nonatomic, retain) NSNumber * signCount;
+@property (nonatomic, retain) NSString * pictureUrlForFunc;
 
 @end

@@ -122,7 +122,7 @@
         [ToolUtils showMessage:@"请先选择科目"];
         return;
     }
-
+    [self waiting:@"打印中..."];
     Subject* selectedSubject = self.subjects[[self.subjectGroup selectedIndex]];
     NSString* type = [NSString stringWithFormat:@"%ld",selectedSubject.type];
     NSString* start = self.startDateButton.titleLabel.text;
@@ -133,12 +133,12 @@
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
+    [self waitingEnd];
     if ([names isEqualToString:@"MQuesPrint"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue ==1) {
             [ToolUtils setLastUpdateTime:self.endDateButton.titleLabel.text];
             [ToolUtils showMessage:@"打印文件已发送至您邮箱，请查收"];
-            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }

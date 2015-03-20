@@ -65,6 +65,7 @@
 @property (nonatomic,strong)NSArray* subjectImgList;
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
 @property (weak, nonatomic) IBOutlet UIControl *bootView;
+@property (strong,nonatomic)Trace* trace;
 @end
 CGFloat angle;
 @implementation SubjectVC
@@ -113,8 +114,10 @@ CGFloat angle;
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
     if (array.count>0) {
         Trace* trace = [array firstObject];
+        _trace = trace;
         [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
     }
+    
 }
 
 #pragma mark - ButtonAction
@@ -132,9 +135,7 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!self.subjects) {
-        self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
-    }
+    self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
     [self.tableview reloadData];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
@@ -205,14 +206,12 @@ CGFloat angle;
     NSInteger hasEnd = self.totalLabel.text.integerValue==total
                 &&self.totalNewLabel.text.integerValue==totalNew
     &&self.cardLabel.text.integerValue==sign;
-
     if (!hasEnd) {
         self.totalLabel.text = [NSString stringWithFormat:@"%ld",MIN(self.totalLabel.text.integerValue+1,total)];
         self.totalNewLabel.text = [NSString stringWithFormat:@"%ld",MIN(self.totalNewLabel.text.integerValue+1,totalNew)];
         self.cardLabel.text = [NSString stringWithFormat:@"%ld",MIN(self.cardLabel.text.integerValue+1,sign)];
         [self performSelector:@selector(animationLabel:) withObject:statics afterDelay:(40.0/total)*0.02];
     }
-    
 }
 
 - (void)calculateTotal
@@ -223,8 +222,10 @@ CGFloat angle;
         total+=subject.total;
         totalNew+=subject.newAdd;
     }
+    totalNew = MAX(totalNew, _trace.addCount.integerValue);
+    
     NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
-    [self animationLabel:@[[NSNumber numberWithInteger:total],[NSNumber numberWithInteger:totalNew],[NSNumber numberWithInteger:signList.count]]];
+    [self animationLabel:@[[NSNumber numberWithInteger:total],[NSNumber numberWithInteger:totalNew],[NSNumber numberWithInteger:MAX(signList.count,_trace.signCount.integerValue)]]];
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
@@ -292,11 +293,17 @@ CGFloat angle;
 - (void)initSubject
 {
     self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
-    if (![ToolUtils connectToInternet]) {
+    if (_firstOpen) {
+        if (![ToolUtils connectToInternet]) {
+            [self calculateTotal];
+            [self.tableview reloadData];
+        }
+        [[[MQuesCountStatus alloc]init]load:self];
+    } else {
         [self calculateTotal];
         [self.tableview reloadData];
     }
-    [[[MQuesCountStatus alloc]init]load:self];
+   
 }
 
 
@@ -329,13 +336,13 @@ CGFloat angle;
 }
 
 - (IBAction)takePhoto:(id)sender {
-//    if (self.subjects.count<4) {
+    if (self.subjects.count<4) {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
-//    } else {
-//        SCNavigationController *nav = [[SCNavigationController alloc] init];
-//        nav.scNaigationDelegate = self;
-//        [nav showCameraWithParentController:self];
-//    }
+    } else {
+        SCNavigationController *nav = [[SCNavigationController alloc] init];
+        nav.scNaigationDelegate = self;
+        [nav showCameraWithParentController:self];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -375,7 +382,9 @@ CGFloat angle;
         if (self.subjects.count<4) {
             [cell.totalLabel setHidden:YES];
             [cell.addLabel setHidden:YES];
-            
+        } else {
+            [cell.totalLabel setHidden:NO];
+            [cell.addLabel setHidden:NO];
         }
     }
     return cell;

@@ -290,12 +290,10 @@
 - (void)save
 {
     NSData *data;
+    _postImage = [self useImage:_postImage];
     if (UIImagePNGRepresentation(_postImage) == nil) {
-        
         data = UIImageJPEGRepresentation(_postImage, 1);
-        
     } else {
-        
         data = UIImagePNGRepresentation(_postImage);
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -338,6 +336,15 @@
         [[[MImgUpload alloc]init]load:self img:_postImage name:fileName];
         [self backBtnPressed:nil];
     }
+}
+
+- (UIImage *)useImage:(UIImage *)image {
+    CGSize newSize = CGSizeMake(SC_DEVICE_SIZE.width*1.5,SC_DEVICE_SIZE.height*1.5);
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names

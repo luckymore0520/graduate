@@ -12,7 +12,7 @@
 #import "CoreDataHelper.h"
 #import "Trace.h"
 #import "WKUILabel.h"
-
+#import "SDWebImageManager.h"
 
 #import "MIndex.h"
 #import "MMain.h"
@@ -110,25 +110,27 @@
         [ToolUtils setCurrentDay:_main.days_];
         _mainList = mainList.index_;
         for (MMain* main in mainList.index_) {
-            NSString* myDay = [NSString stringWithFormat:@"%ld",main.days_.integerValue];
+            NSString* myDay = [NSString stringWithFormat:@"%ld",(long)main.days_.integerValue];
             NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
+            
             [_backImgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.img_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 NSLog(@"下图完成 首页图");
             }];
-            UIImageView* traceImageView = [[UIImageView alloc]initWithFrame:_backImgView.frame];
-            [traceImageView setHidden:YES];
-            [self.view addSubview:traceImageView];
-            [traceImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.imgZj_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[ToolUtils getImageUrlWtihString:main.imgZj_ width:self.view.frame.size.width height:0] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 NSLog(@"下图完成 足迹图");
-                [traceImageView removeFromSuperview];
             }];
-            UIImageView* funcImageView = [[UIImageView alloc]initWithFrame:_backImgView.frame];
-            [funcImageView setHidden:YES];
-            [self.view addSubview:funcImageView];
-            [funcImageView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.imgGn_ width:self.view.frame.size.width height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+            
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[ToolUtils getImageUrlWtihString:main.imgGn_ width:self.view.frame.size.width height:0] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                 NSLog(@"下图完成 功能图");
-                [funcImageView removeFromSuperview];
             }];
+            
+            
+            [[SDWebImageManager sharedManager] downloadImageWithURL:[ToolUtils getImageUrlWtihString:main.imgGn2_ width:self.view.frame.size.width height:0] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                NSLog(@"下图完成 功能图2");
+            }];
+        
             //若CoreData里有该条数据，检验是否下载音乐，未下载播放默认音乐并下载
             if (array.count!=0) {
                 CoreDataHelper* helper = [CoreDataHelper getInstance];
@@ -137,14 +139,17 @@
                 traceOfToday.songName = music.title_;
                 traceOfToday.pictureUrl =main.img_;
                 traceOfToday.myDay = [NSString
-                                      stringWithFormat:@"%ld",main.days_.integerValue];
+                                      stringWithFormat:@"%ld",(long)main.days_.integerValue];
                 traceOfToday.remainday = main.daysLeft_;
                 traceOfToday.pictureUrlForSubject = main.imgGn_;
                 traceOfToday.pictureUrlForTrace = main.imgZj_;
+                traceOfToday.pictureUrlForFunc = main.imgGn2_;
                 traceOfToday.user  = [ToolUtils getUserid];
                 traceOfToday.singer = music.singer_;
                 traceOfToday.date = main.date_;
                 traceOfToday.musicFile = music.file_;
+                traceOfToday.addCount = main.addCount_;
+                traceOfToday.signCount = main.signCount_;
                 NSError* error;
                 BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
                 if (!isSaveSuccess) {
@@ -181,6 +186,9 @@
     trace.singer = music.singer_;
     trace.date = myDay.date_;
     trace.musicFile = music.file_;
+    trace.pictureUrlForFunc = myDay.imgGn2_;
+    trace.addCount = myDay.addCount_;
+    trace.signCount = myDay.signCount_;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);

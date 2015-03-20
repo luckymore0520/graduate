@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *backUpingLabel;
 @property(nonatomic)int total;
 @property(nonatomic)int need;
+@property (nonatomic,strong)NSTimer* timer;
+@property (nonatomic)NSInteger count;
 @end
 
 @implementation BackUpViewController
@@ -115,8 +117,10 @@
 
 - (IBAction)backUp:(id)sender {
     if (_need==0) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     } else {
+        _count = 0;
+        [self updateLabel];
         [_backUpButton setHidden:YES];
         [_progressLabel setHidden:YES];
         [_backUpingLabel setHidden:NO];
@@ -124,13 +128,23 @@
         [[QuestionBook getInstance]updateQuestions];
     }
 }
+
+- (void)updateLabel
+{
+    NSString* tip = @"正在为您备份，超压缩上传。一张图片只有几十K";
+    _count++;
+    for (int i = 0 ; i < _count%5 ; i++) {
+        tip = [tip stringByAppendingString:@"."];
+    }
+    [self.backUpingLabel setText:tip];
+    [self performSelector:@selector(updateLabel) withObject:nil afterDelay:1];
+}
+
 - (IBAction)goBack:(id)sender {
     if (!self.backUpingLabel.hidden) {
         [[[UIAlertView alloc]initWithTitle:@"放弃备份" message:@"您将要放弃备份，这可能使您的笔记不全而无法使用足迹打印等功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"放弃", nil] show];
-
     } else {
         [self.navigationController popViewControllerAnimated:YES];
-
     }
 }
 

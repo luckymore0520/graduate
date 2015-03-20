@@ -12,5 +12,4 @@
 @interface WaitingView : UIView
 @property (weak, nonatomic) IBOutlet UILabel *msgLbel;
 @property (weak, nonatomic) IBOutlet UIImageView *loadingImg;
-@property (nonatomic,strong)JTSlideShadowAnimation* animation;
 @end

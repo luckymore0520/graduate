@@ -66,7 +66,7 @@ QuestionBook* questionBook = nil;
     NSMutableArray* _major2Book =
     [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=5 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
-    
+
     _allQuestions = [NSMutableArray arrayWithObjects:[self removeEmptyQuestions:_englishBook],[self removeEmptyQuestions:_politicBook],[self removeEmptyQuestions:_mathBook],[self removeEmptyQuestions:_major1Book],[self removeEmptyQuestions:_major2Book], nil];
     self.needUpload = 0;
     [self updateQuestions];
@@ -217,7 +217,8 @@ QuestionBook* questionBook = nil;
     question.is_master = currentQuestion.hasLearned_;
     question.isUpload = [NSNumber numberWithBool:YES];
     question.create_time = [[currentQuestion.createTime_ componentsSeparatedByString:@" "]firstObject];
-    question.myDay = [NSString stringWithFormat:@"%d",day];
+    question.myDay = [NSString stringWithFormat:@"%ld",day];
+    question.review_time = currentQuestion.reviewCount_;
     NSError* error;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
@@ -325,7 +326,6 @@ QuestionBook* questionBook = nil;
 {
     NSMutableArray* arr = [_allQuestions objectAtIndex:type-1];
     NSMutableArray* resultArr = [[NSMutableArray alloc]init];
-    
     for (Question* question in arr) {
         BOOL has=NO;
         for (NSDictionary* dic in resultArr) {
@@ -389,27 +389,23 @@ QuestionBook* questionBook = nil;
 {
     
     
-    NSMutableArray* _englishBook =
-    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=1 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    NSMutableArray* _englishBook = [self removeEmptyQuestions:[[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=1 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]]];
     
-    
-    NSMutableArray* _politicBook =
-    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=2 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
-    
-    
+    NSMutableArray* _politicBook = [self removeEmptyQuestions:[[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=2 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]]];
     
     NSMutableArray* _mathBook =
-    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=3 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
-    
+    [self removeEmptyQuestions:[[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=3 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]]];
+
     
     
     NSMutableArray* _major1Book =
-    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=4 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
+    [self removeEmptyQuestions: [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=4 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]]];
+
     
     
+    NSMutableArray* _major2Book =  [self removeEmptyQuestions:  [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=5 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]]];
+  
     
-    NSMutableArray* _major2Book =
-    [[NSMutableArray alloc]initWithArray:[CoreDataHelper query:[NSPredicate predicateWithFormat:@"type=5 and userid=%@",[ToolUtils getUserid]] tableName:@"Question"]];
     
     NSDictionary* userInfo = [ToolUtils getUserInfomation];
     MUser* user = [MUser objectWithKeyValues:userInfo];
@@ -422,7 +418,7 @@ QuestionBook* questionBook = nil;
         _subjects = [NSMutableArray arrayWithObjects:politic, nil];
     } else {
         QuestionBook* book = [QuestionBook getInstance];
-        NSString* today = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
+        NSString* today = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
         self.subjects = [[NSMutableArray alloc]init];
         Subject* english = [[Subject alloc]init];
         english.name = user.subjectEng_;
