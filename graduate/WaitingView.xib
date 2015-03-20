@@ -2,27 +2,31 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view alpha="0.5" contentMode="scaleToFill" id="Z1r-h5-GOF" customClass="WaitingView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+        <view contentMode="scaleToFill" id="Z1r-h5-GOF" customClass="WaitingView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="THq-w8-FeV">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="143" y="220" width="35" height="41"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="CIy-Dw-GdH"/>
+                        <constraint firstAttribute="width" secondItem="THq-w8-FeV" secondAttribute="height" multiplier="51:59" id="emr-NK-egV"/>
+                    </constraints>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="THq-w8-FeV" firstAttribute="leading" secondItem="Z1r-h5-GOF" secondAttribute="leading" id="3pn-eH-Ra3"/>
-                <constraint firstItem="THq-w8-FeV" firstAttribute="top" secondItem="Z1r-h5-GOF" secondAttribute="top" id="8nj-HH-GoQ"/>
-                <constraint firstAttribute="bottom" secondItem="THq-w8-FeV" secondAttribute="bottom" id="fYy-tO-xcC"/>
-                <constraint firstAttribute="trailing" secondItem="THq-w8-FeV" secondAttribute="trailing" id="kZB-rA-YGP"/>
+                <constraint firstAttribute="centerY" secondItem="THq-w8-FeV" secondAttribute="centerY" id="0Vy-SS-zeg"/>
+                <constraint firstAttribute="centerX" secondItem="THq-w8-FeV" secondAttribute="centerX" id="OdV-EJ-tdB"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="loadingImg" destination="THq-w8-FeV" id="JIu-Xp-iDA"/>
             </connections>

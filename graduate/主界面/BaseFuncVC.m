@@ -306,7 +306,7 @@
 
 - (void) waiting:(NSString*)msg
 {
-    [self addMask];
+    [self.view endEditing:YES];
     if (!self.waitingView) {
         CGRect frame = self.navigationController.view.bounds;
         self.waitingView = [[[NSBundle mainBundle] loadNibNamed:@"WaitingView" owner:self options:nil] firstObject];
@@ -322,7 +322,6 @@
 
 - (void) waitingEnd
 {
-    [self removeMask];
     [self.waitingView setHidden:YES];
     [self.waitingView removeFromSuperview];
 }

@@ -22,7 +22,7 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    [self.loadingImg setImage:[UIImage sd_animatedGIFNamed:@"loading图"]];
+    [self.loadingImg setImage:[UIImage sd_animatedGIFNamed:@"loading_small"]];
 }
 
 

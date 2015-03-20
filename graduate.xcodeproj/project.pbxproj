@@ -92,7 +92,11 @@
 		7D2F92B11AB743E000D4B18F /* MyCollectionRootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */; };
 		7D2F92B21AB743E000D4B18F /* MyCollectionRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */; };
 		7D2F92B41AB882D300D4B18F /* Movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92B31AB882D200D4B18F /* Movie.mp4 */; };
-		7D2F92BE1ABC9E6300D4B18F /* loading图.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92BD1ABC9E6300D4B18F /* loading图.gif */; };
+		7D2F92C01ABCA64000D4B18F /* loading_small@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92BF1ABCA64000D4B18F /* loading_small@2x.gif */; };
+		7D2F92C61ABCAC0500D4B18F /* OLImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92C31ABCAC0500D4B18F /* OLImage.m */; };
+		7D2F92C71ABCAC0500D4B18F /* OLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92C51ABCAC0500D4B18F /* OLImageView.m */; };
+		7D2F92CD1ABCAE0300D4B18F /* YLGIFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92CA1ABCAE0300D4B18F /* YLGIFImage.m */; };
+		7D2F92CE1ABCAE0300D4B18F /* YLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92CC1ABCAE0300D4B18F /* YLImageView.m */; };
 		7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */; };
 		7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333D1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m */; };
 		7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4033401A9B435600BDD1D5 /* MQuesPrint.m */; };
@@ -450,7 +454,15 @@
 		7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCollectionRootView.m; path = "发现/精华/MyCollectionRootView.m"; sourceTree = "<group>"; };
 		7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyCollectionRootView.xib; path = "发现/精华/MyCollectionRootView.xib"; sourceTree = "<group>"; };
 		7D2F92B31AB882D200D4B18F /* Movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movie.mp4; sourceTree = "<group>"; };
-		7D2F92BD1ABC9E6300D4B18F /* loading图.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading图.gif"; sourceTree = "<group>"; };
+		7D2F92BF1ABCA64000D4B18F /* loading_small@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading_small@2x.gif"; sourceTree = "<group>"; };
+		7D2F92C21ABCAC0500D4B18F /* OLImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImage.h; sourceTree = "<group>"; };
+		7D2F92C31ABCAC0500D4B18F /* OLImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImage.m; sourceTree = "<group>"; };
+		7D2F92C41ABCAC0500D4B18F /* OLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLImageView.h; sourceTree = "<group>"; };
+		7D2F92C51ABCAC0500D4B18F /* OLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLImageView.m; sourceTree = "<group>"; };
+		7D2F92C91ABCAE0300D4B18F /* YLGIFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLGIFImage.h; sourceTree = "<group>"; };
+		7D2F92CA1ABCAE0300D4B18F /* YLGIFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLGIFImage.m; sourceTree = "<group>"; };
+		7D2F92CB1ABCAE0300D4B18F /* YLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLImageView.h; sourceTree = "<group>"; };
+		7D2F92CC1ABCAE0300D4B18F /* YLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLImageView.m; sourceTree = "<group>"; };
 		7D4033391A9B39EB00BDD1D5 /* BackUpSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingViewController.h; path = "发现/备份/BackUpSettingViewController.h"; sourceTree = "<group>"; };
 		7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackUpSettingViewController.m; path = "发现/备份/BackUpSettingViewController.m"; sourceTree = "<group>"; };
 		7D40333C1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingTableViewCell.h; path = "发现/备份/BackUpSettingTableViewCell.h"; sourceTree = "<group>"; };
@@ -1051,6 +1063,28 @@
 			path = SWCell;
 			sourceTree = "<group>";
 		};
+		7D2F92C11ABCABFA00D4B18F /* GIF */ = {
+			isa = PBXGroup;
+			children = (
+				7D2F92C21ABCAC0500D4B18F /* OLImage.h */,
+				7D2F92C31ABCAC0500D4B18F /* OLImage.m */,
+				7D2F92C41ABCAC0500D4B18F /* OLImageView.h */,
+				7D2F92C51ABCAC0500D4B18F /* OLImageView.m */,
+			);
+			name = GIF;
+			sourceTree = "<group>";
+		};
+		7D2F92C81ABCAE0300D4B18F /* YLGIFImage */ = {
+			isa = PBXGroup;
+			children = (
+				7D2F92C91ABCAE0300D4B18F /* YLGIFImage.h */,
+				7D2F92CA1ABCAE0300D4B18F /* YLGIFImage.m */,
+				7D2F92CB1ABCAE0300D4B18F /* YLImageView.h */,
+				7D2F92CC1ABCAE0300D4B18F /* YLImageView.m */,
+			);
+			path = YLGIFImage;
+			sourceTree = "<group>";
+		};
 		7D4033381A9B39BE00BDD1D5 /* 备份 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1299,8 +1333,8 @@
 				7D5DBB911A845B560078B99C /* 精华 */,
 				7D5DBB661A8358440078B99C /* 广场 */,
 				7D5DBB311A8310310078B99C /* 个人 */,
-				7D5DBB2F1A830D230078B99C /* DiscoverStoryBoard.storyboard */,
 				7D5DBB511A8356000078B99C /* SquareStoryboard.storyboard */,
+				7D5DBB2F1A830D230078B99C /* DiscoverStoryBoard.storyboard */,
 				7D5DBB631A8356830078B99C /* RefreshTableViewController.h */,
 				7D5DBB641A8356830078B99C /* RefreshTableViewController.m */,
 				7D5DBB921A845B9B0078B99C /* EssenceStoryboard.storyboard */,
@@ -1414,7 +1448,7 @@
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
-				7D2F92BD1ABC9E6300D4B18F /* loading图.gif */,
+				7D2F92BF1ABCA64000D4B18F /* loading_small@2x.gif */,
 				7D2F92B31AB882D200D4B18F /* Movie.mp4 */,
 				7DBD866A1A72631A00205576 /* Resource */,
 				7D6A51B61A6B570300355923 /* ThirdParty */,
@@ -1485,6 +1519,8 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				7D2F92C81ABCAE0300D4B18F /* YLGIFImage */,
+				7D2F92C11ABCABFA00D4B18F /* GIF */,
 				7D82A5EA1A9F79A30003F5A5 /* JTSlideShadowAnimation */,
 				7DD43AF01A9762C900A4FBA5 /* IQActionSheetPickerView */,
 				7D0A87FD1A872A0D001A33F7 /* ImageEffects */,
@@ -1917,6 +1953,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D0A87FB1A85F4A5001A33F7 /* AvenirNextLTPro-UltLt.otf in Resources */,
+				7D2F92C01ABCA64000D4B18F /* loading_small@2x.gif in Resources */,
 				7D0A87FC1A85F4A5001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Resources */,
 				7D2432991A7DD18F00C00F64 /* camera_line.png in Resources */,
 				7D2432A31A7DD18F00C00F64 /* flashing_off.png in Resources */,
@@ -1944,7 +1981,6 @@
 				7D44BBFD1A84A06500094D15 /* PushConfig.plist in Resources */,
 				7D2432231A7B9A2400C00F64 /* WeiboSDK.bundle in Resources */,
 				7D24329B1A7DD18F00C00F64 /* camera_line_h.png in Resources */,
-				7D2F92BE1ABC9E6300D4B18F /* loading图.gif in Resources */,
 				7D5DBB931A845B9B0078B99C /* EssenceStoryboard.storyboard in Resources */,
 				7D2432A11A7DD18F00C00F64 /* flashing_auto.png in Resources */,
 				7DBD86791A72749100205576 /* User.storyboard in Resources */,
@@ -1996,6 +2032,7 @@
 				7D2432971A7DD18F00C00F64 /* PostViewController.m in Sources */,
 				7D24324A1A7CE59100C00F64 /* Subject.m in Sources */,
 				7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */,
+				7D2F92CD1ABCAE0300D4B18F /* YLGIFImage.m in Sources */,
 				7D5DBB841A836F5E0078B99C /* MCommentsToMe.m in Sources */,
 				7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */,
 				7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */,
@@ -2010,6 +2047,7 @@
 				7D44BC131A84EAC100094D15 /* MKeys.m in Sources */,
 				7D5DBB901A8458300078B99C /* MPostDetail.m in Sources */,
 				7D5DBB2A1A81BFED0078B99C /* MUploadDiary.m in Sources */,
+				7D2F92C71ABCAC0500D4B18F /* OLImageView.m in Sources */,
 				7D5DBB961A845F580078B99C /* EssenceListViewController.m in Sources */,
 				7D4E05E31A74EF7B001709DB /* MBProgressHUD+Add.m in Sources */,
 				7DA994BE1A7878FE00A879CF /* MJIvar.m in Sources */,
@@ -2177,6 +2215,7 @@
 				7D5DBB431A8340750078B99C /* SetPasswordForThirdPartyViewController.m in Sources */,
 				7D5DBB601A8356540078B99C /* MJRefreshConst.m in Sources */,
 				7DBD86661A7259DB00205576 /* SubjectVC.m in Sources */,
+				7D2F92CE1ABCAE0300D4B18F /* YLImageView.m in Sources */,
 				7D5DBB9C1A8460C70078B99C /* MEssenceList.m in Sources */,
 				7D5DBBB41A848E7D0078B99C /* MMyEssences.m in Sources */,
 				7DA994EF1A7A2A6100A879CF /* MMain.m in Sources */,
@@ -2189,6 +2228,7 @@
 				7D24324D1A7D06F000C00F64 /* Question.m in Sources */,
 				7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */,
 				7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */,
+				7D2F92C61ABCAC0500D4B18F /* OLImage.m in Sources */,
 				7D46BDD81A98B17000F58613 /* MMsgCount.m in Sources */,
 				7D5DBB721A8364D80078B99C /* MPostPublish.m in Sources */,
 				7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */,
