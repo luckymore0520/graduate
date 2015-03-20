@@ -92,7 +92,7 @@
 		7D2F92B11AB743E000D4B18F /* MyCollectionRootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */; };
 		7D2F92B21AB743E000D4B18F /* MyCollectionRootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */; };
 		7D2F92B41AB882D300D4B18F /* Movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92B31AB882D200D4B18F /* Movie.mp4 */; };
-		7D2F92BA1ABC973900D4B18F /* loading图.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92B91ABC973900D4B18F /* loading图.gif */; };
+		7D2F92BE1ABC9E6300D4B18F /* loading图.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92BD1ABC9E6300D4B18F /* loading图.gif */; };
 		7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */; };
 		7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333D1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m */; };
 		7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4033401A9B435600BDD1D5 /* MQuesPrint.m */; };
@@ -450,7 +450,7 @@
 		7D2F92AF1AB743E000D4B18F /* MyCollectionRootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCollectionRootView.m; path = "发现/精华/MyCollectionRootView.m"; sourceTree = "<group>"; };
 		7D2F92B01AB743E000D4B18F /* MyCollectionRootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyCollectionRootView.xib; path = "发现/精华/MyCollectionRootView.xib"; sourceTree = "<group>"; };
 		7D2F92B31AB882D200D4B18F /* Movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Movie.mp4; sourceTree = "<group>"; };
-		7D2F92B91ABC973900D4B18F /* loading图.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading图.gif"; sourceTree = "<group>"; };
+		7D2F92BD1ABC9E6300D4B18F /* loading图.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading图.gif"; sourceTree = "<group>"; };
 		7D4033391A9B39EB00BDD1D5 /* BackUpSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingViewController.h; path = "发现/备份/BackUpSettingViewController.h"; sourceTree = "<group>"; };
 		7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackUpSettingViewController.m; path = "发现/备份/BackUpSettingViewController.m"; sourceTree = "<group>"; };
 		7D40333C1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingTableViewCell.h; path = "发现/备份/BackUpSettingTableViewCell.h"; sourceTree = "<group>"; };
@@ -1414,7 +1414,7 @@
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
-				7D2F92B91ABC973900D4B18F /* loading图.gif */,
+				7D2F92BD1ABC9E6300D4B18F /* loading图.gif */,
 				7D2F92B31AB882D200D4B18F /* Movie.mp4 */,
 				7DBD866A1A72631A00205576 /* Resource */,
 				7D6A51B61A6B570300355923 /* ThirdParty */,
@@ -1944,6 +1944,7 @@
 				7D44BBFD1A84A06500094D15 /* PushConfig.plist in Resources */,
 				7D2432231A7B9A2400C00F64 /* WeiboSDK.bundle in Resources */,
 				7D24329B1A7DD18F00C00F64 /* camera_line_h.png in Resources */,
+				7D2F92BE1ABC9E6300D4B18F /* loading图.gif in Resources */,
 				7D5DBB931A845B9B0078B99C /* EssenceStoryboard.storyboard in Resources */,
 				7D2432A11A7DD18F00C00F64 /* flashing_auto.png in Resources */,
 				7DBD86791A72749100205576 /* User.storyboard in Resources */,
@@ -1958,7 +1959,6 @@
 				7D5DBB521A8356000078B99C /* SquareStoryboard.storyboard in Resources */,
 				7D2432AD1A7DD18F00C00F64 /* switch_camera_h.png in Resources */,
 				7D6A51981A69610600355923 /* Images.xcassets in Resources */,
-				7D2F92BA1ABC973900D4B18F /* loading图.gif in Resources */,
 				7D5DBB301A830D230078B99C /* DiscoverStoryBoard.storyboard in Resources */,
 				7D2432A41A7DD18F00C00F64 /* flashing_off@2x.png in Resources */,
 				7D2432BF1A7DD18F00C00F64 /* SVProgressHUD.bundle in Resources */,
