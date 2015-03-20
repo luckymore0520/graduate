@@ -28,7 +28,6 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.currentDay = [ToolUtils getCurrentDate];
     self.currentContent = 0;
-    
     if (self.currentDay) {
         [self updateDateLabel:self.currentDay];
     }

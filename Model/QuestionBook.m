@@ -70,7 +70,6 @@ QuestionBook* questionBook = nil;
     _allQuestions = [NSMutableArray arrayWithObjects:[self removeEmptyQuestions:_englishBook],[self removeEmptyQuestions:_politicBook],[self removeEmptyQuestions:_mathBook],[self removeEmptyQuestions:_major1Book],[self removeEmptyQuestions:_major2Book], nil];
     self.needUpload = 0;
     [self updateQuestions];
-    
 }
 
 - (void)calculateNeedUpload
@@ -424,9 +423,7 @@ QuestionBook* questionBook = nil;
     } else {
         QuestionBook* book = [QuestionBook getInstance];
         NSString* today = [NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue];
-        
         self.subjects = [[NSMutableArray alloc]init];
-        
         Subject* english = [[Subject alloc]init];
         english.name = user.subjectEng_;
         english.total = _englishBook.count;
@@ -443,7 +440,6 @@ QuestionBook* questionBook = nil;
         politic.type = 2;
         politic.firstStr = @"政";
         [self.subjects addObject:politic];
-        
         
         
         if (user.subjectMath_.length!=0) {

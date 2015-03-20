@@ -11,6 +11,7 @@
 #import "MUpdateSubject.h"
 #import "MUser.h"
 #import "MReturn.h"
+#import "QuestionBook.h"
 @interface SetSubjectVC ()<UITextFieldDelegate,ButtonGroupDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet ButtonGroup *englishGroup;
 @property (weak, nonatomic) IBOutlet UIButton *Eng2Bt;
@@ -37,7 +38,7 @@
     [super viewDidLoad];
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_major1Field,_major2Field, nil];
-    self.keyButtons = [NSArray arrayWithObjects:_completeButton, nil];
+    self.keyButtons = [NSArray arrayWithObjects:_completeButton,_major2Field, nil];
     
 }
 
@@ -112,15 +113,17 @@
     }
     _user.subjectMajor1_ = _major1Field.text;
     _user.subjectMajor2_ = _major2Field.text;
-    _user.subjectMath_ = [_mathGroup selectedSubject];
+    if (_mathGroup.selectedIndex == 3) {
+        _user.subjectMath_ = nil;
+    } else
+    {
+        _user.subjectMath_ = [_mathGroup selectedSubject];
+    }
     _user.subjectEng_ = [_englishGroup selectedSubject];
     [ToolUtils setUserInfomation:_user.keyValues];
     MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];
     [updateSubject load:self subjectMath:_user.subjectMath_ subjectMajor1:_user.subjectMajor1_ subjectMajor2:_user.subjectMajor2_ subjectEng:_user.subjectEng_];
     
-    
-#warning 此处调用设置科目的接口
-
 }
 
 #pragma mark -apidelegate
@@ -134,9 +137,8 @@
             [ToolUtils showMessage:@"网络请求失败，请重试"];
         }
     }
-    
-
 }
+
 - (void)selectIndex:(NSInteger)index name:(NSString *)buttonName
 {
     if ([buttonName isEqualToString:@"Math"]) {
@@ -150,10 +152,7 @@
             [_major2Line setHidden:YES];
         }
     }
-    
 }
-
-
 
 #pragma mark - TableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

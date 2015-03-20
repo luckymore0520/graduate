@@ -158,6 +158,7 @@
 
         }
         [[MyTraceList getInstance]updateTraces];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"UPDATEIMAGE" object:nil];
     }
 }
 

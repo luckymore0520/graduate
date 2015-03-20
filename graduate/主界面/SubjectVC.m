@@ -65,7 +65,6 @@
 @property (nonatomic,strong)NSArray* subjectImgList;
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
 @property (weak, nonatomic) IBOutlet UIControl *bootView;
-
 @end
 CGFloat angle;
 @implementation SubjectVC
@@ -84,13 +83,38 @@ CGFloat angle;
     self.headView.layer.borderWidth = 3;
     _subjectImgList  = [NSArray arrayWithObjects:@"英语",@"政治",@"数学",@"专业课一",@"专业课二", nil];
     self.firstOpen = YES;
-    [self reloadData];
     [self.view bringSubviewToFront:self.centerLine];
     if (![ToolUtils getNotFirstLogin]) {
         [self.bootView setHidden:NO];
         [ToolUtils setNotFirstLogin:YES];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"UPDATEIMAGE" object:nil];
+    if (![ToolUtils connectToInternet]) {
+        [self reloadData];
+    }
+}
 
+- (void)updateImage
+{
+    //这个用来查找最近的一条日记
+    NSArray* arrayNote = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=%@",[ToolUtils getUserid], @""] tableName:@"Trace"];
+    //NSLog(@"length of %d",array.count);
+    if (arrayNote.count>0) {
+        Trace* trace = [arrayNote firstObject];
+        if(trace.note.length){
+            [self setDiaryLabel:trace.note];
+        }else{
+            [self setDiaryLabel:[ToolUtils getDiaryDefault]];
+        }
+    }else{
+        [self setDiaryLabel:[ToolUtils getDiaryDefault]];
+    }
+    //这里用来设置背景图
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].intValue],[ToolUtils getUserid]] tableName:@"Trace"];
+    if (array.count>0) {
+        Trace* trace = [array firstObject];
+        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
+    }
 }
 
 #pragma mark - ButtonAction
@@ -108,6 +132,9 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (!self.subjects) {
+        self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
+    }
     [self.tableview reloadData];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
@@ -140,7 +167,6 @@ CGFloat angle;
 - (void)viewDidAppear:(BOOL)animated
 {
     angle = 0;
-
     [self startAnimation];
     if (self.firstOpen) {
         self.firstOpen = NO;
@@ -155,21 +181,8 @@ CGFloat angle;
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
-    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=%@",[ToolUtils getUserid], @""] tableName:@"Trace"];
-    //NSLog(@"length of %d",array.count);
-    if (array.count>0) {
-        Trace* trace = [array firstObject];
-        // NSLog(@"day: %@",trace.note);
-        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
-        if(trace.note.length){
-            [self setDiaryLabel:trace.note];
-        }else{
-            [self setDiaryLabel:[ToolUtils getDiaryDefault]];
-        }
-        
-    }else{
-        [self setDiaryLabel:[ToolUtils getDiaryDefault]];
-    }
+       [self updateImage];
+
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
 }
@@ -236,7 +249,6 @@ CGFloat angle;
         for (Subject* subject in self.subjects) {
             total+=subject.total;
         }
-        
         if (total<count.totoalCount_.integerValue) {
             for (Subject* subject in self.subjects) {
                 switch (subject.type) {
@@ -265,9 +277,6 @@ CGFloat angle;
                 }
             }
         }
-        
-        
-        
         [self calculateTotal];
         [self.tableview reloadData];
     }
@@ -290,9 +299,6 @@ CGFloat angle;
     }
     [[[MQuesCountStatus alloc]init]load:self];
 }
-
-
-
 
 
 - (IBAction)startEdit:(id)sender {
@@ -326,7 +332,6 @@ CGFloat angle;
 - (IBAction)takePhoto:(id)sender {
     if (self.subjects.count<4) {
         [self performSegueWithIdentifier:@"editSubject" sender:nil];
-
     } else {
         SCNavigationController *nav = [[SCNavigationController alloc] init];
         nav.scNaigationDelegate = self;
@@ -350,13 +355,10 @@ CGFloat angle;
     con.postImage = image;
     [navigationController pushViewController:con animated:NO];
 }
-
 #pragma mark -tableViewDelegate
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SubjectCell* cell = (SubjectCell*)[tableView dequeueReusableCellWithIdentifier:@"subject"];
-    
     if (indexPath.row==_subjects.count) {
         [cell.nameLabel setText:@"添加课程"];
         [cell.totalLabel setText:@"添加考试课程"];
@@ -394,6 +396,9 @@ CGFloat angle;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (!_subjects) {
+        return 0;
+    }
     if (_subjects.count<4) {
         return 2;
     } else {
@@ -421,7 +426,6 @@ CGFloat angle;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    NSLog(@"%lf",);
     if (scrollView.contentSize.height - scrollView.contentOffset.y<=110) {
         if (!_isPresenting) {
             _isPresenting = YES;
@@ -566,7 +570,6 @@ CGFloat angle;
         self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
     } else {
         self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
-
     }
     NSString* myDay = [NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue];
     NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
@@ -576,7 +579,6 @@ CGFloat angle;
         trace = (Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
         trace.myDay = myDay;
         trace.user = [ToolUtils getUserid];
-        NSLog(@"..................此处照理不可能发生");
     } else {
         trace = [array firstObject];
     }

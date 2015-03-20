@@ -72,11 +72,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="99" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lVl-Wx-lhm">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="APD-s9-eH3">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="imgHeader" rowHeight="100" id="7oY-qc-B31" customClass="SelfHeaderCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1582,9 +1577,6 @@
                                 <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="53" y="519" width="296" height="21"/>
-                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在为您备份，超压缩上传。一张图片只有几十K。" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpI-Tx-2Al">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -2420,6 +2412,7 @@
                         <viewControllerLayoutGuide type="bottom" id="MTf-oR-XhV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kMs-Pc-Kzi">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VQC-2j-rlZ">
@@ -2445,12 +2438,12 @@
                                 <exclude reference="VQC-2j-rlZ"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="bp1-MK-IYK"/>
                                 <exclude reference="ByU-OQ-fun"/>
                                 <exclude reference="CSU-VE-Gve"/>
                                 <exclude reference="QZj-OD-oTZ"/>
                                 <exclude reference="Rb3-7D-wqA"/>
                                 <exclude reference="YVa-OG-ZKS"/>
-                                <exclude reference="bp1-MK-IYK"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2458,12 +2451,12 @@
                                 <include reference="VQC-2j-rlZ"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="bp1-MK-IYK"/>
                                 <include reference="ByU-OQ-fun"/>
                                 <include reference="CSU-VE-Gve"/>
                                 <include reference="QZj-OD-oTZ"/>
                                 <exclude reference="Rb3-7D-wqA"/>
                                 <exclude reference="YVa-OG-ZKS"/>
-                                <include reference="bp1-MK-IYK"/>
                             </mask>
                         </variation>
                     </view>

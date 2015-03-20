@@ -15,7 +15,16 @@
         [ToolUtils showMessage:@"专业课不能为空"];
         return;
     }
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"确认修改课程" message:@"原有笔记会存在" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    NSString* message = @"原有笔记会存在";
+    NSDictionary* userDic = [ToolUtils getUserInfomation];
+    MUser *user = [MUser objectWithKeyValues:userDic];
+    if (user.subjectMath_&&user.subjectMath_.length>0&&self.btGroup.selectedIndex==3&&self.majorField.text>0) {
+        message = @"你确定不考数学了？恭喜！跟数学笔记say goodbye吧";
+    }
+    if (user.subjectMajor2_.length>0 && _btGroup && _btGroup.selectedIndex!=3 && self.majorField) {
+        message = @"将新建数学课程，原笔记不保留";
+    }
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"确认修改课程" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
    
 }

@@ -46,7 +46,16 @@
     [self.monthLabel setText:month];
     [self.yearLabel setText:[seperateDate firstObject]];
     [self.dayLabel setText:[seperateDate objectAtIndex:2]];
-    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%d",[ToolUtils getCurrentDay].integerValue],[ToolUtils getUserid]] tableName:@"Trace"];
+    [self updateImage];
+       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateImage) name:@"UPDATEIMAGE" object:nil];
+
+    
+    // Do any additional setup after loading the view.
+}
+
+- (void)updateImage
+{
+    NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",[NSString stringWithFormat:@"%ld",[ToolUtils getCurrentDay].integerValue],[ToolUtils getUserid]] tableName:@"Trace"];
     if (array.count==0) {
         [self.backImageView setImage:[UIImage imageNamed:@"首页1"]];
     } else {
@@ -56,14 +65,9 @@
             [self.backImageView setContentMode:UIViewContentModeScaleAspectFill];
             [self.backImageView setImageToBlur:image blurRadius:8 completionBlock:nil];
             [self.backImageView setClipsToBounds:YES];
-
         }];
     }
-
-    
-    // Do any additional setup after loading the view.
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -160,8 +164,10 @@
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
     
     UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"backUp"];
-    [self.navigationController pushViewController:nextVC animated:YES];
-    
+    WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:nextVC];
+    nav.transitioningDelegate = self;
+    [self.navigationController presentViewController:nav animated:YES completion:^{
+    }];
 }
 - (IBAction)goToSquare:(id)sender {
     

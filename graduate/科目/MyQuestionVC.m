@@ -66,6 +66,10 @@
 }
 
 
+- (void)initViews
+{
+    
+}
 
 - (void)initSubjects
 {
@@ -113,12 +117,13 @@
     self.navigationItem.rightBarButtonItem = myAddButton;
 }
 - (IBAction)showSelectedType:(UIButton *)sender {
-    if (sender != self.selectAllButton) {
-        [self.selectAllButton setSelected:NO];
-    } else {
-        [_selectReviewdButton setSelected:NO];
-        [_selectUnReviewButton setSelected:NO];
+    if (sender.selected) {
+        return;
     }
+    [_selectAllButton setSelected:NO];
+    [_selectImportantButton setSelected:NO];
+    [_selectReviewdButton setSelected:NO];
+    [_selectUnReviewButton setSelected:NO];
     [sender setSelected:!sender.selected];
     [self loadData];
     [self.photoView reloadData];
@@ -138,6 +143,7 @@
     [self.selectView setHidden:!self.selectView.hidden];
     [self cancelTransfer:nil];
     self.selectModel = !self.selectModel;
+    [self.photoView reloadData];
 }
 - (void)loadData
 {
@@ -159,21 +165,17 @@
             BOOL shoudShow = NO;
             if (_selectAllButton.selected) {
                 shoudShow = YES;
-            } else {
-                if (_selectReviewdButton.selected) {
-                    if (question.review_time.integerValue>0) {
-                        shoudShow = YES;
-                    }
+            } else if (_selectReviewdButton.selected) {
+                if (question.review_time.integerValue>0) {
+                    shoudShow = YES;
                 }
-                if (_selectUnReviewButton.selected) {
-                    if (question.review_time.integerValue==0) {
-                        shoudShow = YES;
-                    }
+            } else if (_selectUnReviewButton.selected) {
+                if (question.review_time.integerValue==0) {
+                    shoudShow = YES;
                 }
-            }
-            if (_selectImportantButton.selected) {
-                if (question.is_highlight.integerValue!=1) {
-                    shoudShow = NO;
+            } else if (_selectImportantButton.selected) {
+                if (question.is_highlight.integerValue==1) {
+                    shoudShow = YES;
                 }
             }
             if (shoudShow) {
@@ -272,6 +274,7 @@
     }];
 }
 - (IBAction)ensureTransfer:(id)sender {
+    [ToolUtils showToast:@"转移成功" toView:self.view];
     if ([self.transferView selectedIndex]==-1) {
         return;
     }
@@ -297,31 +300,22 @@
         }
     }
     [self.myQuestions removeObjectsInArray:shoudRemoveDic];
-    [self.photoView reloadData];
     [book save];
     [book updateQuestions];
+    
+    [self.selectedArray removeAllObjects];
+    [self loadData];
+    [self.photoView reloadData];
 }
 
 
 - (IBAction)delete:(id)sender {
-    
-    
     if (_selectedArray.count==0) {
         return;
     }
-    
     UIActionSheet* actionsheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除笔记" otherButtonTitles:nil, nil];
     [actionsheet showInView:[UIApplication sharedApplication].keyWindow];
-    
-    
-    
-    
-
 }
-
-
-
-
 
 
 - (void)didReceiveMemoryWarning {
@@ -373,19 +367,35 @@
             [cell setSelect:YES];
         }
     }
+    [cell setSelectMode:_selectModel];
+    switch (question.orientation.integerValue) {
+        case 1:
+            cell.imgView.transform = CGAffineTransformMakeRotation(0);
+            break;
+        case 2:
+            cell.imgView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+            break;
+        case 3:
+            cell.imgView.transform = CGAffineTransformMakeRotation(M_PI);
+            break;
+        case 4:
+            cell.imgView.transform = CGAffineTransformMakeRotation(M_PI_2);
+            break;
+        default:
+            break;
+    }
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return CGSizeMake(65, 65);
+    return CGSizeMake(55, 55);
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (!self.selectModel) {
         RecordVC* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
         detailVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
@@ -402,7 +412,6 @@
     } else {
         Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         QuestionCell* cell = (QuestionCell*)[self.photoView cellForItemAtIndexPath:indexPath];
-
         if ([self.selectedArray indexOfObject:question]== NSNotFound) {
             [self.selectedArray addObject:question];
             NSLog(@"不在里面");
@@ -412,12 +421,9 @@
             NSLog(@"在里面");
             [cell setSelect:NO];
         }
-        
     }
-//    [self performSegueWithIdentifier:@"showDetail" sender:indexPath];
-    
-    
 }
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -481,7 +487,6 @@
                 [[[QuestionBook getInstance].allQuestions objectAtIndex:question.type.integerValue-1] removeObject:question];
             }
         }
-        
         [[QuestionBook getInstance]save];
         
         MQuesDelete* delete = [[MQuesDelete alloc]init];
@@ -490,6 +495,7 @@
         [self.selectedArray removeAllObjects];
         [self loadData];
         [self.photoView reloadData];
+        [ToolUtils showToast:@"删除成功" toView:self.view];
 
     }
 }

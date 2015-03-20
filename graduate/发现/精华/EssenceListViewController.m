@@ -41,6 +41,9 @@
     self.essenceList = [[NSMutableArray alloc]init];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = view;
+
 }
 
 - (void)setSelectedMode:(BOOL)selectedMode
@@ -106,7 +109,6 @@
         }
     } else if ([names isEqualToString:@"MEssenceDownload"])
     {
-        [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
     } else if ([names isEqualToString:@"MEssenceCollect"])
     {
         [ToolUtils showToast:@"收藏成功" toView:self.view];
@@ -209,6 +211,7 @@
             [_emailAlert show];
             return;
         } else if (essence.isDownloaded_.integerValue==1||essence.needShare_.integerValue==0) {
+            [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
             [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
         } else {
             if (!self.shareAlert) {
@@ -216,7 +219,7 @@
             }
             [_shareAlert show];
         }
-    } else {
+    } else if (buttonIndex == 1){
         if (self.selectEssence.isCollected_.boolValue) {
             [ToolUtils showToast:@"您已收藏该资料" toView:self.view];
             return;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="FZLanTingHeiS-EL-GB.ttf">
@@ -33,7 +33,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdK-Ql-hAx">
-                            <rect key="frame" x="0.0" y="0.0" width="59" height="80"/>
+                            <rect key="frame" x="-8" y="0.0" width="59" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="80" id="BPu-EK-6Lm"/>
                                 <constraint firstAttribute="width" constant="59" id="GUI-4j-KiB"/>
@@ -92,7 +92,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J11-fu-evB">
-                            <rect key="frame" x="282" y="25" width="30" height="30"/>
+                            <rect key="frame" x="278" y="25" width="30" height="30"/>
                             <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="15"/>
                             <state key="normal" title="选择">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -105,14 +105,14 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="J11-fu-evB" secondAttribute="trailing" constant="8" id="1jG-bG-zu1"/>
+                        <constraint firstAttribute="trailing" secondItem="J11-fu-evB" secondAttribute="trailing" constant="12" id="1jG-bG-zu1"/>
                         <constraint firstItem="jdK-Ql-hAx" firstAttribute="centerY" secondItem="gju-RB-T3o" secondAttribute="centerY" id="36j-ng-6lS"/>
                         <constraint firstAttribute="bottom" secondItem="Jdw-L1-xYP" secondAttribute="bottom" id="3am-l4-jOf"/>
                         <constraint firstItem="jdK-Ql-hAx" firstAttribute="top" secondItem="nmI-v6-Iix" secondAttribute="top" id="5iP-t0-Pvo"/>
                         <constraint firstAttribute="height" constant="64" id="DrM-gE-WCS"/>
                         <constraint firstItem="J11-fu-evB" firstAttribute="centerY" secondItem="jdK-Ql-hAx" secondAttribute="centerY" id="IO4-jP-oCa"/>
                         <constraint firstAttribute="centerX" secondItem="gju-RB-T3o" secondAttribute="centerX" id="c3H-tB-qOX"/>
-                        <constraint firstItem="jdK-Ql-hAx" firstAttribute="leading" secondItem="nmI-v6-Iix" secondAttribute="leading" id="kh5-MU-D25"/>
+                        <constraint firstItem="jdK-Ql-hAx" firstAttribute="leading" secondItem="nmI-v6-Iix" secondAttribute="leading" constant="-8" id="kh5-MU-D25"/>
                         <constraint firstItem="Jdw-L1-xYP" firstAttribute="top" secondItem="nmI-v6-Iix" secondAttribute="top" id="pou-R5-2lM"/>
                         <constraint firstAttribute="trailing" secondItem="Jdw-L1-xYP" secondAttribute="trailing" id="umk-Xq-KCj"/>
                         <constraint firstItem="Jdw-L1-xYP" firstAttribute="leading" secondItem="nmI-v6-Iix" secondAttribute="leading" id="wau-Nj-Uqp"/>

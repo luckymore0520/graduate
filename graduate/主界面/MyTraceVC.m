@@ -151,6 +151,22 @@
         } else {
             [cell.stateImg setHidden:YES];
         }
+        switch (question.orientation.integerValue) {
+            case 1:
+                cell.imgView.transform = CGAffineTransformMakeRotation(0);
+                break;
+            case 2:
+                cell.imgView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+                break;
+            case 3:
+                cell.imgView.transform = CGAffineTransformMakeRotation(M_PI);
+                break;
+            case 4:
+                cell.imgView.transform = CGAffineTransformMakeRotation(M_PI_2);
+                break;
+            default:
+                break;
+        }
         return cell;
     }
 }

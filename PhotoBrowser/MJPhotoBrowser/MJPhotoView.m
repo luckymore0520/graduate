@@ -102,15 +102,15 @@
     } else {
         self.scrollEnabled = NO;
         // 直接显示进度条
-        [_photoLoadingView showLoading];
-        [self addSubview:_photoLoadingView];
+//        [_photoLoadingView showLoading];
+//        [self addSubview:_photoLoadingView];
         
         __weak MJPhotoView *photoView = self;
-        __weak MJPhotoLoadingView *loading = _photoLoadingView;
-        [_imageView sd_setImageWithURL:_photo.url placeholderImage:_photo.srcImageView.image options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            if (receivedSize > kMinProgress) {
-                loading.progress = (float)receivedSize/expectedSize;
-            }
+//        __weak MJPhotoLoadingView *loading = _photoLoadingView;
+        [_imageView sd_setImageWithURL:_photo.url placeholderImage:[UIImage imageNamed:@"placeholder"] options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//            if (receivedSize > kMinProgress) {
+//                loading.progress = (float)receivedSize/expectedSize;
+//            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
         }];
@@ -225,6 +225,7 @@
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
     NSLog(@"%lf",self.zoomScale);
+    CGPoint center = _imageView.center;
     CGRect imageViewFrame = _imageView.frame;
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     if (imageViewFrame.size.height > screenBounds.size.height) {
@@ -232,11 +233,8 @@
         self.contentSize = CGSizeMake(imageViewFrame.size.width, imageViewFrame.size.height+200*2*self.zoomScale);
     } else {
         imageViewFrame.origin.y = (screenBounds.size.height - imageViewFrame.size.height-44-20) / 2.0;
-        
         self.contentSize = CGSizeMake(screenBounds.size.width, screenBounds.size.height+200);
     }
-    _imageView.frame = imageViewFrame;
-    
 }
 
 - (void)lazyButtontouchDown
@@ -305,7 +303,7 @@
                                              selector:@selector(lazyButtontouchDown)
                                                object:nil];
     
-    CGPoint touchPoint = [tap locationInView:self];
+    CGPoint touchPoint = [tap locationInView:self.imageView];
 	if (self.zoomScale == self.maximumZoomScale) {
 		[self setZoomScale:self.minimumZoomScale animated:YES];
 	} else {

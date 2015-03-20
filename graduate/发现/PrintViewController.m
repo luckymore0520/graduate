@@ -63,6 +63,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [[QuestionBook getInstance] calculateNeedUpload];
     if ([QuestionBook getInstance].needUpload>0) {
         [self.backupView setHidden:NO];
@@ -123,7 +124,7 @@
     }
 
     Subject* selectedSubject = self.subjects[[self.subjectGroup selectedIndex]];
-    NSString* type = [NSString stringWithFormat:@"%d",selectedSubject.type];
+    NSString* type = [NSString stringWithFormat:@"%ld",selectedSubject.type];
     NSString* start = self.startDateButton.titleLabel.text;
     NSString* endData = self.endDateButton.titleLabel.text;
     [[[MQuesPrint alloc]init]load:self startDate:start endDate:endData type:type];
@@ -202,13 +203,24 @@
     self.editTextView.placeholder = @"请设置您的电子邮箱，以便接收下载的资料";
     [self.navigationController.view bringSubviewToFront:self.editView];
     [self.editTextView becomeFirstResponder];
-    CGRect frame = _editView.frame;
+}
+
+
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+    CGRect frame = self.editView.frame;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-MAX(keyboardHeight, 240));
+        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
     } completion:^(BOOL finished) {
     }];
-    
 }
+
 
 - (void) keyboardWasHidden:(NSNotification *) notif
 {
@@ -219,6 +231,9 @@
         
     }];
 }
+
+
+
 
 
 -(void)cancelEdit

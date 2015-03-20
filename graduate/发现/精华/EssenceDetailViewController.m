@@ -13,6 +13,7 @@
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
 #import "EssenceMediaCell.h"
+
 @interface EssenceDetailViewController ()<UIAlertViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -98,7 +99,6 @@
     } else {
         _videoCollectionViewHeight.constant = (self.essence.media_.count/5+1)*50-15;
     }
-    
     [self.view layoutIfNeeded];
 }
 
