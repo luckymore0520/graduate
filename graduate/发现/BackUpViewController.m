@@ -117,7 +117,7 @@
 
 - (IBAction)backUp:(id)sender {
     if (_need==0) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     } else {
         _count = 0;
         [self updateLabel];
