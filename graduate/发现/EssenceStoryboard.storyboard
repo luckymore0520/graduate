@@ -178,6 +178,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3TJ-d7-jyA" firstAttribute="top" secondItem="Sfh-PO-Fuh" secondAttribute="bottom" id="0Qt-PJ-7DW"/>
+                            <constraint firstAttribute="trailing" secondItem="vZJ-mx-7se" secondAttribute="trailing" id="1ce-gf-pUU"/>
                             <constraint firstItem="vZJ-mx-7se" firstAttribute="top" secondItem="Ju1-V7-MKO" secondAttribute="topMargin" id="9Ce-kd-uPV">
                                 <variation key="heightClass=regular-widthClass=compact" constant="-64"/>
                             </constraint>
@@ -187,6 +188,7 @@
                             <constraint firstAttribute="trailing" secondItem="Sfh-PO-Fuh" secondAttribute="trailing" id="K8O-IX-dqk"/>
                             <constraint firstItem="XCV-nC-6VY" firstAttribute="leading" secondItem="Ju1-V7-MKO" secondAttribute="leading" id="P7f-aN-QeZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vZJ-mx-7se" secondAttribute="trailing" constant="-16" id="Qfv-Qp-Ryb"/>
+                            <constraint firstItem="vZJ-mx-7se" firstAttribute="leading" secondItem="Ju1-V7-MKO" secondAttribute="leading" id="Sjd-DE-KeK"/>
                             <constraint firstItem="Sfh-PO-Fuh" firstAttribute="leading" secondItem="Ju1-V7-MKO" secondAttribute="leading" id="a2a-ha-OpS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XCV-nC-6VY" secondAttribute="trailing" constant="-16" id="bIm-5e-LRy"/>
                             <constraint firstItem="Sfh-PO-Fuh" firstAttribute="leading" secondItem="Ju1-V7-MKO" secondAttribute="leadingMargin" constant="-16" id="hwU-zR-tSR"/>
@@ -204,8 +206,6 @@
                                 <exclude reference="vZJ-mx-7se"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="0Qt-PJ-7DW"/>
-                                <exclude reference="AYt-3v-XCb"/>
                                 <exclude reference="K8O-IX-dqk"/>
                                 <exclude reference="a2a-ha-OpS"/>
                                 <exclude reference="hwU-zR-tSR"/>
@@ -216,9 +216,13 @@
                                 <exclude reference="P7f-aN-QeZ"/>
                                 <exclude reference="bIm-5e-LRy"/>
                                 <exclude reference="tnb-Qk-cbK"/>
+                                <exclude reference="1ce-gf-pUU"/>
                                 <exclude reference="9Ce-kd-uPV"/>
                                 <exclude reference="Qfv-Qp-Ryb"/>
+                                <exclude reference="Sjd-DE-KeK"/>
                                 <exclude reference="yfM-VV-fLO"/>
+                                <exclude reference="0Qt-PJ-7DW"/>
+                                <exclude reference="AYt-3v-XCb"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -228,8 +232,6 @@
                                 <include reference="vZJ-mx-7se"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="0Qt-PJ-7DW"/>
-                                <include reference="AYt-3v-XCb"/>
                                 <include reference="K8O-IX-dqk"/>
                                 <include reference="a2a-ha-OpS"/>
                                 <exclude reference="hwU-zR-tSR"/>
@@ -240,9 +242,13 @@
                                 <include reference="P7f-aN-QeZ"/>
                                 <exclude reference="bIm-5e-LRy"/>
                                 <include reference="tnb-Qk-cbK"/>
+                                <include reference="1ce-gf-pUU"/>
                                 <include reference="9Ce-kd-uPV"/>
-                                <include reference="Qfv-Qp-Ryb"/>
-                                <include reference="yfM-VV-fLO"/>
+                                <exclude reference="Qfv-Qp-Ryb"/>
+                                <include reference="Sjd-DE-KeK"/>
+                                <exclude reference="yfM-VV-fLO"/>
+                                <include reference="0Qt-PJ-7DW"/>
+                                <include reference="AYt-3v-XCb"/>
                             </mask>
                         </variation>
                     </view>
