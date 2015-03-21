@@ -182,6 +182,7 @@ CGFloat angle;
 {
     [[[MQuestionRecommand alloc]init]load:self date:[ToolUtils getCurrentDate]];
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+//    NSLog(@"用户的头像是...%@", user.headImg_);
     [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     [self updateImage];
@@ -254,24 +255,29 @@ CGFloat angle;
             for (Subject* subject in self.subjects) {
                 switch (subject.type) {
                     case 1:
-                        subject.shoudUpdate = subject.total < count.engCount_.integerValue;
+                        subject.shoudUpdate = subject.total < count.engCount_.integerValue || subject.newAdd < count.engAddedCount_.integerValue;
                         subject.total = subject.total>count.engCount_.integerValue?subject.total:count.engCount_.integerValue;
+                        subject.newAdd = subject.newAdd>count.engAddedCount_.integerValue?subject.newAdd:count.engAddedCount_.integerValue;
                         break;
                     case 2:
-                        subject.shoudUpdate = subject.total < count.polityCount_.integerValue;
+                        subject.shoudUpdate = subject.total < count.polityCount_.integerValue || subject.newAdd<count.polityAddedCount_.integerValue;
                         subject.total = subject.total>count.polityCount_.integerValue?subject.total:count.polityCount_.integerValue;
+                        subject.newAdd = subject.newAdd>count.polityAddedCount_.integerValue?subject.newAdd :count.polityAddedCount_.integerValue;
                         break;
                     case 3:
-                        subject.shoudUpdate = subject.total < count.mathCount_.integerValue;
+                        subject.shoudUpdate = subject.total < count.mathCount_.integerValue||subject.newAdd<count.mathAddedCount_.integerValue;
                         subject.total = subject.total>count.mathCount_.integerValue?subject.total:count.mathCount_.integerValue;
+                        subject.newAdd = subject.newAdd>count.mathAddedCount_.integerValue?subject.newAdd:count.mathAddedCount_.integerValue;
                         break;
                     case 4:
-                        subject.shoudUpdate = subject.total < count.major1Count_.integerValue;
+                        subject.shoudUpdate = subject.total < count.major1Count_.integerValue||subject.newAdd<count.major1AddedCount_.integerValue;
                         subject.total = subject.total>count.major1Count_.integerValue?subject.total:count.major1Count_.integerValue;
+                        subject.newAdd = subject.newAdd>count.major1AddedCount_.integerValue?subject.newAdd:count.major1AddedCount_.integerValue;
                         break;
                     case 5:
-                        subject.shoudUpdate = subject.total < count.major2Count_.integerValue;
+                        subject.shoudUpdate = subject.total < count.major2Count_.integerValue||subject.newAdd<count.major2AddedCount_.integerValue;
                         subject.total = subject.total>count.major2Count_.integerValue?subject.total:count.major2Count_.integerValue;
+                        subject.newAdd = subject.newAdd>count.major2AddedCount_.integerValue ? subject.newAdd:count.major2AddedCount_.integerValue;
                         break;
                     default:
                         break;
@@ -282,6 +288,8 @@ CGFloat angle;
         [self.tableview reloadData];
     }
 }
+
+
 
 - (void)showError:(NSError *)error functionName:(NSString *)names
 {

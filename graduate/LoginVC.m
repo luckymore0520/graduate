@@ -19,6 +19,8 @@
 #import "WeiboUser.h"
 #import "WKNavigationViewController.h"
 #import "WXApi.h"
+#import "ToolUtils.h"
+
 @interface LoginVC ()
 @property (weak, nonatomic) IBOutlet UIView *usernameView;
 @property (weak, nonatomic) IBOutlet UIView *passwordView;
@@ -131,6 +133,8 @@
 {
     if (!_tencentOAuth) {
         _tencentOAuth = [[TencentOAuth alloc]initWithAppId:[ToolUtils qqAppid] andDelegate:self];
+    }else{
+        NSLog(@"出试试的数据:  %@-----%@",[_tencentOAuth accessToken],[_tencentOAuth openId]);
     }
 }
 
@@ -205,14 +209,20 @@
         [ToolUtils setContactUrl:user.contactUrl_];
         if (!isThirdParty) {
             [self gotoMainMenu];
+        }else{
+            NSDictionary* userinfo = [ToolUtils getUserInfo];
+            MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
+            [updateUserInfo load:self nickname:[userinfo objectForKey:@"nickname"] headImg:[[ToolUtils getUserInfo] objectForKey:@"headImg"] sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
         }
     } else if ([names isEqualToString:@"MImgUpload"]) {
         MReturn* ret = [MReturn objectWithKeyValues:data];
-        NSLog(@"%@return msg",ret.msg_);
         if (ret.code_.integerValue==1) {
-            NSDictionary* userinfo = [ToolUtils getUserInfo];
-            MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
-            [updateUserInfo load:self nickname:[userinfo objectForKey:@"nickname"] headImg:ret.msg_ sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+            NSLog(@"%@return msg",ret.msg_);
+//            [ToolUtils setHeadImg:ret.msg_];
+            NSDictionary *userInfo = [ToolUtils getUserInfo];
+            [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[userInfo objectForKey:@"gender"],@"gender",[userInfo objectForKey:@"nickname"],@"nickname",ret.msg_,@"headImg",nil]];
+            MLogin* login = [[MLogin alloc]init];
+            [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
         } else {
             [self gotoMainMenu];
         }
@@ -221,6 +231,7 @@
         NSURL* url = [data objectForKey:@"path"];
         NSLog(@"url %@",url.absoluteString);
         NSData* img = [NSData dataWithContentsOfURL:url];
+        NSLog(@"Length of data; %d",[img length]);
         MImgUpload* upLoad = [[MImgUpload alloc]init];
         [ToolUtils setIgnoreNetwork:YES];
         [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
@@ -228,6 +239,7 @@
     } else if ([names isEqualToString:@"MUpdateUserInfo"])
     {
         NSDictionary* userinfo = [ToolUtils getUserInfo];
+        NSLog(@"用户昵称等%@",userinfo);
         MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
         user.nickname_ = [userinfo objectForKey:@"nickname"];;
         user.sex_ = [NSNumber numberWithInt:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1];
@@ -260,13 +272,18 @@
 - (void)tencentDidLogin
 {
     NSLog(@"Success");
-    NSLog(@"%@",[_tencentOAuth openId]);
-    NSLog(@"%@",[_tencentOAuth accessToken]);
+    //NSLog(@"%@",[_tencentOAuth openId]);
+    //NSLog(@"%@",[_tencentOAuth accessToken]);
     [ToolUtils setIdentify:[_tencentOAuth openId]];
+    [self waiting:@"Loading"];
     if ([_tencentOAuth getUserInfo]) {
         NSLog(@"正在获取用户数据");
     } else {
         NSLog(@"授权过期");
+        [self waitingEnd];
+        [self.waitingView setHidden:YES];
+        [self.maskView setHidden:YES];
+        [ToolUtils showMessage:@"请尝试其他方式登录" title:@"登录失败"];
     }
 }
 
@@ -277,20 +294,30 @@
 {
     MLogin* login = [[MLogin alloc]init];
     isThirdParty = YES;
-    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
+//    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
     [self waiting:@"正在获取个人信息"];
     [WBHttpRequest requestForUserProfile:[ToolUtils getIdentify] withAccessToken:[ToolUtils getToken] andOtherProperties:[NSDictionary dictionaryWithObjectsAndKeys:[ToolUtils weiboAppid], @"source",[ToolUtils getToken],@"access_token",nil] queue:[[NSOperationQueue alloc]init] withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
-        NSLog(@"%@", error);
-        [self waitingEnd];
+        NSLog(@"erro is %@", error);
+//      [self waitingEnd];
         NSLog(@"获取成功");
         WeiboUser* user = (WeiboUser*)result;
-        ApiHelper* api = [[ApiHelper alloc]init];
-        api.fileId =user.avatarHDUrl;
-        [ToolUtils setIgnoreNetwork:YES];
-        [api download:self url:user.avatarHDUrl];
-        [ToolUtils setIgnoreNetwork:NO];
-        isThirdParty = YES;
-        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
+        if(user) {
+            ApiHelper* api = [[ApiHelper alloc]init];
+            api.fileId =user.avatarHDUrl;
+            [ToolUtils setIgnoreNetwork:YES];
+            [api download:self url:user.avatarHDUrl];
+            [ToolUtils setIgnoreNetwork:NO];
+            isThirdParty = YES;
+            [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+            [self waitingEnd];
+            [self.waitingView setHidden:YES];
+            [self.maskView setHidden:YES];
+            [ToolUtils showMessage:@"请尝试其他方式登录" title:@"微博授权失败"];
+            });
+        }
+        
     }];
     
     
@@ -326,9 +353,9 @@
     NSURL *zoneUrl = [NSURL URLWithString:url];
     NSString *zoneStr = [NSString stringWithContentsOfURL:zoneUrl encoding:NSUTF8StringEncoding error:nil];
     NSData *data = [zoneStr dataUsingEncoding:NSUTF8StringEncoding];
-    MLogin* login = [[MLogin alloc]init];
+//    MLogin* login = [[MLogin alloc]init];
     isThirdParty = YES;
-    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
+//    [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
     if (data) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         ApiHelper* api = [[ApiHelper alloc]init];
@@ -350,11 +377,8 @@
 //    NSLog(@"%@",userInfo);
 //    NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
     NSLog(@"%@",userInfo);
-    [ToolUtils setUserInfo:userInfo];
-    MLogin* login = [[MLogin alloc]init];
-    [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
+    [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[userInfo objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[userInfo objectForKey:@"nickname"],@"nickname",@"",@"headImg", nil]];
     if (userInfo) {
-        [self waiting:@"Loading"];
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId =[userInfo objectForKey:@"figureurl_qq_1"];
