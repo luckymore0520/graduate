@@ -219,6 +219,7 @@
     } else if ([names isEqualToString:@"download"])
     {
         NSURL* url = [data objectForKey:@"path"];
+        NSLog(@"url %@",url.absoluteString);
         NSData* img = [NSData dataWithContentsOfURL:url];
         MImgUpload* upLoad = [[MImgUpload alloc]init];
         [ToolUtils setIgnoreNetwork:YES];

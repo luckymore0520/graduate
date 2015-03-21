@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "ToolUtils.h"
 #define BASEURL @"http://114.215.196.179:8080/gs/mobile"
-//#define BASEURL @"http://192.168.253.1:8080/gs/mobile"
+//#define BASEURL @"http://192.168.1.130:8080/gs/mobile"
 @protocol ApiDelegate<NSObject>
 @required
 - (void)dispos:(NSDictionary*) data functionName:(NSString*)names;
@@ -37,7 +37,7 @@
 -(ApiHelper*) load:(NSString*)method params:(NSDictionary*) params delegate:(id<ApiDelegate>) delegate;
 -(ApiHelper*) post:(NSString*)method params:(NSDictionary*) params delegate:(id<ApiDelegate>) delegate;
 - (ApiHelper*)setPage:(NSInteger)page limit:(NSInteger) limit;
-- (ApiHelper*)download:(id<ApiDelegate>)delegate  url:(NSString*)url  ;
+- (ApiHelper*)download:(id<ApiDelegate>)delegate  url:(NSString*)url;
 //- (ApiHelper*) load:(id<ApiDelegate>) delegate id:(NSString*)id ;
 //- (ApiHelper*) load:(id<ApiDelegate>) delegate type:(NSString*)type ;
 //- (ApiHelper*) load:(id<ApiDelegate>) delegate tag:(NSString*)tag begin:(NSString*) begin;

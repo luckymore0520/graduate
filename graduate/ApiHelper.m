@@ -32,6 +32,7 @@
     NSURL *URL = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        NSLog(@"filaname  %@",response.suggestedFilename);
         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
         return [documentsDirectoryURL URLByAppendingPathComponent:response.suggestedFilename];
 //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);

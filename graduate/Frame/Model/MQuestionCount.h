@@ -24,4 +24,14 @@
 
 @property (retain,nonatomic) NSNumber *major2Count_;
 
+@property (retain,nonatomic) NSNumber *engAddedCount_;
+
+@property (retain,nonatomic) NSNumber *polityAddedCount_;
+
+@property (retain,nonatomic) NSNumber *mathAddedCount_;
+
+@property (retain,nonatomic) NSNumber *major1AddedCount_;
+
+@property (retain,nonatomic) NSNumber *major2AddedCount_;
+
 @end

@@ -277,7 +277,7 @@
     if (tag>=0) {
         MComment* comment = [self.commentList objectAtIndex:tag];
         _editTextView.text = [NSString stringWithFormat:@"回复%@:",comment.nickname_];
-        self.selectFloor = comment.id_;
+        self.selectFloor = comment.userid_;
     } else if (self.replyNickname){
         _editTextView.text = [NSString stringWithFormat:@"回复%@:",self.replyNickname];
         self.replyNickname = nil;

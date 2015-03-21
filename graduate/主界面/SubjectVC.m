@@ -99,7 +99,7 @@ CGFloat angle;
 {
     //这个用来查找最近的一条日记
     NSArray* arrayNote = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=%@",[ToolUtils getUserid], @""] tableName:@"Trace"];
-    //NSLog(@"length of %d",array.count);
+    //NSLog(@"length of %d",arrayNote.count);
     if (arrayNote.count>0) {
         Trace* trace = [arrayNote firstObject];
         if(trace.note.length){

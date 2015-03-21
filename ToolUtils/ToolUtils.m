@@ -169,7 +169,6 @@
 {
     [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfo"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    
 }
 
 + (NSDictionary *)getUserInfo
