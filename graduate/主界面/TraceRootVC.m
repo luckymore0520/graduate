@@ -93,7 +93,9 @@
 {
     [super viewWillAppear:animated];
     if (_slideSwitchView.currentVC) {
-        [((MyTraceVC*)_slideSwitchView.currentVC) loadQuestion];
+        if ([_slideSwitchView.currentVC respondsToSelector:@selector(loadQuestion)]) {
+            [((MyTraceVC*)_slideSwitchView.currentVC) loadQuestion];
+        }
     }
 }
 

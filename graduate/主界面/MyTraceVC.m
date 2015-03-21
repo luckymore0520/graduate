@@ -37,7 +37,6 @@
         ApiHelper* api = [[ApiHelper alloc]init];
         api.fileId = self.trace.songName;
         [api download:self url:[ToolUtils getImageUrlWtihString:self.trace.musicFile].absoluteString];
-
     }
 }
 
