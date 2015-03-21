@@ -98,7 +98,8 @@
 {
     MessageCell* cell = [tableView dequeueReusableCellWithIdentifier:@"message"];
     MComment* comment = [self.commentList objectAtIndex:indexPath.row];
-    [cell.contentLabel setText:comment.content_];
+    NSRange range = [comment.content_ rangeOfString:@":"];
+    [cell.contentLabel setText:[NSString stringWithFormat:@"%@回复:%@",comment.nickname_,[comment.content_ substringFromIndex:(int)range.location+1]]];
     [cell.stateLabel setText:comment.isNew_.integerValue==0?@"已读":@"未读"];
     if (comment.isNew_.integerValue==0) {
         [cell.contentLabel setTextColor:[UIColor colorOfGrayText]];
