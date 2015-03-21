@@ -231,10 +231,8 @@
 
 + (NSNumber*)getCurrentDay
 {
-    
     NSNumber* current = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDay"];
     return current;
-
 }
 + (void)setCurrentDay:(NSNumber*) currentDay
 {

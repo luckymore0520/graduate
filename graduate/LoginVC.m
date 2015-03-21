@@ -207,6 +207,7 @@
         [ToolUtils setDiaryDefault:user.diaryDefault_];
         [ToolUtils setAboutUrl:user.aboutusUrl_];
         [ToolUtils setContactUrl:user.contactUrl_];
+        [[QuestionBook getInstance] loadAllData];
         if (!isThirdParty) {
             [self gotoMainMenu];
         }else{

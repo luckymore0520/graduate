@@ -150,7 +150,7 @@
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionOfType:self.type]];
     if (self.shoudUpdate) {
-        [self waiting:@"正在更新本地错题"];
+        self.shoudUpdate = NO;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         NSInteger currentDay = [ToolUtils getCurrentDay].integerValue;
@@ -234,9 +234,9 @@
             self.day--;
             NSDate* currentDate = [now addTimeInterval:(self.day-currentDay)*secondsPerDay1];
             [[[MQuesList alloc]init]load:self type:self.type date:[dateFormatter stringFromDate:currentDate]];
+            [self loadData];
+            [self.photoView reloadData];
         } else {
-            [self waitingEnd];
-            self.shoudUpdate = NO;
             [self loadData];
             [self.photoView reloadData];
         }

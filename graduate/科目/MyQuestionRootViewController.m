@@ -34,6 +34,7 @@
     _myQuestionVC.type = self.subject.type;
     _myQuestionVC.shoudUpdate = self.subject.shoudUpdate;
     _myQuestionVC.subject = self.subject.name;
+    _myQuestionVC.parentVC = self;
     _myQuestionVC.view.frame = self.myNoteView.frame;
     
     _myCollection = [[MyCollectionRootView alloc]initWithNibName:NSStringFromClass([MyCollectionRootView class]) bundle:nil];

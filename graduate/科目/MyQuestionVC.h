@@ -10,6 +10,7 @@
 #import "BaseFuncVC.h"
 @interface MyQuestionVC : BaseFuncVC
 @property (nonatomic,strong)NSMutableArray* myQuestions;
+@property (nonatomic,weak)BaseFuncVC* parentVC;
 @property (nonatomic)NSInteger type;
 @property (nonatomic)BOOL shoudUpdate;
 @property (nonatomic)NSString* subject;

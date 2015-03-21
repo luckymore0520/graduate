@@ -69,7 +69,6 @@
         [_traceVCs addObject:traceVC];
         traceVC.title = [NSString stringWithFormat:@"My %i Day",trace.myDay.integerValue];
     }
-    
     if (self.traceVCs.count>0) {
         MyTraceVC* traceVC = [self.traceVCs lastObject];
         traceVC.title = @"Yesterday";

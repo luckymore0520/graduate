@@ -52,7 +52,7 @@
     for (NSDictionary* dic in self.myQuestions) {
         total = total + [[dic objectForKey:@"array"] count];
     }
-    if (self.shoudUpdate||total==0) {
+    if (self.shoudUpdate||total<self.trace.addCount.integerValue) {
         [[[MQuesList alloc]init]load:self type:0 date:self.trace.date];
     }
     if (total>=self.trace.addCount.integerValue) {
@@ -93,7 +93,7 @@
         
         self.myQuestions =
         [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
-        
+        [self.questionView reloadData];
     } 
 }
 
@@ -141,7 +141,11 @@
         if (question.is_recommand.integerValue==0) {
             [cell.imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:question.img width:150 height:150] placeholderImage:[UIImage imageNamed:@"placeholder"]] ;
         } else {
-            [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+            if (question.thumb_img) {
+                [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.thumb_img]]];
+            } else {
+                [cell.imgView setImage:[UIImage imageWithData:[ToolUtils loadData:question.questionid]]];
+            }
         }
         if (question.is_highlight.integerValue==1) {
             [cell setIsStar:YES];
