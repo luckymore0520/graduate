@@ -97,6 +97,7 @@
 		7D2F92C71ABCAC0500D4B18F /* OLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92C51ABCAC0500D4B18F /* OLImageView.m */; };
 		7D2F92CD1ABCAE0300D4B18F /* YLGIFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92CA1ABCAE0300D4B18F /* YLGIFImage.m */; };
 		7D2F92CE1ABCAE0300D4B18F /* YLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F92CC1ABCAE0300D4B18F /* YLImageView.m */; };
+		7D2F92D41ABD558800D4B18F /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F92D31ABD558800D4B18F /* loading.gif */; };
 		7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */; };
 		7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D40333D1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m */; };
 		7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4033401A9B435600BDD1D5 /* MQuesPrint.m */; };
@@ -463,6 +464,7 @@
 		7D2F92CA1ABCAE0300D4B18F /* YLGIFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLGIFImage.m; sourceTree = "<group>"; };
 		7D2F92CB1ABCAE0300D4B18F /* YLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLImageView.h; sourceTree = "<group>"; };
 		7D2F92CC1ABCAE0300D4B18F /* YLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLImageView.m; sourceTree = "<group>"; };
+		7D2F92D31ABD558800D4B18F /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		7D4033391A9B39EB00BDD1D5 /* BackUpSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingViewController.h; path = "发现/备份/BackUpSettingViewController.h"; sourceTree = "<group>"; };
 		7D40333A1A9B39EB00BDD1D5 /* BackUpSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackUpSettingViewController.m; path = "发现/备份/BackUpSettingViewController.m"; sourceTree = "<group>"; };
 		7D40333C1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackUpSettingTableViewCell.h; path = "发现/备份/BackUpSettingTableViewCell.h"; sourceTree = "<group>"; };
@@ -1448,6 +1450,7 @@
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
+				7D2F92D31ABD558800D4B18F /* loading.gif */,
 				7D2F92BF1ABCA64000D4B18F /* loading_small@2x.gif */,
 				7D2F92B31AB882D200D4B18F /* Movie.mp4 */,
 				7DBD866A1A72631A00205576 /* Resource */,
@@ -1999,6 +2002,7 @@
 				7D2432A41A7DD18F00C00F64 /* flashing_off@2x.png in Resources */,
 				7D2432BF1A7DD18F00C00F64 /* SVProgressHUD.bundle in Resources */,
 				7D2432A01A7DD18F00C00F64 /* close_cha_h@2x.png in Resources */,
+				7D2F92D41ABD558800D4B18F /* loading.gif in Resources */,
 				7D24329F1A7DD18F00C00F64 /* close_cha_h.png in Resources */,
 				7D2432AB1A7DD18F00C00F64 /* switch_camera.png in Resources */,
 				7D2432981A7DD18F00C00F64 /* meizi.jpg in Resources */,

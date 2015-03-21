@@ -12,11 +12,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="THq-w8-FeV">
-                    <rect key="frame" x="143" y="220" width="35" height="41"/>
+                    <rect key="frame" x="140" y="220" width="40" height="40"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="35" id="CIy-Dw-GdH"/>
-                        <constraint firstAttribute="width" secondItem="THq-w8-FeV" secondAttribute="height" multiplier="51:59" id="emr-NK-egV"/>
+                        <constraint firstAttribute="width" secondItem="THq-w8-FeV" secondAttribute="height" multiplier="1:1" id="04V-1z-Wda"/>
+                        <constraint firstAttribute="width" constant="40" id="CIy-Dw-GdH"/>
                     </constraints>
                 </imageView>
             </subviews>
