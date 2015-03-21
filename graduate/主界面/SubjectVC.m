@@ -298,8 +298,8 @@ CGFloat angle;
             [self calculateTotal];
             [self.tableview reloadData];
         }
-        [[[MQuesCountStatus alloc]init]load:self];
     } else {
+        [[[MQuesCountStatus alloc]init]load:self];
         [self calculateTotal];
         [self.tableview reloadData];
     }
