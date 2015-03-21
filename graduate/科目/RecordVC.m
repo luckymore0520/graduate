@@ -103,10 +103,9 @@
                     [self.questionViews removeObject:removeView];
                     [removeView removeFromSuperview];
                     self.scrollView.contentSize = CGSizeMake(self.questionViews.count*self.scrollView.frame.size.width, 0);
-                    
+            
                 }
             }
-            
         }
 
     }

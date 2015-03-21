@@ -10,6 +10,7 @@
 
 #import "ReviewVC.h"
 #import "SignVC.h"
+#import "NSMutableArray+Shuffle.h"
 @interface ReviewVC ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *footToolView;
 @property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
@@ -25,6 +26,39 @@
     self.hasTitle = NO;
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
+}
+
+- (void)setReviewType:(NSString *)reviewType
+{
+    _reviewType = reviewType;
+    if ([_reviewType isEqualToString:@"按序学习"]) {
+        //先排序
+        [_questionList sortUsingComparator:^NSComparisonResult(MQuestion* obj1, MQuestion* obj2) {
+            return obj1.myDay_.integerValue < obj2.myDay_.integerValue;
+        }];
+        if (_questionList.count>30) {
+            NSUInteger middleIndex = _questionList.count/2;
+            //前半部分
+            NSMutableArray* formerArray = [NSMutableArray arrayWithArray:[_questionList subarrayWithRange: NSMakeRange(0, middleIndex)]];
+            //后半部分
+            [_questionList removeObjectsInArray:formerArray];
+            
+            //打乱顺序
+            [formerArray shuffle];
+            [_questionList shuffle];
+            //数量，
+            NSUInteger formerCount = MIN(formerArray.count/3, 11);
+            NSUInteger latterCount = MIN(_questionList.count/3*2, 19);
+            //直接取前面那部分（因为已经打乱了)
+            formerArray = [NSMutableArray arrayWithArray:[formerArray subarrayWithRange:NSMakeRange(0, formerCount)]];
+            _questionList = [NSMutableArray arrayWithArray:[_questionList subarrayWithRange:NSMakeRange(0, latterCount)]];
+            [_questionList addObjectsFromArray:formerArray];
+        }
+        [_questionList sortUsingComparator:^NSComparisonResult(MQuestion* obj1, MQuestion* obj2) {
+            return obj1.myDay_.integerValue > obj2.myDay_.integerValue;
+        }];
+    } else {
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

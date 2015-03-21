@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -207,6 +207,8 @@
                                 <exclude reference="vZJ-mx-7se"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="0Qt-PJ-7DW"/>
+                                <exclude reference="AYt-3v-XCb"/>
                                 <exclude reference="K8O-IX-dqk"/>
                                 <exclude reference="a2a-ha-OpS"/>
                                 <exclude reference="hwU-zR-tSR"/>
@@ -222,8 +224,6 @@
                                 <exclude reference="Qfv-Qp-Ryb"/>
                                 <exclude reference="Sjd-DE-KeK"/>
                                 <exclude reference="yfM-VV-fLO"/>
-                                <exclude reference="0Qt-PJ-7DW"/>
-                                <exclude reference="AYt-3v-XCb"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -233,6 +233,8 @@
                                 <include reference="vZJ-mx-7se"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="0Qt-PJ-7DW"/>
+                                <include reference="AYt-3v-XCb"/>
                                 <include reference="K8O-IX-dqk"/>
                                 <include reference="a2a-ha-OpS"/>
                                 <exclude reference="hwU-zR-tSR"/>
@@ -248,8 +250,6 @@
                                 <exclude reference="Qfv-Qp-Ryb"/>
                                 <include reference="Sjd-DE-KeK"/>
                                 <exclude reference="yfM-VV-fLO"/>
-                                <include reference="0Qt-PJ-7DW"/>
-                                <include reference="AYt-3v-XCb"/>
                             </mask>
                         </variation>
                     </view>

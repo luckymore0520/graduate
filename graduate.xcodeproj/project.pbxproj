@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D0A87F21A85D462001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A87F11A85D3CC001A33F7 /* FZLanTingHeiS-EL-GB.ttf */; };
 		7D0A87F61A85D989001A33F7 /* WaitingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D0A87F31A85D989001A33F7 /* WaitingView.xib */; };
 		7D0A87F71A85D989001A33F7 /* WaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A87F51A85D989001A33F7 /* WaitingView.m */; };
@@ -316,6 +317,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
+		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D0A87F11A85D3CC001A33F7 /* FZLanTingHeiS-EL-GB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FZLanTingHeiS-EL-GB.ttf"; sourceTree = "<group>"; };
 		7D0A87F31A85D989001A33F7 /* WaitingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingView.xib; sourceTree = "<group>"; };
 		7D0A87F41A85D989001A33F7 /* WaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingView.h; sourceTree = "<group>"; };
@@ -1184,6 +1187,8 @@
 				7DF3C2411AA4BE980068812D /* WKUILabel.m */,
 				7D2F92A21AB5C5A900D4B18F /* UIImage+Graduate.h */,
 				7D2F92A31AB5C5A900D4B18F /* UIImage+Graduate.m */,
+				7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */,
+				7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -2096,6 +2101,7 @@
 				7D4E05C81A74EF71001709DB /* UIImage+GIF.m in Sources */,
 				7D6A51901A69610600355923 /* AppDelegate.m in Sources */,
 				7D4E05C31A74EF71001709DB /* SDWebImageDownloader.m in Sources */,
+				7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */,
 				7DA994D01A79F64100A879CF /* MReturn.m in Sources */,
 				7D5DBB3A1A8310A00078B99C /* SelfOtherCell.m in Sources */,
 				7DA994C41A7878FE00A879CF /* NSObject+MJKeyValue.m in Sources */,
