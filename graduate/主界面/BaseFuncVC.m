@@ -57,6 +57,10 @@
 }
 
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 - (void)initViews
 {
@@ -310,8 +314,6 @@
     if (!self.waitingView) {
         CGRect frame = self.navigationController.view.bounds;
         self.waitingView = [[[NSBundle mainBundle] loadNibNamed:@"WaitingView" owner:self options:nil] firstObject];
-//        self.waitingView.layer.cornerRadius=15;
-//        [self.waitingView setClipsToBounds:YES];
         self.waitingView.frame = frame;
     }
     [self.navigationController.view addSubview:self.waitingView];
