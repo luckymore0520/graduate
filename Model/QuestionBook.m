@@ -14,7 +14,7 @@
 #import "MReturn.h"
 #import "Sign.h"
 #import "MSign.h"
-
+#import "UIImage+Graduate.h"
 
 @implementation QuestionBook
 
@@ -115,8 +115,6 @@ QuestionBook* questionBook = nil;
                 NSLog(@"开始上传打卡 %@",sign.date);
             }
         }
-        
-        
     });
 }
 
@@ -157,12 +155,10 @@ QuestionBook* questionBook = nil;
 
         }
     }
-    
     if (self.needUpload==0) {
         [self save];
     }
     [[NSNotificationCenter defaultCenter]postNotificationName:@"backup" object:nil];
-
 }
 
 - (void)showAlert:(NSString *)alert functionName:(NSString *)names
@@ -179,7 +175,8 @@ QuestionBook* questionBook = nil;
         UIImage* image = [UIImage imageWithData:[ToolUtils loadData:question.questionid]];
         MImgUpload* upLoad = [[MImgUpload alloc]init];
         upLoad.object = question;
-        [upLoad load:self img:image name:question.questionid];
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        [upLoad load:self img:[UIImage originImage:image scaleToSize:CGSizeMake(screenSize.width*1.3, screenSize.height*1.3)] name:question.questionid];
     } else {
         MUploadQues* upLoadQues = [[MUploadQues alloc]init];
         upLoadQues.object = question;

@@ -10,5 +10,5 @@
 
 @interface UIImage (Graduate)
 + (UIImage *)imageWithColor:(UIColor *)color;
-
++(UIImage*)originImage:(UIImage *)image scaleToSize:(CGSize)size;
 @end
