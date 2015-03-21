@@ -189,6 +189,19 @@
     
 }
 
+//+ (NSString *)getHeadImg
+//{
+//    return [[NSUserDefaults standardUserDefaults]objectForKey:@"headImg"];
+//}
+//
+//
+//+ (void)setHeadImg:(NSString *)headImg
+//{
+//    [[NSUserDefaults standardUserDefaults]setObject:headImg forKey:@"headImg"];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//    
+//}
+
 
 + (NSString*)getFirstUse
 {
@@ -208,6 +221,7 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
 
 }
+
 
 
 + (NSDictionary*) getSubAccount
@@ -330,9 +344,18 @@
     [defaults setObject:[userInfo objectForKey:@"id_"] forKey:@"userid"];
     [defaults setObject:[userInfo objectForKey:@"verify_"] forKey:@"verify"];
     [defaults setObject:[userInfo objectForKey:@"startDay_"] forKey:@"currentDay"];
+    //[defaults setObject:[userInfo objectForKey:@"headImg_"] forKey:@"headImg"];
     [defaults setObject:userInfo forKey:@"userInfomation"];
 //    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfomation"];
 //    [[NSUserDefaults standardUserDefaults]synchronize];
+    [defaults synchronize];
+}
+
++(void)setUserInfomation:(NSDictionary*)userInfo forUserkey:(NSString *)key valueKey:(NSString *) valueKey
+{
+    NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[userInfo objectForKey:key] forKey:valueKey];
+    [defaults setObject:userInfo forKey:@"userInfomation"];
     [defaults synchronize];
 }
 

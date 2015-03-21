@@ -77,6 +77,9 @@
 //用户信息
 +(NSDictionary*)getUserInfomation;
 +(void)setUserInfomation:(NSDictionary*)userInfo;
++(void)setUserInfomation:(NSDictionary*)userInfo forUserkey:(NSString *)key valueKey:(NSString *) valueKey;
+
+
 
 +(BOOL)getNotFirstLogin;
 +(void)setNotFirstLogin:(BOOL)firstLogin;
