@@ -89,6 +89,11 @@
     if (total==0) {
         percent = 100;
     }
+    NSString* progress = [_percentLabel.text componentsSeparatedByString:@"%"][0];
+    NSUInteger progressInt = progress.integerValue;
+    if (progressInt>=percent) {
+        return;
+    }
     [_percentLabel setText:[NSString stringWithFormat:@"%d%@",percent>=100?100:percent,@"%"]];
     CGFloat offSet;
     offSet = (total-hasBackUp)/(total+0.0)* _progressView.frame.size.width;
@@ -102,6 +107,21 @@
     }
 }
 
+- (void)updateProgressLabel
+{
+    NSString* progress = [_percentLabel.text componentsSeparatedByString:@"%"][0];
+    NSUInteger progressInt = progress.integerValue;
+    if (progressInt>=99) {
+        return;
+    } else {
+        progressInt++;
+        [_percentLabel setText:[NSString stringWithFormat:@"%ld%@",progressInt,@"%"]];
+        CGFloat offSet;
+        offSet = (1-progressInt/100.0) * _progressView.frame.size.width;
+        _waveView.transform = CGAffineTransformMakeTranslation(0, offSet);
+        [self performSelector:@selector(updateProgressLabel) withObject:nil afterDelay:1];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -125,6 +145,7 @@
         [_progressLabel setHidden:YES];
         [_backUpingLabel setHidden:NO];
         [ToolUtils setIgnoreNetwork:YES];
+        [self performSelector:@selector(updateProgressLabel) withObject:nil afterDelay:2];
         [[QuestionBook getInstance]updateQuestions];
     }
 }

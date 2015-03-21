@@ -840,11 +840,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/BackUpViewController.m"
-            timestampString = "448558001.049402"
+            timestampString = "448631515.586425"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "-updateLabel"
             landmarkType = "5">
          </BreakpointContent>
@@ -856,11 +856,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/BackUpViewController.m"
-            timestampString = "448558208.850004"
+            timestampString = "448631515.586425"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "-updateLabel"
             landmarkType = "5">
          </BreakpointContent>
@@ -1030,11 +1030,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/BackUpViewController.m"
-            timestampString = "448629513.014718"
+            timestampString = "448631515.586425"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "-backUp:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1115,7 +1115,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "296"
             endingLineNumber = "296"
-            landmarkName = "-initSubject"
+            landmarkName = "-showError:functionName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
