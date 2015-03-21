@@ -135,7 +135,9 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
+    if (!self.subjects) {
+        self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
+    }
     [self.tableview reloadData];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     if ([ToolUtils recommandDay]&&[[ToolUtils recommandDay]isEqualToString:[ToolUtils getCurrentDate]]) {
@@ -194,7 +196,6 @@ CGFloat angle;
         self.dailyNoteLabel.textAlignment = NSTextAlignmentCenter;
     } else {
         self.dailyNoteLabel.textAlignment = NSTextAlignmentLeft;
-        
     }
 }
 
@@ -299,12 +300,10 @@ CGFloat angle;
             [self.tableview reloadData];
         } else {
             [[[MQuesCountStatus alloc]init]load:self];
-            [self calculateTotal];
             [self.tableview reloadData];
         }
     } else {
         [[[MQuesCountStatus alloc]init]load:self];
-        [self calculateTotal];
         [self.tableview reloadData];
     }
    

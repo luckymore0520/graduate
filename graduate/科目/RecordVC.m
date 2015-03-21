@@ -92,9 +92,6 @@
                 self.scrollView.contentSize=CGSizeMake(self.scrollView.frame.size.width*self.questionList.count, 0);
                 self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width*self.currentPage, 0);
                 [removeView removeFromSuperview];
-                
-                
-                
             } else {
                 for (int i = self.currentPage+1 ;i < self.questionViews.count;i++)
                 {
