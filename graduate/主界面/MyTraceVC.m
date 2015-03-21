@@ -44,7 +44,6 @@
 
 - (void)loadQuestion
 {
-    
     self.myQuestions =
     [NSMutableArray arrayWithArray:[[QuestionBook getInstance]getQuestionByDay:self.trace.myDay]];
     NSUInteger total = 0 ;

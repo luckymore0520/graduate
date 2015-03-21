@@ -189,6 +189,17 @@
     
 }
 
++(NSString*)getThirdParyType
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"thirdType"];
+}
++(void)setThirdParyType:(NSString*)type
+{
+    [[NSUserDefaults standardUserDefaults]setObject:type forKey:@"thirdType"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+
+}
+
 //+ (NSString *)getHeadImg
 //{
 //    return [[NSUserDefaults standardUserDefaults]objectForKey:@"headImg"];

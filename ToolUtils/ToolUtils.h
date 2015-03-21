@@ -74,6 +74,10 @@
 +(NSString*)getDeviceId;
 +(void)setDeviceId:(NSString*)deviceid;
 
+//设备id
++(NSString*)getThirdParyType;
++(void)setThirdParyType:(NSString*)type;
+
 //用户信息
 +(NSDictionary*)getUserInfomation;
 +(void)setUserInfomation:(NSDictionary*)userInfo;

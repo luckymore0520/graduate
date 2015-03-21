@@ -222,8 +222,16 @@
 //            [ToolUtils setHeadImg:ret.msg_];
             NSDictionary *userInfo = [ToolUtils getUserInfo];
             [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[userInfo objectForKey:@"gender"],@"gender",[userInfo objectForKey:@"nickname"],@"nickname",ret.msg_,@"headImg",nil]];
+            
+            //需要根据不同的第三方登录类型判定
             MLogin* login = [[MLogin alloc]init];
-            [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
+            if([[ToolUtils getThirdParyType] isEqualToString:@"qq"]){
+                [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
+            }else if([[ToolUtils getThirdParyType] isEqualToString:@"weixin"]){
+                [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
+            }else{
+                [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
+            }
         } else {
             [self gotoMainMenu];
         }
@@ -309,6 +317,7 @@
             [api download:self url:user.avatarHDUrl];
             [ToolUtils setIgnoreNetwork:NO];
             isThirdParty = YES;
+            [ToolUtils setThirdParyType:@"weibo"];
             [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:user.gender,@"gender",user.name,@"nickname", nil]];
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -367,6 +376,7 @@
         //[self waitingEnd];
         [ToolUtils setIgnoreNetwork:NO];
         isThirdParty = YES;
+        [ToolUtils setThirdParyType:@"weixin"];
         NSLog(@"nickname---%@",[dic objectForKey:@"nickname"]);
         [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[dic objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
     }
@@ -378,7 +388,8 @@
 //    NSLog(@"%@",userInfo);
 //    NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
     NSLog(@"%@",userInfo);
-    [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[userInfo objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[userInfo objectForKey:@"nickname"],@"nickname",@"",@"headImg", nil]];
+    NSLog(@"sex of %@",[(NSNumber*)[userInfo objectForKey:@"sex"] intValue]==1? @"yes":@"no");
+    [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[userInfo objectForKey:@"gender"],@"gender",[userInfo objectForKey:@"nickname"],@"nickname",@"",@"headImg", nil]];
     if (userInfo) {
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);
         ApiHelper* api = [[ApiHelper alloc]init];
@@ -387,6 +398,7 @@
         [api download:self url:[userInfo objectForKey:@"figureurl_qq_1"]];
         [ToolUtils setIgnoreNetwork:NO];
         isThirdParty = YES;
+        [ToolUtils setThirdParyType:@"qq"];
     }
 }
                        
