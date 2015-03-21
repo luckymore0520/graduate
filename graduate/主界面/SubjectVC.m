@@ -575,6 +575,10 @@ CGFloat angle;
         [ToolUtils showMessage:@"日记不能超过42个字"];
         return;
     }
+    if ([self.editTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]) {
+        [ToolUtils showMessage:@"日记不能为空"];
+        return;
+    }
     [self.editTextView resignFirstResponder];
     [self.dailyNoteLabel setText:self.editTextView.text];
     if (self.editTextView.text.length<23) {
