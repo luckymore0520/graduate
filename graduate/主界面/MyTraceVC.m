@@ -26,12 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadQuestion];
     _phoneOfLine = 5;
+    [self loadQuestion];
 }
-
-
-
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -72,6 +69,7 @@
         }
     }
     self.trace.signCount = MAX(self.trace.signCount,[NSNumber numberWithInteger:signCount]);
+    [self.questionView reloadData];
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names

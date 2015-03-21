@@ -362,39 +362,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305402.653316"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-selectCollection:isSelected:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305402.653316"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-selectCollection:isSelected:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305402.653316"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "127"
@@ -410,7 +378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305402.653316"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
@@ -426,7 +394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305402.653316"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "129"
@@ -442,7 +410,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305402.653316"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
@@ -458,12 +426,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305472.195018"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "-dispos:functionName:"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "-selectCollection:isSelected:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -474,12 +442,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305590.675597"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "-dispos:functionName:"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-selectCollection:isSelected:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -490,11 +458,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
-            timestampString = "448305596.487829"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
             endingLineNumber = "117"
+            landmarkName = "-dispos:functionName:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graduate/&#x53d1;&#x73b0;/&#x7cbe;&#x534e;/MyCollectionRootView.m"
+            timestampString = "448629513.014718"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "-dispos:functionName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1046,23 +1030,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x53d1;&#x73b0;/BackUpViewController.m"
-            timestampString = "448567344.78616"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "-backUp:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graduate/&#x53d1;&#x73b0;/BackUpViewController.m"
-            timestampString = "448567391.522415"
+            timestampString = "448629513.014718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
@@ -1074,7 +1042,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Model/QuestionBook.m"
@@ -1090,7 +1058,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/Frame/ApiTools/MUploadQues.m"
@@ -1149,6 +1117,85 @@
             endingLineNumber = "296"
             landmarkName = "-initSubject"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/MyTraceVC.m"
+            timestampString = "448628403.674324"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/MyTraceVC.m"
+            timestampString = "448628404.820795"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/MyTraceVC.m"
+            timestampString = "448628406.40828"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "Yes"
+            filePath = "graduate/&#x4e3b;&#x754c;&#x9762;/MyTraceVC.m"
+            timestampString = "448628520.669751"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.Log">
+                  <ActionContent
+                     message = "orientation"
+                     conveyanceType = "0">
+                  </ActionContent>
+               </BreakpointActionProxy>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "po question.orientation">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -21,5 +21,5 @@
 @property (nonatomic)BOOL shoudUpdate;
 @property (nonatomic)BOOL isInView;
 @property (nonatomic,weak) id<TraceDelegate> myDelegate;
-
+- (void)loadQuestion;
 @end

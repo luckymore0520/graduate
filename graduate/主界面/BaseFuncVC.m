@@ -316,6 +316,7 @@
         self.waitingView = [[[NSBundle mainBundle] loadNibNamed:@"WaitingView" owner:self options:nil] firstObject];
         self.waitingView.frame = frame;
     }
+    [self.waitingView setHidden:NO];
     [self.navigationController.view addSubview:self.waitingView];
     [self.waitingView.msgLbel setText:msg];
     [self.navigationController.view bringSubviewToFront:self.waitingView];

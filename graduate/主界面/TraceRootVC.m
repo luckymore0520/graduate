@@ -90,6 +90,13 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (_slideSwitchView.currentVC) {
+        [((MyTraceVC*)_slideSwitchView.currentVC) loadQuestion];
+    }
+}
 
 
 - (void)didReceiveMemoryWarning {

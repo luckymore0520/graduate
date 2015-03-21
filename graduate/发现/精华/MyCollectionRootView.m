@@ -102,6 +102,7 @@
 }
 
 - (IBAction)ensureDelete:(id)sender {
+    _count = 0;
     for (NSString* str in self.removeArray) {
         MEssenceCollect* collect = [[MEssenceCollect alloc]init];
         [collect load:self id:str type:0];
@@ -112,6 +113,7 @@
 {
     _count++;
     if (_count == self.removeArray.count) {
+        [ToolUtils showToast:@"删除成功" toView:self.view];
         [self.removeArray removeAllObjects];
         for (EssenceListViewController* vc in self.myControllers) {
             [vc reloadData];
