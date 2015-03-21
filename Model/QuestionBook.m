@@ -170,7 +170,6 @@ QuestionBook* questionBook = nil;
 
 -(void)upLoadQuestion:(Question*)question
 {
-//    MQuestion* mQuestion = [self changeFromMQuestion:question];
     if ([question.img isEqualToString:question.questionid]) {
         UIImage* image = [UIImage imageWithData:[ToolUtils loadData:question.questionid]];
         MImgUpload* upLoad = [[MImgUpload alloc]init];

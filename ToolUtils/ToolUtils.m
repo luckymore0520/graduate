@@ -233,16 +233,13 @@
 {
     
     NSNumber* current = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDay"];
-//    NSDate* today = [NSDate date];
-//    NSDate* currentDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDate"];
     return current;
 
 }
-+ (void) setCurrentDay:(NSNumber*) currentDay
++ (void)setCurrentDay:(NSNumber*) currentDay
 {
     NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
     [defaults setObject:currentDay forKey:@"currentDay"];
-//    [[NSUserDefaults standardUserDefaults]setObject:[NSDate date] forKey:@"currentDate"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
@@ -252,7 +249,13 @@
 
 + (NSString *)getCurrentDate
 {
-    return [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDate"];
+    NSString* currentDate = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDate"];
+    if (!currentDate) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        currentDate = [dateFormatter stringFromDate:[NSDate date]];
+    }
+    return currentDate ;
 }
 
 + (void)setMySubjects:(NSDictionary*)subjects

@@ -266,15 +266,15 @@
        selectedImgStr:@""
                action:@selector(takePictureBtnPressed:)
            parentView:_bottomContainerView];
-    CGFloat rightBtnLength = 120;
-    [self buildButton:CGRectMake(-20, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 120, 120)
+    CGFloat rightBtnLength = 150;
+    [self buildButton:CGRectMake(-35, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 150, 150)
          normalImgStr:@"我的相册"
       highlightImgStr:@""
        selectedImgStr:@""
                action:@selector(album)
            parentView:_bottomContainerView];
     
-    [self buildButton:CGRectMake(SC_DEVICE_SIZE.width-20-80, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 120, 120)
+    [self buildButton:CGRectMake(SC_DEVICE_SIZE.width-20-95, (_bottomContainerView.frame.size.height - rightBtnLength)/2, 150, 150)
          normalImgStr:@"拍照取消"
       highlightImgStr:@""
        selectedImgStr:@""
@@ -312,19 +312,15 @@
     
     //屏幕高度大于480的，后退按钮放在_cameraMenuView；小于480的，放在_bottomContainerView
     for (int i = 0; i < actionArr.count; i++) {
-        
         CGFloat theH = (!isHigherThaniPhone4_SC && i == 0 ? _bottomContainerView.frame.size.height : CAMERA_MENU_VIEW_HEIGH);
         UIView *parent = (!isHigherThaniPhone4_SC && i == 0 ? _bottomContainerView : _cameraMenuView);
-        
         UIButton * btn = [self buildButton:CGRectMake(eachW * i, 0, eachW, theH)
                               normalImgStr:[normalArr objectAtIndex:i]
                            highlightImgStr:[highlightArr objectAtIndex:i]
                             selectedImgStr:[selectedArr objectAtIndex:i]
                                     action:NSSelectorFromString([actionArr objectAtIndex:i])
                                 parentView:parent];
-        
         btn.showsTouchWhenHighlighted = YES;
-        
         [_cameraBtnSet addObject:btn];
     }
 }
@@ -349,6 +345,7 @@
     }
     [btn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     [parentView addSubview:btn];
+    [btn setExclusiveTouch:YES];
     return btn;
 }
 
