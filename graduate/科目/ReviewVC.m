@@ -31,11 +31,13 @@
 - (void)setReviewType:(NSString *)reviewType
 {
     _reviewType = reviewType;
-    if ([_reviewType isEqualToString:@"按序学习"]) {
+    //先排序
+    [_questionList sortUsingComparator:^NSComparisonResult(MQuestion* obj1, MQuestion* obj2) {
+        return obj1.myDay_.integerValue < obj2.myDay_.integerValue;
+    }];
+
+    if (![_reviewType isEqualToString:@"按序学习"]) {
         //先排序
-        [_questionList sortUsingComparator:^NSComparisonResult(MQuestion* obj1, MQuestion* obj2) {
-            return obj1.myDay_.integerValue < obj2.myDay_.integerValue;
-        }];
         if (_questionList.count>30) {
             NSUInteger middleIndex = _questionList.count/2;
             //前半部分
@@ -58,6 +60,25 @@
             return obj1.myDay_.integerValue > obj2.myDay_.integerValue;
         }];
     } else {
+        //取最前面的两天
+        MQuestion* question = [_questionList firstObject];
+        NSString* firstDay = question.myDay_;
+        NSString* secondDay = nil;
+        BOOL hasFoundSecondDay = NO;
+        NSUInteger index = 0;
+        for (int i = 0 ; i < _questionList.count; i++) {
+            MQuestion* question = _questionList[i];
+            if (!hasFoundSecondDay && ![firstDay isEqualToString:question.myDay_]) {
+                hasFoundSecondDay = YES;
+                secondDay = question.myDay_;
+            } else if (hasFoundSecondDay) {
+                if (![question.myDay_ isEqualToString:secondDay]) {
+                    break;
+                }
+            }
+            index++;
+        }
+        _questionList = [NSMutableArray arrayWithArray:[_questionList subarrayWithRange:NSMakeRange(0, index)]];
     }
 }
 
