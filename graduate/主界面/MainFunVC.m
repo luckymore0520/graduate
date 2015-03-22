@@ -71,7 +71,11 @@
             music.file_ = trace.songUrl;
             _main.music_ = [[NSMutableArray alloc]initWithObjects:music, nil];
             [self initView];
-            [_imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] placeholderImage:[UIImage imageNamed:@"首页1.png"]];
+            UIImage* plageHolder = nil;
+            if (![[SDWebImageManager sharedManager]cachedImageExistsForURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] ]) {
+                plageHolder = [UIImage imageNamed:@"首页1.png"];
+            }
+            [_imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] placeholderImage:plageHolder];
         }
         [[[MIndex alloc]init]load:self date:nil type:1 days:0];
     }

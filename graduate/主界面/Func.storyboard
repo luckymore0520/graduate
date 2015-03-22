@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -244,7 +244,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9D61C5EA-E303-4B7C-B912-DD212D016697" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B57E027A-C604-4E7A-B93F-8742655CACD4" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -5589,13 +5589,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="首页1" translatesAutoresizingMaskIntoConstraints="NO" id="fWU-2U-ReX">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="默认背景功能主页二" translatesAutoresizingMaskIntoConstraints="NO" id="fWU-2U-ReX">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             </imageView>
-                            <view hidden="YES" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YpG-97-gaE">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oic-iB-MJH">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="精华">
@@ -5885,16 +5881,13 @@
                             <constraint firstItem="Jse-wB-49l" firstAttribute="top" secondItem="oic-iB-MJH" secondAttribute="bottom" constant="90" id="f9h-4w-Ma0">
                                 <variation key="heightClass=regular-widthClass=compact" constant="52"/>
                             </constraint>
-                            <constraint firstAttribute="trailingMargin" secondItem="YpG-97-gaE" secondAttribute="trailing" constant="-16" id="fsk-dp-n0I"/>
                             <constraint firstItem="oic-iB-MJH" firstAttribute="top" secondItem="wvZ-pS-RSu" secondAttribute="bottom" constant="35" id="g60-7v-wVN"/>
                             <constraint firstItem="F2m-j8-8uw" firstAttribute="leading" secondItem="yrD-2L-f6k" secondAttribute="leading" constant="7" id="gwm-ME-8s8">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="YpG-97-gaE" firstAttribute="leading" secondItem="7OI-WD-9zk" secondAttribute="leadingMargin" constant="-16" id="hJs-48-6fk"/>
                             <constraint firstItem="Vbj-02-cu3" firstAttribute="centerX" secondItem="JdP-jB-Kb4" secondAttribute="centerX" constant="-2" id="j1B-0A-kN9">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="QRQ-4O-lBI" firstAttribute="top" secondItem="YpG-97-gaE" secondAttribute="bottom" id="kV0-Ln-vOZ"/>
                             <constraint firstItem="yrD-2L-f6k" firstAttribute="top" secondItem="F2m-j8-8uw" secondAttribute="bottom" constant="8" id="mv5-pp-aFZ">
                                 <variation key="heightClass=regular-widthClass=compact" constant="-1"/>
                             </constraint>
@@ -5902,7 +5895,6 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="oic-iB-MJH" firstAttribute="top" secondItem="Vbj-02-cu3" secondAttribute="bottom" constant="-10" id="pMz-TO-ruk"/>
-                            <constraint firstItem="YpG-97-gaE" firstAttribute="top" secondItem="7OI-WD-9zk" secondAttribute="topMargin" id="rhX-ym-bua"/>
                             <constraint firstItem="zZK-CF-yyD" firstAttribute="leading" secondItem="wvZ-pS-RSu" secondAttribute="trailing" constant="-74" id="sxu-KJ-ZCK"/>
                             <constraint firstItem="XJE-SF-yg0" firstAttribute="top" secondItem="bds-QU-xWN" secondAttribute="bottom" constant="7" id="tZe-Ac-7d5"/>
                             <constraint firstItem="SpP-6M-fLa" firstAttribute="centerX" secondItem="0tC-KM-kGi" secondAttribute="centerX" id="to6-DN-4gl"/>
@@ -5924,7 +5916,6 @@
                             <mask key="subviews">
                                 <exclude reference="wEr-Lj-GoY"/>
                                 <exclude reference="fWU-2U-ReX"/>
-                                <exclude reference="YpG-97-gaE"/>
                                 <exclude reference="oic-iB-MJH"/>
                                 <exclude reference="SpP-6M-fLa"/>
                                 <exclude reference="0tC-KM-kGi"/>
@@ -5955,7 +5946,6 @@
                                 <exclude reference="U1N-Pa-YpM"/>
                                 <exclude reference="bdj-N2-7Wc"/>
                                 <exclude reference="5mC-A2-aaZ"/>
-                                <exclude reference="kV0-Ln-vOZ"/>
                                 <exclude reference="vN5-Yj-BVF"/>
                                 <exclude reference="JOi-jU-8AX"/>
                                 <exclude reference="tZe-Ac-7d5"/>
@@ -6012,16 +6002,12 @@
                                 <exclude reference="28Q-yu-do5"/>
                                 <exclude reference="LgM-bc-kGn"/>
                                 <exclude reference="MrI-JT-fFM"/>
-                                <exclude reference="fsk-dp-n0I"/>
-                                <exclude reference="hJs-48-6fk"/>
-                                <exclude reference="rhX-ym-bua"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="wEr-Lj-GoY"/>
                                 <include reference="fWU-2U-ReX"/>
-                                <include reference="YpG-97-gaE"/>
                                 <include reference="oic-iB-MJH"/>
                                 <include reference="SpP-6M-fLa"/>
                                 <include reference="0tC-KM-kGi"/>
@@ -6052,7 +6038,6 @@
                                 <include reference="U1N-Pa-YpM"/>
                                 <include reference="bdj-N2-7Wc"/>
                                 <include reference="5mC-A2-aaZ"/>
-                                <include reference="kV0-Ln-vOZ"/>
                                 <include reference="vN5-Yj-BVF"/>
                                 <include reference="JOi-jU-8AX"/>
                                 <include reference="tZe-Ac-7d5"/>
@@ -6109,9 +6094,6 @@
                                 <include reference="28Q-yu-do5"/>
                                 <include reference="LgM-bc-kGn"/>
                                 <include reference="MrI-JT-fFM"/>
-                                <include reference="fsk-dp-n0I"/>
-                                <include reference="hJs-48-6fk"/>
-                                <include reference="rhX-ym-bua"/>
                             </mask>
                         </variation>
                     </view>
@@ -7468,7 +7450,7 @@
     <resources>
         <image name="1-返回键" width="10" height="19"/>
         <image name="2-开始体验" width="180" height="40"/>
-        <image name="9D61C5EA-E303-4B7C-B912-DD212D016697" width="166" height="165">
+        <image name="B57E027A-C604-4E7A-B93F-8742655CACD4" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9408,8 +9390,8 @@ AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
         <image name="重点触发效果" width="77" height="32"/>
         <image name="错题-删除图标" width="19" height="18"/>
         <image name="首次登录背景图" width="375" height="568"/>
-        <image name="首页1" width="375" height="667"/>
         <image name="默认背景" width="375" height="302"/>
+        <image name="默认背景功能主页二" width="375" height="667"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Fep-Lh-H5j"/>

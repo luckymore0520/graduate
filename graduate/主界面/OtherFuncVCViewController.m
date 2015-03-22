@@ -170,9 +170,7 @@
     }];
 }
 - (IBAction)goToSquare:(id)sender {
-    
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"SquareStoryboard" bundle:nil];
-    
     UIViewController* nextVC = [storyboard instantiateViewControllerWithIdentifier:@"square"];
     WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:nextVC];
     nav.transitioningDelegate = self;
