@@ -23,7 +23,7 @@ MyTraceList* tracelist = nil;
 }
 
 
-- (NSMutableArray*)getMyTraces
+- (NSMutableArray*)getMyTracesIncludeToday:(BOOL)include
 {
     NSMutableArray* traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@",[ToolUtils getUserid]] tableName:@"Trace"]];
     NSMutableArray* futureDays = [[NSMutableArray alloc]init];
@@ -39,6 +39,9 @@ MyTraceList* tracelist = nil;
         if (trace.myDay.integerValue>=[ToolUtils getCurrentDay].integerValue) {
             [futureDays addObject:trace];
         }
+        if (include && trace.myDay.integerValue == [ToolUtils getCurrentDay].integerValue) {
+            [futureDays removeObject:trace];
+        }
     }
     [traceList removeObjectsInArray:futureDays];
     [traceList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
@@ -46,7 +49,6 @@ MyTraceList* tracelist = nil;
         NSString* b = ((Trace*)obj2).myDay;
         return  b.integerValue<a.integerValue;
     }];
-    
     return traceList;
 }
 
@@ -65,7 +67,7 @@ MyTraceList* tracelist = nil;
 
 - (void)updateTraces
 {
-    NSMutableArray* traceList = [self getMyTraces];
+    NSMutableArray* traceList = [self getMyTracesIncludeToday:YES];
     Trace* trace = [traceList firstObject];
     NSInteger earlistDay = trace.myDay.integerValue;
     if (earlistDay>1) {

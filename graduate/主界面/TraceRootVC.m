@@ -39,7 +39,7 @@
     
     
     _traceVCs = [[NSMutableArray alloc]init];
-    _traceList = [[MyTraceList getInstance] getMyTraces];
+    _traceList = [[MyTraceList getInstance] getMyTracesIncludeToday:NO];
     for (Trace* trace in self.traceList) {
         MyTraceVC* traceVC = [self.storyboard instantiateViewControllerWithIdentifier:@"trace_wide"];
         traceVC.shoudUpdate = self.shoudUpdate;
