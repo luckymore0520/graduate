@@ -63,7 +63,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdV-xz-cHj">
-                            <rect key="frame" x="41" y="0.0" width="260" height="1"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                             <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="Env-Q0-LV2"/>
@@ -74,8 +74,8 @@
                     <constraints>
                         <constraint firstItem="gdV-xz-cHj" firstAttribute="top" secondItem="idU-xo-EQT" secondAttribute="top" id="D7X-P5-z6y"/>
                         <constraint firstAttribute="trailing" secondItem="hVC-kg-Nxe" secondAttribute="trailing" id="JVR-bZ-7qv"/>
-                        <constraint firstItem="gdV-xz-cHj" firstAttribute="leading" secondItem="Ocn-qs-zZG" secondAttribute="trailing" id="Puo-Ed-863"/>
-                        <constraint firstItem="hVC-kg-Nxe" firstAttribute="leading" secondItem="gdV-xz-cHj" secondAttribute="trailing" id="ZWd-Hu-228"/>
+                        <constraint firstItem="gdV-xz-cHj" firstAttribute="leading" secondItem="idU-xo-EQT" secondAttribute="leading" id="LLV-at-zOP"/>
+                        <constraint firstAttribute="trailing" secondItem="gdV-xz-cHj" secondAttribute="trailing" id="MOA-qS-XO2"/>
                         <constraint firstItem="Ocn-qs-zZG" firstAttribute="leading" secondItem="idU-xo-EQT" secondAttribute="leading" constant="5" id="bzE-v2-ha6"/>
                         <constraint firstAttribute="centerY" secondItem="hVC-kg-Nxe" secondAttribute="centerY" id="dgg-cI-ZfL"/>
                         <constraint firstAttribute="height" constant="45" id="gqv-0c-Jcq"/>
