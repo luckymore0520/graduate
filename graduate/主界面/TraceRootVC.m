@@ -8,6 +8,7 @@
 
 #import "TraceRootVC.h"
 #import "MyTraceVC.h"
+#import "MyTraceList.h"
 #import "QCSlideSwitchView.h"
 #import "CoreDataHelper.h"
 @interface TraceRootVC ()<QCSlideSwitchViewDelegate,TraceDelegate>
@@ -38,36 +39,14 @@
     
     
     _traceVCs = [[NSMutableArray alloc]init];
-    
-    _traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@",[ToolUtils getUserid]] tableName:@"Trace"]];
-
-    
-    
-    NSMutableArray* futureDays = [[NSMutableArray alloc]init];
-    
-    for (Trace* trace in _traceList) {
-        if (trace.myDay.integerValue>=[ToolUtils getCurrentDay].integerValue) {
-            [futureDays addObject:trace];
-        }
-    }
-    [_traceList removeObjectsInArray:futureDays];
-    
-    
-    
-    
-    [self.traceList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSString* a = ((Trace*)obj1).myDay;
-        NSString* b = ((Trace*)obj2).myDay;
-        return  b.integerValue<a.integerValue;
-    }];
-    
+    _traceList = [[MyTraceList getInstance] getMyTraces];
     for (Trace* trace in self.traceList) {
         MyTraceVC* traceVC = [self.storyboard instantiateViewControllerWithIdentifier:@"trace_wide"];
         traceVC.shoudUpdate = self.shoudUpdate;
         traceVC.trace = trace;
         traceVC.myDelegate = self;
         [_traceVCs addObject:traceVC];
-        traceVC.title = [NSString stringWithFormat:@"My %i Day",trace.myDay.integerValue];
+        traceVC.title = [NSString stringWithFormat:@"My %ld Day",(long)trace.myDay.integerValue];
     }
     if (self.traceVCs.count>0) {
         MyTraceVC* traceVC = [self.traceVCs lastObject];

@@ -46,6 +46,7 @@ MyTraceList* tracelist = nil;
         NSString* b = ((Trace*)obj2).myDay;
         return  b.integerValue<a.integerValue;
     }];
+    
     return traceList;
 }
 
@@ -103,11 +104,14 @@ MyTraceList* tracelist = nil;
         MMainList* mainList = [MMainList objectWithKeyValues:data];
         for (MMain* main in mainList.index_) {
             NSString* myDay = [NSString stringWithFormat:@"%d",main.days_.integerValue];
-            UIImageView* imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, 500)];
-            [imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.imgZj_ width:[[UIScreen mainScreen]bounds].size.width*2 height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                NSLog(@"下图完成 足迹图 From APPDELEGATE");
-            }];
-            [self saveDay:main musicUrl:nil];
+            NSArray* array = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"myDay=%@ and user=%@",myDay,[ToolUtils getUserid]] tableName:@"Trace"];
+            if (array.count==0) {
+                UIImageView* imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen]bounds].size.width, 500)];
+                [imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:main.imgZj_ width:[[UIScreen mainScreen]bounds].size.width*2 height:0] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    NSLog(@"下图完成 足迹图 From APPDELEGATE");
+                }];
+                [self saveDay:main musicUrl:nil];
+            }
         }
     }
 }
@@ -117,6 +121,7 @@ MyTraceList* tracelist = nil;
 {
     NSError* error;
     CoreDataHelper* helper = [CoreDataHelper getInstance];
+    
     MMusic* music = [myDay.music_ firstObject];
     Trace* trace=(Trace *)[NSEntityDescription insertNewObjectForEntityForName:@"Trace" inManagedObjectContext:helper.managedObjectContext];
     trace.songName = music.title_;
@@ -135,6 +140,9 @@ MyTraceList* tracelist = nil;
     trace.reviewCount = myDay.reviewCount_;
     trace.signCount = myDay.signCount_;
     trace.note = myDay.diary_;
+    
+    
+    
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);

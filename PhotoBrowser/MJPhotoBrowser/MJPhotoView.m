@@ -17,7 +17,6 @@
     BOOL _doubleTap;
     BOOL originHeight;
     MJPhotoLoadingView *_photoLoadingView;
-    UIImageView* loadingImageView;
 }
 @end
 
@@ -114,7 +113,6 @@
 //            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
-            [loadingImageView removeFromSuperview];
         }];
         
     }
@@ -199,7 +197,9 @@
 	} else {
         imageFrame.origin.y = 0;
 	}
-    
+    if (imageFrame.origin.y<0) {
+        imageFrame.origin.y = 0;
+    }
     if (_photo.firstShow) { // 第一次显示的图片
         _photo.firstShow = NO; // 已经显示过了
         _imageView.frame = [_photo.srcImageView convertRect:_photo.srcImageView.bounds toView:nil];

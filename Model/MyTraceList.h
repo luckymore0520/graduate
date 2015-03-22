@@ -17,4 +17,7 @@
 +(MyTraceList *)getInstance;
 -(Trace*)getTodayTrace;
 -(Trace *)getNearestNoteTrace;
+- (NSMutableArray*)getMyTraces;
+
 @end
+
