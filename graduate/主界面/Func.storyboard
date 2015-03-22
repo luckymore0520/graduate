@@ -244,7 +244,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B57E027A-C604-4E7A-B93F-8742655CACD4" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="55F901DF-6FBB-4D46-996C-DA5AD4830BAC" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -7450,7 +7450,7 @@
     <resources>
         <image name="1-返回键" width="10" height="19"/>
         <image name="2-开始体验" width="180" height="40"/>
-        <image name="B57E027A-C604-4E7A-B93F-8742655CACD4" width="166" height="165">
+        <image name="55F901DF-6FBB-4D46-996C-DA5AD4830BAC" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
