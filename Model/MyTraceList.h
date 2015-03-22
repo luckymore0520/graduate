@@ -16,4 +16,5 @@
 - (void)updateTraces;
 +(MyTraceList *)getInstance;
 -(Trace*)getTodayTrace;
+-(Trace *)getNearestNoteTrace;
 @end
