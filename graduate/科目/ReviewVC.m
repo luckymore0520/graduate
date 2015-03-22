@@ -508,6 +508,11 @@
     if (photoView.photo.index==0) {
         MQuestion* question = ((QuestionView*)photoView).myQuestion;
         [self addBottomView:question showAll:NO];
+        CGRect frame = photoView.imageView.frame;
+        if (frame.origin.y < 0) {
+            frame.origin.y = 0;
+            photoView.imageView.frame = frame;
+        }
     }
 }
 

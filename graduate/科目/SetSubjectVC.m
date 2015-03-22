@@ -39,12 +39,7 @@
     [super viewDidLoad];
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_major1Field,_major2Field, nil];
-    self.keyButtons = [NSArray arrayWithObjects:_major2Field, nil];
-    self.completeAccessoryView = [[NSBundle mainBundle]loadNibNamed:@"CompleteButtonAccessoryView" owner:self options:nil][0];
-    self.completeAccessoryView.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
-    self.major1Field.inputAccessoryView = self.completeAccessoryView;
-    self.major2Field.inputAccessoryView = self.completeAccessoryView;
-    
+    self.keyButtons = [NSArray arrayWithObjects:_completeButton, nil];
 }
 
 - (void)addMaskBt
@@ -116,37 +111,10 @@
 #pragma mark -textFieldDelegate
 //开始编辑
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{   CGRect frame;
-    if (self.major2Field) {
-        frame = _major2Field.frame;
-    } else
-    {
-        frame = textField.frame;
-
-    }
-    CGFloat offset = frame.origin.y - (self.view.frame.size.height - MAX(keyboardHeight, 240));//键盘高度216
-    if (textField.inputAccessoryView) {
-        offset = offset+ textField.inputAccessoryView.frame.size.height;
-    }
-    NSTimeInterval animationDuration = 0.30f;
-    CGFloat y = [self.view convertRect:textField.frame toView:nil].origin.y-self.navigationController.navigationBar.frame.size.height-20;
-    if (offset>0&&  y > offset) {
-        [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
-    }
-    [self addMaskBt];
-    return YES;
-}
-
-- (void)animationReturn
 {
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
-    }];
-    [self.maskBt setHidden:YES];
-    [self.maskBt removeFromSuperview];
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height-self.tableView.frame.size.height)];
+    return [super textFieldShouldBeginEditing:textField];
 }
-
 
 #pragma mark ButtonAction
 - (IBAction)goBack:(id)sender {
@@ -222,9 +190,9 @@
     return cell;
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    [self resignAll];
-//}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self resignAll];
+}
 
 @end

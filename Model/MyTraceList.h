@@ -16,4 +16,6 @@
 - (void)updateTraces;
 +(MyTraceList *)getInstance;
 -(Trace*)getTodayTrace;
+- (NSMutableArray*)getMyTraces;
 @end
+
