@@ -651,7 +651,7 @@ CGFloat angle;
     }else{
         NSLog(@"Save successful! 日记~~~~~~~~~");
     }
-    [[[MUploadDiary alloc]init]load:self id:trace.myDay content:trace.note date:trace.date];
+    [[[MUploadDiary alloc]init]load:self content:trace.note date:trace.date];
 }
 
 

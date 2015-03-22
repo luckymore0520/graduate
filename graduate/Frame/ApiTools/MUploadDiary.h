@@ -9,5 +9,5 @@
 #import "ApiHelper.h"
 
 @interface MUploadDiary : ApiHelper
-- (ApiHelper *)load:(id<ApiDelegate>)delegate id:(NSString*)id content:(NSString*)content date:(NSString*)date;
+- (ApiHelper *)load:(id<ApiDelegate>)delegate content:(NSString*)content date:(NSString*)date;
 @end
