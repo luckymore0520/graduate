@@ -36,5 +36,6 @@
 - (void)loadQuestions;
 - (void)addBottomView:(MQuestion*)selectedQuestion showAll:(BOOL)showAll;
 @property (nonatomic,strong) NSString* currentQuestionId;
+@property (weak, nonatomic) IBOutlet UIImageView *loadingImageView;
 
 @end

@@ -117,6 +117,7 @@ MyTraceList* tracelist = nil;
     trace.addCount = myDay.addCount_;;
     trace.reviewCount = myDay.reviewCount_;
     trace.signCount = myDay.signCount_;
+    trace.note = myDay.diary_;
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);

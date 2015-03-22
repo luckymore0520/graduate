@@ -150,6 +150,7 @@
                 traceOfToday.musicFile = music.file_;
                 traceOfToday.addCount = main.addCount_;
                 traceOfToday.signCount = main.signCount_;
+                traceOfToday.note = main.diary_;
                 NSError* error;
                 BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
                 if (!isSaveSuccess) {
@@ -189,6 +190,8 @@
     trace.pictureUrlForFunc = myDay.imgGn2_;
     trace.addCount = myDay.addCount_;
     trace.signCount = myDay.signCount_;
+    trace.note = myDay.diary_;
+
     BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);

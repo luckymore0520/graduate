@@ -17,6 +17,7 @@
     BOOL _doubleTap;
     BOOL originHeight;
     MJPhotoLoadingView *_photoLoadingView;
+    UIImageView* loadingImageView;
 }
 @end
 
@@ -24,7 +25,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    if ((self = [super initWithFrame:frame])) {
+    if (self = [super initWithFrame:frame]) {
         self.clipsToBounds = YES;
 		// 图片
 		_imageView = [[UIImageView alloc] init];
@@ -52,6 +53,7 @@
         doubleTap.numberOfTapsRequired = 2;
         [self addGestureRecognizer:doubleTap];
         self.parentHeight = 0;
+        
     }
     return self;
 }
@@ -101,13 +103,9 @@
         [self photoDidFinishLoadWithImage:_photo.image];
     } else {
         self.scrollEnabled = NO;
-        UIImageView* loadingGIFImageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.frame.size.width-50)/2, (self.frame.size.height-50)/2, 50, 50)];
-        [loadingGIFImageView setImage:[UIImage sd_animatedGIFNamed:@"454545"]];
-        [self addSubview:loadingGIFImageView];
         // 直接显示进度条
 //        [_photoLoadingView showLoading];
 //        [self addSubview:_photoLoadingView];
-        
         __weak MJPhotoView *photoView = self;
 //        __weak MJPhotoLoadingView *loading = _photoLoadingView;
         [_imageView sd_setImageWithURL:_photo.url placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -116,7 +114,7 @@
 //            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
-            [loadingGIFImageView removeFromSuperview];
+            [loadingImageView removeFromSuperview];
         }];
         
     }
@@ -189,7 +187,8 @@
     
     CGRect imageFrame = CGRectMake(0, 0, boundsWidth, imageHeight * boundsWidth / imageWidth);
     // 内容尺寸
-    self.contentSize = CGSizeMake(0, imageFrame.size.height+200);
+    
+    self.contentSize = CGSizeMake(0, imageFrame.size.height+100);
     originHeight = imageFrame.size.height;
     if (self.parentHeight!=0) {
         boundsHeight = self.parentHeight;
@@ -234,10 +233,10 @@
     CGRect screenBounds = [UIScreen mainScreen].bounds;
     if (imageViewFrame.size.height > screenBounds.size.height) {
         imageViewFrame.origin.y = 0.0f;
-        self.contentSize = CGSizeMake(imageViewFrame.size.width, imageViewFrame.size.height+200*2*self.zoomScale);
+        self.contentSize = CGSizeMake(imageViewFrame.size.width, imageViewFrame.size.height+100);
     } else {
         imageViewFrame.origin.y = (screenBounds.size.height - imageViewFrame.size.height-44-20) / 2.0;
-        self.contentSize = CGSizeMake(screenBounds.size.width, screenBounds.size.height+200);
+        self.contentSize = CGSizeMake(screenBounds.size.width, imageViewFrame.size.height);
     }
 }
 

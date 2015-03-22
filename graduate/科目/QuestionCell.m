@@ -9,10 +9,18 @@
 #import "QuestionCell.h"
 
 @implementation QuestionCell
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [_selectedButton setExclusiveTouch:YES];
+}
+
 - (void)setSelect:(BOOL) select;
 {
     [self.selectedButton setSelected:select];
 }
+
 
 -(void)setSelectMode:(BOOL)selectMode
 {

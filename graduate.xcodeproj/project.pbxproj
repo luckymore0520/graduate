@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
+		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
 		7D0A87F21A85D462001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A87F11A85D3CC001A33F7 /* FZLanTingHeiS-EL-GB.ttf */; };
 		7D0A87F61A85D989001A33F7 /* WaitingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D0A87F31A85D989001A33F7 /* WaitingView.xib */; };
 		7D0A87F71A85D989001A33F7 /* WaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A87F51A85D989001A33F7 /* WaitingView.m */; };
@@ -323,6 +324,7 @@
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
 		7D099E041ABE420A00504E42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Other.strings"; sourceTree = "<group>"; };
 		7D099E051ABE420A00504E42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompleteButtonAccessoryView.xib; sourceTree = "<group>"; };
 		7D0A87F11A85D3CC001A33F7 /* FZLanTingHeiS-EL-GB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FZLanTingHeiS-EL-GB.ttf"; sourceTree = "<group>"; };
 		7D0A87F31A85D989001A33F7 /* WaitingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingView.xib; sourceTree = "<group>"; };
 		7D0A87F41A85D989001A33F7 /* WaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingView.h; sourceTree = "<group>"; };
@@ -1172,6 +1174,7 @@
 				7D2F929D1AB57FC600D4B18F /* MyQuestionRootViewController.h */,
 				7D2F929E1AB57FC600D4B18F /* MyQuestionRootViewController.m */,
 				7D2F929F1AB57FC600D4B18F /* MyQuestionRootViewController.xib */,
+				7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */,
 			);
 			name = "科目";
 			sourceTree = "<group>";
@@ -1994,6 +1997,7 @@
 				7D44BBFD1A84A06500094D15 /* PushConfig.plist in Resources */,
 				7D2432231A7B9A2400C00F64 /* WeiboSDK.bundle in Resources */,
 				7D24329B1A7DD18F00C00F64 /* camera_line_h.png in Resources */,
+				7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */,
 				7D5DBB931A845B9B0078B99C /* EssenceStoryboard.storyboard in Resources */,
 				7D2432A11A7DD18F00C00F64 /* flashing_auto.png in Resources */,
 				7DBD86791A72749100205576 /* User.storyboard in Resources */,

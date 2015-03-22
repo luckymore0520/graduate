@@ -12,6 +12,7 @@
 #import "SignVC.h"
 #import "NSMutableArray+Shuffle.h"
 #import "MyTraceList.h"
+#import "UIImage+GIF.h"
 @interface ReviewVC ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *footToolView;
 @property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
@@ -26,6 +27,7 @@
     self.bottomHeight = 150.0;
     self.hasTitle = NO;
     _trace = [[MyTraceList getInstance] getTodayTrace];
+    [self.loadingImageView setImage:[UIImage sd_animatedGIFNamed:@"454545"]];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
 }
@@ -127,7 +129,6 @@
     for (UIView* view in self.questionViews) {
         [view removeFromSuperview];
     }
-
     CGSize pageScrollViewSize = self.view.frame.size;
     self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * self.questionList.count, 0);
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -164,9 +165,6 @@
         [self.questionViews addObject:view];
     }
     [self.scrollView addSubview:self.questionViews.firstObject];
-    
-    
-    
 }
 
 
@@ -174,8 +172,6 @@
 
 
 -(void)pageChange:(UIPageControl *)sender{
-    
-    
     
     self.currentPage ++;
     CGFloat width = self.progressBar.frame.size.width;
@@ -189,7 +185,7 @@
             view.transform = CGAffineTransformMakeTranslation(0,0);
             originView.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width,0);
         }];
-        [self addBottomView:view.myQuestion.remark_ showAll:NO];
+        [self addBottomView:view.myQuestion showAll:NO];
     } else {
         self.currentPage--;
         [self performSegueWithIdentifier:@"complete" sender:nil];

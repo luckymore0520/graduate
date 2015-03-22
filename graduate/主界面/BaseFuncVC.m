@@ -164,8 +164,19 @@
 {
     CGRect frame;
     if (_keyButtons.count>0) {
-        UIButton* button = [_keyButtons firstObject];
-        frame = [button convertRect:button.bounds toView:nil];
+        for (int i = 0 ; i < _keyButtons.count; i++) {
+            UIView* view = _keyButtons[i];
+            if (i==0) {
+                frame = [view convertRect:view.bounds toView:nil];
+            } else
+            {
+                CGRect thisFrame = [view convertRect:view.bounds toView:nil];
+                if (thisFrame.origin.y > frame.origin.y) {
+                    frame = thisFrame;
+                }
+            }
+
+        }
     } else {
         frame = textField.frame;
     }

@@ -16,6 +16,9 @@
     _songNameLabel.text = trace.songName;
     _singerNameLabel.text = trace.singer;
     [_traceImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForTrace width:_traceImg.frame.size.width height:_traceImg.frame.size.height] placeholderImage:[UIImage imageNamed:@"足迹-默认背景"] ];
+    if (trace.note.length==0) {
+        trace.note = [ToolUtils getDiaryDefault];
+    }
     [_markLabel setText:trace.note];
     NSArray* _monthArr = [NSArray arrayWithObjects:@"Jan",@"Feb",@"Mar",@"Apr",@"May",@"Jun",@"Jul",@"Aug",@"Sep",@"Oct",@"Nov",@"Dec", nil];
     NSString* today = trace.date;

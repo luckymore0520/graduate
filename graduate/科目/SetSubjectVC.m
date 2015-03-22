@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *major2Label;
 @property (weak, nonatomic) IBOutlet UIView *major2Line;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *completeAccessoryView;
 @property (nonatomic,strong)MUser* user;
 @end
 
@@ -38,10 +39,31 @@
     [super viewDidLoad];
     [self initGroup];
     self.textFields = [NSArray arrayWithObjects:_major1Field,_major2Field, nil];
-    self.keyButtons = [NSArray arrayWithObjects:_completeButton,_major2Field, nil];
+    self.keyButtons = [NSArray arrayWithObjects:_major2Field, nil];
+    self.completeAccessoryView = [[NSBundle mainBundle]loadNibNamed:@"CompleteButtonAccessoryView" owner:self options:nil][0];
+    self.completeAccessoryView.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
+    self.major1Field.inputAccessoryView = self.completeAccessoryView;
+    self.major2Field.inputAccessoryView = self.completeAccessoryView;
     
 }
 
+- (void)addMaskBt
+{
+    if (self.maskBt) {
+        [self.maskBt setHidden:YES];
+        [self.maskBt removeFromSuperview];
+    }
+    self.maskBt = [[UIButton alloc]initWithFrame:self.tableView.tableHeaderView.bounds];
+    [self.tableView.tableHeaderView addSubview:self.maskBt];
+    [self.maskBt addTarget:self action:@selector(resignAll) forControlEvents:UIControlEventTouchUpInside];
+    for (UITextField* textField in self.textFields) {
+        [self.tableView.tableHeaderView bringSubviewToFront:textField];
+    }
+    
+    for (UIButton* button in self.keyButtons) {
+        [self.tableView.tableHeaderView bringSubviewToFront:button];
+    }
+}
 - (void)initViews
 {
     
@@ -91,6 +113,39 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -textFieldDelegate
+//开始编辑
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{   CGRect frame;
+    if (self.major2Field) {
+        frame = _major2Field.frame;
+    } else
+    {
+        frame = textField.frame;
+
+    }
+    CGFloat offset = frame.origin.y - (self.view.frame.size.height - MAX(keyboardHeight, 240));//键盘高度216
+    if (textField.inputAccessoryView) {
+        offset = offset+ textField.inputAccessoryView.frame.size.height;
+    }
+    NSTimeInterval animationDuration = 0.30f;
+    CGFloat y = [self.view convertRect:textField.frame toView:nil].origin.y-self.navigationController.navigationBar.frame.size.height-20;
+    if (offset>0&&  y > offset) {
+        [self.tableView setContentOffset:CGPointMake(0, offset) animated:YES];
+    }
+    [self addMaskBt];
+    return YES;
+}
+
+- (void)animationReturn
+{
+    NSTimeInterval animationDuration = 0.30f;
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }];
+    [self.maskBt setHidden:YES];
+    [self.maskBt removeFromSuperview];
+}
 
 
 #pragma mark ButtonAction
@@ -114,7 +169,7 @@
     _user.subjectMajor1_ = _major1Field.text;
     _user.subjectMajor2_ = _major2Field.text;
     if (_mathGroup.selectedIndex == 3) {
-        _user.subjectMath_ = nil;
+        _user.subjectMath_ = @"";
     } else
     {
         _user.subjectMath_ = [_mathGroup selectedSubject];
@@ -167,9 +222,9 @@
     return cell;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self resignAll];
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    [self resignAll];
+//}
 
 @end
