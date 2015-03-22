@@ -249,13 +249,17 @@
 
 - (IBAction)cancelShare:(id)sender {
     [self hideShareView];
-    
 }
+
 - (void)showShareView{
     [_maskBackView setHidden:NO];
     [self addMaskAtNavigation];
+    CGFloat offset = 0;
+    if (self.parentVC.navigationController.navigationBarHidden) {
+        offset = 20;
+    }
     [UIView animateWithDuration:0.3 animations:^{
-        self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, -self.shareView.frame.size.height);
+        self.shareView.transform = CGAffineTransformMake(1, 0, 0, 1, 0, -self.shareView.frame.size.height-offset);
     }];
 }
 
