@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *collectBt;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic,strong) NSMutableArray* questionViews;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *footMaskHeight;
 @property (weak, nonatomic) IBOutlet UIImageView *footMask;
 @property (nonatomic)NSInteger currentPage;
 @property (nonatomic,strong)UIView* bottomContainerView;

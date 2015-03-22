@@ -260,7 +260,9 @@
         titleLabel = [[UILabel alloc]initWithFrame:titleFrame];
         [titleLabel setFont:titleFont];
         [titleLabel setTextColor:[UIColor whiteColor]];
-        [titleLabel setText:@"南大学霸推荐英语笔记"];
+        if (selectQuestion.title_) {
+            [titleLabel setText:selectQuestion.title_];
+        }
         
         
         
@@ -390,9 +392,12 @@
     [self.isImportantBt setSelected:question.isHighlight_.boolValue];
     if (question.remark_.length>0) {
         [self.footMask setImage:[UIImage imageNamed:@"底部渐变蒙版有文字"]];
+        self.footMaskHeight.constant = 128;
     } else {
         [self.footMask setImage:[UIImage imageNamed:@"文字渐变蒙版"]];
+        self.footMaskHeight.constant = 64;
     }
+    [self.view layoutIfNeeded];
 }
 
 
@@ -528,7 +533,7 @@
             [self.backMaskView setAlpha:alpha==0?0.5:1];
         }];
         // 隐藏状态栏
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:alpha!=0];
     }
 }
 

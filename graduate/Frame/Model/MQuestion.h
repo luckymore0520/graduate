@@ -54,4 +54,5 @@
 
 @property (retain,nonatomic)NSString* myDay_;
 
+@property (retain,nonatomic)NSString* title_;
 @end

@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SDImageCache.h"
-
+#import "UIImage+GIF.h"
 @interface MJPhotoView ()
 {
     BOOL _doubleTap;
@@ -101,18 +101,22 @@
         [self photoDidFinishLoadWithImage:_photo.image];
     } else {
         self.scrollEnabled = NO;
+        UIImageView* loadingGIFImageView = [[UIImageView alloc]initWithFrame:CGRectMake((self.frame.size.width-50)/2, (self.frame.size.height-50)/2, 50, 50)];
+        [loadingGIFImageView setImage:[UIImage sd_animatedGIFNamed:@"454545"]];
+        [self addSubview:loadingGIFImageView];
         // 直接显示进度条
 //        [_photoLoadingView showLoading];
 //        [self addSubview:_photoLoadingView];
         
         __weak MJPhotoView *photoView = self;
 //        __weak MJPhotoLoadingView *loading = _photoLoadingView;
-        [_imageView sd_setImageWithURL:_photo.url placeholderImage:[UIImage imageNamed:@"placeholder"] options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [_imageView sd_setImageWithURL:_photo.url placeholderImage:nil options:SDWebImageRetryFailed|SDWebImageLowPriority  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
 //            if (receivedSize > kMinProgress) {
 //                loading.progress = (float)receivedSize/expectedSize;
 //            }
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [photoView photoDidFinishLoadWithImage:image];
+            [loadingGIFImageView removeFromSuperview];
         }];
         
     }

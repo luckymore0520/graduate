@@ -89,6 +89,10 @@
         field.delegate = self;
     }
     [self registerForKeyboardNotifications];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    [self setNeedsStatusBarAppearanceUpdate];
+    
 }
 
 

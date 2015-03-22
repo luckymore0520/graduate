@@ -136,7 +136,6 @@
 
 -(void)initQuestions
 {
-    
     self.questionViews = [[NSMutableArray alloc]init];
     CGSize pageScrollViewSize = self.view.frame.size;
     self.scrollView.contentSize = CGSizeMake(pageScrollViewSize.width * self.questionList.count, 0);
@@ -168,6 +167,7 @@
         view.photo = photo;
         [view setBackgroundColor:[UIColor clearColor]];
         [self.questionViews addObject:view];
+        [self.scrollView addSubview:view];
     }
     if (self.currentQuestionId) {
         for (int i = 0  ; i < self.questionList.count ; i ++) {
@@ -214,13 +214,11 @@
 
 - (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
 {
-    [self.scrollView addSubview:photoView];
     self.scrollView.contentSize = CGSizeMake(self.questionList.count*self.view.frame.size.width, 0);
     if (photoView.photo.index==0) {
         MQuestion* question = ((QuestionView*)photoView).myQuestion;
         [self addBottomView:question showAll:NO];
     }
-  
 }
 
 
