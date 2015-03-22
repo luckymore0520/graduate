@@ -120,6 +120,7 @@
         _user.subjectMath_ = [_mathGroup selectedSubject];
     }
     _user.subjectEng_ = [_englishGroup selectedSubject];
+    _user.startDay_ = [ToolUtils getCurrentDay];
     [ToolUtils setUserInfomation:_user.keyValues];
     MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];
     [updateSubject load:self subjectMath:_user.subjectMath_ subjectMajor1:_user.subjectMajor1_ subjectMajor2:_user.subjectMajor2_ subjectEng:_user.subjectEng_];

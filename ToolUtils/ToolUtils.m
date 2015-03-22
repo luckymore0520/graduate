@@ -243,6 +243,21 @@
 + (NSNumber*)getCurrentDay
 {
     NSNumber* current = [[NSUserDefaults standardUserDefaults]objectForKey:@"currentDay"];
+    if (!current) {
+        current = @1;
+    }
+    NSString* currentDateStr = [self getCurrentDate];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString* todayStr = [dateFormatter stringFromDate:[NSDate date]];
+    if (![todayStr isEqualToString:currentDateStr]) {
+        NSDate* today = [NSDate date];
+        NSDate* currentDate = [dateFormatter dateFromString:currentDateStr];
+        NSTimeInterval secondsBetweenDates= [today timeIntervalSinceDate:currentDate];
+        NSUInteger day = secondsBetweenDates/24/60/60;
+        current = @(current.integerValue+day);
+        [self setCurrentDay:current];
+    }
     return current;
 }
 + (void)setCurrentDay:(NSNumber*) currentDay
@@ -355,7 +370,7 @@
     NSUserDefaults *defaults  = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[userInfo objectForKey:@"id_"] forKey:@"userid"];
     [defaults setObject:[userInfo objectForKey:@"verify_"] forKey:@"verify"];
-    [defaults setObject:[userInfo objectForKey:@"startDay_"] forKey:@"currentDay"];
+//    [defaults setObject:[userInfo objectForKey:@"startDay_"] forKey:@"currentDay"];
     //[defaults setObject:[userInfo objectForKey:@"headImg_"] forKey:@"headImg"];
     [defaults setObject:userInfo forKey:@"userInfomation"];
 //    [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userInfomation"];

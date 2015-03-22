@@ -12,6 +12,7 @@
 #import "MUser.h"
 #import "MUpdateUserInfo.h"
 #import "MReturn.h"
+#import "UIImage+Graduate.h"
 #import "MImgUpload.h"
 @interface SelfEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -44,7 +45,7 @@
             [ToolUtils setIgnoreNetwork:YES];
             set = YES;
         }
-        [[[MImgUpload alloc]init]load:self img:_head name:@""];
+        [[[MImgUpload alloc]init]load:self img:[UIImage originImage:_head scaleToSize:CGSizeMake(200, 200)] name:@""];
         if (set) {
             [ToolUtils setIgnoreNetwork:NO];
         }
@@ -76,6 +77,7 @@
         _user.nickname_ = ((SelfOtherCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]]).nickNameField.text;
         _user.sex_ =  [NSNumber numberWithInteger:((SelfOtherCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]]).cellBtGroup.selectedIndex];
         _user.headImg_ = ret.msg_;
+        _user.startDay_ = [ToolUtils getCurrentDay];
         [ToolUtils setUserInfomation:_user.keyValues];
         [[[MUpdateUserInfo alloc]init]load:self nickname:_user.nickname_ headImg:_user.headImg_ sex:_user.sex_.integerValue email:_user.email_];
     }

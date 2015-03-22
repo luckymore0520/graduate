@@ -89,7 +89,6 @@
             NSError* error;
             [helper.managedObjectContext save:&error];
             [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                
             }];
             return;
         }

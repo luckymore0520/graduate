@@ -1,0 +1,108 @@
+
+/* Class = "IBUILabel"; text = "2016年考研精品视频"; ObjectID = "0Mw-qE-dpa"; */
+"0Mw-qE-dpa.text" = "2016年考研精品视频";
+
+/* Class = "IBUINavigationItem"; title = "精华"; ObjectID = "33V-w9-ChK"; */
+"33V-w9-ChK.title" = "精华";
+
+/* Class = "IBUIButton"; normalTitle = "备份"; ObjectID = "37R-PZ-frQ"; */
+"37R-PZ-frQ.normalTitle" = "备份";
+
+/* Class = "IBUILabel"; text = "王小"; ObjectID = "3XI-wi-G5I"; */
+"3XI-wi-G5I.text" = "王小";
+
+/* Class = "IBUIButton"; normalTitle = "资料"; ObjectID = "3fQ-0e-Rrp"; */
+"3fQ-0e-Rrp.normalTitle" = "资料";
+
+/* Class = "IBUILabel"; text = "评论内容"; ObjectID = "43l-H3-XEw"; */
+"43l-H3-XEw.text" = "评论内容";
+
+/* Class = "IBUIButton"; normalTitle = "search"; ObjectID = "BGU-Ld-WbO"; */
+"BGU-Ld-WbO.normalTitle" = "search";
+
+/* Class = "IBUIBarButtonItem"; title = "新消息"; ObjectID = "Cdv-Uf-bZG"; */
+"Cdv-Uf-bZG.title" = "新消息";
+
+/* Class = "IBUILabel"; text = "23:59"; ObjectID = "Ev9-15-aji"; */
+"Ev9-15-aji.text" = "23:59";
+
+/* Class = "IBUILabel"; text = "男"; ObjectID = "Ij3-pJ-5c9"; */
+"Ij3-pJ-5c9.text" = "男";
+
+/* Class = "IBUINavigationItem"; title = "主功能页2"; ObjectID = "KVL-s9-BZO"; */
+"KVL-s9-BZO.title" = "主功能页2";
+
+/* Class = "IBUINavigationItem"; title = "广场"; ObjectID = "OmV-Hh-6LI"; */
+"OmV-Hh-6LI.title" = "广场";
+
+/* Class = "IBUIButton"; normalTitle = "真题"; ObjectID = "On4-3A-ywM"; */
+"On4-3A-ywM.normalTitle" = "真题";
+
+/* Class = "IBUILabel"; text = "昵称"; ObjectID = "Pbs-Zl-1td"; */
+"Pbs-Zl-1td.text" = "昵称";
+
+/* Class = "IBUIButton"; normalTitle = "评论"; ObjectID = "QDm-HZ-Ru6"; */
+"QDm-HZ-Ru6.normalTitle" = "评论";
+
+/* Class = "IBUITextField"; placeholder = "回复:"; ObjectID = "RvR-3g-YZ9"; */
+"RvR-3g-YZ9.placeholder" = "回复:";
+
+/* Class = "IBUIButton"; normalTitle = "个人中心"; ObjectID = "VSH-oc-1mx"; */
+"VSH-oc-1mx.normalTitle" = "个人中心";
+
+/* Class = "IBUILabel"; text = "标题"; ObjectID = "ZGD-Sh-6Hk"; */
+"ZGD-Sh-6Hk.text" = "标题";
+
+/* Class = "IBUIButton"; normalTitle = "回复"; ObjectID = "aAp-OM-TvK"; */
+"aAp-OM-TvK.normalTitle" = "回复";
+
+/* Class = "IBUIButton"; normalTitle = "广场"; ObjectID = "aZM-TC-DTO"; */
+"aZM-TC-DTO.normalTitle" = "广场";
+
+/* Class = "IBUILabel"; text = "正文"; ObjectID = "bsq-bv-Ncl"; */
+"bsq-bv-Ncl.text" = "正文";
+
+/* Class = "IBUILabel"; text = "来自王小丫的分享"; ObjectID = "c0w-DR-DHR"; */
+"c0w-DR-DHR.text" = "来自王小丫的分享";
+
+/* Class = "IBUIButton"; normalTitle = "资讯"; ObjectID = "gAV-xS-IYO"; */
+"gAV-xS-IYO.normalTitle" = "资讯";
+
+/* Class = "IBUILabel"; text = "30分钟前"; ObjectID = "gj4-gV-p56"; */
+"gj4-gV-p56.text" = "30分钟前";
+
+/* Class = "IBUILabel"; text = "评论数"; ObjectID = "hOw-gw-mjw"; */
+"hOw-gw-mjw.text" = "评论数";
+
+/* Class = "IBUINavigationItem"; title = "广场帖子详情"; ObjectID = "iTn-xJ-Dt9"; */
+"iTn-xJ-Dt9.title" = "广场帖子详情";
+
+/* Class = "IBUIButton"; normalTitle = "打印"; ObjectID = "iZa-gs-m6T"; */
+"iZa-gs-m6T.normalTitle" = "打印";
+
+/* Class = "IBUILabel"; text = "男"; ObjectID = "k8c-d2-uUd"; */
+"k8c-d2-uUd.text" = "男";
+
+/* Class = "IBUILabel"; text = "男"; ObjectID = "kdC-Xq-wHB"; */
+"kdC-Xq-wHB.text" = "男";
+
+/* Class = "IBUIButton"; normalTitle = "vip"; ObjectID = "njm-w7-dAX"; */
+"njm-w7-dAX.normalTitle" = "vip";
+
+/* Class = "IBUILabel"; text = "昵称"; ObjectID = "oIo-57-Tmk"; */
+"oIo-57-Tmk.text" = "昵称";
+
+/* Class = "IBUILabel"; text = "正文内容"; ObjectID = "vYl-eu-4ZT"; */
+"vYl-eu-4ZT.text" = "正文内容";
+
+/* Class = "IBUILabel"; text = "30分钟前"; ObjectID = "vog-eX-afB"; */
+"vog-eX-afB.text" = "30分钟前";
+
+/* Class = "IBUILabel"; text = "30分钟前"; ObjectID = "w25-gb-6XF"; */
+"w25-gb-6XF.text" = "30分钟前";
+
+/* Class = "IBUIButton"; normalTitle = "精华"; ObjectID = "wVO-kg-UGq"; */
+"wVO-kg-UGq.normalTitle" = "精华";
+
+/* Class = "IBUIButton"; normalTitle = "联系管理员"; ObjectID = "z4z-N8-XRR"; */
+"z4z-N8-XRR.normalTitle" = "联系管理员";

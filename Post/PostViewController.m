@@ -381,8 +381,6 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 
-
-
 - (void)editRemark
 {
     [self addMask];

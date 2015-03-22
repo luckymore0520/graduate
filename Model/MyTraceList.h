@@ -15,5 +15,5 @@
 @interface MyTraceList : NSObject<ApiDelegate>
 - (void)updateTraces;
 +(MyTraceList *)getInstance;
-
+-(Trace*)getTodayTrace;
 @end

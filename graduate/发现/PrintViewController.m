@@ -91,6 +91,7 @@
     }
     [_endDateButton setTitle:[dateFormatter stringFromDate:now] forState:UIControlStateNormal];
     self.endDate = [dateFormatter stringFromDate:now];
+    self.startDate = [ToolUtils getLastUpdateTime];
 }
 
 - (void)setSubject
@@ -301,11 +302,14 @@
             [self.endDateButton setTitle:[dateFormatterwithoutYear stringFromDate:end] forState:UIControlStateNormal];
             self.endDate = [dateFormatter stringFromDate:end];
         }
+        
+        
+        
         NSTimeInterval timeBetween = [end timeIntervalSinceDate:start];
         if (timeBetween<0) {
             self.startDate  = self.endDate;
             [self.startDateButton setTitle:self.endDateButton.titleLabel.text forState:UIControlStateNormal];
-            
+    
         }
     }
 }

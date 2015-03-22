@@ -130,7 +130,7 @@
             default:
                 break;
         }
-        
+        user.startDay_ = [ToolUtils getCurrentDay];
         [ToolUtils setUserInfomation:user.keyValues];
         
         MUpdateSubject* updateSubject = [[MUpdateSubject alloc]init];

@@ -32,11 +32,11 @@
 	// Do any additional setup after loading the view.
     self.navigationBarHidden = YES;
     self.hidesBottomBarWhenPushed = YES;
-    _isStatusBarHiddenBeforeShowCamera = [UIApplication sharedApplication].statusBarHidden;
-    if ([UIApplication sharedApplication].statusBarHidden == NO) {
-        //iOS7，需要plist里设置 View controller-based status bar appearance 为NO
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
+//    _isStatusBarHiddenBeforeShowCamera = [UIApplication sharedApplication].statusBarHidden;
+//    if ([UIApplication sharedApplication].statusBarHidden == NO) {
+//        //iOS7，需要plist里设置 View controller-based status bar appearance 为NO
+//        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+//    }
     
 }
 

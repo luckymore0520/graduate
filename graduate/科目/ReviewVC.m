@@ -11,11 +11,12 @@
 #import "ReviewVC.h"
 #import "SignVC.h"
 #import "NSMutableArray+Shuffle.h"
+#import "MyTraceList.h"
 @interface ReviewVC ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *footToolView;
 @property (weak, nonatomic) IBOutlet UIButton *isImportantBt;
 @property (weak, nonatomic) IBOutlet UIView *progressBar;
-
+@property (nonatomic,strong)Trace* trace;
 @end
 
 @implementation ReviewVC
@@ -24,6 +25,7 @@
     [super viewDidLoad];
     self.bottomHeight = 150.0;
     self.hasTitle = NO;
+    _trace = [[MyTraceList getInstance] getTodayTrace];
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
 }
@@ -202,6 +204,7 @@
     QuestionBook* book = [QuestionBook getInstance];
     [book review:[self.questionList objectAtIndex:self.currentPage] isMaster:YES];
     [self pageChange:nil];
+    _trace.reviewCount = @(_trace.reviewCount.integerValue+1);
 }
 
 //未掌握
@@ -209,6 +212,20 @@
     QuestionBook* book = [QuestionBook getInstance];
     [book review:[self.questionList objectAtIndex:self.currentPage] isMaster:NO];
     [self pageChange:nil];
+    _trace.reviewCount = @(_trace.reviewCount.integerValue+1);
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    CoreDataHelper *helper = [CoreDataHelper getInstance];
+    NSError *error;
+    BOOL isSaveSuccess=[helper.managedObjectContext save:&error];
+    if (!isSaveSuccess) {
+        NSLog(@"Error:%@",error);
+    }else{
+        NSLog(@"Save successful!");
+    }
 }
 
 
@@ -216,26 +233,22 @@
 - (void)showAll
 {
     MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
-    [self addBottomView:question.remark_ showAll:YES];
+    [self addBottomView:question showAll:YES];
 }
 
 
-- (void)addBottomView:(NSString*)originRemark showAll:(BOOL)showAll 
+- (void)addBottomView:(MQuestion*)selectQuestion showAll:(BOOL)showAll
 {
-  
+    NSString* originRemark = selectQuestion.remark_;
+    originRemark = [originRemark stringByReplacingOccurrencesOfString:@" " withString:@""];
+    originRemark = [originRemark stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    originRemark = [originRemark stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     NSString* remark = [originRemark copy];
     if (!showAll&&remark.length>=40) {
         remark = [remark substringToIndex:40];
         remark = [NSString stringWithFormat:@"%@....",remark];
     } else {
-        
     }
-    
-    
-    
-    
-    
-    
     CGRect frame = [[UIScreen mainScreen]bounds];
     CGFloat width = frame.size.width;
     
@@ -299,7 +312,7 @@
 
     [_markLabel setShowsVerticalScrollIndicator:YES];
     [_markLabel setFont:font];
-    _markLabel.text = remark;
+    _markLabel.text = [remark stringByReplacingOccurrencesOfString:@" " withString:@""];
     _markLabel.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     [_markLabel setBackgroundColor:[UIColor clearColor]];
     if (self.footMask) {
@@ -473,7 +486,7 @@
     question.remark = self.editTextView.text;
     ((MQuestion*)[self.questionList objectAtIndex:self.currentPage]).remark_=self.editTextView.text;
     [book save];
-    [self addBottomView:self.editTextView.text showAll:NO];
+    [self addBottomView:((MQuestion*)[self.questionList objectAtIndex:self.currentPage]) showAll:NO];
 }
 
 
@@ -493,7 +506,7 @@
     self.scrollView.contentSize = CGSizeMake(0, 0);
     if (photoView.photo.index==0) {
         MQuestion* question = ((QuestionView*)photoView).myQuestion;
-        [self addBottomView:question.remark_ showAll:NO];
+        [self addBottomView:question showAll:NO];
     }
 }
 

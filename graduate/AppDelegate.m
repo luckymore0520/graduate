@@ -33,7 +33,8 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     [self initDeviceid];
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     if (![ToolUtils getFirstUse]) {

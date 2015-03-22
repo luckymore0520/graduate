@@ -183,8 +183,14 @@
     [super viewDidAppear:animated];
     [self animationWithOrient:orientation];
     [_motionManager stopAccelerometerUpdates];
+  
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self showCameraCover:NO];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -379,12 +385,10 @@
 
 - (void)showCameraCover:(BOOL)toShow {
     
-    [UIView animateWithDuration:0.38f animations:^{
+    [UIView animateWithDuration:toShow?0.38f:0 animations:^{
         CGRect upFrame = _doneCameraUpView.frame;
         upFrame.size.height = (toShow ? SC_DEVICE_SIZE.height / 2: 0);
-        
         _doneCameraUpView.frame = upFrame;
-        
         CGRect downFrame = _doneCameraDownView.frame;
         downFrame.origin.y = (toShow ? SC_DEVICE_SIZE.height / 2  : SC_DEVICE_SIZE.height);
         downFrame.size.height = (toShow ? SC_DEVICE_SIZE.height / 2 : 0);
@@ -529,7 +533,7 @@ void c_slideAlpha() {
     }
 #endif
     
-    sender.userInteractionEnabled = NO;
+//    sender.userInteractionEnabled = NO;
     
     [self showCameraCover:YES];
     
@@ -545,11 +549,9 @@ void c_slideAlpha() {
         actiView = nil;
         
         double delayInSeconds = 2.f;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            sender.userInteractionEnabled = YES;
-            [weakSelf_SC showCameraCover:NO];
-        });
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//                   });
         //your code 0
         SCNavigationController *nav = (SCNavigationController*)weakSelf_SC.navigationController;
         if ([nav.scNaigationDelegate respondsToSelector:@selector(didTakePicture:image:)]) {
@@ -557,6 +559,8 @@ void c_slideAlpha() {
         }
     }];
 }
+
+
 
 - (void)tmpBtnPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

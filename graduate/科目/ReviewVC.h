@@ -33,7 +33,7 @@
 @property (nonatomic)BOOL hasTitle;
 @property (nonatomic,strong)NSString* subject;
 - (void)loadQuestions;
-- (void)addBottomView:(NSString*)remark showAll:(BOOL)showAll;
+- (void)addBottomView:(MQuestion*)selectedQuestion showAll:(BOOL)showAll;
 @property (nonatomic,strong) NSString* currentQuestionId;
 
 @end

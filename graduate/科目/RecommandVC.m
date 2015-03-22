@@ -175,7 +175,7 @@
             if ([question.id_ isEqualToString:self.currentQuestionId]) {
                 self.scrollView.contentOffset= CGPointMake(i*self.scrollView.frame.size.width, 0);
                 self.currentPage = i;
-                [self addBottomView:question.remark_ showAll:NO];
+                [self addBottomView:question showAll:NO];
                 return;
             }
         }
@@ -197,7 +197,7 @@
                 [self.collectBt setHidden:NO];
             }
             [self updateDateLabel:question.createTime_];
-            [self addBottomView:question.remark_ showAll:NO];
+            [self addBottomView:question showAll:NO];
         }
         if (index == self.questionList.count-1) {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -218,7 +218,7 @@
     self.scrollView.contentSize = CGSizeMake(self.questionList.count*self.view.frame.size.width, 0);
     if (photoView.photo.index==0) {
         MQuestion* question = ((QuestionView*)photoView).myQuestion;
-        [self addBottomView:question.remark_ showAll:NO];
+        [self addBottomView:question showAll:NO];
     }
   
 }

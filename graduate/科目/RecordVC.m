@@ -111,9 +111,9 @@
     }
 }
 
-- (void)addBottomView:(NSString *)remark showAll:(BOOL)showAll
+- (void)addBottomView:(MQuestion *)selectQuestion showAll:(BOOL)showAll
 {
-    [super addBottomView:remark showAll:showAll];
+    [super addBottomView:selectQuestion showAll:showAll];
     
     MQuestion* question = [self.questionList objectAtIndex:self.currentPage];
 

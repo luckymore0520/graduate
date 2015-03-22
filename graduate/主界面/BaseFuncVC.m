@@ -54,7 +54,6 @@
     [self initViews];
     _hasJumpedAway = NO;
     
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     // Do any additional setup after loading the view.
 }
 

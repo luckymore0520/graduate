@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
+		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D0A87F21A85D462001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A87F11A85D3CC001A33F7 /* FZLanTingHeiS-EL-GB.ttf */; };
 		7D0A87F61A85D989001A33F7 /* WaitingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D0A87F31A85D989001A33F7 /* WaitingView.xib */; };
 		7D0A87F71A85D989001A33F7 /* WaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A87F51A85D989001A33F7 /* WaitingView.m */; };
@@ -319,6 +320,9 @@
 /* Begin PBXFileReference section */
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
+		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
+		7D099E041ABE420A00504E42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Other.strings"; sourceTree = "<group>"; };
+		7D099E051ABE420A00504E42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		7D0A87F11A85D3CC001A33F7 /* FZLanTingHeiS-EL-GB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FZLanTingHeiS-EL-GB.ttf"; sourceTree = "<group>"; };
 		7D0A87F31A85D989001A33F7 /* WaitingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WaitingView.xib; sourceTree = "<group>"; };
 		7D0A87F41A85D989001A33F7 /* WaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitingView.h; sourceTree = "<group>"; };
@@ -1142,11 +1146,11 @@
 			isa = PBXGroup;
 			children = (
 				7D2432D71A7E4A2300C00F64 /* ModifySubjectVC.h */,
-				7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */,
 				7D4E060F1A751593001709DB /* MyQuestionVC.h */,
+				7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */,
 				7D4E06101A751593001709DB /* MyQuestionVC.m */,
-				7D2432511A7D116300C00F64 /* QuestionCell.h */,
 				7D2432521A7D116300C00F64 /* QuestionCell.m */,
+				7D2432511A7D116300C00F64 /* QuestionCell.h */,
 				7D24324E1A7D113300C00F64 /* QuestionHeaderView.h */,
 				7D24324F1A7D113300C00F64 /* QuestionHeaderView.m */,
 				7D4E05971A74DCB2001709DB /* QuestionView.h */,
@@ -1455,6 +1459,7 @@
 		7D6A517E1A69610600355923 = {
 			isa = PBXGroup;
 			children = (
+				7D099E021ABDC77C00504E42 /* 454545.gif */,
 				7D2F92D31ABD558800D4B18F /* loading.gif */,
 				7D2F92BF1ABCA64000D4B18F /* loading_small@2x.gif */,
 				7D2F92B31AB882D200D4B18F /* Movie.mp4 */,
@@ -1941,7 +1946,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 			);
 			mainGroup = 7D6A517E1A69610600355923;
@@ -1981,6 +1985,7 @@
 				7D24329D1A7DD18F00C00F64 /* close_cha.png in Resources */,
 				7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				7D2431F61A7B782C00C00F64 /* Other.storyboard in Resources */,
+				7D099E031ABDC77C00504E42 /* 454545.gif in Resources */,
 				7D24329A1A7DD18F00C00F64 /* camera_line@2x.png in Resources */,
 				7D6A519B1A69610600355923 /* LaunchScreen.xib in Resources */,
 				7D4E05E71A74EF7B001709DB /* MJPhotoBrowser.bundle in Resources */,
@@ -2272,6 +2277,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7D2431F51A7B782C00C00F64 /* Base */,
+				7D099E041ABE420A00504E42 /* zh-Hans */,
 			);
 			name = Other.storyboard;
 			sourceTree = "<group>";
@@ -2280,6 +2286,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7D6A519A1A69610600355923 /* Base */,
+				7D099E051ABE420A00504E42 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

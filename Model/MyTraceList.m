@@ -7,7 +7,7 @@
 //
 
 #import "MyTraceList.h"
-
+#import "Sign.h"
 @implementation MyTraceList
 
 MyTraceList* tracelist = nil;
@@ -19,7 +19,6 @@ MyTraceList* tracelist = nil;
             tracelist = [[self alloc] init];
         }
     }
-    
     return tracelist;
 }
 
@@ -28,8 +27,15 @@ MyTraceList* tracelist = nil;
 {
     NSMutableArray* traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@",[ToolUtils getUserid]] tableName:@"Trace"]];
     NSMutableArray* futureDays = [[NSMutableArray alloc]init];
-    
+    NSArray* signList = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"userid=%@",[ToolUtils getUserid]] tableName:@"Sign"];
     for (Trace* trace in traceList) {
+        NSUInteger signCount = 0;
+        for (Sign* sign in signList) {
+            if (sign.myDay.integerValue <= trace.myDay.integerValue) {
+                signCount++;
+            }
+        }
+        trace.signCount = @(MAX(trace.signCount.integerValue,signCount));
         if (trace.myDay.integerValue>[ToolUtils getCurrentDay].integerValue) {
             [futureDays addObject:trace];
         }
@@ -44,9 +50,20 @@ MyTraceList* tracelist = nil;
 }
 
 
+
+-(Trace*)getTodayTrace
+{
+    NSMutableArray* traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@",[ToolUtils getUserid]] tableName:@"Trace"]];
+    for (Trace* trace in traceList) {
+        if (trace.myDay.integerValue == [ToolUtils getCurrentDay].integerValue) {
+            return trace;
+        }
+    }
+    return nil;
+}
+
 - (void)updateTraces
 {
-    
     NSMutableArray* traceList = [self getMyTraces];
     Trace* trace = [traceList firstObject];
     NSInteger earlistDay = trace.myDay.integerValue;
@@ -60,7 +77,6 @@ MyTraceList* tracelist = nil;
         NSString* firstDayStr = [dateFormatter stringFromDate:firstDay];
         [[[MFootprint alloc]init]load:self date:firstDayStr type:1 days:earlistDay-1];
     }
-    
 }
 
 
@@ -108,6 +124,9 @@ MyTraceList* tracelist = nil;
         NSLog(@"Save successful!");
     }
 }
+
+
+
 
 
 

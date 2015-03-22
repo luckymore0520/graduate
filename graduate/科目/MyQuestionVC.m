@@ -276,6 +276,10 @@
     }];
 }
 - (IBAction)ensureTransfer:(id)sender {
+    if (_transferView.selectedIndex==-1) {
+        [ToolUtils showMessage:@"请先选择科目"];
+        return;
+    }
     [ToolUtils showToast:@"转移成功" toView:self.view];
     if ([self.transferView selectedIndex]==-1) {
         return;
