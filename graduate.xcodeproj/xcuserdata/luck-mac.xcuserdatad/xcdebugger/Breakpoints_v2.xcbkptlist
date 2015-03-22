@@ -639,7 +639,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
             endingLineNumber = "208"
-            landmarkName = "-animationLabel:"
+            landmarkName = "-setUserHeadImg"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -671,7 +671,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "169"
             endingLineNumber = "169"
-            landmarkName = "-viewDidAppear:"
+            landmarkName = "-endAnimation"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1083,7 +1083,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "220"
             endingLineNumber = "220"
-            landmarkName = "-calculateTotal"
+            landmarkName = "-setDiaryLabel:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1099,7 +1099,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "183"
             endingLineNumber = "183"
-            landmarkName = "-reloadData"
+            landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1115,7 +1115,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "296"
             endingLineNumber = "296"
-            landmarkName = "-showError:functionName:"
+            landmarkName = "-dispos:functionName:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1269,11 +1269,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x79d1;&#x76ee;/SetSubjectVC.m"
-            timestampString = "448725671.864685"
+            timestampString = "448729107.782417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "-complete:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1285,11 +1285,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graduate/&#x79d1;&#x76ee;/SetSubjectVC.m"
-            timestampString = "448725671.864685"
+            timestampString = "448729107.782417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "-dispos:functionName:"
             landmarkType = "5">
          </BreakpointContent>

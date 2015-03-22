@@ -44,20 +44,7 @@
 
 - (void)addMaskBt
 {
-    if (self.maskBt) {
-        [self.maskBt setHidden:YES];
-        [self.maskBt removeFromSuperview];
-    }
-    self.maskBt = [[UIButton alloc]initWithFrame:self.tableView.tableHeaderView.bounds];
-    [self.tableView.tableHeaderView addSubview:self.maskBt];
-    [self.maskBt addTarget:self action:@selector(resignAll) forControlEvents:UIControlEventTouchUpInside];
-    for (UITextField* textField in self.textFields) {
-        [self.tableView.tableHeaderView bringSubviewToFront:textField];
-    }
     
-    for (UIButton* button in self.keyButtons) {
-        [self.tableView.tableHeaderView bringSubviewToFront:button];
-    }
 }
 - (void)initViews
 {
@@ -115,6 +102,7 @@
     [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height-self.tableView.frame.size.height)];
     return [super textFieldShouldBeginEditing:textField];
 }
+
 
 #pragma mark ButtonAction
 - (IBAction)goBack:(id)sender {
