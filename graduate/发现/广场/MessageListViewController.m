@@ -97,10 +97,11 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MessageCell* cell = [tableView dequeueReusableCellWithIdentifier:@"message"];
+    NSString *str = @"jljl";
+    NSLog(@"%@",[str substringToIndex:4]);
     MComment* comment = [self.commentList objectAtIndex:indexPath.row];
-    NSRange range = [comment.content_ rangeOfString:@":"];
-    [cell.contentLabel setText:[NSString stringWithFormat:@"%@回复:%@",comment.nickname_,[comment.content_ substringFromIndex:(int)range.location+1]]];
-    [cell.stateLabel setText:comment.isNew_.integerValue==0?@"已读":@"未读"];
+    [cell.contentLabel setText:[NSString stringWithFormat:@"%@回复:%@",comment.nickname_,comment.content_]];
+    [cell.stateLabel setText:comment.isNew_.integerValue == 0 ? @"已读" : @"未读"];
     if (comment.isNew_.integerValue==0) {
         [cell.contentLabel setTextColor:[UIColor colorOfGrayText]];
         [cell.stateLabel setTextColor:[UIColor colorOfGrayText]];
