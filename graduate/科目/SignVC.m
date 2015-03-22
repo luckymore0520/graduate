@@ -75,7 +75,7 @@
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);
     }else{
-        [ToolUtils showMessage:@"打卡成功，现在去分享吧"];
+//        [ToolUtils showMessage:@"打卡成功，现在去分享吧"];
     }
     [self.maskBackView setHidden:NO];
     [UIView animateWithDuration:0.3 animations:^{

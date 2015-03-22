@@ -215,8 +215,8 @@
         //如果是第三方登录并且当前用户没头像，那么就重传头像
         if (isThirdParty && ![user.headImg_ length]) {
             NSURL* url = [NSURL URLWithString:[ToolUtils getHeadImgLocal]];
-//            NSLog(@"url %@",url.absoluteString);
-            NSData* img = [NSData dataWithContentsOfURL:url];
+//           NSLog(@"url %@",url.absoluteString);
+             NSData* img = [NSData dataWithContentsOfURL:url];
 //            NSLog(@"Length of data; %d",[img length]);
             MImgUpload* upLoad = [[MImgUpload alloc]init];
             [ToolUtils setIgnoreNetwork:YES];
@@ -229,9 +229,10 @@
         }else{
             [ToolUtils setHeadImgLocal:@""];
              NSDictionary *userInfoFromThird = [ToolUtils getUserInfo];
-            
-            user.sex_ = [NSNumber numberWithInt:([[userInfoFromThird objectForKey:@"gender"]
-                                                isEqualToString:@"男"]? 0 : 1)];
+             if(isThirdParty){
+                 user.sex_ = [NSNumber numberWithInt:([[userInfoFromThird objectForKey:@"gender"]
+                                                      isEqualToString:@"男"]? 0 : 1)];
+             }
             if(![user.nickname_ length]){
                 user.nickname_ = [userInfoFromThird objectForKey:@"nickname"];
             }
