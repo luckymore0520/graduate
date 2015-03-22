@@ -212,40 +212,55 @@
         [ToolUtils setContactUrl:user.contactUrl_];
         [[QuestionBook getInstance] loadAllData];
         [self gotoMainMenu];
-        //如果是第三方登录，那么就重传头像
+        //如果是第三方登录并且当前用户没头像，那么就重传头像
         if (isThirdParty && ![user.headImg_ length]) {
             NSURL* url = [NSURL URLWithString:[ToolUtils getHeadImgLocal]];
-            NSLog(@"url %@",url.absoluteString);
+//            NSLog(@"url %@",url.absoluteString);
             NSData* img = [NSData dataWithContentsOfURL:url];
 //            NSLog(@"Length of data; %d",[img length]);
             MImgUpload* upLoad = [[MImgUpload alloc]init];
             [ToolUtils setIgnoreNetwork:YES];
             [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
+             NSDictionary *userInfoFromThird = [ToolUtils getUserInfo];
+             user.nickname_ = [userInfoFromThird objectForKey:@"nickname"];
+             user.sex_ = [NSNumber numberWithInt:([[userInfoFromThird objectForKey:@"gender"]isEqualToString:@"男"]? 0 : 1)];
+            [ToolUtils setUserInfomation:[user keyValues]];
             [ToolUtils setIgnoreNetwork:NO];
         }else{
             [ToolUtils setHeadImgLocal:@""];
+             NSDictionary *userInfoFromThird = [ToolUtils getUserInfo];
+            
+            user.sex_ = [NSNumber numberWithInt:([[userInfoFromThird objectForKey:@"gender"]
+                                                isEqualToString:@"男"]? 0 : 1)];
+            if(![user.nickname_ length]){
+                user.nickname_ = [userInfoFromThird objectForKey:@"nickname"];
+            }
+            [ToolUtils setUserInfomation:[user keyValues]];
+            MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
+            [updateUserInfo load:self nickname:user.nickname_ headImg:user.headImg_  sex:user.sex_.integerValue email:nil];
         }
       } else if ([names isEqualToString:@"MImgUpload"]) {
         //头像重传成功，则更改个人信息并同步服务器
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
+            //首先取出第三方登录获得的昵称和头像
+            NSDictionary *userInfoFromThird = [ToolUtils getUserInfo];
 //            NSLog(@"%@return msg",ret.msg_);
             NSDictionary *userInfo = [ToolUtils getUserInfomation];
 //            NSLog(@"%@sdds0-----",userInfo);
             MUser *user = [MUser objectWithKeyValues:userInfo];
             user.headImg_ = ret.msg_;
+            user.nickname_ = [userInfoFromThird objectForKey:@"nickname"];
+            user.sex_ = [NSNumber numberWithInt:([[userInfoFromThird objectForKey:@"gender"]
+            isEqualToString:@"男"]? 0 : 1)];
             [ToolUtils setUserInfomation:[user keyValues]];
             MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
-            [updateUserInfo load:self nickname:[userInfo objectForKey:@"nickname"] headImg:ret.msg_  sex:[[userInfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+            [updateUserInfo load:self nickname:user.nickname_ headImg:ret.msg_  sex:user.sex_.integerValue email:nil];
         } else {
             //[self gotoMainMenu];
         }
     } else if ([names isEqualToString:@"download"])
     {
-//        NSLog(@"url is %@",[data objectForKey:@"path"]);
-//        NSDictionary *userInfo = [ToolUtils getUserInfomation];
-//        NSLog(@"%@sdds0-----",userInfo);
-//        MUser *user = [MUser objectWithKeyValues:userInfo];
         //先把本地头像存一下
         [ToolUtils setHeadImgLocal:[NSString stringWithFormat:@"%@",[data objectForKey:@"path"]]];
         //需要根据不同的第三方登录类型判定
@@ -386,7 +401,7 @@
         isThirdParty = YES;
         [ToolUtils setThirdParyType:@"weixin"];
         NSLog(@"nickname---%@",[dic objectForKey:@"nickname"]);
-        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[(NSNumber*)[dic objectForKey:@"sex"] intValue]==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
+        [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:((NSNumber*)[dic objectForKey:@"sex"]).integerValue==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
     }
 }
 
