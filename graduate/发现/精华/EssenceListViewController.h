@@ -14,6 +14,7 @@
 @property (nonatomic,strong)NSString* key;
 @property (nonatomic,assign)BOOL isMyCollection;
 @property (nonatomic,assign)BOOL selectedMode;
+- (void)scrollToTop;
 - (void)reloadData;
 - (void)selectAll:(BOOL)isAll;
 @end

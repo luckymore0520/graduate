@@ -69,10 +69,17 @@
 
 - (void)reloadData
 {
+    [self.tableView setContentOffset:CGPointMake(0, 0)];
     page = 1;
-    [_essenceList removeAllObjects];
     [_header beginRefreshing];
 }
+
+- (void)scrollToTop
+{
+    [_essenceList removeAllObjects];
+    [self.tableView reloadData];
+}
+
 
 - (void)loadData
 {

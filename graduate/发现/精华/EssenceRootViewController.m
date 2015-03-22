@@ -123,6 +123,8 @@
 - (void)search
 {
     _state = SEARCH;
+    EssenceListViewController* current = (EssenceListViewController*)[_slideSwitchView currentVC];
+    [current scrollToTop];
     [self.searchTable setHidden:NO];
     [self.navigationController setNavigationBarHidden:YES];
     [UIView animateWithDuration:0.3 animations:^{
