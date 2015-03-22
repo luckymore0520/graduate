@@ -36,7 +36,7 @@ MyTraceList* tracelist = nil;
             }
         }
         trace.signCount = @(MAX(trace.signCount.integerValue,signCount));
-        if (trace.myDay.integerValue>[ToolUtils getCurrentDay].integerValue) {
+        if (trace.myDay.integerValue>=[ToolUtils getCurrentDay].integerValue) {
             [futureDays addObject:trace];
         }
     }
