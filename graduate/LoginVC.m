@@ -149,7 +149,7 @@
 
 
 - (IBAction)weixinLogin:(id)sender {
-    SendAuthReq* req = [[SendAuthReq alloc] init] ;
+    SendAuthReq* req = [[SendAuthReq alloc] init];
     req.scope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact"; // @"post_timeline,sns"
     req.state = @"xxx";
     req.openID = @"0c806938e2413ce73eef92cc3";
@@ -177,6 +177,9 @@
         [ToolUtils showMessage:@"密码不得为空"];
     } else {
         isThirdParty = NO;
+        //清除第三方登录的一些信息
+        [ToolUtils setHeadImgLocal:@""];
+        [ToolUtils setThirdParyType:@""];
         [self waiting:@"正在登陆..."];
         MLogin* login = [[MLogin alloc]init];
         NSString* password = [ToolUtils md5:_passwordField.text];
@@ -208,52 +211,57 @@
         [ToolUtils setAboutUrl:user.aboutusUrl_];
         [ToolUtils setContactUrl:user.contactUrl_];
         [[QuestionBook getInstance] loadAllData];
-        if (!isThirdParty) {
-            [self gotoMainMenu];
+        [self gotoMainMenu];
+        //如果是第三方登录，那么就重传头像
+        if (isThirdParty && ![user.headImg_ length]) {
+            NSURL* url = [NSURL URLWithString:[ToolUtils getHeadImgLocal]];
+            NSLog(@"url %@",url.absoluteString);
+            NSData* img = [NSData dataWithContentsOfURL:url];
+//            NSLog(@"Length of data; %d",[img length]);
+            MImgUpload* upLoad = [[MImgUpload alloc]init];
+            [ToolUtils setIgnoreNetwork:YES];
+            [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
+            [ToolUtils setIgnoreNetwork:NO];
         }else{
-            NSDictionary* userinfo = [ToolUtils getUserInfo];
-            MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
-            [updateUserInfo load:self nickname:[userinfo objectForKey:@"nickname"] headImg:[[ToolUtils getUserInfo] objectForKey:@"headImg"] sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+            [ToolUtils setHeadImgLocal:@""];
         }
-    } else if ([names isEqualToString:@"MImgUpload"]) {
+      } else if ([names isEqualToString:@"MImgUpload"]) {
+        //头像重传成功，则更改个人信息并同步服务器
         MReturn* ret = [MReturn objectWithKeyValues:data];
         if (ret.code_.integerValue==1) {
-            NSLog(@"%@return msg",ret.msg_);
-//            [ToolUtils setHeadImg:ret.msg_];
-            NSDictionary *userInfo = [ToolUtils getUserInfo];
-            [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[userInfo objectForKey:@"gender"],@"gender",[userInfo objectForKey:@"nickname"],@"nickname",ret.msg_,@"headImg",nil]];
-            
-            //需要根据不同的第三方登录类型判定
-            MLogin* login = [[MLogin alloc]init];
-            if([[ToolUtils getThirdParyType] isEqualToString:@"qq"]){
-                [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
-            }else if([[ToolUtils getThirdParyType] isEqualToString:@"weixin"]){
-                [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
-            }else{
-                [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
-            }
+//            NSLog(@"%@return msg",ret.msg_);
+            NSDictionary *userInfo = [ToolUtils getUserInfomation];
+//            NSLog(@"%@sdds0-----",userInfo);
+            MUser *user = [MUser objectWithKeyValues:userInfo];
+            user.headImg_ = ret.msg_;
+            [ToolUtils setUserInfomation:[user keyValues]];
+            MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
+            [updateUserInfo load:self nickname:[userInfo objectForKey:@"nickname"] headImg:ret.msg_  sex:[[userInfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
         } else {
-            [self gotoMainMenu];
+            //[self gotoMainMenu];
         }
     } else if ([names isEqualToString:@"download"])
     {
-        NSURL* url = [data objectForKey:@"path"];
-        NSLog(@"url %@",url.absoluteString);
-        NSData* img = [NSData dataWithContentsOfURL:url];
-        NSLog(@"Length of data; %d",[img length]);
-        MImgUpload* upLoad = [[MImgUpload alloc]init];
-        [ToolUtils setIgnoreNetwork:YES];
-        [upLoad load:self img:[UIImage imageWithData:img] name:[NSString stringWithFormat:@"%@.png",[ToolUtils getIdentify]]];
-        [ToolUtils setIgnoreNetwork:NO];
+//        NSLog(@"url is %@",[data objectForKey:@"path"]);
+//        NSDictionary *userInfo = [ToolUtils getUserInfomation];
+//        NSLog(@"%@sdds0-----",userInfo);
+//        MUser *user = [MUser objectWithKeyValues:userInfo];
+        //先把本地头像存一下
+        [ToolUtils setHeadImgLocal:[NSString stringWithFormat:@"%@",[data objectForKey:@"path"]]];
+        //需要根据不同的第三方登录类型判定
+        MLogin* login = [[MLogin alloc]init];
+        if([[ToolUtils getThirdParyType] isEqualToString:@"qq"]){
+            [login load:self phone:nil account:nil password:nil qqAcount:[ToolUtils getIdentify] wxAccount:nil wbAccount:nil];
+        }else if([[ToolUtils getThirdParyType] isEqualToString:@"weixin"]){
+            [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:[ToolUtils getIdentify] wbAccount:nil];
+        }else{
+            [login load:self phone:nil account:nil password:nil qqAcount:nil wxAccount:nil wbAccount:[ToolUtils getIdentify]];
+        }
+
     } else if ([names isEqualToString:@"MUpdateUserInfo"])
     {
         NSDictionary* userinfo = [ToolUtils getUserInfo];
-        NSLog(@"用户昵称等%@",userinfo);
-        MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-        user.nickname_ = [userinfo objectForKey:@"nickname"];;
-        user.sex_ = [NSNumber numberWithInt:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1];
-        [ToolUtils setUserInfomation:[user keyValues]];
-        [self gotoMainMenu];
+//        NSLog(@"用户昵称等%@",userinfo);
     }
 }
 
@@ -399,6 +407,13 @@
         [ToolUtils setIgnoreNetwork:NO];
         isThirdParty = YES;
         [ToolUtils setThirdParyType:@"qq"];
+    }else{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self waitingEnd];
+            [self.waitingView setHidden:YES];
+            [self.maskView setHidden:YES];
+            [ToolUtils showMessage:@"请重新登录" title:@"QQ授权失败"];
+        });
     }
 }
                        

@@ -29,6 +29,8 @@
 #import "Trace.h"
 #import "UIPlaceHolderTextView.h"
 #import "MUploadDiary.h"
+#import "MImgUpload.h"
+#import "MUpdateUserInfo.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
 @property (weak, nonatomic) IBOutlet UIImageView *rollImage;
@@ -93,15 +95,19 @@ CGFloat angle;
     if (![ToolUtils connectToInternet]) {
         [self reloadData];
     }
+    [self setUserHeadImg];
 }
+
+
 
 - (void)updateImage
 {
     //这个用来查找最近的一条日记
-    NSArray* arrayNote = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=%@",[ToolUtils getUserid], @""] tableName:@"Trace"];
-    //NSLog(@"length of %d",arrayNote.count);
+    NSArray* arrayNote = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=null",[ToolUtils getUserid]] tableName:@"Trace"];
+//    NSLog(@"length of %d",arrayNote.count);
     if (arrayNote.count>0) {
         Trace* trace = [arrayNote firstObject];
+//        NSLog(@"第一条的日期%d")
         if(trace.note.length){
             [self setDiaryLabel:trace.note];
         }else{
@@ -145,6 +151,7 @@ CGFloat angle;
     } else {
         [self.redDot setHidden:NO];
     }
+    
 }
 
 -(void) startAnimation
@@ -169,6 +176,7 @@ CGFloat angle;
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    
     angle = 0;
     [self startAnimation];
     if (self.firstOpen) {
@@ -182,12 +190,24 @@ CGFloat angle;
 {
     [[[MQuestionRecommand alloc]init]load:self date:[ToolUtils getCurrentDate]];
     MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-//    NSLog(@"用户的头像是...%@", user.headImg_);
-    [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-    }];
+    [self setUserHeadImg];
     [self updateImage];
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
+}
+
+
+-(void)setUserHeadImg
+{
+    MUser* user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    if([[ToolUtils getHeadImgLocal] length]){
+        [self.headView sd_setImageWithURL:[NSURL URLWithString:[ToolUtils getHeadImgLocal]] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        }];
+   }else if([user.headImg_ length])
+   {
+       [self.headView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:user.headImg_ width:164 height:164] placeholderImage:[UIImage imageNamed:user.sex_.integerValue==0?@"原始头像男":@"原始头像女"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+       }];
+   }
 }
 
 -(void)setDiaryLabel:(NSString *)diary
@@ -283,7 +303,21 @@ CGFloat angle;
                         break;
                 }
             }
+        }else if ([names isEqualToString:@"MImgUpload"]) {
+            MReturn* ret = [MReturn objectWithKeyValues:data];
+            NSLog(@"%@return msg",ret.msg_);
+
+            if (ret.code_.integerValue==1) {
+                               //            [ToolUtils setHeadImg:ret.msg_];
+                NSDictionary *userInfo = [ToolUtils getUserInfo];
+                [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[userInfo objectForKey:@"gender"],@"gender",[userInfo objectForKey:@"nickname"],@"nickname",ret.msg_,@"headImg",nil]];
+                NSDictionary* userinfo = [ToolUtils getUserInfo];
+                MUpdateUserInfo* updateUserInfo = [[MUpdateUserInfo alloc]init];
+                [updateUserInfo load:self nickname:[userinfo objectForKey:@"nickname"] headImg:[[ToolUtils getUserInfo] objectForKey:@"headImg"] sex:[[userinfo objectForKey:@"gender"]isEqualToString:@"男"]?0:1 email:nil];
+                
+            }
         }
+        
         [self calculateTotal];
         [self.tableview reloadData];
     }

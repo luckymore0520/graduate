@@ -35,7 +35,9 @@
 + (NSURL *)getImageUrlWtihString:(NSString *)urlString;
 + (NSURL *)getImageUrlWtihString:(NSString *)urlString width:(CGFloat)width height:(CGFloat)height;
 
-
+//本地头像图片
++ (NSString *)getHeadImgLocal;
++ (void)setHeadImgLocal:(NSString *)headImgLocal;
 
 //第三方登陆唯一标识
 + (NSString*)getIdentify;

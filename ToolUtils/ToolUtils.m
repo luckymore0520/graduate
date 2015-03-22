@@ -200,18 +200,18 @@
 
 }
 
-//+ (NSString *)getHeadImg
-//{
-//    return [[NSUserDefaults standardUserDefaults]objectForKey:@"headImg"];
-//}
-//
-//
-//+ (void)setHeadImg:(NSString *)headImg
-//{
-//    [[NSUserDefaults standardUserDefaults]setObject:headImg forKey:@"headImg"];
-//    [[NSUserDefaults standardUserDefaults]synchronize];
-//    
-//}
++ (NSString *)getHeadImgLocal
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:@"headImgLocal"];
+}
+
+
++ (void)setHeadImgLocal:(NSString *)headImgLocal
+{
+    [[NSUserDefaults standardUserDefaults]setObject:headImgLocal forKey:@"headImgLocal"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+}
 
 
 + (NSString*)getFirstUse
