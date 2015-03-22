@@ -31,6 +31,7 @@
 #import "MUploadDiary.h"
 #import "MImgUpload.h"
 #import "MUpdateUserInfo.h"
+#import "MyTraceList.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
 @property (weak, nonatomic) IBOutlet UIImageView *rollImage;
@@ -103,11 +104,9 @@ CGFloat angle;
 - (void)updateImage
 {
     //这个用来查找最近的一条日记
-    NSArray* arrayNote = [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=null",[ToolUtils getUserid]] tableName:@"Trace"];
-//    NSLog(@"length of %d",arrayNote.count);
-    if (arrayNote.count>0) {
-        Trace* trace = [arrayNote firstObject];
-//        NSLog(@"第一条的日期%d")
+    Trace *trace = [[MyTraceList getInstance] getNearestNoteTrace];
+    //    NSLog(@"length of %d",arrayNote.count);
+    if (trace) {
         if(trace.note.length){
             [self setDiaryLabel:trace.note];
         }else{

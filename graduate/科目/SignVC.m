@@ -75,8 +75,12 @@
     if (!isSaveSuccess) {
         NSLog(@"Error:%@",error);
     }else{
-        [ToolUtils showMessage:@"打卡成功，现在去分享吧"];
-          }
+//        [ToolUtils showMessage:@"打卡成功，现在去分享吧"];
+    }
+    [self.maskBackView setHidden:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
+    }];
     self.sign = sign;
     [[[MSign alloc]init]load:self type:self.type subject:self.subject date:sign.date];
 }
@@ -123,10 +127,6 @@
             NSError* error;
             [[CoreDataHelper getInstance].managedObjectContext save:&error];
             NSLog(@"打卡,同步服务器成功");
-            [self.maskBackView setHidden:NO];
-            [UIView animateWithDuration:0.3 animations:^{
-                self.shareView.transform = CGAffineTransformMakeTranslation(0, -self.shareView.frame.size.height);
-            }];
         }
     }
     

@@ -16,6 +16,9 @@
 - (void)updateTraces;
 +(MyTraceList *)getInstance;
 -(Trace*)getTodayTrace;
-- (NSMutableArray*)getMyTracesIncludeToday:(BOOL)include;
+-(NSMutableArray*)getMyTracesIncludeToday:(BOOL)include;
+-(Trace *)getNearestNoteTrace;
+- (NSMutableArray*)getMyTraces;
+
 @end
 
