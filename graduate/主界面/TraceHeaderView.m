@@ -15,7 +15,13 @@
     _dateLabel.text = [NSString stringWithFormat:@"第%@天",trace.myDay];
     _songNameLabel.text = trace.songName;
     _singerNameLabel.text = trace.singer;
-    [_traceImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForTrace width:_traceImg.frame.size.width height:_traceImg.frame.size.height] placeholderImage:[UIImage imageNamed:@"足迹-默认背景"] ];
+    
+    UIImage* plageHolder = nil;
+    if (![[SDWebImageManager sharedManager]cachedImageExistsForURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForTrace width:_traceImg.frame.size.width height:_traceImg.frame.size.height] ]) {
+        plageHolder = [UIImage imageNamed:@"足迹-默认背景"];
+    }
+    [_traceImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForTrace width:_traceImg.frame.size.width height:_traceImg.frame.size.height] placeholderImage:plageHolder ];
+//    [_traceImg sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForTrace width:_traceImg.frame.size.width height:_traceImg.frame.size.height] placeholderImage:[UIImage imageNamed:@"足迹-默认背景"] ];
     if (trace.note.length==0) {
         trace.note = [ToolUtils getDiaryDefault];
     }

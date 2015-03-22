@@ -120,7 +120,12 @@ CGFloat angle;
     if (array.count>0) {
         Trace* trace = [array firstObject];
         _trace = trace;
-        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:[UIImage imageNamed:@"默认背景"]];
+        UIImage* plageHolder = nil;
+        if (![[SDWebImageManager sharedManager]cachedImageExistsForURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] ]) {
+            plageHolder = [UIImage imageNamed:@"默认背景"];
+        }
+
+        [_backgroundViw sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrlForSubject width:self.view.frame.size.width*2 height:0] placeholderImage:plageHolder];
     }
     
 }

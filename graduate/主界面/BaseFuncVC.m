@@ -164,23 +164,11 @@
 {
     CGRect frame;
     if (_keyButtons.count>0) {
-        for (int i = 0 ; i < _keyButtons.count; i++) {
-            UIView* view = _keyButtons[i];
-            if (i==0) {
-                frame = [view convertRect:view.bounds toView:nil];
-            } else
-            {
-                CGRect thisFrame = [view convertRect:view.bounds toView:nil];
-                if (thisFrame.origin.y > frame.origin.y) {
-                    frame = thisFrame;
-                }
-            }
-
-        }
+        UIView* view = _keyButtons[0];
+        frame = [view convertRect:view.bounds toView:nil];
     } else {
         frame = textField.frame;
     }
-    
     int offset = frame.origin.y - (self.view.frame.size.height - MAX(keyboardHeight, 240));//键盘高度216
     NSLog(@"offset is %d",offset);
     if (textField.inputAccessoryView) {
@@ -189,8 +177,9 @@
     NSTimeInterval animationDuration = 0.30f;
     CGFloat y = [self.view convertRect:textField.frame toView:nil].origin.y-self.navigationController.navigationBar.frame.size.height-20;
     if (offset>0&&  y > offset) {
+        CGAffineTransform transform = self.view.transform;
         [UIView animateWithDuration:animationDuration animations:^{
-            self.view.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0.0, -offset);
+            self.view.transform = CGAffineTransformMake(self.scale, 0, 0, self.scale, 0.0, -offset+transform.ty);
         }];
     }
    

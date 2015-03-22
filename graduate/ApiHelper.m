@@ -63,7 +63,6 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:BASEURL parameters:dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",operation.request.URL.absoluteString);
-        
         [self handleData:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *backImgView;
 @property (nonatomic,strong)NSMutableArray* mainList;
 @property (weak, nonatomic) IBOutlet UIView *middleTextView;
+@property (nonatomic,assign)BOOL firstOpen;
 @end
 
 @implementation MainFunVC
@@ -70,12 +71,28 @@
             music.file_ = trace.songUrl;
             _main.music_ = [[NSMutableArray alloc]initWithObjects:music, nil];
             [self initView];
-            [_imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] placeholderImage:[UIImage imageNamed:@"首页1.png"]];
+            UIImage* plageHolder = nil;
+            if (![[SDWebImageManager sharedManager]cachedImageExistsForURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] ]) {
+                plageHolder = [UIImage imageNamed:@"首页1.png"];
+            }
+            [_imgView sd_setImageWithURL:[ToolUtils getImageUrlWtihString:trace.pictureUrl] placeholderImage:plageHolder];
         }
         [[[MIndex alloc]init]load:self date:nil type:1 days:0];
     }
+    _firstOpen = YES;
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    [super viewDidAppear:animated];
+    if (_firstOpen) {
+        _firstOpen = NO;
+    } else {
+        [[[MIndex alloc]init]load:self date:nil type:1 days:0];
+    }
+}
 //该方法用于根据接口获取的数据更新界面
 - (void)initView
 {
@@ -161,7 +178,6 @@
             } else {
                 [self saveDay:main musicUrl:nil];
             }
-
         }
         [[MyTraceList getInstance]updateTraces];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"UPDATEIMAGE" object:nil];

@@ -3,7 +3,7 @@
 //  graduate
 //
 //  Created by luck-mac on 15/2/6.
-//  Copyright (c) 2015年 nju.excalibur. All rights reserved.
+//  Copyright (c) 2015年 . All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,6 +16,7 @@
 - (void)updateTraces;
 +(MyTraceList *)getInstance;
 -(Trace*)getTodayTrace;
+-(NSMutableArray*)getMyTracesIncludeToday:(BOOL)include;
 -(Trace *)getNearestNoteTrace;
 - (NSMutableArray*)getMyTraces;
 

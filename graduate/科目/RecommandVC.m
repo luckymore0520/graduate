@@ -7,7 +7,7 @@
 //
 
 #import "RecommandVC.h"
-
+#import "MQuesDelete.h"
 @interface RecommandVC ()
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -80,9 +80,10 @@
     if (question) {
         [[QuestionBook getInstance]deleteQuestion:question];
         [ToolUtils showToast:@"已取消收藏"  toView:self.view];
+        [[[MQuesDelete alloc]init]load:self id:currentQuestion.id_ ];
     } else {
+        currentQuestion.createTime_ = [ToolUtils getCurrentDate];
         self.recommandQuestion = [[QuestionBook getInstance] insertQuestionFromRecommand:currentQuestion];
-        
         if (self.recommandQuestion) {
             [ToolUtils showToast:[NSString stringWithFormat:@"已收藏至%@笔记本",            currentQuestion.subject_
 ]  toView:self.view];
@@ -91,10 +92,7 @@
                 [[[MUploadQues alloc]init]load:self question:self.recommandQuestion];
             }
         }
-
     }
-    
-    
 }
 
 
