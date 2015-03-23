@@ -255,7 +255,7 @@
         CGRect titleFrame = CGRectMake(15, 23, width-100, 45);
         titleLabel = [[UILabel alloc]initWithFrame:titleFrame];
         [titleLabel setFont:titleFont];
-        [titleLabel setTextColor:[UIColor whiteColor]];
+        [titleLabel setTextColor:[UIColor blackColor]];
         if (selectQuestion.title_) {
             [titleLabel setText:selectQuestion.title_];
         }
@@ -313,13 +313,13 @@
     _markLabel.text = [remark stringByReplacingOccurrencesOfString:@" " withString:@""];
     _markLabel.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     [_markLabel setBackgroundColor:[UIColor clearColor]];
-//    if (self.footMask) {
-//        [_markLabel setTextColor:[UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1]];
-//
-//    } else {
+    if (self.footMask) {
+        [_markLabel setTextColor:[UIColor blackColor]];
+
+    } else {
     [_markLabel setTextColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1]];
 
-//    }
+    }
     
 
     if (self.bottomContainerView) {
