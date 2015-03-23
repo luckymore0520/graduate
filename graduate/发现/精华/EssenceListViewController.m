@@ -43,6 +43,7 @@
     [super viewDidLoad];
     self.essenceList = [[NSMutableArray alloc]init];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+    _user.email_ = nil;
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
     UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.tableFooterView = view;
@@ -325,17 +326,19 @@
 
 - (void) keyboardWasShown:(NSNotification *) notif
 {
-    NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    NSLog(@"keyBoard:%f", keyboardSize.height);  //216
-    keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
-    [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
-    CGRect frame = self.editView.frame;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
-    } completion:^(BOOL finished) {
-    }];
+    if (self.editTextView.isFirstResponder) {
+        NSDictionary *info = [notif userInfo];
+        NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+        CGSize keyboardSize = [value CGRectValue].size;
+        NSLog(@"keyBoard:%f", keyboardSize.height);  //216
+        keyboardHeight = keyboardSize.height>=240?keyboardSize.height:240;
+        [ToolUtils setKeyboardHeight:[NSNumber numberWithDouble:keyboardHeight]];
+        CGRect frame = self.editView.frame;
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            self.editView.transform = CGAffineTransformMakeTranslation(0, -frame.size.height-(keyboardHeight==0?240:keyboardHeight));
+        } completion:^(BOOL finished) {
+        }];
+    }
 }
 
 
