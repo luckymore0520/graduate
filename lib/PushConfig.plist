@@ -5,7 +5,7 @@
 	<key>APP_KEY</key>
 	<string>2066005f1c9c8244ffb789ed</string>
 	<key>APS_FOR_PRODUCTION</key>
-	<string>0</string>
+	<string>1</string>
 	<key>CHANNEL</key>
 	<string>APP STORE</string>
 </dict>

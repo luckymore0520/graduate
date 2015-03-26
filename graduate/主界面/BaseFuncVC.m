@@ -92,6 +92,9 @@
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self setNeedsStatusBarAppearanceUpdate];
+    if(self.title){
+        [MobClick beginLogPageView:self.title];
+    }
     
 }
 
@@ -106,6 +109,9 @@
     [self.waitingView setHidden:YES];
     [self.waitingView removeFromSuperview];
     self.waitingView = nil;
+    if(self.title){
+        [MobClick endLogPageView:self.title];
+    }
 }
 
 - (void)dealloc
