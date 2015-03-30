@@ -39,7 +39,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    if (_firstAppear) {
+       if (_firstAppear) {
         _firstAppear = NO;
     } else {
         [self.myEssences removeAllObjects];

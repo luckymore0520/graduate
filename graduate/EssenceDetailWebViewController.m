@@ -75,6 +75,7 @@ document.location=\"myweb:touch:end\";};";
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
+    
     if ([names isEqualToString:@"MEssenceDetail"])
     {
         self.essence = [MEssence objectWithKeyValues:data];

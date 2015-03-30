@@ -43,12 +43,11 @@
     [super viewDidLoad];
     self.essenceList = [[NSMutableArray alloc]init];
     _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
-    _user.email_ = nil;
+//    _user.email_ = nil;
     _typeArray = @[@"视频图标",@"音频图标",@"文档图标"];
     UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.tableFooterView = view;
      [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
-
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -70,6 +69,7 @@
 
 - (void)reloadData
 {
+    [self.essenceList removeAllObjects];
     [self.tableView setContentOffset:CGPointMake(0, 0)];
     page = 1;
     [_header beginRefreshing];

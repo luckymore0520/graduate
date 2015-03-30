@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ToolUtils.h"
-#define BASEURL @"http://114.215.196.179:8080/gs/mobile"
+#define BASEURL @"http://s4.smartjiangsu.com:8080/gs/mobile"
 //#define BASEURL @"http://192.168.1.130:8080/gs/mobile"
 @protocol ApiDelegate<NSObject>
 @required

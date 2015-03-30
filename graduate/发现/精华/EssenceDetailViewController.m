@@ -312,7 +312,7 @@
 
 - (IBAction)qqShare:(UIButton *)sender
 {
-    self.essence.hasDownload_ = @1;
+    self.essence.isDownloaded_ = @1;
     [ShareApiUtil qqShare:[self getShareTitle] description:[self getShareTitle] imageUrl:[BaseFuncVC getShareImgUrl] shareUrl:[self getShareUrl] from:self];
 }
 
