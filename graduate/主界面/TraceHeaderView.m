@@ -39,7 +39,6 @@
     } else {
         [_titleLabel setText:[NSString stringWithFormat:@"新增的笔记(%d)",trace.addCount.integerValue]];
     }
-    [self.progressBar setClipsToBounds:YES];
 }
 
 - (void)didUpdateProgressView:(CGFloat)progress

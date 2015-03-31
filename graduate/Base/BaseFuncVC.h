@@ -6,11 +6,9 @@
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 #import "WKNavigationViewController.h"
-#import "MediaPlayController.h"
 #import "ToolUtils.h"
 #import "ApiHelper.h"
 #import "WaitingView.h"
-#import "CircularProgressView.h"
 #import "UIColor+Graduate.h"
 #import "FlipPresentAnimation.h"
 @interface BaseFuncVC : UIViewController<UITextFieldDelegate,ApiDelegate,UIViewControllerTransitioningDelegate>

@@ -16,7 +16,6 @@
 #import "Sign.h"
 @interface MyTraceVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *questionView;
-@property (strong, nonatomic)  CircularProgressView *progressBar;
 @property (nonatomic,strong)NSMutableArray* myQuestions;
 @property (nonatomic,assign)NSInteger phoneOfLine;
 @property (nonatomic,strong)TraceHeaderView* header;

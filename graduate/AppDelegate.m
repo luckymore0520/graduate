@@ -64,8 +64,6 @@
     [self initJPush:launchOptions];
     [self initUmen];
     
-    
-    self.mediaPlayController = [MediaPlayController getInstance];
     self.book = [QuestionBook getInstance];
     [_book loadAllData];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
