@@ -28,6 +28,8 @@
     self.hasTitle = NO;
     _trace = [[MyTraceList getInstance] getTodayTrace];
     [self.loadingImageView setImage:[UIImage sd_animatedGIFNamed:@"454545"]];
+    [self.scrollView setPagingEnabled:YES];
+    self.scrollView.delegate = self;
 //    self.scrollView.pagingEnabled=YES;
     // Do any additional setup after loading the view.
 }
@@ -40,7 +42,7 @@
         return obj1.myDay_.integerValue < obj2.myDay_.integerValue;
     }];
 
-    if (![_reviewType isEqualToString:@"按序学习"]) {
+    if ([_reviewType isEqualToString:@"艾氏复习"]) {
         //先排序
         if (_questionList.count>30) {
             NSUInteger middleIndex = _questionList.count/2;
@@ -63,7 +65,7 @@
         [_questionList sortUsingComparator:^NSComparisonResult(MQuestion* obj1, MQuestion* obj2) {
             return obj1.myDay_.integerValue > obj2.myDay_.integerValue;
         }];
-    } else {
+    } else if([_reviewType isEqualToString:@"按序复习"]){
         //取最前面的两天
         MQuestion* question = [_questionList firstObject];
         NSString* firstDay = question.myDay_;
@@ -83,6 +85,7 @@
             index++;
         }
         _questionList = [NSMutableArray arrayWithArray:[_questionList subarrayWithRange:NSMakeRange(0, index)]];
+    }else{
     }
 }
 
@@ -114,7 +117,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self loadQuestions];
-    [self setTitle:[NSString stringWithFormat:@"%@(%ld/%ld)",self.reviewType,self.currentPage,self.questionList.count]];
+    [self updateProgressBarAndTitle];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -125,7 +128,6 @@
 
 - (void)loadQuestions
 {
-    
     for (UIView* view in self.questionViews) {
         [view removeFromSuperview];
     }
@@ -135,7 +137,7 @@
     self.questionViews = [[NSMutableArray alloc]init];
     for (int i = 0 ; i < self.questionList.count; i++) {
         CGRect frame;
-        frame.origin.x = 0;
+        frame.origin.x = self.view.frame.size.width * i;
         frame.origin.y = 0;
         frame.size = self.view.frame.size;
         QuestionView* view = [[QuestionView alloc]initWithFrame:frame];
@@ -163,8 +165,23 @@
         view.photo = photo;
         [view setBackgroundColor:[UIColor clearColor]];
         [self.questionViews addObject:view];
+        [self.scrollView addSubview:view];
     }
-    [self.scrollView addSubview:self.questionViews.firstObject];
+    //如果有当前id的话就需要跳几步
+    if([self.currentQuestionId length]){
+        for (int i = 0  ; i < self.questionList.count ; i ++) {
+            MQuestion* question = [self.questionList objectAtIndex:i];
+            if ([question.id_ isEqualToString:self.currentQuestionId]) {
+                self.scrollView.contentOffset= CGPointMake(i*self.scrollView.frame.size.width, 0);
+                self.currentPage = i;
+                [self addBottomView:question showAll:NO];
+                break;
+            }
+        }
+
+    }
+    
+    
 }
 
 
@@ -172,19 +189,14 @@
 
 
 -(void)pageChange:(UIPageControl *)sender{
-    
     self.currentPage ++;
-    CGFloat width = self.progressBar.frame.size.width;
-    self.progressBar.transform = CGAffineTransformMakeTranslation(width*(self.currentPage/(self.questionList.count+0.0)), 0);
-    [self setTitle:[NSString stringWithFormat:@"%@(%d/%d)",self.reviewType,self.currentPage,self.questionList.count]];    if (self.currentPage<self.questionList.count) {
-        QuestionView* originView = [self.questionViews objectAtIndex:self.currentPage-1];
+    [self updateProgressBarAndTitle];
+    if (self.currentPage<self.questionList.count) {
         QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
-        [self.scrollView addSubview:view];
-        view.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width,0);
         [UIView animateWithDuration:0.3 animations:^{
-            view.transform = CGAffineTransformMakeTranslation(0,0);
-            originView.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width,0);
+            self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x + self.view.frame.size.width, 0.0);
         }];
+        NSLog(@"the location is %f  %f",self.scrollView.contentOffset.x,self.scrollView.contentOffset.y);
         [self addBottomView:view.myQuestion showAll:NO];
     } else {
         self.currentPage--;
@@ -259,9 +271,6 @@
         if (selectQuestion.title_) {
             [titleLabel setText:selectQuestion.title_];
         }
-        
-        
-        
 //        UIFont* pageTitleFont = [UIFont fontWithName:@"FZLanTingHeiS-EL-GB" size:18];
 //        NSString* totalPage =[NSString stringWithFormat:@"/%ld", self.questionList.count];
 //        NSString* currentPage = [NSString stringWithFormat:@"%ld",self.currentPage+1];
@@ -412,7 +421,6 @@
 }
 
 - (IBAction)rotate:(id)sender {
-    
     QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
     [view rotate];
 }
@@ -500,24 +508,47 @@
     }];
 }
 
-#pragma mark -MJPhotoDelegate
-- (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
-{
-//    [self.scrollView addSubview:photoView];
-    self.scrollView.contentSize = CGSizeMake(0, 0);
-    if (photoView.photo.index==0) {
-        MQuestion* question = ((QuestionView*)photoView).myQuestion;
-        [self addBottomView:question showAll:NO];
-        CGRect frame = photoView.imageView.frame;
-        if (frame.origin.y < 0) {
-            frame.origin.y = 0;
-            photoView.imageView.frame = frame;
+#pragma mark -scrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView==self.scrollView) {
+        NSLog(@"the is %f  %f",scrollView.contentOffset.x,scrollView.contentOffset.y);
+        int index= round(scrollView.contentOffset.x/scrollView.frame.size.width);
+        
+        if (self.currentPage!=index) {
+            self.currentPage = index;
+            [self updateProgressBarAndTitle];
+            if (self.currentPage<self.questionList.count) {
+                QuestionView* view = [self.questionViews objectAtIndex:self.currentPage];
+                [self addBottomView:view.myQuestion showAll:NO];
+            } else {
+                self.currentPage--;
+                [self performSegueWithIdentifier:@"complete" sender:nil];
+            }
         }
     }
 }
 
+-(void)updateProgressBarAndTitle
+{
+    CGFloat width = self.progressBar.frame.size.width;
+    self.progressBar.transform = CGAffineTransformMakeTranslation(width*((self.currentPage+1)/(self.questionList.count+0.0)), 0);
+    [self setTitle:[NSString stringWithFormat:@"%@(%d/%d)",self.reviewType,self.currentPage+1,self.questionList.count]];
+}
 
 
+- (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
+{
+    self.scrollView.contentSize = CGSizeMake(self.questionList.count*self.view.frame.size.width, 0);
+    if (photoView.photo.index==0) {
+        MQuestion* question = ((QuestionView*)photoView).myQuestion;
+        [self addBottomView:question showAll:NO];
+        if (photoView.imageView.frame.origin.y<0) {
+            photoView.imageView.frame = photoView.bounds;
+        }
+    }
+}
+
+#pragma mark -MJPhotoDelegate
 - (void)photoViewSingleTap:(MJPhotoView *)photoView
 {
     if (self.footMask) {

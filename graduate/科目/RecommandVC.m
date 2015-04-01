@@ -185,6 +185,7 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView==self.scrollView) {
         int index= round(scrollView.contentOffset.x/scrollView.frame.size.width);
+        
         if (self.currentPage!=index) {
             self.currentPage = index;
             

@@ -36,12 +36,14 @@
 @property (weak, nonatomic) IBOutlet UIButton *selectUnReviewButton;
 @property (weak, nonatomic) IBOutlet UIButton *selectImportantButton;
 @property (weak, nonatomic) IBOutlet UIButton *selectReviewdButton;
+@property(nonatomic)BOOL needAlertEmpty;
 @end
 
 @implementation MyQuestionVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.needAlertEmpty = YES;
     [self loadData];
     self.firstShow = YES;
     [self addRightButton];
@@ -62,6 +64,9 @@
     }
     [self initSubjects];
     CGRect frame = self.view.frame;
+    if([self.myQuestions count] < 1){
+        //[ToolUtils showMessage:@"赶紧拍重点几自己的考研笔记吧"];
+    }
     NSLog(@"%lf",frame.origin.y);
 }
 
@@ -116,15 +121,27 @@
     UIBarButtonItem *myAddButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = myAddButton;
 }
+
+
 - (IBAction)showSelectedType:(UIButton *)sender {
-    if (sender.selected) {
-        return;
+//    if (sender.selected) {
+//        return;
+//    }
+    
+    if([sender.titleLabel.text isEqualToString:@"全部"]){
+        
+        [_selectImportantButton setSelected:NO];
+        [_selectReviewdButton setSelected:NO];
+        [_selectUnReviewButton setSelected:NO];
+        [_selectAllButton setSelected:YES];
+    }else{
+        [_selectAllButton setSelected:NO];
+        [sender setSelected:!sender.selected];
+        //如果此时除去全部以外的按钮都没被选中，那么就选中全部按钮
+        if(!_selectImportantButton.isSelected && !_selectReviewdButton.isSelected && !_selectUnReviewButton.isSelected){
+            [_selectAllButton setSelected:YES];
+        }
     }
-    [_selectAllButton setSelected:NO];
-    [_selectImportantButton setSelected:NO];
-    [_selectReviewdButton setSelected:NO];
-    [_selectUnReviewButton setSelected:NO];
-    [sender setSelected:!sender.selected];
     [self loadData];
     [self.photoView reloadData];
 }
@@ -145,6 +162,7 @@
     self.selectModel = !self.selectModel;
     [self.photoView reloadData];
 }
+
 - (void)loadData
 {
     self.myQuestions =
@@ -164,21 +182,34 @@
     for (NSDictionary* dic in self.myQuestions) {
         for (Question* question in dic[@"array"]) {
             BOOL shoudShow = NO;
+            //判断笔记是否要显示的逻辑在这里
             if (_selectAllButton.selected) {
                 shoudShow = YES;
-            } else if (_selectReviewdButton.selected) {
-                if (question.review_time.integerValue>0) {
-                    shoudShow = YES;
-                }
-            } else if (_selectUnReviewButton.selected) {
-                if (question.review_time.integerValue==0) {
-                    shoudShow = YES;
-                }
-            } else if (_selectImportantButton.selected) {
-                if (question.is_highlight.integerValue==1) {
-                    shoudShow = YES;
-                }
             }
+            if (_selectReviewdButton.selected && question.review_time.integerValue>0) {
+                    shoudShow = YES;
+            }
+            if (_selectUnReviewButton.selected && question.review_time.integerValue==0) {
+                    shoudShow = YES;
+            }
+            if (_selectImportantButton.selected && question.is_highlight.integerValue==1) {
+                    shoudShow = YES;
+            }
+//            if (_selectAllButton.selected) {
+//                shoudShow = YES;
+//            } else if (_selectReviewdButton.selected) {
+//                if (question.review_time.integerValue>0) {
+//                    shoudShow = YES;
+//                }
+//            } else if (_selectUnReviewButton.selected) {
+//                if (question.review_time.integerValue==0) {
+//                    shoudShow = YES;
+//                }
+//            } else if (_selectImportantButton.selected) {
+//                if (question.is_highlight.integerValue==1) {
+//                    shoudShow = YES;
+//                }
+//            }
             if (shoudShow) {
                 BOOL hadDay = NO;
                 for (NSDictionary* dicToShow in self.questionsToShow) {
@@ -195,6 +226,7 @@
             }
         }
     }
+    
     [self.questionsToShow sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         NSString* a = [obj1 objectForKey:@"day"];
         NSString* b = [obj2 objectForKey:@"day"];
@@ -407,17 +439,27 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.selectModel) {
-        RecordVC* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"QuestionDetail"];
-        detailVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
-        [detailVC.questionList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            MQuestion* a = (MQuestion*)obj1;
-            MQuestion* b = (MQuestion*)obj2;
-            return a.myDay_.integerValue < b.myDay_.integerValue;
-        }];
-        Question* question = [[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
-        detailVC.currentQuestionId = question.questionid;
-        [self.navigationController pushViewController:detailVC animated:YES];
+        ReviewVC* reviewVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Review"];
+        reviewVC.questionList = [[NSMutableArray alloc]init];
+        QuestionBook *book = [[QuestionBook alloc]init];
+        for(NSDictionary *dic in self.questionsToShow){
+            for(Question *ques in [dic objectForKey:@"array"]){
+                [reviewVC.questionList addObject:[book changeFromMQuestion:ques]];
+            }
+        }
+        reviewVC.reviewType = @"笔记复习";
+        reviewVC.subject = self.subject;
+        Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
+        reviewVC.currentQuestionId = question.questionid;
+        //detailVC.currentQuestionId = question.questionid;
+        [self.navigationController pushViewController:reviewVC animated:YES];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
+               //点击浏览按钮直接进入复习页面
+//        ReviewVC* reviewVC = [segue destinationViewController];
+//        reviewVC.questionList = [[QuestionBook getInstance] getMQuestionsOfType:self.type];
+//        reviewVC.subject = self.subject;
+//        UIButton* button = (UIButton*)sender;
+//        reviewVC.reviewType = button.titleLabel.text;
         
     } else {
         Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
