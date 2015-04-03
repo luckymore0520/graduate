@@ -74,8 +74,8 @@
 
 - (void)reloadData
 {
-    [self.essenceList removeAllObjects];
     [self.tableView setContentOffset:CGPointMake(0, 0)];
+    [self.essenceList removeAllObjects];
     page = 1;
     [_header beginRefreshing];
 }
@@ -172,6 +172,9 @@
 {
     if (tableView==self.tableView) {
         EssenceListCell* cell = [tableView dequeueReusableCellWithIdentifier:@"essence"];
+        if(self.essenceList.count <= indexPath.row){
+            return cell;
+        }
         MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
         [cell.essenceTitleLabel setText:essence.title_];
         [cell.essenceSourceLabel setText:[NSString stringWithFormat:@"来自网友%@的分享",essence.source_]];
@@ -213,10 +216,9 @@
             [self.parentVC.navigationController pushViewController:detail animated:YES];
         }
     }else if(tableView ==self.tableView && _selectedMode){
-        
         EssenceListCell* cell = (EssenceListCell *)[tableView cellForRowAtIndexPath:indexPath];
         [cell.selectButton setSelected:!cell.selectButton.selected];
-        NSLog(@"不是那种情况%@ %@",cell.essenceId,cell.selectButton.selected ? @"选中了" : @"没选中");
+//        NSLog(@"不是那种情况%@ %@",cell.essenceId,cell.selectButton.selected ? @"选中了" : @"没选中");
         [cell.delegate selectCollection:cell.essenceId isSelected:cell.selectButton.selected];
 //        MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
 //        MyCollectionRootView *root = (MyCollectionRootView*)self.parentVC;

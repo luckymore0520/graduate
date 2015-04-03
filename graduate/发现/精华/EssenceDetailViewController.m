@@ -56,8 +56,8 @@
         //[_essenceDownloadBt setHidden:YES];
         //[_essenceCollectButton setHidden:YES];
     }
-    UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
-    self.tableView.tableFooterView = view;
+//    UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
+//    self.tableView.tableFooterView = view;
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
 -(void)viewDidDisappear:(BOOL)animated
@@ -66,6 +66,14 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    self.tableView.contentSize = CGSizeMake(0, self.tableView.contentSize.height+[self calVideoCollectionViewHeight]);
+    CGRect rect = self.tableView.tableHeaderView.frame;
+    self.tableView.tableHeaderView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height+[self calVideoCollectionViewHeight]);
+}
+
 
 - (void)addRightButton
 {
@@ -125,6 +133,7 @@
         [ToolUtils showToast:@"收藏成功" toView:self.view];
     }
 }
+
 - (IBAction)collect:(id)sender {
     if (self.essence.isCollected_.boolValue) {
         [ToolUtils showToast:@"您已收藏该资料" toView:self.view];
@@ -309,6 +318,7 @@
     return cell;
 }
 
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
@@ -316,6 +326,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    self.tableView.contentSize = CGSizeMake(0, self.tableView.contentSize.height+[self calVideoCollectionViewHeight]);
+    CGRect rect = self.tableView.tableHeaderView.frame;
+    self.tableView.tableHeaderView.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height+[self calVideoCollectionViewHeight]);
     return self.essence.media_.count;
 }
 
