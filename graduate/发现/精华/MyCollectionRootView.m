@@ -18,7 +18,8 @@
 @property (nonatomic,strong) NSMutableArray* myControllers;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolBarLocation;
 @property (nonatomic)int count;
-
+//弹窗
+@property (nonatomic,strong)UIAlertView* subjectAlert;
 @end
 
 @implementation MyCollectionRootView
@@ -95,6 +96,7 @@
         [listView setSelectedMode:_selectedMode];
     }
 }
+
 - (IBAction)selectAll:(id)sender {
     UIButton* button = (UIButton*)sender;
     [button setSelected:!button.selected];
@@ -102,11 +104,10 @@
 }
 
 - (IBAction)ensureDelete:(id)sender {
-    _count = 0;
-    for (NSString* str in self.removeArray) {
-        MEssenceCollect* collect = [[MEssenceCollect alloc]init];
-        [collect load:self id:str type:0];
+    if (!self.subjectAlert) {
+        _subjectAlert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确实删除么" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     }
+    [_subjectAlert show];
 }
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
@@ -131,6 +132,23 @@
         [_removeArray removeObject:essenceId];
     }
 }
+
+
+#pragma mark -AlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.subjectAlert) {
+        if (buttonIndex==1) {
+            _count = 0;
+            for (NSString* str in self.removeArray) {
+                MEssenceCollect* collect = [[MEssenceCollect alloc]init];
+                [collect load:self id:str type:0];
+            }
+
+        }
+    }
+}
+
 /*
 #pragma mark - Navigation
 

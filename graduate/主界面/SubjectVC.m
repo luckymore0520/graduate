@@ -69,6 +69,9 @@
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
 @property (weak, nonatomic) IBOutlet UIControl *bootView;
 @property (strong,nonatomic)Trace* trace;
+
+//弹窗
+@property (nonatomic,strong)UIAlertView* subjectAlert;
 @end
 CGFloat angle;
 @implementation SubjectVC
@@ -363,8 +366,7 @@ CGFloat angle;
 
 - (IBAction)recommand:(id)sender {
     if (self.subjects.count<4) {
-        [self performSegueWithIdentifier:@"editSubject" sender:nil];
-
+        [self showSubjectAlert];
     } else {
         [self performSegueWithIdentifier:@"recommand" sender:nil];
         [ToolUtils setRecommandDay:[ToolUtils getCurrentDate]];
@@ -386,7 +388,7 @@ CGFloat angle;
 
 - (IBAction)takePhoto:(id)sender {
     if (self.subjects.count<4) {
-        [self performSegueWithIdentifier:@"editSubject" sender:nil];
+        [self showSubjectAlert];
     } else {
         SCNavigationController *nav = [[SCNavigationController alloc] init];
         nav.scNaigationDelegate = self;
@@ -654,6 +656,22 @@ CGFloat angle;
     [[[MUploadDiary alloc]init]load:self content:trace.note date:trace.date];
 }
 
+-(void)showSubjectAlert
+{
+    if (!self.subjectAlert) {
+        _subjectAlert = [[UIAlertView alloc]initWithTitle:@"设置科目" message:@"该功能取决于您的课程，请先添加课程" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    }
+    [_subjectAlert show];
+}
+#pragma mark -AlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.subjectAlert) {
+        if (buttonIndex==1) {
+            [self performSegueWithIdentifier:@"editSubject" sender:nil];
+        }
+    }
+}
 
 - (void) keyboardWasShown:(NSNotification *) notif
 {

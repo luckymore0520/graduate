@@ -103,7 +103,11 @@
 
 
 -(void)closeSelf{
-    [[[UIAlertView alloc]initWithTitle:@"退出复习" message:@"再坚持一下吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] show];
+    if(!self.isBrowse){
+        [[[UIAlertView alloc]initWithTitle:@"退出复习" message:@"再坚持一下吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] show];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -196,7 +200,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.scrollView.contentOffset = CGPointMake(self.scrollView.contentOffset.x + self.view.frame.size.width, 0.0);
         }];
-        NSLog(@"the location is %f  %f",self.scrollView.contentOffset.x,self.scrollView.contentOffset.y);
+        //NSLog(@"the location is %f  %f",self.scrollView.contentOffset.x,self.scrollView.contentOffset.y);
         [self addBottomView:view.myQuestion showAll:NO];
     } else {
         self.currentPage--;

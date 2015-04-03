@@ -11,4 +11,5 @@
 @interface MyCollectionRootView : BaseFuncVC<EssenceListCellDelegate>
 - (void)setSelectedMode:(BOOL)selectedMode;
 - (void)selectCollection:(NSString *)essenceId isSelected:(BOOL)isSelected;
+-(NSMutableArray *)removeArray;
 @end

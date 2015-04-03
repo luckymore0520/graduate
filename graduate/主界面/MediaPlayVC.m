@@ -11,6 +11,8 @@
 #import "LoginVC.h"
 #import "MGetWelcome.h"
 #import "MReturn.h"
+#import "RootViewController.h"
+#import "MUser.h"
 
 
 @interface MediaPlayVC ()<ApiDelegate>
@@ -18,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (nonatomic,strong)MPMoviePlayerController* moviePlayer;
 @property (weak, nonatomic) IBOutlet UIButton *jumpButton;
-@property (nonatomic,strong)LoginVC* rootVC;
+@property (nonatomic,strong)RootViewController* rootVC;
 @property (nonatomic,strong)NSTimer* timer;
 @end
 
@@ -41,11 +43,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     if (!self.moviePlayer) {
-        UIStoryboard *userSB ;
-        userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
-        self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
-        MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
-        [getWelcome load:self];
+        if([ToolUtils connectToInternet]){
+            MGetWelcome* getWelcome = [[MGetWelcome alloc]init];
+            [getWelcome load:self];
+        }
         NSString *thePath=[[NSBundle mainBundle] pathForResource:@"Movie" ofType:@"mp4"];
         NSURL *theurl=[NSURL fileURLWithPath:thePath];
         self.moviePlayer=[[MPMoviePlayerController alloc] initWithContentURL:theurl];
@@ -63,7 +64,16 @@
 - (IBAction)goToLogin:(id)sender {
     [self.moviePlayer stop];
     self.moviePlayer = nil;
-    [self.navigationController pushViewController:self.rootVC animated:YES];
+    if([ToolUtils getHasLogin]){
+        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+//        self.rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
+        [self.navigationController pushViewController:(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"] animated:YES];
+//        self.rootVC = (LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"];
+    }else{
+        UIStoryboard *userSB ;
+        userSB = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+        [self.navigationController pushViewController:(LoginVC*)[userSB instantiateViewControllerWithIdentifier:@"login"] animated:YES];
+    }
 }
 
 - (IBAction)showJumpButton:(id)sender {
@@ -82,9 +92,16 @@
 - (void)dispos:(NSDictionary*) data functionName:(NSString*)names
 {
     if ([names isEqualToString:@"MGetWelcomePage"]) {
-        MReturn* ret = [MReturn objectWithKeyValues:data];
-        NSLog(@"%@",ret.msg_);
-        
+        MUser* user = [MUser objectWithKeyValues:data];
+        if([user.verify_ length]){
+            [ToolUtils setUserInfomation:user.keyValues];
+            [ToolUtils setDiaryDefault:user.diaryDefault_];
+            [ToolUtils setAboutUrl:user.aboutusUrl_];
+            [ToolUtils setContactUrl:user.contactUrl_];
+
+            [ToolUtils setHasLogin:YES];
+        }
+//        NSLog(@"%@",user);
     }
     
 }

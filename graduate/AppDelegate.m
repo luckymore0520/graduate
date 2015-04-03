@@ -26,6 +26,8 @@
 #import "WKNavigationViewController.h"
 #import "LoginVC.h"
 #import "EssenceDetailViewController.h"
+#import "UIDevice+IdentifierAddition.h"
+#import <AdSupport/ASIdentifierManager.h>
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,QQApiInterfaceDelegate>
 
 @end
@@ -44,11 +46,11 @@
         [unv setNavigationBarHidden:YES];
         [_window setRootViewController:unv];
         [ToolUtils setFirstUse:@"NO"];
-    } else if ([ToolUtils getHasLogin]){
+    } else if([ToolUtils getHasLogin]){
         UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
         RootViewController* _rootVC =(RootViewController*)[myStoryBoard instantiateViewControllerWithIdentifier:@"root"];
         [_window setRootViewController:_rootVC];
-    } else {
+    }else {
         UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"User" bundle:nil];
         LoginVC* _rootVC = (LoginVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"login"];
         WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
@@ -118,15 +120,23 @@
     CGFloat version = [sysVersion floatValue];
     
     NSString *deviceid = @"";
-    if (version >= 7.0) {
-        deviceid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    }
-    else if (version >= 2.0) {
-        deviceid =  [self getMacAddress];
-    }
+//    if (version >= 7.0) {
+//        deviceid = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+//    }
+//    else if (version >= 2.0) {
+//        deviceid =  [self getMacAddress];
+//    }
+    deviceid =  [self getDeviceId];
     [ToolUtils setDeviceId:deviceid];
 }
 
+-(NSString  *)getDeviceId
+{
+    //return  [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
+    NSString *adId =[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+//    NSLog(@"%@ id为",adId);
+    return adId;
+}
 
 
 - (NSString *)getMacAddress

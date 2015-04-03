@@ -126,10 +126,14 @@
     {
         [self editEmail];
     } else if (indexPath.section ==4)
-        
     {
-        UIActionSheet* actionSheet = [[UIActionSheet alloc]initWithTitle:@"退出后不会删除任何历史数据，下次登录依然可以使用本账号" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登录" otherButtonTitles:nil, nil];
-        [actionSheet showInView:self.view];
+        if(_user.hasPassword_.integerValue < 0){
+            [ToolUtils showMessage:[NSString stringWithFormat:@"您当前帐号为%@，密码为空，请务必设置密码以备重新登录",_user.account_]];
+            [self performSegueWithIdentifier:@"setPassword" sender:nil];
+        }else{
+            UIActionSheet* actionSheet = [[UIActionSheet alloc]initWithTitle:@"退出后不会删除任何历史数据，下次登录依然可以使用本账号" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登录" otherButtonTitles:nil, nil];
+            [actionSheet showInView:self.view];
+        }
     } else if (indexPath.section==2)
     {
         if (_user.hasPassword_&&_user.hasPassword_.integerValue==1) {
@@ -309,16 +313,18 @@
 #pragma mark -ActionSheetDelegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
     if (buttonIndex==0) {
+        //如果发现这个用户是静默登录的，而且还没有设置密码，那么就让他设置密码
+        [ToolUtils showMessage:[NSString stringWithFormat:@"您当前的研大大帐号为%@，下次也可使用该帐号继续登录",_user.account_]];
         [ToolUtils setHasLogin:NO];
-        [ToolUtils setUserId:nil];
-        [ToolUtils setVerify:nil];
-        UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"User" bundle:nil];
-        LoginVC* _rootVC = (LoginVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"login"];
-        WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
-        [nav setNavigationBarHidden:YES];
-        [[[UIApplication sharedApplication].delegate window] setRootViewController:nav];
+            [ToolUtils setUserId:nil];
+            [ToolUtils setVerify:nil];
+            UIStoryboard *myStoryBoard = [UIStoryboard storyboardWithName:@"User" bundle:nil];
+            LoginVC* _rootVC = (LoginVC*)[myStoryBoard instantiateViewControllerWithIdentifier:@"login"];
+            WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:_rootVC];
+            [nav setNavigationBarHidden:YES];
+            [[[UIApplication sharedApplication].delegate window] setRootViewController:nav];
+        
     }
 }
 

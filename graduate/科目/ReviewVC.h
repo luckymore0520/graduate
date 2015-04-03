@@ -32,6 +32,7 @@
 @property (nonatomic,strong)NSMutableArray* questionList;
 @property (nonatomic)CGFloat bottomHeight;
 @property (nonatomic)BOOL hasTitle;
+@property (nonatomic)BOOL isBrowse;
 @property (nonatomic,strong)NSString* subject;
 - (void)loadQuestions;
 - (void)addBottomView:(MQuestion*)selectedQuestion showAll:(BOOL)showAll;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jsd-1m-36F">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -245,7 +245,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="350CB0FE-084C-42BE-9148-779892C9741A" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B3BC1A51-F70C-495A-A9D8-EB9188C56150" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -7451,7 +7451,7 @@
     <resources>
         <image name="1-返回键" width="10" height="19"/>
         <image name="2-开始体验" width="180" height="40"/>
-        <image name="350CB0FE-084C-42BE-9148-779892C9741A" width="166" height="165">
+        <image name="B3BC1A51-F70C-495A-A9D8-EB9188C56150" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

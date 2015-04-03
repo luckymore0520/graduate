@@ -56,9 +56,9 @@ MyTraceList* tracelist = nil;
 {
     NSMutableArray* traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=null and note!='' and note!=%@",[ToolUtils getUserid],[ToolUtils getDiaryDefault]] tableName:@"Trace"]];
     NSLog(@"legnth of %d" ,[traceList count]);
-    for(Trace *t in traceList){
-        NSLog(@"%@--%d-%@",t.user,t.myDay.integerValue,t.note);
-    }
+//    for(Trace *t in traceList){
+//        NSLog(@"%@--%d-%@",t.user,t.myDay.integerValue,t.note);
+//    }
     if([traceList count] > 0){
         [traceList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSString* a = ((Trace*)obj1).myDay;

@@ -53,14 +53,17 @@
     _essenceDownloadBt.layer.cornerRadius = 5;
     [self.navigationController setNavigationBarHidden:NO];
     if (_isMyCollection) {
-        [_essenceDownloadBt setHidden:YES];
-        [_essenceCollectButton setHidden:YES];
+        //[_essenceDownloadBt setHidden:YES];
+        //[_essenceCollectButton setHidden:YES];
     }
+    UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = view;
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -75,6 +78,7 @@
     [self.navigationController pushViewController:more
                                          animated:YES];
 }
+
 - (void)loadData
 {
     [self.essenceTitleLabel setText:self.essence.title_];
@@ -97,17 +101,21 @@
     if (self.essence.media_.count==0) {
         _videoCollectionViewHeight.constant = 0;
     } else {
-        _videoCollectionViewHeight.constant = (self.essence.media_.count/5+1)*50-15;
+        _videoCollectionViewHeight.constant = [self calVideoCollectionViewHeight];
     }
     [self.view layoutIfNeeded];
 }
 
+-(CGFloat)calVideoCollectionViewHeight
+{
+    return (self.essence.media_.count/5+1)*50-15;
+}
 
 - (void)dispos:(NSDictionary *)data functionName:(NSString *)names
 {
     if ([names isEqualToString:@"MEssenceDownload"])
     {
-        [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
+        //[ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
     } else if ([names isEqualToString:@"MEssenceDetail"])
     {
         self.essence = [MEssence objectWithKeyValues:data];
@@ -148,7 +156,7 @@
 }
 
 - (IBAction)download:(id)sender {
-    if (!_user.email_||_user.email_.length==0) {
+    if (![_user.email_ length]) {
         if (!self.emailAlert) {
             _emailAlert = [[UIAlertView alloc]initWithTitle:@"设置邮箱" message:@"下载前请先设置邮箱" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             
@@ -156,7 +164,9 @@
         [_emailAlert show];
         return;
     } else if (_essence.isDownloaded_.integerValue==1||_essence.needShare_.integerValue==0) {
-         [[[MEssenceDownload alloc]init]load:self id:_essence.id_ resid:_essence.resid_ email:_user.email_ isShared:@"1"];
+        [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
+        self.essenceDownloadBt.enabled = false;
+        [[[MEssenceDownload alloc]init]load:self id:_essence.id_ resid:_essence.resid_ email:_user.email_ isShared:@"1"];
     } else {
         if (!self.shareAlert) {
             _shareAlert = [[UIAlertView alloc]initWithTitle:@"先分享，再下载" message:@"因为是星级帖，所以要先分享后再下载" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"分享", nil];
@@ -308,6 +318,7 @@
 {
     return self.essence.media_.count;
 }
+
 #pragma mark -sharebuttons
 
 - (IBAction)qqShare:(UIButton *)sender

@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *essenceCollectButton;
 @property (weak, nonatomic) IBOutlet UIView *shareView;
 @property (weak, nonatomic) IBOutlet UIButton *essenceShareButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -47,7 +48,6 @@ document.location=\"myweb:touch:end\";};";
 {
     [super viewDidLoad];
     [self.webView setDelegate:self];
-    
     if (self.url) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
     }
@@ -59,6 +59,7 @@ document.location=\"myweb:touch:end\";};";
     }
     [self.navigationController setNavigationBarHidden:NO];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
+    self.activityIndicator.hidesWhenStopped = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -130,6 +131,8 @@ document.location=\"myweb:touch:end\";};";
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [self.activityIndicator stopAnimating];
+    
     [self.webView stringByEvaluatingJavaScriptFromString:kTouchJavaScriptString];
 }
 
@@ -233,11 +236,14 @@ document.location=\"myweb:touch:end\";};";
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    
-    
+    //创建UIActivityIndicatorView背底半透明View
+    [self.activityIndicator startAnimating];
 }
 
-
+- (void)webView:(UIWebView *)webView  didFailLoadWithError:(NSError *)error
+{
+    [self.activityIndicator stopAnimating];
+}
 - (void)addRightButton
 {
     [self addRightButton:@"更多精华" action:@selector(showMore) img:nil];

@@ -11,6 +11,9 @@
 @implementation MGetWelcome
 - (ApiHelper *)load:(id<ApiDelegate>)delegate
 {
-    return [self load:@"MGetWelcomePage" params:nil delegate:delegate];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:[ToolUtils getDeviceId] forKey:@"deviceid"];
+    [dic setObject:@"IOS" forKey:@"device"];
+    return [self load:@"MGetWelcomePage" params:dic delegate:delegate];
 }
 @end

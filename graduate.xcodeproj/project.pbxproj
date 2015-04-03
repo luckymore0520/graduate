@@ -301,6 +301,8 @@
 		7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */; };
 		7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3C2411AA4BE980068812D /* WKUILabel.m */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
+		B13D1FEC1ACD270000F81344 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B13D1FE91ACD270000F81344 /* NSString+MD5Addition.m */; };
+		B13D1FED1ACD270000F81344 /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = B13D1FEB1ACD270000F81344 /* UIDevice+IdentifierAddition.m */; };
 		B14080D61ABAFACC004BAF3F /* VIPWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14080D51ABAFACC004BAF3F /* VIPWebViewController.m */; };
 		B14080D91ABB23B0004BAF3F /* AboutUsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14080D81ABB23B0004BAF3F /* AboutUsWebViewController.m */; };
 		B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B1AD83621AB3FDA200117C8C /* UIPlaceHolderTextView.m */; };
@@ -846,6 +848,10 @@
 		7DF3C2401AA4BE980068812D /* WKUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKUILabel.h; path = Tools/WKUILabel.h; sourceTree = "<group>"; };
 		7DF3C2411AA4BE980068812D /* WKUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKUILabel.m; path = Tools/WKUILabel.m; sourceTree = "<group>"; };
 		7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B13D1FE81ACD270000F81344 /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Addition.h"; sourceTree = "<group>"; };
+		B13D1FE91ACD270000F81344 /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
+		B13D1FEA1ACD270000F81344 /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
+		B13D1FEB1ACD270000F81344 /* UIDevice+IdentifierAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+IdentifierAddition.m"; sourceTree = "<group>"; };
 		B14080D41ABAFACC004BAF3F /* VIPWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VIPWebViewController.h; path = "主界面/VIPWebViewController.h"; sourceTree = "<group>"; };
 		B14080D51ABAFACC004BAF3F /* VIPWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VIPWebViewController.m; path = "主界面/VIPWebViewController.m"; sourceTree = "<group>"; };
 		B14080D71ABB23B0004BAF3F /* AboutUsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutUsWebViewController.h; path = "发现/个人/AboutUsWebViewController.h"; sourceTree = "<group>"; };
@@ -1535,6 +1541,7 @@
 		7D6A51B61A6B570300355923 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				B13D1FE71ACD26D800F81344 /* UIDevice */,
 				7D2F92C81ABCAE0300D4B18F /* YLGIFImage */,
 				7D2F92C11ABCABFA00D4B18F /* GIF */,
 				7D82A5EA1A9F79A30003F5A5 /* JTSlideShadowAnimation */,
@@ -1884,6 +1891,17 @@
 				7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */,
 			);
 			name = QCSlide;
+			sourceTree = "<group>";
+		};
+		B13D1FE71ACD26D800F81344 /* UIDevice */ = {
+			isa = PBXGroup;
+			children = (
+				B13D1FE81ACD270000F81344 /* NSString+MD5Addition.h */,
+				B13D1FE91ACD270000F81344 /* NSString+MD5Addition.m */,
+				B13D1FEA1ACD270000F81344 /* UIDevice+IdentifierAddition.h */,
+				B13D1FEB1ACD270000F81344 /* UIDevice+IdentifierAddition.m */,
+			);
+			name = UIDevice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2241,6 +2259,7 @@
 				7D5DBB0E1A8080FF0078B99C /* MUpdateSubject.m in Sources */,
 				7DA994E31A7A0D8B00A879CF /* MLogin.m in Sources */,
 				7D2F92AA1AB72F6900D4B18F /* MMedia.m in Sources */,
+				B13D1FED1ACD270000F81344 /* UIDevice+IdentifierAddition.m in Sources */,
 				7DDA29481A7B2144003F77C3 /* AFHTTPSessionManager.m in Sources */,
 				7D4E05CC1A74EF71001709DB /* UIImageView+WebCache.m in Sources */,
 				7D4E05CA1A74EF71001709DB /* UIImage+WebP.m in Sources */,
@@ -2248,6 +2267,7 @@
 				7D5DBB271A81BF5A0078B99C /* MSign.m in Sources */,
 				7D24322F1A7C984E00C00F64 /* MQuestion.m in Sources */,
 				7D2F92C61ABCAC0500D4B18F /* OLImage.m in Sources */,
+				B13D1FEC1ACD270000F81344 /* NSString+MD5Addition.m in Sources */,
 				7D46BDD81A98B17000F58613 /* MMsgCount.m in Sources */,
 				7D5DBB721A8364D80078B99C /* MPostPublish.m in Sources */,
 				7D2432111A7B785500C00F64 /* essencePostVC.m in Sources */,

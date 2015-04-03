@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *dotLabelForEssence;
 @property (nonatomic,strong)NSArray* monthArr;
 @property (weak, nonatomic) IBOutlet UILabel *dotLabelForSquare;
+//弹窗
+@property (nonatomic,strong)UIAlertView* subjectAlert;
 @end
 
 @implementation OtherFuncVCViewController
@@ -126,9 +128,7 @@
 }
 - (IBAction)goToPrint:(id)sender {
     if ([[QuestionBook getInstance]getMySubjects].count<4) {
-        [ToolUtils showMessage:@"请先设置科目"];
-        UIViewController* setSubject = [self.storyboard instantiateViewControllerWithIdentifier:@"setSubject"];
-        [self.navigationController pushViewController:setSubject animated:YES];
+        [self showSubjectAlert];
         return;
         
     }
@@ -156,9 +156,7 @@
 }
 - (IBAction)goToBackUp:(id)sender {
     if ([[QuestionBook getInstance]getMySubjects].count<4) {
-        [ToolUtils showMessage:@"请先设置科目"];
-        UIViewController* setSubject = [self.storyboard instantiateViewControllerWithIdentifier:@"setSubject"];
-        [self.navigationController pushViewController:setSubject animated:YES];
+        [self showSubjectAlert];
         return;
     }
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"DiscoverStoryBoard" bundle:nil];
@@ -201,6 +199,26 @@
         vwvc.url = [NSURL URLWithString:[ToolUtils getContactUrl]];
     }
 }
+
+-(void)showSubjectAlert
+{
+    if (!self.subjectAlert) {
+        _subjectAlert = [[UIAlertView alloc]initWithTitle:@"设置科目" message:@"该功能取决于您的课程，请先添加课程" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    }
+    [_subjectAlert show];
+}
+#pragma mark -AlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.subjectAlert) {
+        if (buttonIndex==1) {
+            UIViewController* setSubject = [self.storyboard instantiateViewControllerWithIdentifier:@"setSubject"];
+            [self.navigationController pushViewController:setSubject animated:YES];
+            return;
+        }
+    }
+}
+
 
 /*
 #pragma mark - Navigation

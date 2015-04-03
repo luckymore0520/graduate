@@ -489,6 +489,7 @@
 + (BOOL)connectToInternet
 {
     
+    
     //创建零地址，0.0.0.0的地址表示查询本机的网络连接状态
         
     struct sockaddr_storage zeroAddress;

@@ -401,7 +401,7 @@
         [ToolUtils setIgnoreNetwork:NO];
         isThirdParty = YES;
         [ToolUtils setThirdParyType:@"weixin"];
-        NSLog(@"nickname---%@",[dic objectForKey:@"nickname"]);
+//        NSLog(@"nickname---%@",[dic objectForKey:@"nickname"]);
         [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:((NSNumber*)[dic objectForKey:@"sex"]).integerValue==1 ? @"男" : @"女",@"gender",[dic objectForKey:@"nickname"],@"nickname", nil]];
     }
 }
@@ -411,8 +411,8 @@
     NSDictionary* userInfo =response.jsonResponse;
 //    NSLog(@"%@",userInfo);
 //    NSLog(@"%@",[userInfo objectForKey:@"nickname"]);
-    NSLog(@"%@",userInfo);
-    NSLog(@"sex of %@",[(NSNumber*)[userInfo objectForKey:@"sex"] intValue]==1? @"yes":@"no");
+//    NSLog(@"%@",userInfo);
+//    NSLog(@"sex of %@",[(NSNumber*)[userInfo objectForKey:@"sex"] intValue]==1? @"yes":@"no");
     [ToolUtils setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:[userInfo objectForKey:@"gender"],@"gender",[userInfo objectForKey:@"nickname"],@"nickname",@"",@"headImg", nil]];
     if (userInfo) {
         NSLog(@"%@",[userInfo objectForKey:@"figureurl_qq_1"]);

@@ -447,8 +447,9 @@
                 [reviewVC.questionList addObject:[book changeFromMQuestion:ques]];
             }
         }
-        reviewVC.reviewType = @"笔记复习";
+        reviewVC.reviewType = @"笔记浏览";
         reviewVC.subject = self.subject;
+        reviewVC.isBrowse = YES;
         Question* question = (Question*)[[[self.questionsToShow objectAtIndex:indexPath.section]objectForKey:@"array"]objectAtIndex:indexPath.row];
         reviewVC.currentQuestionId = question.questionid;
         //detailVC.currentQuestionId = question.questionid;

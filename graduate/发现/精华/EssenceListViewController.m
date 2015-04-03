@@ -50,6 +50,11 @@
      [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(processShareSuccess) name:@"shareSuccess" object:nil];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -185,14 +190,14 @@
         }
         cell.essenceId = essence.id_;
         return cell;
-    } 
+    }
     return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (tableView==self.tableView) {
+    if (tableView==self.tableView && !_selectedMode) {
         MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
             if (essence.hasDownload_.integerValue==1) {
             EssenceDetailViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"essenceDetail"];
@@ -207,13 +212,30 @@
             detail.postId = essence.id_;
             [self.parentVC.navigationController pushViewController:detail animated:YES];
         }
+    }else if(tableView ==self.tableView && _selectedMode){
+        
+        EssenceListCell* cell = (EssenceListCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [cell.selectButton setSelected:!cell.selectButton.selected];
+        NSLog(@"不是那种情况%@ %@",cell.essenceId,cell.selectButton.selected ? @"选中了" : @"没选中");
+        [cell.delegate selectCollection:cell.essenceId isSelected:cell.selectButton.selected];
+//        MEssence* essence = [self.essenceList objectAtIndex:indexPath.row];
+//        MyCollectionRootView *root = (MyCollectionRootView*)self.parentVC;
+        
+//        NSLog(@"不是那种情况%@ %@",essence.id_,[root.removeArray containsObject:essence.id_] ? @"选中了" : @"没选中");
+//        NSLog(@"%@",cell.selectButton);
+//        [cell.selectButton setSelected:YES];
+//        [cell.selectButton setSelected:!cell.selectButton.selected];
+//        [cell setSelect:cell.selectButton.selected];
+//        [root selectCollection:essence.id_ isSelected:YES];
+//        [cell selectCollection:cell.essenceId isSelected:cell.selectButton.selected];
+        //cell.delegate selectCollection:<#(NSString *)#> isSelected:<#(BOOL)#>
     }
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (_selectedMode) {
-        return nil;
+        //return nil;
     }
     return indexPath;
 }
@@ -222,7 +244,11 @@
 {
     if (buttonIndex == 0) {
         MEssence* essence = self.selectEssence;
-        if (!_user.email_||_user.email_.length==0) {
+        //这里再读一次用户信息
+        if(![_user.email_ length]){
+            _user = [MUser objectWithKeyValues:[ToolUtils getUserInfomation]];
+        }
+        if (![_user.email_  length]) {
             if (!self.emailAlert) {
                 _emailAlert = [[UIAlertView alloc]initWithTitle:@"设置邮箱" message:@"下载前请先设置邮箱" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             }
@@ -391,7 +417,7 @@
 
 -(void)sendEmail
 {
-    NSLog(@"%@dd",self.selectEssence);
+//    NSLog(@"%@dd",self.selectEssence);
     [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
 }
 

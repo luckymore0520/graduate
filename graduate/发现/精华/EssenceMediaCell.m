@@ -32,7 +32,7 @@
 //    MPMoviePlayerViewController* controller = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL URLWithString:_media.url_]];
 //    [self.viewController presentMoviePlayerViewControllerAnimated:controller];
     EssenceDetailWebViewController* detail = [self.viewController.storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
-    detail.url = [NSURL URLWithString:_media.url_];
+    detail.url = [NSURL URLWithString:[_media.url_ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [self.viewController.navigationController pushViewController:detail animated:YES];
 
 }

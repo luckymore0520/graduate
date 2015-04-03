@@ -21,7 +21,9 @@
 }
 - (ApiHelper *)download:(id<ApiDelegate>)delegate url:(NSString *)url
 {
-    
+    if (![ToolUtils connectToInternet]) {
+        return self;
+    }
     NSLog(@"歌曲下载%@",url);
 //    if (![ToolUtils connectedToNetWork]&&![ToolUtils ignoreNetwork]) {
 //        return nil;
@@ -52,6 +54,7 @@
 //调用接口 get 方法名 参数 代理
 - (ApiHelper*)load:(NSString *)method params:(NSDictionary *)params delegate:(id<ApiDelegate>)delegate
 {
+//    NSLog(@"联网了么%@",[ToolUtils connectToInternet]?@"联网了":@"没联网");
     if (![ToolUtils connectToInternet]) {
         return self;
     }
