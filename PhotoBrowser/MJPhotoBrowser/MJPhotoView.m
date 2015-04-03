@@ -186,7 +186,7 @@
     CGRect imageFrame = CGRectMake(0, 0, boundsWidth, imageHeight * boundsWidth / imageWidth);
     // 内容尺寸
     
-    self.contentSize = CGSizeMake(0, imageFrame.size.height+100);
+    self.contentSize = CGSizeMake(0, imageFrame.size.height+170);
     originHeight = imageFrame.size.height;
     if (self.parentHeight!=0) {
         boundsHeight = self.parentHeight;
@@ -231,9 +231,9 @@
     CGPoint center = _imageView.center;
     CGRect imageViewFrame = _imageView.frame;
     CGRect screenBounds = [UIScreen mainScreen].bounds;
-    if (imageViewFrame.size.height > screenBounds.size.height) {
+    if (imageViewFrame.size.height > screenBounds.size.height-170) {
         imageViewFrame.origin.y = 0.0f;
-        self.contentSize = CGSizeMake(imageViewFrame.size.width, imageViewFrame.size.height+100);
+        self.contentSize = CGSizeMake(imageViewFrame.size.width, imageViewFrame.size.height+170);
     } else {
         imageViewFrame.origin.y = (screenBounds.size.height - imageViewFrame.size.height-44-20) / 2.0;
         self.contentSize = CGSizeMake(screenBounds.size.width, imageViewFrame.size.height);
