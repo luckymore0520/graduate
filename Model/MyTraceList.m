@@ -55,7 +55,7 @@ MyTraceList* tracelist = nil;
 -(Trace *)getNearestNoteTrace
 {
     NSMutableArray* traceList = [NSMutableArray arrayWithArray: [CoreDataHelper query:[NSPredicate predicateWithFormat:@"user=%@ and note!=null and note!='' and note!=%@",[ToolUtils getUserid],[ToolUtils getDiaryDefault]] tableName:@"Trace"]];
-    NSLog(@"legnth of %d" ,[traceList count]);
+//    NSLog(@"legnth of %d" ,[traceList count]);
 //    for(Trace *t in traceList){
 //        NSLog(@"%@--%d-%@",t.user,t.myDay.integerValue,t.note);
 //    }
@@ -65,6 +65,7 @@ MyTraceList* tracelist = nil;
             NSString* b = ((Trace*)obj2).myDay;
             return  b.integerValue>a.integerValue;
         }];
+//        NSLog(@"%@",[traceList firstObject]);
         return [traceList firstObject];
     }else{
         return nil;

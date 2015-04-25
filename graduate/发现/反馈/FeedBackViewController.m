@@ -73,6 +73,10 @@
         [ToolUtils showMessage:@"不能提交空的内容哟！"];
         return;
     }
+    if(![ToolUtils connectToInternet]){
+        [ToolUtils showMessage:@"请确认您的网络是否连接正常"];
+        return;
+    }
     [self waiting:@"正在提交"];
     [[[MFeedback alloc]init]load:self content:self.textArea.text contact:self.contactField.text];
     

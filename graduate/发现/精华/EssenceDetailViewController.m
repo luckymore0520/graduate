@@ -357,7 +357,9 @@
     [self hideShareView];
     self.essence.isDownloaded_ = @1;
     [ShareApiUtil showShareSuccessAlert];
-    [self sendEmail];
+    if([_user.email_ length]){
+        [self sendEmail];
+    }
 }
 
 -(NSString *)getShareTitle
