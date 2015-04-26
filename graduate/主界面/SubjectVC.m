@@ -32,6 +32,7 @@
 #import "MImgUpload.h"
 #import "MUpdateUserInfo.h"
 #import "MyTraceList.h"
+#import "GodNoteViewController.h"
 @interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
 //昵称
 @property (weak, nonatomic) IBOutlet UIImageView *rollImage;
@@ -400,8 +401,11 @@ CGFloat angle;
 {
     
     if ([segue.identifier isEqualToString:@"recommand"]) {
-        RecommandVC* vc = (RecommandVC*)[segue destinationViewController];
-        vc.questionList = [NSMutableArray arrayWithArray:self.recommandList];
+//        RecommandVC* vc = (RecommandVC*)[segue destinationViewController];
+//        vc.questionList = [NSMutableArray arrayWithArray:self.recommandList];
+        
+        GodNoteViewController *godNote = [[GodNoteViewController alloc] init];
+        [self.navigationController pushViewController:godNote animated:YES];
     } 
 }
 

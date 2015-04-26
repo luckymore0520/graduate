@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		317C555D1AEC9AB10063E524 /* GodNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55541AEC9AB10063E524 /* GodNoteViewController.m */; };
+		317C555E1AEC9AB10063E524 /* CourseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55571AEC9AB10063E524 /* CourseModel.m */; };
+		317C555F1AEC9AB10063E524 /* GodNoteRequestManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */; };
+		317C55601AEC9AB10063E524 /* GodNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C555C1AEC9AB10063E524 /* GodNoteView.m */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
@@ -226,7 +230,6 @@
 		7D6A51901A69610600355923 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A518F1A69610600355923 /* AppDelegate.m */; };
 		7D6A51981A69610600355923 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51971A69610600355923 /* Images.xcassets */; };
 		7D6A519B1A69610600355923 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D6A51991A69610600355923 /* LaunchScreen.xib */; };
-		7D6A51A71A69610600355923 /* graduateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A51A61A69610600355923 /* graduateTests.m */; };
 		7D6A51C01A6B574700355923 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6A51BF1A6B574700355923 /* libxml2.dylib */; };
 		7D6A51C21A6B574D00355923 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6A51C11A6B574D00355923 /* MobileCoreServices.framework */; };
 		7D6A51C41A6B575A00355923 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6A51C31A6B575A00355923 /* AVFoundation.framework */; };
@@ -310,17 +313,15 @@
 		B1DC6DE51AB96BCF0046D9C2 /* ThirdPartyCallBackDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DC6DE41AB96BCF0046D9C2 /* ThirdPartyCallBackDelegate.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7D6A51A11A69610600355923 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7D6A517F1A69610600355923 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7D6A51861A69610600355923;
-			remoteInfo = graduate;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		317C55531AEC9AB10063E524 /* GodNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteViewController.h; sourceTree = "<group>"; };
+		317C55541AEC9AB10063E524 /* GodNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteViewController.m; sourceTree = "<group>"; };
+		317C55561AEC9AB10063E524 /* CourseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseModel.h; sourceTree = "<group>"; };
+		317C55571AEC9AB10063E524 /* CourseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseModel.m; sourceTree = "<group>"; };
+		317C55581AEC9AB10063E524 /* GodNoteRequestManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteRequestManger.h; sourceTree = "<group>"; };
+		317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteRequestManger.m; sourceTree = "<group>"; };
+		317C555B1AEC9AB10063E524 /* GodNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteView.h; sourceTree = "<group>"; };
+		317C555C1AEC9AB10063E524 /* GodNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteView.m; sourceTree = "<group>"; };
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
@@ -719,7 +720,6 @@
 		7D6A518F1A69610600355923 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7D6A51971A69610600355923 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7D6A519A1A69610600355923 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		7D6A51A01A69610600355923 /* graduateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = graduateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6A51A51A69610600355923 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D6A51A61A69610600355923 /* graduateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = graduateTests.m; sourceTree = "<group>"; };
 		7D6A51BF1A6B574700355923 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -899,16 +899,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7D6A519D1A69610600355923 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		317C55521AEC9AB10063E524 /* GodNote */ = {
+			isa = PBXGroup;
+			children = (
+				317C55531AEC9AB10063E524 /* GodNoteViewController.h */,
+				317C55541AEC9AB10063E524 /* GodNoteViewController.m */,
+				317C55551AEC9AB10063E524 /* Model */,
+				317C555A1AEC9AB10063E524 /* View */,
+			);
+			name = GodNote;
+			path = "科目/GodNote";
+			sourceTree = "<group>";
+		};
+		317C55551AEC9AB10063E524 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				317C55561AEC9AB10063E524 /* CourseModel.h */,
+				317C55571AEC9AB10063E524 /* CourseModel.m */,
+				317C55581AEC9AB10063E524 /* GodNoteRequestManger.h */,
+				317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		317C555A1AEC9AB10063E524 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				317C555B1AEC9AB10063E524 /* GodNoteView.h */,
+				317C555C1AEC9AB10063E524 /* GodNoteView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7D0A87FD1A872A0D001A33F7 /* ImageEffects */ = {
 			isa = PBXGroup;
 			children = (
@@ -1153,6 +1178,7 @@
 		7D4E05891A74C610001709DB /* 科目 */ = {
 			isa = PBXGroup;
 			children = (
+				317C55521AEC9AB10063E524 /* GodNote */,
 				7D2432D71A7E4A2300C00F64 /* ModifySubjectVC.h */,
 				7D4E060F1A751593001709DB /* MyQuestionVC.h */,
 				7D2432D81A7E4A2300C00F64 /* ModifySubjectVC.m */,
@@ -1486,7 +1512,6 @@
 			isa = PBXGroup;
 			children = (
 				7D6A51871A69610600355923 /* graduate.app */,
-				7D6A51A01A69610600355923 /* graduateTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1924,41 +1949,18 @@
 			productReference = 7D6A51871A69610600355923 /* graduate.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7D6A519F1A69610600355923 /* graduateTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7D6A51AD1A69610600355923 /* Build configuration list for PBXNativeTarget "graduateTests" */;
-			buildPhases = (
-				7D6A519C1A69610600355923 /* Sources */,
-				7D6A519D1A69610600355923 /* Frameworks */,
-				7D6A519E1A69610600355923 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7D6A51A21A69610600355923 /* PBXTargetDependency */,
-			);
-			name = graduateTests;
-			productName = graduateTests;
-			productReference = 7D6A51A01A69610600355923 /* graduateTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		7D6A517F1A69610600355923 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = nju.excalibur;
 				TargetAttributes = {
 					7D6A51861A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = KQ5836GK89;
-					};
-					7D6A519F1A69610600355923 = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2GRZFYGA77;
-						TestTargetID = 7D6A51861A69610600355923;
+						DevelopmentTeam = 9CM6MTZ24G;
 					};
 				};
 			};
@@ -1975,7 +1977,6 @@
 			projectRoot = "";
 			targets = (
 				7D6A51861A69610600355923 /* graduate */,
-				7D6A519F1A69610600355923 /* graduateTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2041,13 +2042,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7D6A519E1A69610600355923 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2062,6 +2056,7 @@
 				7D4E05C61A74EF71001709DB /* SDWebImagePrefetcher.m in Sources */,
 				7D5DBB621A8356540078B99C /* MJRefreshHeaderView.m in Sources */,
 				7D4E05CD1A74EF71001709DB /* UIView+WebCacheOperation.m in Sources */,
+				317C555F1AEC9AB10063E524 /* GodNoteRequestManger.m in Sources */,
 				7D2F92A01AB57FC600D4B18F /* MyQuestionRootViewController.m in Sources */,
 				7D0A87FA1A85ED2A001A33F7 /* CircularProgressView.m in Sources */,
 				7D4E05BE1A74EF71001709DB /* MKAnnotationView+WebCache.m in Sources */,
@@ -2177,6 +2172,7 @@
 				7D4E05C51A74EF71001709DB /* SDWebImageManager.m in Sources */,
 				7D24320D1A7B785500C00F64 /* EssencePostCell.m in Sources */,
 				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
+				317C555E1AEC9AB10063E524 /* CourseModel.m in Sources */,
 				7D5DBB871A83898F0078B99C /* ChatCenterDetailViewController.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
 				B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */,
@@ -2200,6 +2196,7 @@
 				7D2432B51A7DD18F00C00F64 /* SCNavigationController.m in Sources */,
 				7D2432D41A7E453F00C00F64 /* SWTableViewCell.m in Sources */,
 				7D44BC0D1A84BF4400094D15 /* MyTraceList.m in Sources */,
+				317C55601AEC9AB10063E524 /* GodNoteView.m in Sources */,
 				7D5DBB4A1A834BDF0078B99C /* FeedBackViewController.m in Sources */,
 				7D2F92B11AB743E000D4B18F /* MyCollectionRootView.m in Sources */,
 				7D24323B1A7CB88200C00F64 /* GraduateModel.xcdatamodeld in Sources */,
@@ -2238,6 +2235,7 @@
 				7D4E05EB1A74EF7B001709DB /* MJPhotoToolbar.m in Sources */,
 				7D4E05991A74DCB2001709DB /* QuestionView.m in Sources */,
 				7D2432121A7B785500C00F64 /* MainFeatureVC.m in Sources */,
+				317C555D1AEC9AB10063E524 /* GodNoteViewController.m in Sources */,
 				7DDA29491A7B2144003F77C3 /* AFNetworkReachabilityManager.m in Sources */,
 				7D5DBB241A81BF300078B99C /* Sign.m in Sources */,
 				7D2432C31A7E181A00C00F64 /* MUploadQues.m in Sources */,
@@ -2278,23 +2276,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7D6A519C1A69610600355923 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7D6A51A71A69610600355923 /* graduateTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7D6A51A21A69610600355923 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7D6A51861A69610600355923 /* graduate */;
-			targetProxy = 7D6A51A11A69610600355923 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7D2431F41A7B782C00C00F64 /* Other.storyboard */ = {
@@ -2354,10 +2336,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-fobjc-arc";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.2;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -2395,7 +2377,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-fobjc-arc";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.2;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
@@ -2407,8 +2389,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jingyu Wang (7LY9J62F6Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jingyu Wang (7LY9J62F6Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: fei Zhou (8DE5AWXJ3Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: fei Zhou (8DE5AWXJ3Q)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2436,8 +2418,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.2;
+				PROVISIONING_PROFILE = "09fe34b0-6e5f-4f59-94b8-bbcc2dc2b132";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
@@ -2449,8 +2431,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jingyu Wang (KQ5836GK89)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jingyu Wang (KQ5836GK89)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2478,50 +2460,10 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos8.2;
+				PROVISIONING_PROFILE = "09fe34b0-6e5f-4f59-94b8-bbcc2dc2b132";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
-			};
-			name = Release;
-		};
-		7D6A51AE1A69610600355923 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = graduateTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/graduate.app/graduate";
-			};
-			name = Debug;
-		};
-		7D6A51AF1A69610600355923 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = graduateTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/graduate.app/graduate";
 			};
 			name = Release;
 		};
@@ -2542,15 +2484,6 @@
 			buildConfigurations = (
 				7D6A51AB1A69610600355923 /* Debug */,
 				7D6A51AC1A69610600355923 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7D6A51AD1A69610600355923 /* Build configuration list for PBXNativeTarget "graduateTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7D6A51AE1A69610600355923 /* Debug */,
-				7D6A51AF1A69610600355923 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
