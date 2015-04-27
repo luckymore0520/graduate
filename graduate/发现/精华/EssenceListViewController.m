@@ -132,6 +132,7 @@
         }
     } else if ([names isEqualToString:@"MEssenceDownload"])
     {
+        [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
     } else if ([names isEqualToString:@"MEssenceCollect"])
     {
         [ToolUtils showToast:@"收藏成功" toView:self.view];
@@ -257,7 +258,7 @@
             [_emailAlert show];
             return;
         } else if (essence.isDownloaded_.integerValue==1||essence.needShare_.integerValue==0) {
-            [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
+            
             [self sendEmail];
         } else {
             if (!self.shareAlert) {
@@ -420,7 +421,7 @@
 -(void)sendEmail
 {
 //    NSLog(@"%@dd",self.selectEssence);
-    [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+        [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
 }
 
 #pragma mark -sharebuttons
@@ -447,12 +448,15 @@
 }
 
 -(void)processShareSuccess{
-    //[self sendEmail];
-    [self hideShareView];
-     self.selectEssence.isDownloaded_ = @1;
-     //[ShareApiUtil showShareSuccessAlert];
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//    [alert show];
+    if(self.selectEssence){
+        [self hideShareView];
+        self.selectEssence.isDownloaded_ = @1;
+        [self sendEmail];
+//        [ShareApiUtil showShareSuccessAlert];
+        //    NSLog(@"当前的窗口是--%@",self.window);
+        //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        //    [alert show];
+    }
 }
 
 -(NSString *)getShareTitle
@@ -539,6 +543,18 @@
 }
 - (void)isOnlineResponse:(NSDictionary *)response
 {
+}
+
+- (BOOL)alertViewExist
+{
+    for (UIWindow* window in [UIApplication sharedApplication].windows) {
+        for (UIView* view in window.subviews) {
+            BOOL alert = [view isKindOfClass:[UIAlertView class]];
+            if (alert)
+                return YES;
+        }
+    }
+    return NO;
 }
 
 

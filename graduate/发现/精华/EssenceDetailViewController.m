@@ -123,7 +123,7 @@
 {
     if ([names isEqualToString:@"MEssenceDownload"])
     {
-        //[ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
+        [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
     } else if ([names isEqualToString:@"MEssenceDetail"])
     {
         self.essence = [MEssence objectWithKeyValues:data];

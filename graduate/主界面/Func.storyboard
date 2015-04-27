@@ -106,7 +106,6 @@
             <string>FZLTXHJW--GB1-0</string>
             <string>FZLTXHJW--GB1-0</string>
             <string>FZLTXHJW--GB1-0</string>
-            <string>FZLTXHJW--GB1-0</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -245,7 +244,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2A5A8C2B-FC3F-48F7-B4FF-DD3A86856015" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="068F746C-B5C0-4F87-A995-A34D85F4DEC2" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -5613,20 +5612,20 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0tC-KM-kGi">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" image="VIP">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="GTq-dJ-EEe" kind="show" identifier="vip webview" id="3SU-Jn-sha"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bds-QU-xWN">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="打印">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="goToPrint:" destination="tDp-dd-JJk" eventType="touchUpInside" id="Zfd-lY-mMl"/>
+                                    <action selector="goToPrint:" destination="tDp-dd-JJk" eventType="touchUpInside" id="xzr-WV-Qh7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bds-QU-xWN">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="联系我们">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="goToFeedback:" destination="tDp-dd-JJk" eventType="touchUpInside" id="d5l-HV-ejG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZK-CF-yyD">
@@ -5667,15 +5666,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3JZ-xQ-KUs">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" image="联系我们">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="goToFeedback:" destination="tDp-dd-JJk" eventType="touchUpInside" id="TSo-j9-eSU"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一段回忆的翻箱倒柜跟着我在，追想到的是谁？" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wvZ-pS-RSu">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
@@ -5755,7 +5745,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-o8-VfT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="打印" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HFr-o8-VfT">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -5770,17 +5760,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="打印" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJE-SF-yg0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系我们" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJE-SF-yg0">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系我们" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7m-67-mEJ">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="FZLTXHJW--GB1-0" family="FZLanTingHeiS-EL-GB" pointSize="18"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="282" y="538" width="36" height="21"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备份" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfk-Fc-xu1">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -5797,12 +5784,6 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="3JZ-xQ-KUs" firstAttribute="top" secondItem="0tC-KM-kGi" secondAttribute="bottom" constant="22" id="05z-M0-uct">
-                                <variation key="heightClass=regular-widthClass=compact" constant="8" symbolic="YES"/>
-                            </constraint>
-                            <constraint firstItem="3JZ-xQ-KUs" firstAttribute="top" secondItem="Jse-wB-49l" secondAttribute="bottom" constant="41" id="0sa-Ac-lOX">
-                                <variation key="heightClass=regular-widthClass=compact" constant="52"/>
-                            </constraint>
                             <constraint firstAttribute="centerX" secondItem="SpP-6M-fLa" secondAttribute="centerX" id="1RG-lK-4JT"/>
                             <constraint firstAttribute="centerY" secondItem="2Rc-sY-HzW" secondAttribute="centerY" id="28Q-yu-do5"/>
                             <constraint firstItem="epO-pg-44i" firstAttribute="centerX" secondItem="Jse-wB-49l" secondAttribute="centerX" id="2AL-JK-GrX"/>
@@ -5841,7 +5822,6 @@
                             <constraint firstItem="2Rc-sY-HzW" firstAttribute="top" secondItem="SpP-6M-fLa" secondAttribute="bottom" constant="-5" id="LgM-bc-kGn"/>
                             <constraint firstAttribute="centerX" secondItem="2Rc-sY-HzW" secondAttribute="centerX" id="MrI-JT-fFM"/>
                             <constraint firstItem="wEr-Lj-GoY" firstAttribute="leading" secondItem="7OI-WD-9zk" secondAttribute="leadingMargin" constant="-16" id="Mxf-VP-AoI"/>
-                            <constraint firstItem="Jse-wB-49l" firstAttribute="centerX" secondItem="3JZ-xQ-KUs" secondAttribute="centerX" id="N2X-e8-9I2"/>
                             <constraint firstItem="oic-iB-MJH" firstAttribute="centerX" secondItem="sgn-rs-e3b" secondAttribute="centerX" id="NPf-JX-zQv"/>
                             <constraint firstItem="zZK-CF-yyD" firstAttribute="leading" secondItem="SpP-6M-fLa" secondAttribute="trailing" constant="39" id="Ne5-jT-2CL">
                                 <variation key="heightClass=regular-widthClass=compact" constant="26"/>
@@ -5857,18 +5837,12 @@
                             <constraint firstItem="Jse-wB-49l" firstAttribute="centerY" secondItem="0tC-KM-kGi" secondAttribute="centerY" id="RHh-iH-DZn"/>
                             <constraint firstItem="0tC-KM-kGi" firstAttribute="centerX" secondItem="HFr-o8-VfT" secondAttribute="centerX" id="RPb-zX-bTc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wEr-Lj-GoY" secondAttribute="trailing" constant="-16" id="TCN-pR-FY2"/>
-                            <constraint firstItem="N7m-67-mEJ" firstAttribute="centerX" secondItem="3JZ-xQ-KUs" secondAttribute="centerX" constant="1" id="U1N-Pa-YpM">
-                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                            </constraint>
                             <constraint firstItem="SpP-6M-fLa" firstAttribute="centerY" secondItem="oic-iB-MJH" secondAttribute="centerY" constant="4" id="X3c-at-uaT">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="epO-pg-44i" firstAttribute="top" secondItem="Jse-wB-49l" secondAttribute="bottom" constant="7" id="Y9c-gJ-TPB"/>
                             <constraint firstItem="Vbj-02-cu3" firstAttribute="leading" secondItem="oic-iB-MJH" secondAttribute="trailing" constant="-22" id="YWj-RP-qRH"/>
                             <constraint firstItem="wvZ-pS-RSu" firstAttribute="leading" secondItem="oic-iB-MJH" secondAttribute="trailing" constant="-74" id="b6A-Hl-TuG"/>
-                            <constraint firstItem="N7m-67-mEJ" firstAttribute="top" secondItem="3JZ-xQ-KUs" secondAttribute="bottom" constant="8" id="bdj-N2-7Wc">
-                                <variation key="heightClass=regular-widthClass=compact" constant="7"/>
-                            </constraint>
                             <constraint firstItem="fWU-2U-ReX" firstAttribute="leading" secondItem="7OI-WD-9zk" secondAttribute="leading" id="cho-Va-2dd"/>
                             <constraint firstItem="wvZ-pS-RSu" firstAttribute="top" secondItem="yrD-2L-f6k" secondAttribute="bottom" constant="24" id="d3n-BX-5i3">
                                 <variation key="heightClass=regular-widthClass=compact" constant="13"/>
@@ -5880,9 +5854,11 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="Jse-wB-49l" firstAttribute="top" secondItem="oic-iB-MJH" secondAttribute="bottom" constant="90" id="f9h-4w-Ma0">
-                                <variation key="heightClass=regular-widthClass=compact" constant="52"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="60"/>
                             </constraint>
-                            <constraint firstItem="oic-iB-MJH" firstAttribute="top" secondItem="wvZ-pS-RSu" secondAttribute="bottom" constant="35" id="g60-7v-wVN"/>
+                            <constraint firstItem="oic-iB-MJH" firstAttribute="top" secondItem="wvZ-pS-RSu" secondAttribute="bottom" constant="35" id="g60-7v-wVN">
+                                <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                            </constraint>
                             <constraint firstItem="F2m-j8-8uw" firstAttribute="leading" secondItem="yrD-2L-f6k" secondAttribute="leading" constant="7" id="gwm-ME-8s8">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
@@ -5924,7 +5900,6 @@
                                 <exclude reference="zZK-CF-yyD"/>
                                 <exclude reference="Jse-wB-49l"/>
                                 <exclude reference="2Rc-sY-HzW"/>
-                                <exclude reference="3JZ-xQ-KUs"/>
                                 <exclude reference="wvZ-pS-RSu"/>
                                 <exclude reference="yrD-2L-f6k"/>
                                 <exclude reference="F2m-j8-8uw"/>
@@ -5937,15 +5912,12 @@
                                 <exclude reference="HFr-o8-VfT"/>
                                 <exclude reference="epO-pg-44i"/>
                                 <exclude reference="XJE-SF-yg0"/>
-                                <exclude reference="N7m-67-mEJ"/>
                                 <exclude reference="cfk-Fc-xu1"/>
                                 <exclude reference="sgn-rs-e3b"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="gwm-ME-8s8"/>
                                 <exclude reference="C6r-aX-Imp"/>
-                                <exclude reference="U1N-Pa-YpM"/>
-                                <exclude reference="bdj-N2-7Wc"/>
                                 <exclude reference="5mC-A2-aaZ"/>
                                 <exclude reference="vN5-Yj-BVF"/>
                                 <exclude reference="JOi-jU-8AX"/>
@@ -5963,9 +5935,6 @@
                                 <exclude reference="d3n-BX-5i3"/>
                                 <exclude reference="mv5-pp-aFZ"/>
                                 <exclude reference="RPb-zX-bTc"/>
-                                <exclude reference="05z-M0-uct"/>
-                                <exclude reference="0sa-Ac-lOX"/>
-                                <exclude reference="N2X-e8-9I2"/>
                                 <exclude reference="OCs-3h-uwG"/>
                                 <exclude reference="RHh-iH-DZn"/>
                                 <exclude reference="f9h-4w-Ma0"/>
@@ -6016,7 +5985,6 @@
                                 <include reference="zZK-CF-yyD"/>
                                 <include reference="Jse-wB-49l"/>
                                 <include reference="2Rc-sY-HzW"/>
-                                <include reference="3JZ-xQ-KUs"/>
                                 <include reference="wvZ-pS-RSu"/>
                                 <include reference="yrD-2L-f6k"/>
                                 <include reference="F2m-j8-8uw"/>
@@ -6029,15 +5997,12 @@
                                 <include reference="HFr-o8-VfT"/>
                                 <include reference="epO-pg-44i"/>
                                 <include reference="XJE-SF-yg0"/>
-                                <include reference="N7m-67-mEJ"/>
                                 <include reference="cfk-Fc-xu1"/>
                                 <include reference="sgn-rs-e3b"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="gwm-ME-8s8"/>
                                 <include reference="C6r-aX-Imp"/>
-                                <include reference="U1N-Pa-YpM"/>
-                                <include reference="bdj-N2-7Wc"/>
                                 <include reference="5mC-A2-aaZ"/>
                                 <include reference="vN5-Yj-BVF"/>
                                 <include reference="JOi-jU-8AX"/>
@@ -6055,9 +6020,6 @@
                                 <include reference="d3n-BX-5i3"/>
                                 <include reference="mv5-pp-aFZ"/>
                                 <include reference="RPb-zX-bTc"/>
-                                <exclude reference="05z-M0-uct"/>
-                                <include reference="0sa-Ac-lOX"/>
-                                <include reference="N2X-e8-9I2"/>
                                 <include reference="OCs-3h-uwG"/>
                                 <include reference="RHh-iH-DZn"/>
                                 <include reference="f9h-4w-Ma0"/>
@@ -7449,9 +7411,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1-返回键" width="10" height="19"/>
-        <image name="2-开始体验" width="180" height="40"/>
-        <image name="2A5A8C2B-FC3F-48F7-B4FF-DD3A86856015" width="166" height="165">
+        <image name="068F746C-B5C0-4F87-A995-A34D85F4DEC2" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9330,7 +9290,8 @@ AbXZAAG15gABtesAAbXtAAG17wABtfQAAbX8AAG1/wABtgQAAbYMAAG2DwABtiEAAbYkAAG2KQAAAAAA
 AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
 </mutableData>
         </image>
-        <image name="VIP" width="74" height="74"/>
+        <image name="1-返回键" width="10" height="19"/>
+        <image name="2-开始体验" width="180" height="40"/>
         <image name="不太熟" width="187" height="60"/>
         <image name="不太熟触发" width="187" height="60"/>
         <image name="个人中心" width="74" height="74"/>
