@@ -28,6 +28,8 @@
 #import "EssenceDetailViewController.h"
 #import "UIDevice+IdentifierAddition.h"
 #import <AdSupport/ASIdentifierManager.h>
+#import "KeychainItemWrapper.h"
+
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,QQApiInterfaceDelegate>
 
 @end
@@ -133,8 +135,17 @@
 -(NSString  *)getDeviceId
 {
     //return  [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
-    NSString *adId =[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
 //    NSLog(@"%@ id为",adId);
+    KeychainItemWrapper *keyChain = [[KeychainItemWrapper alloc] initWithIdentifier:@"keyChainIdentifier" accessGroup:nil];
+    NSString *adId;
+//    NSString *idForDeviceInKeyChain = @"ydddeviceid";
+    //首先取一下看keychain中是否存了id
+    if([[keyChain objectForKey:(__bridge id)kSecAttrAccount] length]){
+        adId = [keyChain objectForKey:(__bridge id)kSecAttrAccount];
+    }else{
+        adId= [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        [keyChain setObject:adId forKey:(__bridge id)kSecAttrAccount];
+    }
     return adId;
 }
 

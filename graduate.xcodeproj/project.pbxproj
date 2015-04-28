@@ -285,7 +285,7 @@
 		7DD888EB1A6AC89C00D198DD /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD888EA1A6AC89C00D198DD /* CoreTelephony.framework */; };
 		7DD888ED1A6AC8A800D198DD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD888EC1A6AC8A800D198DD /* libstdc++.dylib */; };
 		7DD888EF1A6AC8B000D198DD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD888EE1A6AC8B000D198DD /* libz.dylib */; };
-		7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7DD888F01A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle */; };
+		7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bunxdle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7DD888F01A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bunxdle.bundle */; };
 		7DD888F41A6ACB4700D198DD /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD888F31A6ACB4700D198DD /* LoginVC.m */; };
 		7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29341A7B2144003F77C3 /* AFHTTPRequestOperation.m */; };
 		7DDA29471A7B2144003F77C3 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DDA29361A7B2144003F77C3 /* AFHTTPRequestOperationManager.m */; };
@@ -301,6 +301,7 @@
 		7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE7ACDE1A7FB09700D23449 /* QCSlideSwitchView.m */; };
 		7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF3C2411AA4BE980068812D /* WKUILabel.m */; };
 		7DF5C7091A6BB26500D1F543 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */; };
+		B13980161ADE5EF3007C3CFF /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B13980151ADE5EF3007C3CFF /* KeychainItemWrapper.m */; };
 		B13D1FEC1ACD270000F81344 /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = B13D1FE91ACD270000F81344 /* NSString+MD5Addition.m */; };
 		B13D1FED1ACD270000F81344 /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = B13D1FEB1ACD270000F81344 /* UIDevice+IdentifierAddition.m */; };
 		B14080D61ABAFACC004BAF3F /* VIPWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B14080D51ABAFACC004BAF3F /* VIPWebViewController.m */; };
@@ -817,7 +818,7 @@
 		7DD888EA1A6AC89C00D198DD /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		7DD888EC1A6AC8A800D198DD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		7DD888EE1A6AC8B000D198DD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		7DD888F01A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		7DD888F01A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bunxdle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bunxdle.bundle; sourceTree = "<group>"; };
 		7DD888F21A6ACB4700D198DD /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
 		7DD888F31A6ACB4700D198DD /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		7DDA29331A7B2144003F77C3 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -848,6 +849,8 @@
 		7DF3C2401AA4BE980068812D /* WKUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKUILabel.h; path = Tools/WKUILabel.h; sourceTree = "<group>"; };
 		7DF3C2411AA4BE980068812D /* WKUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WKUILabel.m; path = Tools/WKUILabel.m; sourceTree = "<group>"; };
 		7DF5C7081A6BB26500D1F543 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B13980141ADE5EF3007C3CFF /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		B13980151ADE5EF3007C3CFF /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		B13D1FE81ACD270000F81344 /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5Addition.h"; sourceTree = "<group>"; };
 		B13D1FE91ACD270000F81344 /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5Addition.m"; sourceTree = "<group>"; };
 		B13D1FEA1ACD270000F81344 /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
@@ -1188,6 +1191,8 @@
 		7D4E058D1A74C6BD001709DB /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				B13980141ADE5EF3007C3CFF /* KeychainItemWrapper.h */,
+				B13980151ADE5EF3007C3CFF /* KeychainItemWrapper.m */,
 				7D9027D11A9DD95A00410B0C /* FlipPresentAnimation.h */,
 				7D9027D21A9DD95A00410B0C /* FlipPresentAnimation.m */,
 				7D4E058E1A74C73A001709DB /* ButtonGroup.h */,
@@ -1474,7 +1479,7 @@
 				7D2F92B31AB882D200D4B18F /* Movie.mp4 */,
 				7DBD866A1A72631A00205576 /* Resource */,
 				7D6A51B61A6B570300355923 /* ThirdParty */,
-				7DD888F01A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle */,
+				7DD888F01A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bunxdle.bundle */,
 				7DD888DD1A6AC82D00D198DD /* Frameworks */,
 				7D6A51891A69610600355923 /* graduate */,
 				7D6A51A31A69610600355923 /* graduateTests */,
@@ -2004,7 +2009,7 @@
 				7D2432A91A7DD18F00C00F64 /* shot_h.png in Resources */,
 				7D2432B21A7DD18F00C00F64 /* touch_focus_x@2x.png in Resources */,
 				7D24329D1A7DD18F00C00F64 /* close_cha.png in Resources */,
-				7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				7DD888F11A6AC8DE00D198DD /* TencentOpenApi_IOS_Bundle.bunxdle.bundle in Resources */,
 				7D2431F61A7B782C00C00F64 /* Other.storyboard in Resources */,
 				7D099E031ABDC77C00504E42 /* 454545.gif in Resources */,
 				7D24329A1A7DD18F00C00F64 /* camera_line@2x.png in Resources */,
@@ -2069,6 +2074,7 @@
 				7D24324A1A7CE59100C00F64 /* Subject.m in Sources */,
 				7DA994BF1A7878FE00A879CF /* MJMember.m in Sources */,
 				7D2F92CD1ABCAE0300D4B18F /* YLGIFImage.m in Sources */,
+				B13980161ADE5EF3007C3CFF /* KeychainItemWrapper.m in Sources */,
 				7D5DBB841A836F5E0078B99C /* MCommentsToMe.m in Sources */,
 				7DDA294D1A7B2144003F77C3 /* AFURLResponseSerialization.m in Sources */,
 				7D5DBB171A8084A80078B99C /* MQuestionCount.m in Sources */,

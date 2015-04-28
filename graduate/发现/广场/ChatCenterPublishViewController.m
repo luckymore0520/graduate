@@ -50,6 +50,10 @@
         [ToolUtils showMessage:@"标题不得超过20字"];
         return;
     }
+    if(![ToolUtils connectToInternet]){
+        [ToolUtils showMessage:@"请确认您的网络是否连接正常"];
+        return;
+    }
     [self waiting:@"正在发布..."];
     [self resignAll:nil];
     [[[MPostPublish alloc]init]load:self content:self.contentArea.text title:self.titleField.text];

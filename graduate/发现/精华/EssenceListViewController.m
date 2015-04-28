@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 
+#import "EssenceRootViewController.h"
 #import "EssenceListViewController.h"
 #import "MEssenceCollect.h"
 #import "EssenceListCell.h"
@@ -132,6 +133,7 @@
         }
     } else if ([names isEqualToString:@"MEssenceDownload"])
     {
+        
     } else if ([names isEqualToString:@"MEssenceCollect"])
     {
         [ToolUtils showToast:@"收藏成功" toView:self.view];
@@ -420,7 +422,7 @@
 -(void)sendEmail
 {
 //    NSLog(@"%@dd",self.selectEssence);
-    [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
+        [[[MEssenceDownload alloc]init]load:self id:self.selectEssence.id_ resid:self.selectEssence.resid_ email:_user.email_ isShared:@"1"];
 }
 
 #pragma mark -sharebuttons
@@ -447,12 +449,18 @@
 }
 
 -(void)processShareSuccess{
-    //[self sendEmail];
-    [self hideShareView];
-     self.selectEssence.isDownloaded_ = @1;
-     //[ShareApiUtil showShareSuccessAlert];
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//    [alert show];
+    if(self.parentVC && [self.parentVC isKindOfClass:[EssenceRootViewController class]]){
+        if(self.type-1 == ((EssenceRootViewController *)self.parentVC).nowType && self.selectEssence){
+            [self hideShareView];
+            self.selectEssence.isDownloaded_ = @1;
+            [self sendEmail];
+            [ToolUtils showMessage:@"下载成功"];
+            //    NSLog(@"当前的窗口是--%@",self.window);
+            //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            //    [alert show];
+
+        }
+    }
 }
 
 -(NSString *)getShareTitle
@@ -539,6 +547,18 @@
 }
 - (void)isOnlineResponse:(NSDictionary *)response
 {
+}
+
+- (BOOL)alertViewExist
+{
+    for (UIWindow* window in [UIApplication sharedApplication].windows) {
+        for (UIView* view in window.subviews) {
+            BOOL alert = [view isKindOfClass:[UIAlertView class]];
+            if (alert)
+                return YES;
+        }
+    }
+    return NO;
 }
 
 

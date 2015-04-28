@@ -38,6 +38,10 @@
 
 
 - (void)save:(id)sender {
+    if(![ToolUtils connectToInternet]){
+        [ToolUtils showMessage:@"请确认您的网络是否连接正常"];
+        return;
+    }
     if (_head) {
         [self waiting:@"正在上传头像..."];
         BOOL set = NO;

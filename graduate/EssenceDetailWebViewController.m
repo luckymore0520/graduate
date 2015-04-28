@@ -49,6 +49,7 @@ document.location=\"myweb:touch:end\";};";
     [super viewDidLoad];
     [self.webView setDelegate:self];
     if (self.url) {
+//        NSLog(@"url is %@",self.url);
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
     }
     if (self.postId) {
