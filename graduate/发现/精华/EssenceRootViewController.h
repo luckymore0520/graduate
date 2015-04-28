@@ -9,5 +9,5 @@
 #import "BaseFuncVC.h"
 
 @interface EssenceRootViewController : BaseFuncVC
-
+@property (nonatomic,assign)NSUInteger nowType;
 @end

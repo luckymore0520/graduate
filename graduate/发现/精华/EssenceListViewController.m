@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 nju.excalibur. All rights reserved.
 //
 
+#import "EssenceRootViewController.h"
 #import "EssenceListViewController.h"
 #import "MEssenceCollect.h"
 #import "EssenceListCell.h"
@@ -132,7 +133,7 @@
         }
     } else if ([names isEqualToString:@"MEssenceDownload"])
     {
-        [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
+        
     } else if ([names isEqualToString:@"MEssenceCollect"])
     {
         [ToolUtils showToast:@"收藏成功" toView:self.view];
@@ -258,7 +259,7 @@
             [_emailAlert show];
             return;
         } else if (essence.isDownloaded_.integerValue==1||essence.needShare_.integerValue==0) {
-            
+            [ToolUtils showToast:@"已发送至您的邮箱" toView:self.view];
             [self sendEmail];
         } else {
             if (!self.shareAlert) {
@@ -448,14 +449,17 @@
 }
 
 -(void)processShareSuccess{
-    if(self.selectEssence){
-        [self hideShareView];
-        self.selectEssence.isDownloaded_ = @1;
-        [self sendEmail];
-//        [ShareApiUtil showShareSuccessAlert];
-        //    NSLog(@"当前的窗口是--%@",self.window);
-        //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        //    [alert show];
+    if(self.parentVC && [self.parentVC isKindOfClass:[EssenceRootViewController class]]){
+        if(self.type-1 == ((EssenceRootViewController *)self.parentVC).nowType && self.selectEssence){
+            [self hideShareView];
+            self.selectEssence.isDownloaded_ = @1;
+            [self sendEmail];
+            [ToolUtils showMessage:@"下载成功"];
+            //    NSLog(@"当前的窗口是--%@",self.window);
+            //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享成功" message:@"分享成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            //    [alert show];
+
+        }
     }
 }
 
