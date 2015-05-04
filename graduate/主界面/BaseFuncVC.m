@@ -301,7 +301,7 @@
 - (void)addRightButton:(NSString*)title action:(SEL)action img:(NSString*)img
 {
     
-    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, title==nil?20:44, 44)];
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, title==nil?20:70, 44)];
     if (title) {
         [button setTitle:title forState:UIControlStateNormal];
     }

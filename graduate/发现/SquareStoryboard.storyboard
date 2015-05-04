@@ -123,8 +123,7 @@
                                                             <exclude reference="DNU-O1-ppc"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="98" y="18" width="18" height="18"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <exclude reference="DNU-O1-ppc"/>
                                                         </mask>
@@ -997,8 +996,7 @@
                                                             <exclude reference="GDq-yI-htO"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="98" y="13" width="18" height="18"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <exclude reference="GDq-yI-htO"/>
                                                         </mask>
@@ -1340,8 +1338,7 @@
                                                             <exclude reference="j2h-Wi-7nh"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="93" y="13" width="18" height="18"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <exclude reference="j2h-Wi-7nh"/>
                                                         </mask>

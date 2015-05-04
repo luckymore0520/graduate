@@ -14,5 +14,6 @@
 @property (nonatomic,strong)NSString* postId;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 - (void)addRightButton;
+- (void)addRightButtonForNews;
 
 @end
