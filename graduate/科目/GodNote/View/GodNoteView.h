@@ -8,17 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class GodNoteView, SubjectModel;
-@protocol GodNoteViewDataSource <NSObject>
+@class GodNoteView, SubjectModel, SubjectNote;
+@protocol GodNoteViewDelete <NSObject>
 @required
-- (void)noteView:(GodNoteView *)noteView didSelectItemAtIndex:(NSInteger)itemIndex;
+- (void)noteView:(GodNoteView *)noteView didSelectItem:(SubjectNote *)note;
 
 @end
 
 @interface GodNoteView : UIView
 
-@property (weak, nonatomic) id<GodNoteViewDataSource> dataSource;
-@property (weak, nonatomic) id<GodNoteViewDataSource> delegate;
+@property (weak, nonatomic) id<GodNoteViewDelete> delegate;
 
 - (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel;
 

@@ -45,8 +45,6 @@ UICollectionViewDelegateFlowLayout
     return self;
 }
 
-#pragma mark - getter &&  setter
-
 #pragma mark - actions
 - (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel;
 {
@@ -59,6 +57,16 @@ UICollectionViewDelegateFlowLayout
 }
 
 #pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SubjectNote *model = self.subjectModel.subjectNotes[indexPath.section];
+    SubjectNote *chapter = model.allChapters[indexPath.row - 1];
+    if ([self.delegate respondsToSelector:@selector(noteView:didSelectItem:)]) {
+        [self.delegate noteView:self didSelectItem:chapter];
+    }
+}
+
+#pragma mark - UICollectionViewDatasource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kGodNoteViewCellIdentifier forIndexPath:indexPath];

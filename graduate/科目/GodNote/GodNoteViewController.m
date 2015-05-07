@@ -10,10 +10,11 @@
 #import "GodNoteView.h"
 #import "SubjectModel.h"
 #import "GodNoteRequestManger.h"
+#import "GodNoteHeader.h"
 
 @interface GodNoteViewController ()
 <
-GodNoteViewDelegate
+GodNoteViewDelete
 >
 
 @property (nonatomic) NSInteger currentIndex;
@@ -30,8 +31,6 @@ GodNoteViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -39,10 +38,36 @@ GodNoteViewDelegate
     [super viewDidAppear:animated];
     
     [self getDataSourceCompletion:^{
+        //layout all subject view
+        for (NSInteger i = 0; i < self.allSubjectModels.count; i++) {
+            GodNoteView *view = [[GodNoteView alloc] init];
+            view.delegate = self;
+            [self.allSubjectViews addObject:view];
+        }
+        
        //reload the first tab with data from server
-        GodNoteView *firstSubjectView = self.allSubjectViews[0];
-        firstSubjectView 
+        if (self.allSubjectViews.count > 0 && self.allSubjectViews.count > 0) {
+            GodNoteView *firstSubjectView = self.allSubjectViews[0];
+            [firstSubjectView reloadViewWithSubjectModel:self.allSubjectModels[0]];
+        }
     }];
+}
+
+#pragma mark - GodNoteViewDelete
+- (void)noteView:(GodNoteView *)noteView didSelectItem:(SubjectNote *)note
+{
+    
+}
+
+#pragma mark - GodNoteHeaderDelegate
+- (void)noteHeader:(GodNoteHeader *)header didSelectItem:(SubjectModel *)sModel
+{
+
+}
+
+- (void)noteHeader:(GodNoteHeader *)header didSelectAdvertisementWithURL:(NSString *)adURL
+{
+
 }
 
 #pragma mark - get Data source
@@ -61,13 +86,7 @@ GodNoteViewDelegate
     }];
 }
 
-#pragma mark - GodNoteViewDataSource
-- (NSString *)godNoteViewRequestAPI
-{
-    SubjectModel *model = self.allSubjectModels[self.currentIndex];
-    return self.currentAPI;
-}
-
+#pragma mark - setter && getter
 - (NSMutableArray *)allSubjectViews
 {
     if (!_allSubjectViews) {

@@ -8,19 +8,42 @@
 
 #import <UIKit/UIKit.h>
 
-@class GodNoteHeader;
+@class GodNoteHeader, AdView, AdModel, SubjectModel;
 @protocol GodNoteHeaderDelegate <NSObject>
 
 @required
-- (void)noteHeader:(GodNoteHeader *)header didSelectItemAtIndex:(NSInteger)itemIndex;
+- (void)noteHeader:(GodNoteHeader *)header didSelectItem:(SubjectModel *)sModel;
 - (void)noteHeader:(GodNoteHeader *)header didSelectAdvertisementWithURL:(NSString *)adURL;
+
+@end
+
+@protocol AdViewDelegate <NSObject>
+
+@required
+- (void)adViewDidCloseAd:(AdView *)adView;
 
 @end
 
 @interface GodNoteHeader : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame
-                     delegate:(id<GodNoteHeaderDelegate>)delegate
-         withAllSubjectModels:(NSArray *)array andAdmdel:();
+@property (weak, nonatomic) id<GodNoteHeaderDelegate> delegate;
+@property (readonly, nonatomic) NSInteger currentSelectIndex;
+
+- (void)reloadViewWithAllSubjectModels:(NSArray *)subjectModels
+                             andAdmdel:(AdModel *)model;
+
+@end
+
+@interface  SubjectTitleCell: UICollectionViewCell
+
+@property (nonatomic) UILabel *titleLabel;
+
+@end
+
+@interface AdView : UIView
+
+@property (weak, nonatomic) id<AdViewDelegate> delegate;
+
+- (void)setImageURL:(NSString *)url;
 
 @end
