@@ -176,6 +176,10 @@
     {
         [ToolUtils showMessage:@"密码不得为空"];
     } else {
+        if(![ToolUtils connectToInternet]){
+            [ToolUtils showMessage:@"请确认您的网络是否连接正常"];
+            return;
+        }
         isThirdParty = NO;
         //清除第三方登录的一些信息
         [ToolUtils setHeadImgLocal:@""];

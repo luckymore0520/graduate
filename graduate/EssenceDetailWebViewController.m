@@ -49,6 +49,7 @@ document.location=\"myweb:touch:end\";};";
     [super viewDidLoad];
     [self.webView setDelegate:self];
     if (self.url) {
+//        NSLog(@"url is %@",self.url);
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
     }
     if (self.postId) {
@@ -249,11 +250,27 @@ document.location=\"myweb:touch:end\";};";
     [self addRightButton:@"更多精华" action:@selector(showMore) img:nil];
 }
 
+-(void)addRightButtonForNews
+{
+    [self addRightButton:@"更多新闻" action:@selector(showMoreNews) img:nil];
+}
+
 - (void)showMore
 {
     BaseFuncVC* more = (BaseFuncVC*)[self.storyboard instantiateViewControllerWithIdentifier:@"essenceRoot"];
     [self.navigationController pushViewController:more
                                          animated:YES];
+}
+
+-(void)showMoreNews
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+    EssenceDetailWebViewController* detail = [storyboard instantiateViewControllerWithIdentifier:@"newsList"];
+//    detail.url = [NSURL URLWithString:[n.url_ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//    detail.title = @"新闻列表";
+    //        [detail addRightButton:@"更多新闻" action:@selector(moreNews) img:nil];
+    //    [detail addRightButtonForNews];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 #pragma mark -sharebuttons

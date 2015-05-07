@@ -8,6 +8,7 @@
 
 #import "SubjectVC.h"
 #import "ToolUtils.h"
+#import "EssenceDetailWebViewController.h"
 #import "MQuestionRecommand.h"
 #import "MyQuestionRootViewController.h"
 #import "RecommandVC.h"
@@ -33,7 +34,9 @@
 #import "MUpdateUserInfo.h"
 #import "MyTraceList.h"
 #import "GodNoteViewController.h"
-@interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate>
+
+@interface SubjectVC ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SCNavigationControllerDelegate,SWTableViewCellDelegate,UIScrollViewDelegate>
+
 //昵称
 @property (weak, nonatomic) IBOutlet UIImageView *rollImage;
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
@@ -70,17 +73,32 @@
 @property (weak, nonatomic) IBOutlet UIView *centerLine;
 @property (weak, nonatomic) IBOutlet UIControl *bootView;
 @property (strong,nonatomic)Trace* trace;
-
+//首页新闻
+@property (nonatomic,strong)NSArray* newsList;
+@property (nonatomic)int nowNewsIndex;
 //弹窗
 @property (nonatomic,strong)UIAlertView* subjectAlert;
+//新闻滚动条
+@property (weak, nonatomic) IBOutlet UIScrollView *newsListScrollView;
+
+
+
 @end
 CGFloat angle;
+NSTimer *timer;
 @implementation SubjectVC
 
 - (void)viewDidLoad {
     if (self.view.frame.size.height>500) {
         [self.tableview setScrollEnabled:NO];
     }
+    
+    //新闻的scrollView
+    self.newsListScrollView.delegate = self;
+    [self.newsListScrollView setPagingEnabled:YES];
+    self.newsListScrollView.showsHorizontalScrollIndicator=NO;
+    //加载首页新闻
+    [self loadIndexNews];
     [self setTitle:@"主页"];
     [super viewDidLoad];
     [self.editView removeFromSuperview];
@@ -149,6 +167,7 @@ CGFloat angle;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
     if (!self.subjects) {
         self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
     }
@@ -182,9 +201,14 @@ CGFloat angle;
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [timer setFireDate:[NSDate distantFuture]];
+    
+}
 - (void)viewDidAppear:(BOOL)animated
 {
-    
     angle = 0;
     [self startAnimation];
     if (self.firstOpen) {
@@ -202,6 +226,76 @@ CGFloat angle;
     [self updateImage];
     [self.nickNameLabel setText:user.nickname_];
     [self initSubject];
+}
+
+-(void)loadIndexNews
+{
+    MGetNewsList* getNewsList = [[MGetNewsList alloc]init];
+    getNewsList = (MGetNewsList*)[getNewsList setPage:1 limit:3];
+    [getNewsList load:self type:nil];
+}
+
+-(void)showIndexNews
+{
+    for (UIView* view in self.newsListScrollView.subviews) {
+        [view removeFromSuperview];
+    }
+    CGSize pageScrollViewSize = self.view.frame.size;
+    float width = self.newsListScrollView.frame.size.width,height = self.newsListScrollView.frame.size.height;
+    self.newsListScrollView.contentSize = CGSizeMake(width * self.newsList.count, 0);
+    self.newsListScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    for (int i = 0 ; i < self.newsList.count; i++) {
+        MNews *n = self.newsList[i];
+        CGRect frame;
+        frame.origin.x = width * i;
+        frame.origin.y = 0;
+        frame.size = CGSizeMake(width, height);
+        UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        button.frame = frame;
+        button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        button.titleLabel.font = [UIFont fontWithName:@"FZLTXHJW--GB1-0" size:20.0];
+        [button addTarget:self action:@selector(newsClicked) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:n.title_ forState:UIControlStateNormal];
+//        button.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 0);
+        [button setTitleColor:[UIColor colorWithRed:67.0/255.0 green:121.0/255.0 blue:183.0/255.0 alpha:1.0] forState:(UIControlStateNormal)];
+//        [button.layer setBorderWidth:2.0];
+//        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//        CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 0, 0, 1 });
+//        [button.layer setBorderColor:colorref];
+        [self.newsListScrollView addSubview:button];
+    }
+    timer = [NSTimer scheduledTimerWithTimeInterval:7.0 target:self selector:@selector(moveNews) userInfo:nil repeats:YES];
+}
+
+-(void)newsClicked
+{
+    MNews* nowNews = self.newsList[self.nowNewsIndex];
+//    [ToolUtils showMessage:[NSString stringWithFormat:@"点击了新闻了 %@",nowNews.title_]];
+    if(nowNews.type_.integerValue ==1){
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
+        EssenceDetailWebViewController* detail = [storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
+        detail.url = [NSURL URLWithString:[nowNews.url_ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        detail.title = @"新闻详情";
+//        [detail addRightButton:@"更多新闻" action:@selector(moreNews) img:nil];
+        [detail addRightButtonForNews];
+        [self.navigationController pushViewController:detail animated:YES];
+    }else if(nowNews.type_.integerValue==3){
+        NSLog(@"%@",nowNews.noteId_);
+        [ToolUtils showMessage:[NSString stringWithFormat:@"大神笔记%@",nowNews.noteId_]];
+    }
+}
+
+
+
+-(void)moveNews
+{
+    if(self.nowNewsIndex < self.newsList.count -1){
+        self.nowNewsIndex++;
+        [self.newsListScrollView setContentOffset:CGPointMake(self.newsListScrollView.frame.size.width*self.nowNewsIndex,0)animated:YES];
+    }else if(self.nowNewsIndex == self.newsList.count-1){
+        [self.newsListScrollView setContentOffset:CGPointMake(0,0)animated:YES];
+        self.nowNewsIndex=0;
+    }
 }
 
 
@@ -272,7 +366,11 @@ CGFloat angle;
             }];
             [_imgViewList addObject:newImage];
         }
-    } else if ([names isEqualToString:@"MQuesCountStatus"])
+    } else if([names isEqualToString:@"MIndexNews"]){
+        MNewsList* newsList = [MNewsList objectWithKeyValues:data];
+        _newsList = newsList.news_;
+        [self showIndexNews];
+    }else if ([names isEqualToString:@"MQuesCountStatus"])
     {
         MQuestionCount* count = [MQuestionCount objectWithKeyValues:data];
         int total = 0;
@@ -325,6 +423,7 @@ CGFloat angle;
                 
             }
         }
+
         
         [self calculateTotal];
         [self.tableview reloadData];
@@ -349,11 +448,11 @@ CGFloat angle;
             [self calculateTotal];
             [self.tableview reloadData];
         } else {
-            [[[MQuesCountStatus alloc]init]load:self];
+//            [[[MQuesCountStatus alloc]init]load:self];
             [self.tableview reloadData];
         }
     } else {
-        [[[MQuesCountStatus alloc]init]load:self];
+//        [[[MQuesCountStatus alloc]init]load:self];
         [self.tableview reloadData];
     }
    
@@ -489,34 +588,40 @@ CGFloat angle;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentSize.height - scrollView.contentOffset.y<=110) {
-        if (!_isPresenting) {
-            _isPresenting = YES;
-            BaseFuncVC* controller = (BaseFuncVC*)[self.parentVC.delegate flipViewController:self.parentVC contentIndex:2];
-            UIView *sourceSnapshot = [controller.view snapshotViewAfterScreenUpdates:YES];
-            UIImageView* background = [[UIImageView alloc]initWithFrame:sourceSnapshot.frame];
-            [background setImage:[UIImage imageNamed:@"首页1"]];
-
-            [self.navigationController.view addSubview:sourceSnapshot];
-            sourceSnapshot.transform = CGAffineTransformMake(0.8,0,0,0.8, 0,sourceSnapshot.frame.size.height);
-            [self.navigationController.view addSubview:background];
-            [self.navigationController.view bringSubviewToFront:sourceSnapshot];
-            background.transform = CGAffineTransformMake(1,0,0,1, 0,sourceSnapshot.frame.size.height);
-            [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                background.transform = CGAffineTransformMake(1,0,0,1, 0,0);
-            } completion:^(BOOL finished) {
-            }];
-            [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-                sourceSnapshot.transform = CGAffineTransformMake(0.8,0,0,0.8, 0,0);
-            } completion:^(BOOL finished) {
-                [sourceSnapshot removeFromSuperview];
-                [background removeFromSuperview];
-                [self.parentVC pushViewController:controller animated:NO];
-                _isPresenting = NO;
-            }];
+    
+    if (scrollView==self.newsListScrollView) {
+        int index= round(scrollView.contentOffset.x/scrollView.frame.size.width);
+        self.nowNewsIndex = index;
+    }else{
+        if (scrollView.contentSize.height - scrollView.contentOffset.y<=110) {
+            if (!_isPresenting) {
+                _isPresenting = YES;
+                BaseFuncVC* controller = (BaseFuncVC*)[self.parentVC.delegate flipViewController:self.parentVC contentIndex:2];
+                UIView *sourceSnapshot = [controller.view snapshotViewAfterScreenUpdates:YES];
+                UIImageView* background = [[UIImageView alloc]initWithFrame:sourceSnapshot.frame];
+                [background setImage:[UIImage imageNamed:@"首页1"]];
+                
+                [self.navigationController.view addSubview:sourceSnapshot];
+                sourceSnapshot.transform = CGAffineTransformMake(0.8,0,0,0.8, 0,sourceSnapshot.frame.size.height);
+                [self.navigationController.view addSubview:background];
+                [self.navigationController.view bringSubviewToFront:sourceSnapshot];
+                background.transform = CGAffineTransformMake(1,0,0,1, 0,sourceSnapshot.frame.size.height);
+                [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                    background.transform = CGAffineTransformMake(1,0,0,1, 0,0);
+                } completion:^(BOOL finished) {
+                }];
+                [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                    sourceSnapshot.transform = CGAffineTransformMake(0.8,0,0,0.8, 0,0);
+                } completion:^(BOOL finished) {
+                    [sourceSnapshot removeFromSuperview];
+                    [background removeFromSuperview];
+                    [self.parentVC pushViewController:controller animated:NO];
+                    _isPresenting = NO;
+                }];
+            }
         }
-    }
 
+    }
 }
 
 
@@ -676,6 +781,8 @@ CGFloat angle;
         }
     }
 }
+
+
 
 - (void) keyboardWasShown:(NSNotification *) notif
 {

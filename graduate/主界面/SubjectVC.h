@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BaseFuncVC.h"
 #import "MAOFlipViewController.h"
+#import "MNews.h"
+#import "MNewsList.h"
+#import "MGetNewsList.h"
 @interface SubjectVC : BaseFuncVC
 @property (nonatomic,assign)MAOFlipViewController* parentVC;
 @end
