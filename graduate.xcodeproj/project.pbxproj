@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3168BF361AFB5A1700D93AC5 /* GodNoteHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF351AFB5A1700D93AC5 /* GodNoteHeader.m */; };
+		3168BF391AFB5DAE00D93AC5 /* AdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF381AFB5DAE00D93AC5 /* AdModel.m */; };
 		317C555D1AEC9AB10063E524 /* GodNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55541AEC9AB10063E524 /* GodNoteViewController.m */; };
-		317C555E1AEC9AB10063E524 /* CourseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55571AEC9AB10063E524 /* CourseModel.m */; };
+		317C555E1AEC9AB10063E524 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55571AEC9AB10063E524 /* SubjectModel.m */; };
 		317C555F1AEC9AB10063E524 /* GodNoteRequestManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */; };
 		317C55601AEC9AB10063E524 /* GodNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C555C1AEC9AB10063E524 /* GodNoteView.m */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
@@ -314,10 +316,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3168BF341AFB5A1700D93AC5 /* GodNoteHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteHeader.h; sourceTree = "<group>"; };
+		3168BF351AFB5A1700D93AC5 /* GodNoteHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteHeader.m; sourceTree = "<group>"; };
+		3168BF371AFB5DAE00D93AC5 /* AdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdModel.h; sourceTree = "<group>"; };
+		3168BF381AFB5DAE00D93AC5 /* AdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdModel.m; sourceTree = "<group>"; };
 		317C55531AEC9AB10063E524 /* GodNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteViewController.h; sourceTree = "<group>"; };
 		317C55541AEC9AB10063E524 /* GodNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteViewController.m; sourceTree = "<group>"; };
-		317C55561AEC9AB10063E524 /* CourseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseModel.h; sourceTree = "<group>"; };
-		317C55571AEC9AB10063E524 /* CourseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseModel.m; sourceTree = "<group>"; };
+		317C55561AEC9AB10063E524 /* SubjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModel.h; sourceTree = "<group>"; };
+		317C55571AEC9AB10063E524 /* SubjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectModel.m; sourceTree = "<group>"; };
 		317C55581AEC9AB10063E524 /* GodNoteRequestManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteRequestManger.h; sourceTree = "<group>"; };
 		317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteRequestManger.m; sourceTree = "<group>"; };
 		317C555B1AEC9AB10063E524 /* GodNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteView.h; sourceTree = "<group>"; };
@@ -917,10 +923,12 @@
 		317C55551AEC9AB10063E524 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				317C55561AEC9AB10063E524 /* CourseModel.h */,
-				317C55571AEC9AB10063E524 /* CourseModel.m */,
+				317C55561AEC9AB10063E524 /* SubjectModel.h */,
+				317C55571AEC9AB10063E524 /* SubjectModel.m */,
 				317C55581AEC9AB10063E524 /* GodNoteRequestManger.h */,
 				317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */,
+				3168BF371AFB5DAE00D93AC5 /* AdModel.h */,
+				3168BF381AFB5DAE00D93AC5 /* AdModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -930,6 +938,8 @@
 			children = (
 				317C555B1AEC9AB10063E524 /* GodNoteView.h */,
 				317C555C1AEC9AB10063E524 /* GodNoteView.m */,
+				3168BF341AFB5A1700D93AC5 /* GodNoteHeader.h */,
+				3168BF351AFB5A1700D93AC5 /* GodNoteHeader.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2103,6 +2113,7 @@
 				7D4E05881A74B1DF001709DB /* OtherFuncVCViewController.m in Sources */,
 				7DDA294A1A7B2144003F77C3 /* AFSecurityPolicy.m in Sources */,
 				7D5DBB7E1A836EA70078B99C /* MComment.m in Sources */,
+				3168BF391AFB5DAE00D93AC5 /* AdModel.m in Sources */,
 				7D4E062D1A766658001709DB /* RegistVC.m in Sources */,
 				7DA994F21A7A2AA800A879CF /* MMusic.m in Sources */,
 				7D2432141A7B785500C00F64 /* PostDetailsReplyCell.m in Sources */,
@@ -2172,7 +2183,7 @@
 				7D4E05C51A74EF71001709DB /* SDWebImageManager.m in Sources */,
 				7D24320D1A7B785500C00F64 /* EssencePostCell.m in Sources */,
 				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
-				317C555E1AEC9AB10063E524 /* CourseModel.m in Sources */,
+				317C555E1AEC9AB10063E524 /* SubjectModel.m in Sources */,
 				7D5DBB871A83898F0078B99C /* ChatCenterDetailViewController.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
 				B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */,
@@ -2255,6 +2266,7 @@
 				7D5DBBB41A848E7D0078B99C /* MMyEssences.m in Sources */,
 				7DA994EF1A7A2A6100A879CF /* MMain.m in Sources */,
 				7D5DBB0E1A8080FF0078B99C /* MUpdateSubject.m in Sources */,
+				3168BF361AFB5A1700D93AC5 /* GodNoteHeader.m in Sources */,
 				7DA994E31A7A0D8B00A879CF /* MLogin.m in Sources */,
 				7D2F92AA1AB72F6900D4B18F /* MMedia.m in Sources */,
 				B13D1FED1ACD270000F81344 /* UIDevice+IdentifierAddition.m in Sources */,

@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AdModel.h"
 
 @interface GodNoteRequestManger : NSObject
 
-+ (void)getNoteWithNoteID:(NSNumber *)nid
-               completion:(void(^)(NSArray *models))completion
++ (void)getAllSubjectCompletion:(void(^)(NSArray *subjectModels, AdModel *adModel))completion
                   failure:(void(^)(NSString *errorString))failure;
 
 @end

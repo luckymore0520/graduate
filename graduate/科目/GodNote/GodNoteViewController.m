@@ -8,15 +8,20 @@
 
 #import "GodNoteViewController.h"
 #import "GodNoteView.h"
+#import "SubjectModel.h"
+#import "GodNoteRequestManger.h"
 
 @interface GodNoteViewController ()
 <
 GodNoteViewDelegate
 >
 
-@property (nonatomic) GodNoteView *godNoteView;
+@property (nonatomic) NSInteger currentIndex;
 
-@property (nonatomic) NSString *currentAPI;
+@property (nonatomic) NSMutableArray *allSubjectViews;
+
+@property (nonatomic) NSMutableArray *allSubjectModels;
+@property (nonatomic) AdModel *adModel;
 
 @end
 
@@ -26,14 +31,49 @@ GodNoteViewDelegate
 {
     [super viewDidLoad];
     
-    self.godNoteView = [[GodNoteView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:self.godNoteView];
+    
 }
 
-#pragma mark - GodNoteViewDelegate
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self getDataSourceCompletion:^{
+       //reload the first tab with data from server
+        GodNoteView *firstSubjectView = self.allSubjectViews[0];
+        firstSubjectView 
+    }];
+}
+
+#pragma mark - get Data source
+- (void)getDataSourceCompletion:(dispatch_block_t)completion
+{
+    [GodNoteRequestManger getAllSubjectCompletion:^(NSArray *subjectModels, AdModel *adModel) {
+        [self.allSubjectModels removeAllObjects];
+        [self.allSubjectModels addObjectsFromArray:subjectModels];
+        
+        self.adModel = adModel;
+        if (completion) {
+            completion();
+        }
+    } failure:^(NSString *errorString) {
+        [self showDetailViewController:self sender:nil];
+    }];
+}
+
+#pragma mark - GodNoteViewDataSource
 - (NSString *)godNoteViewRequestAPI
 {
+    SubjectModel *model = self.allSubjectModels[self.currentIndex];
     return self.currentAPI;
+}
+
+- (NSMutableArray *)allSubjectViews
+{
+    if (!_allSubjectViews) {
+        _allSubjectViews = [NSMutableArray array];
+    }
+    return _allSubjectViews;
 }
 
 @end

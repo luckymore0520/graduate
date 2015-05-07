@@ -13,19 +13,33 @@
 
 @implementation GodNoteRequestManger
 
-+ (void)getNoteWithNoteID:(NSNumber *)nid
-               completion:(void(^)(NSArray *models))completion
-                  failure:(void(^)(NSString *errorString))failure
++ (void)getAllSubjectCompletion:(void(^)(NSArray *subjectModels, AdModel *adModel))completion
+                        failure:(void(^)(NSString *errorString))failure;
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    NSString *url = [BASEURL stringByAppendingFormat:@"?id=%@", nid];
+    NSString *url = [BASEURL stringByAppendingFormat:@"?id=%@", @1];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",operation.request.URL.absoluteString);
-        
-        if (completion) {
-            completion(responseObject);
+        if ([responseObject[@"errorCode"] integerValue] == 0) {
+            //get the advertisement
+            AdModel *ad = [[AdModel alloc] init];
+            ad.adTitle = responseObject[@"adTitle_"];
+            ad.adURL = responseObject[@"adUrl_"];
+#warning Check the field charater yixiaoluo
+            ad.adImageURL = responseObject[@"adImage_"];
+            
+            //get all subjects
+            //here
+            
+            if (completion) {
+                completion(responseObject, ad);
+            }
+        }else{
+            if (failure) {
+                failure(@"返回数据失败");
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

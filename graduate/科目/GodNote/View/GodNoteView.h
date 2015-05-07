@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class GodNoteView;
-@protocol GodNoteViewDelegate <NSObject>
-
+@class GodNoteView, SubjectModel;
+@protocol GodNoteViewDataSource <NSObject>
 @required
-@property (readonly) NSString *godNoteViewRequestAPI;
+- (void)noteView:(GodNoteView *)noteView didSelectItemAtIndex:(NSInteger)itemIndex;
 
 @end
 
 @interface GodNoteView : UIView
 
-@property (weak, nonatomic) id<GodNoteViewDelegate> delegate;
+@property (weak, nonatomic) id<GodNoteViewDataSource> dataSource;
+@property (weak, nonatomic) id<GodNoteViewDataSource> delegate;
 
-- (void)loadDataCompletion:(dispatch_block_t)completion;
+- (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel;
 
 @end

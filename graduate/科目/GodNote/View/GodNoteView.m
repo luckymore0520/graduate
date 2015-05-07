@@ -7,7 +7,7 @@
 //
 
 #import "GodNoteView.h"
-#import "CourseModel.h"
+#import "SubjectModel.h"
 #import "GodNoteRequestManger.h"
 
 static NSString * const kGodNoteViewCellIdentifier = @"kGodNoteViewCellIdentifier";
@@ -20,7 +20,7 @@ UICollectionViewDelegateFlowLayout
 >
 
 @property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) NSMutableArray *dataSourceArray;
+@property (nonatomic) SubjectModel *subjectModel;
 
 @end
 
@@ -46,27 +46,16 @@ UICollectionViewDelegateFlowLayout
 }
 
 #pragma mark - getter &&  setter
-- (NSMutableArray *)dataSourceArray
-{
-    if (_dataSourceArray == nil) {
-        _dataSourceArray = [NSMutableArray array];
-        [_dataSourceArray addObject:[CourseModel withCourseName:@"数学" andNotes:nil]];
-        [_dataSourceArray addObject:[CourseModel withCourseName:@"政治" andNotes:nil]];
-        [_dataSourceArray addObject:[CourseModel withCourseName:@"英语" andNotes:nil]];
-    }
-    return _dataSourceArray;
-}
 
 #pragma mark - actions
-- (void)loadDataCompletion:(dispatch_block_t)completion;
+- (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel;
 {
-    [GodNoteRequestManger getNoteWithNoteID:@1 completion:^(NSArray *models) {
-        
-        dispatch_async(dispatch_get_main_queue(), completion);
-    } failure:^(NSString *errorString) {
-        
-        dispatch_async(dispatch_get_main_queue(), completion);
-    }];
+    if (subjectModel == self.subjectModel) {
+        return;
+    }
+    
+    self.subjectModel = subjectModel;
+    [self.collectionView reloadData];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -87,13 +76,13 @@ UICollectionViewDelegateFlowLayout
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    CourseModel *model = self.dataSourceArray[section];
-    return model.courseNotes.count;
+    SubjectNote *model = self.subjectModel.subjectNotes[section];
+    return model.allChapters.count + 1;//1 is the title
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.dataSourceArray.count;
+    return self.subjectModel.subjectNotes.count;
 }
 
 @end
