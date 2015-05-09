@@ -27,19 +27,19 @@
     [super viewDidLoad];
     _sectionHeader = [[UIView alloc] initWithFrame:CGRectZero];
     _firstAppear = YES;
-    [self setTitle:@"新闻列表"];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = view;
     _newsArray = [[NSMutableArray alloc]init];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+//    [super viewDidAppear:animated];
     if (_firstAppear) {
         _firstAppear = NO;
     }else{
         [self loadData];
     }
-    //    [super viewDidAppear:animated];
-    
 }
 
 - (void)loadData
@@ -122,10 +122,8 @@
     NewsListCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"news"];
     MNews *n = [self.newsArray objectAtIndex:indexPath.row];
     [cell.newsTitleLabel setText:n.title_];
-    [cell.newsTimeLabel setText:@"| 2015-03-12"];
-    NSLog(@"%@",n.time_);
-    //        [cell.newsSourceTitle setText:[NSString stringWithFormat:@"来自 %@",n.source_]];
-    [cell.newsSourceTitle setText:@"来自 研大大"];
+    [cell.newsTimeLabel setText:[NSString stringWithFormat:@" |  %@",n.time_]];
+    [cell.newsSourceTitle setText:[NSString stringWithFormat:@"来自 %@",n.source_]];
     return cell;
 }
 
@@ -133,11 +131,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    MNews* n = [self.newsArray objectAtIndex:indexPath.section];
+    MNews* n = [self.newsArray objectAtIndex:indexPath.row];
+    NSLog(@"%@",n.title_);
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"EssenceStoryboard" bundle:nil];
     EssenceDetailWebViewController* detail = [storyboard instantiateViewControllerWithIdentifier:@"essenceWeb"];
     detail.url = [NSURL URLWithString:[n.url_ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     detail.title = @"新闻详情";
+    [detail addRightButton:@"" action:nil img:nil];
     [self.navigationController pushViewController:detail animated:YES];
 }
 
