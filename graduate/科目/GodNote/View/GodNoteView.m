@@ -55,8 +55,8 @@ GodNoteViewDelete
     }
 }
 
-#pragma mark - GodNoteViewDelete
-- (void)noteView:(GodNoteView *)noteView didSelectItem:(id)note
+#pragma mark - GodNoteViewDelegate
+- (void)noteView:(GodNoteView *)noteView didSelectItem:(BookModel *)note
 {
     if ([self.delegate respondsToSelector:@selector(noteView:didSelectItem:)]) {
         [self.delegate noteView:self didSelectItem:note];

@@ -12,6 +12,10 @@
 		3168BF3C1AFC410300D93AC5 /* NoteDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF3B1AFC410300D93AC5 /* NoteDetail.m */; };
 		3168BF3F1AFD1CA800D93AC5 /* SubjectAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF3E1AFD1CA800D93AC5 /* SubjectAdapter.m */; };
 		3168BF461AFEE5DA00D93AC5 /* GodNoteViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF451AFEE5DA00D93AC5 /* GodNoteViewCell.m */; };
+		3168BF491AFF344E00D93AC5 /* NoteDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF481AFF344E00D93AC5 /* NoteDetailViewController.m */; };
+		3168BF4C1AFF3A1200D93AC5 /* NoteDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF4B1AFF3A1200D93AC5 /* NoteDetailView.m */; };
+		3168BF4F1AFF661A00D93AC5 /* NoteDetailBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF4E1AFF661A00D93AC5 /* NoteDetailBrowserView.m */; };
+		3168BF521AFF795D00D93AC5 /* NoteDetailMask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3168BF511AFF795D00D93AC5 /* NoteDetailMask.m */; };
 		317C555D1AEC9AB10063E524 /* GodNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55541AEC9AB10063E524 /* GodNoteViewController.m */; };
 		317C555E1AEC9AB10063E524 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55571AEC9AB10063E524 /* SubjectModel.m */; };
 		317C555F1AEC9AB10063E524 /* GodNoteRequestManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */; };
@@ -336,6 +340,14 @@
 		3168BF431AFE554F00D93AC5 /* GodNoteMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GodNoteMacro.h; sourceTree = "<group>"; };
 		3168BF441AFEE5DA00D93AC5 /* GodNoteViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteViewCell.h; sourceTree = "<group>"; };
 		3168BF451AFEE5DA00D93AC5 /* GodNoteViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteViewCell.m; sourceTree = "<group>"; };
+		3168BF471AFF344E00D93AC5 /* NoteDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDetailViewController.h; sourceTree = "<group>"; };
+		3168BF481AFF344E00D93AC5 /* NoteDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDetailViewController.m; sourceTree = "<group>"; };
+		3168BF4A1AFF3A1200D93AC5 /* NoteDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDetailView.h; sourceTree = "<group>"; };
+		3168BF4B1AFF3A1200D93AC5 /* NoteDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDetailView.m; sourceTree = "<group>"; };
+		3168BF4D1AFF661A00D93AC5 /* NoteDetailBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDetailBrowserView.h; sourceTree = "<group>"; };
+		3168BF4E1AFF661A00D93AC5 /* NoteDetailBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDetailBrowserView.m; sourceTree = "<group>"; };
+		3168BF501AFF795D00D93AC5 /* NoteDetailMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDetailMask.h; sourceTree = "<group>"; };
+		3168BF511AFF795D00D93AC5 /* NoteDetailMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDetailMask.m; sourceTree = "<group>"; };
 		317C55531AEC9AB10063E524 /* GodNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteViewController.h; sourceTree = "<group>"; };
 		317C55541AEC9AB10063E524 /* GodNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteViewController.m; sourceTree = "<group>"; };
 		317C55561AEC9AB10063E524 /* SubjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModel.h; sourceTree = "<group>"; };
@@ -941,6 +953,8 @@
 			children = (
 				317C55531AEC9AB10063E524 /* GodNoteViewController.h */,
 				317C55541AEC9AB10063E524 /* GodNoteViewController.m */,
+				3168BF471AFF344E00D93AC5 /* NoteDetailViewController.h */,
+				3168BF481AFF344E00D93AC5 /* NoteDetailViewController.m */,
 				317C55551AEC9AB10063E524 /* Model */,
 				317C555A1AEC9AB10063E524 /* View */,
 			);
@@ -975,6 +989,12 @@
 				3168BF351AFB5A1700D93AC5 /* GodNoteHeader.m */,
 				3168BF441AFEE5DA00D93AC5 /* GodNoteViewCell.h */,
 				3168BF451AFEE5DA00D93AC5 /* GodNoteViewCell.m */,
+				3168BF4A1AFF3A1200D93AC5 /* NoteDetailView.h */,
+				3168BF4B1AFF3A1200D93AC5 /* NoteDetailView.m */,
+				3168BF4D1AFF661A00D93AC5 /* NoteDetailBrowserView.h */,
+				3168BF4E1AFF661A00D93AC5 /* NoteDetailBrowserView.m */,
+				3168BF501AFF795D00D93AC5 /* NoteDetailMask.h */,
+				3168BF511AFF795D00D93AC5 /* NoteDetailMask.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2252,6 +2272,7 @@
 				7DBD86731A7264E900205576 /* MediaPlayVC.m in Sources */,
 				7D4E05901A74C73A001709DB /* ButtonGroup.m in Sources */,
 				7D44453C1A96E64600A4BE04 /* WKNavigationViewController.m in Sources */,
+				3168BF4F1AFF661A00D93AC5 /* NoteDetailBrowserView.m in Sources */,
 				7D2432441A7CC42100C00F64 /* QuestionBook.m in Sources */,
 				7DE7ACDF1A7FB09700D23449 /* QCSlideSwitchView.m in Sources */,
 				7D5DBBA21A84612C0078B99C /* MGetEssenceList.m in Sources */,
@@ -2283,6 +2304,8 @@
 				7D2432B71A7DD18F00C00F64 /* UIImage+Resize.m in Sources */,
 				7D4E05E91A74EF7B001709DB /* MJPhotoLoadingView.m in Sources */,
 				7D4E05931A74D869001709DB /* RecommandVC.m in Sources */,
+				3168BF521AFF795D00D93AC5 /* NoteDetailMask.m in Sources */,
+				3168BF491AFF344E00D93AC5 /* NoteDetailViewController.m in Sources */,
 				7D4445391A94D1C300A4BE04 /* EssenceRootViewController.m in Sources */,
 				7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */,
 				7D5DBB6C1A835BCE0078B99C /* MPostList.m in Sources */,
@@ -2294,6 +2317,7 @@
 				7D6A53BE1A6B5BEE00355923 /* ToolUtils.m in Sources */,
 				7D2432291A7C764200C00F64 /* MMainList.m in Sources */,
 				7D5DBB9F1A8460D80078B99C /* MEssence.m in Sources */,
+				3168BF4C1AFF3A1200D93AC5 /* NoteDetailView.m in Sources */,
 				7D4E05C71A74EF71001709DB /* UIButton+WebCache.m in Sources */,
 				7D2F92A71AB5E88000D4B18F /* MSignCountStatus.m in Sources */,
 				7D4E05801A749CE4001709DB /* MediaPlayController.m in Sources */,

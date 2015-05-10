@@ -52,10 +52,10 @@ UICollectionViewDelegateFlowLayout
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SubjectNote *model = self.subjectModel.subjectBooks[indexPath.section];
-    SubjectNote *chapter = model.allBooks[indexPath.row - 1];
+//    SubjectNote *model = self.subjectModel.subjectBooks[indexPath.section];
+//    BookModel *chapter = model.allBooks[indexPath.row - 1];
     if ([self.delegate respondsToSelector:@selector(noteView:didSelectItem:)]) {
-        [self.delegate noteView:nil didSelectItem:chapter];
+        [self.delegate noteView:nil didSelectItem:nil];
     }
 }
 

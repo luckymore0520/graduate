@@ -8,9 +8,9 @@
 
 #define RGBa(r, g, b, a)  [UIColor colorWithRed:r/255. green:g/255. blue:b/255. alpha:a]
 
-@class GodNoteView, SubjectNote;
+@class GodNoteView, BookModel;
 @protocol GodNoteViewDelete <NSObject>
 @required
-- (void)noteView:(GodNoteView *)noteView didSelectItem:(SubjectNote *)note;
+- (void)noteView:(GodNoteView *)noteView didSelectItem:(BookModel *)note;
 
 @end
