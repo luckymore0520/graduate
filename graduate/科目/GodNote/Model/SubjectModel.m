@@ -7,37 +7,63 @@
 //
 
 #import "SubjectModel.h"
+#import "AdModel.h"
 
 @implementation SubjectModel
 
-+ (SubjectModel *)withID:(NSNumber *)sid title:(NSString *)title andNotes:(NSArray *)notes;
++ (SubjectModel *)fromDictionary:(NSDictionary *)note
 {
     SubjectModel *model = [[SubjectModel alloc] init];
-    model.subjectID = sid;
-    model.subjectTitle = title;
-    [model.subjectNotes addObjectsFromArray:notes];
+    model.subjectID = note[@"id_"];
+    model.subjectTitle = note[@"title_"];
+    
+    NSArray *books = note[@"books_"];
+    [books enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+        [model.subjectBooks addObject:[SubjectNote fromDictionary:obj]];
+    }];
+
     return model;
 }
 
-- (NSMutableArray *)subjectNotes
+- (NSMutableArray *)subjectBooks
 {
-    if (_subjectNotes == nil) {
-        _subjectNotes = [NSMutableArray array];
-        for (NSInteger i = 0; i < 10; i++) {
-            SubjectNote *note = [[SubjectNote alloc] init];
-            note.noteCoverURL = @"http://ww4.sinaimg.cn/mw600/005vbOHfgw1erf6sxbi7tj30m80wxwi6.jpg";
-            note.noteTitle = @"美女";
-            note.noteID = @1;
-            [_subjectNotes addObject:note];
-        }
+    if (_subjectBooks == nil) {
+        _subjectBooks = [NSMutableArray array];
     }
-    return _subjectNotes;
+    return _subjectBooks;
 }
 
 @end
 
 @implementation SubjectNote
++ (SubjectNote *)fromDictionary:(NSDictionary *)book
+{
+    SubjectNote *model = [[SubjectNote alloc] init];
+    model.noteTitle = book[@"title_"];
+    NSArray *notes = book[@"books_"];
+    [notes enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+        [model.allBooks addObject:[BookModel fromDictionary:obj]];
+    }];
+    return model;
+}
+
+- (NSMutableArray *)allBooks
+{
+    if (!_allBooks) {
+        _allBooks = [NSMutableArray array];
+    }
+    return _allBooks;
+}
 @end
 
-@implementation ChapterModel
+@implementation BookModel
+
++ (BookModel *)fromDictionary:(NSDictionary *)note
+{
+    BookModel *model = [[BookModel alloc] init];
+    model.bookID = note[@"id_"];
+    model.bookCoverURL = note[@"cover_"];
+    return model;
+}
+
 @end

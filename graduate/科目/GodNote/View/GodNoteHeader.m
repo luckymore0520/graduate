@@ -8,10 +8,9 @@
 
 #import "GodNoteHeader.h"
 #import "SubjectModel.h"
-#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 #import "AdModel.h"
-
-#define RGBa(r, g, b, a)  [UIColor colorWithRed:r/255. green:g/255. blue:b/255. alpha:a]
+#import "GodNoteMacro.h"
 
 static NSString * const kGodNoteHeaderCellIdentifier = @"kGodNoteViewCellIdentifier";
 
@@ -45,18 +44,37 @@ AdViewDelegate
     return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), 35);
+    self.adView.frame = CGRectMake(0, CGRectGetHeight(self.collectionView.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.bounds) - CGRectGetHeight(self.collectionView.frame));
+}
+
 #pragma mark - actions
 - (void)reloadViewWithAllSubjectModels:(NSArray *)subjectModels
                              andAdmdel:(AdModel *)model;
 {
     self.allSubjectModels = subjectModels;
-    self.adModel = model;
-    
     [self.collectionView reloadData];
+    
+    //load once. because only one advertisement
+//    if (!self.adModel && model) {
+        self.adModel = model;
+        [self.adView setImageURL:model.adImageURL];
+//    }
 }
 
 #pragma mark - AdViewDelegate
 - (void)adViewDidCloseAd:(AdView *)adView
+{
+    if ([self.delegate respondsToSelector:@selector(noteHeaderDidCloseAdvertisement:)]) {
+        [self.delegate noteHeaderDidCloseAdvertisement:self];
+    }
+}
+
+- (void)adViewDidTapped:(AdView *)adView
 {
     if ([self.delegate respondsToSelector:@selector(noteHeader:didSelectAdvertisementWithURL:)]) {
         [self.delegate noteHeader:self didSelectAdvertisementWithURL:self.adModel.adImageURL];
@@ -68,8 +86,8 @@ AdViewDelegate
 {
     self.currentSelectIndex = indexPath.row;
     
-    if ([self.delegate respondsToSelector:@selector(noteHeader:didSelectItem:)]) {
-        [self.delegate noteHeader:self didSelectItem:self.allSubjectModels[indexPath.row]];
+    if ([self.delegate respondsToSelector:@selector(noteHeader:didSelectItem:atIndex:)]) {
+        [self.delegate noteHeader:self didSelectItem:self.allSubjectModels[indexPath.row] atIndex:indexPath.row];
     }
     
     //hilite the cell
@@ -90,7 +108,11 @@ AdViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(CGRectGetWidth(self.frame)/self.allSubjectModels.count, 34);
+    if (self.allSubjectModels.count == 0) {
+        return CGSizeZero;
+    }
+
+    return CGSizeMake(CGRectGetWidth(self.frame)/self.allSubjectModels.count - 1, 34);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -103,14 +125,15 @@ AdViewDelegate
 {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.minimumInteritemSpacing = 5;
-        layout.minimumLineSpacing = 5;
-        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        layout.minimumInteritemSpacing = 0;
+        layout.minimumLineSpacing = 0;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         [_collectionView registerClass:[SubjectTitleCell class] forCellWithReuseIdentifier:kGodNoteHeaderCellIdentifier];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.backgroundColor = [UIColor whiteColor];
     }
     
     return _collectionView;
@@ -132,7 +155,7 @@ AdViewDelegate
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    [self addSubview:self.titleLabel];
+    [self.contentView addSubview:self.titleLabel];
     return self;
 }
 
@@ -148,6 +171,7 @@ AdViewDelegate
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.highlightedTextColor = RGBa(73, 156, 214, 1);
         _titleLabel.textColor = [UIColor blackColor];
     }
@@ -158,7 +182,7 @@ AdViewDelegate
 
 @interface AdView ()
 
-@property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UIButton *imageViewButton;
 @property (nonatomic) UIButton *deleteButton;
 
 @end
@@ -168,9 +192,8 @@ AdViewDelegate
 {
     self = [super initWithFrame:frame];
     
-    [self addSubview:self.imageView];
+    [self addSubview:self.imageViewButton];
     [self addSubview:self.deleteButton];
-    self.backgroundColor = [UIColor redColor];
     
     return self;
 }
@@ -179,14 +202,15 @@ AdViewDelegate
 {
     [super layoutSubviews];
     
-    self.imageView.frame = self.bounds;
-    self.deleteButton.frame = CGRectMake(CGRectGetWidth(self.bounds) - CGRectGetHeight(self.bounds), 0, CGRectGetHeight(self.bounds), CGRectGetHeight(self.bounds));
+    self.imageViewButton.frame = self.bounds;
+    self.deleteButton.frame = CGRectMake(CGRectGetWidth(self.bounds) - CGRectGetHeight(self.bounds) - 8, 0, CGRectGetHeight(self.bounds)+8, CGRectGetHeight(self.bounds));
 }
 
 #pragma mark - response
 - (void)setImageURL:(NSString *)url
 {
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
+    url = @"http://pic.wenwen.soso.com/p/20090901/20090901103853-803999540.jpg";
+    [self.imageViewButton sd_setImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal];
 }
 
 #pragma mark - response
@@ -197,21 +221,30 @@ AdViewDelegate
     }
 }
 
-#pragma mark - setter && getter
-- (UIImageView *)imageView
+- (void)imageViewButtonClicked:(id)sender
 {
-    if (!_imageView) {
-        _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+    if ([self.delegate respondsToSelector:@selector(adViewDidTapped:)]) {
+        [self.delegate adViewDidTapped:self];
     }
-    return _imageView;
+}
+
+#pragma mark - setter && getter
+- (UIButton *)imageViewButton
+{
+    if (!_imageViewButton) {
+        _imageViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _imageViewButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [_imageViewButton addTarget:self action:@selector(imageViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _imageViewButton;
 }
 
 - (UIButton *)deleteButton
 {
     if (!_deleteButton) {
         _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_deleteButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+        _deleteButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [_deleteButton setImage:[UIImage imageNamed:@"关于我们"] forState:UIControlStateNormal];
         [_deleteButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _deleteButton;

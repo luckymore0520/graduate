@@ -8,42 +8,47 @@
 
 #import <Foundation/Foundation.h>
 
+@class AdModel;
 @interface SubjectModel : NSObject
 
 @property (nonatomic) NSNumber *subjectID;
 @property (copy, nonatomic) NSString *subjectTitle;
-@property (nonatomic) NSMutableArray *subjectNotes;//SubjectNote array
+@property (nonatomic) NSMutableArray *subjectBooks;//SubjectBook array
 
-+ (SubjectModel *)withID:(NSNumber *)sid title:(NSString *)title andNotes:(NSArray *)notes;
+@property (nonatomic) AdModel *adModel;
+
+/**
+ *  @param subject 数据格式参考接口文档：获取笔记本列表(V2.1)
+ */
++ (SubjectModel *)fromDictionary:(NSDictionary *)subject;
 
 @end
 
 @interface SubjectNote : NSObject
 
-@property (nonatomic) NSNumber *noteID;
 @property (copy, nonatomic) NSString *noteTitle;
-@property (copy, nonatomic) NSString *noteCoverURL;
+@property (nonatomic) NSMutableArray *allBooks;//BookModel array. currently max count is 3
 
-//currently max count is 3
-@property (nonatomic) NSMutableArray *allChapters;//ChapterModel array
+/**
+ *  @param book 数据格式参考接口文档：获取笔记本列表(V2.1)
+ "title_": "完型",
+ "books_": [
+ {
+ "id_": "ea5fcd49-f4cf-11e4-9812-ac853dac2305",
+ "cover_": "1b48dd11b7b5404c8f9d84974e5d8e15"
+ }
+ ]
+ }
+ */
++ (SubjectNote *)fromDictionary:(NSDictionary *)book;
 
 @end
 
-@interface ChapterModel : NSObject
+@interface BookModel : NSObject
 
-//chapter info
-@property (nonatomic) NSNumber *parentID;
-@property (nonatomic) NSNumber *chapterID;
-@property (nonatomic) NSNumber *numberID;//科目编号
-@property (copy, nonatomic) NSString *chapterDes;
-@property (nonatomic) BOOL isLock;//是否加锁
+@property (nonatomic) NSNumber *bookID;
+@property (copy, nonatomic) NSString *bookCoverURL;
 
-//author info
-@property (nonatomic) NSNumber *authorID;
-@property (copy, nonatomic) NSString *authorName;
-@property (copy, nonatomic) NSString *authorDes;
-@property (copy, nonatomic) NSString *authorImg;
-@property (copy, nonatomic) NSString *authorVideo;
-
++ (BookModel *)fromDictionary:(NSDictionary *)book;
 
 @end
