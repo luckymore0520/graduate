@@ -91,7 +91,7 @@ MJPhotoViewDelegate
     photoModel.index = indexPath.row;
     
     cell.photoView.photo = photoModel;
-    
+    cell.delegate = self;
     cell.contentView.backgroundColor = [UIColor redColor];
     
     return cell;
@@ -99,7 +99,7 @@ MJPhotoViewDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(CGRectGetHeight(self.frame), CGRectGetHeight(self.frame));
+    return CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -115,10 +115,12 @@ MJPhotoViewDelegate
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.minimumInteritemSpacing = 5;
         layout.minimumLineSpacing = 5;
-        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         [_collectionView registerClass:[NoteDetailBrowserViewCell class] forCellWithReuseIdentifier:kNoteDetailBrowserViewCellIdentifier];
+        _collectionView.pagingEnabled = YES;
+        _collectionView.backgroundColor = [UIColor orangeColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
     }
@@ -166,8 +168,9 @@ MJPhotoViewDelegate
 - (MJPhotoView *)photoView
 {
     if (!_photoView) {
-        _photoView = [[MJPhotoView alloc] init];
-        _photoView.delegate = self;
+        _photoView = [[MJPhotoView alloc] initWithFrame:self.bounds];
+        _photoView.photoViewDelegate = self;
+        _photoView.imageView.backgroundColor = [UIColor yellowColor];
     }
     return _photoView;
 }

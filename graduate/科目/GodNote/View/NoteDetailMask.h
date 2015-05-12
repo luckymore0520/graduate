@@ -32,4 +32,6 @@ typedef NS_ENUM(NSUInteger, NoteDetailViewStyle) {
 @property (nonatomic) id<NoteDetailMaskDelegate> delegate;
 @property (nonatomic) NoteDetailViewStyle viewStyle;
 
++ (instancetype)mask;
+
 @end

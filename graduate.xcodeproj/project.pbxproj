@@ -20,6 +20,7 @@
 		317C555E1AEC9AB10063E524 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55571AEC9AB10063E524 /* SubjectModel.m */; };
 		317C555F1AEC9AB10063E524 /* GodNoteRequestManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */; };
 		317C55601AEC9AB10063E524 /* GodNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C555C1AEC9AB10063E524 /* GodNoteView.m */; };
+		318737091B017DB000BC6D24 /* NoteDetailMask.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318737081B017DB000BC6D24 /* NoteDetailMask.xib */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
@@ -356,6 +357,7 @@
 		317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteRequestManger.m; sourceTree = "<group>"; };
 		317C555B1AEC9AB10063E524 /* GodNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteView.h; sourceTree = "<group>"; };
 		317C555C1AEC9AB10063E524 /* GodNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteView.m; sourceTree = "<group>"; };
+		318737081B017DB000BC6D24 /* NoteDetailMask.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteDetailMask.xib; sourceTree = "<group>"; };
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
@@ -995,6 +997,7 @@
 				3168BF4E1AFF661A00D93AC5 /* NoteDetailBrowserView.m */,
 				3168BF501AFF795D00D93AC5 /* NoteDetailMask.h */,
 				3168BF511AFF795D00D93AC5 /* NoteDetailMask.m */,
+				318737081B017DB000BC6D24 /* NoteDetailMask.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2074,6 +2077,7 @@
 				7D0A87FB1A85F4A5001A33F7 /* AvenirNextLTPro-UltLt.otf in Resources */,
 				7D2F92C01ABCA64000D4B18F /* loading_small@2x.gif in Resources */,
 				7D0A87FC1A85F4A5001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Resources */,
+				318737091B017DB000BC6D24 /* NoteDetailMask.xib in Resources */,
 				7D2432991A7DD18F00C00F64 /* camera_line.png in Resources */,
 				7D2432A31A7DD18F00C00F64 /* flashing_off.png in Resources */,
 				7D2432A61A7DD18F00C00F64 /* flashing_on@2x.png in Resources */,

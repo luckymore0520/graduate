@@ -9,6 +9,9 @@
 #import "NoteDetailMask.h"
 
 @interface NoteToolButton : UIButton
+@end
+
+@interface BottomBar : UIView
 
 @end
 
@@ -21,6 +24,11 @@
 @end
 
 @implementation NoteDetailMask
++ (instancetype)mask
+{
+    UINib *nib = [UINib nibWithNibName:@"NoteDetailMask" bundle:nil];
+    return [nib instantiateWithOwner:self options:nil][0];
+}
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {

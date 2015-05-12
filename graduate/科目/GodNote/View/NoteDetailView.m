@@ -31,13 +31,6 @@ static CGFloat itemWidth = 94;
     return self;
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.collectionView.frame = self.bounds;
-}
-
 - (void)reloadViewWithNotes:(NSArray *)notes completion:(dispatch_block_t)completion
 {
     self.notes = notes;
@@ -58,7 +51,7 @@ static CGFloat itemWidth = 94;
 {
     if ([self.delegate respondsToSelector:@selector(noteDetailView:didSelectItem:fromRect:)]) {
         UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-        CGRect frame = [self convertRect:cell.frame fromView:cell];
+        CGRect frame = [self convertRect:cell.frame fromView:cell.superview];
         
         [self.delegate noteDetailView:self didSelectItem:self.notes[indexPath.row] fromRect:frame];
     }

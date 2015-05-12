@@ -11,6 +11,7 @@
 #import "NoteDetailBrowserView.h"
 #import "MJPhoto.h"
 #import "NoteDetailMask.h"
+#import "UIImageView+WebCache.h"
 
 @interface NoteDetailViewController ()
 <
@@ -61,6 +62,8 @@ MJPhotoViewDelegate
 {
     [self removeObserver:self.noteDetailMask forKeyPath:@"viewStyle"];
 }
+
+#pragma mark - action
 
 #pragma mark - observer
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -116,16 +119,23 @@ MJPhotoViewDelegate
     
     self.noteDetailMask.viewStyle = NoteDetailViewSingleStyle;
     
-    //here show transition animation
-    self.noteDetailBrowserlView.frame = frameInSelf;
-    [self.view bringSubviewToFront:self.noteDetailBrowserlView];
+    //temp mask
+    NSString *url = @"http://pic.wenwen.soso.com/p/20090901/20090901103853-803999540.jpg";
+    UIImageView *prototypeImageView = [[UIImageView alloc] initWithFrame:frameInSelf];
+    [prototypeImageView sd_setImageWithURL:[NSURL URLWithString:url]];
+    prototypeImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:prototypeImageView];
     
-    [UIView animateWithDuration:.3 animations:^{
-        CGFloat barHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
-        CGFloat navigationControllerHeight = CGRectGetHeight(self.navigationController.view.frame);
-        self.noteDetailBrowserlView.frame = CGRectMake(0, -barHeight, CGRectGetWidth(self.view.frame), navigationControllerHeight);
-    } completion:^(BOOL finished) {
+    CGFloat barHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
+    CGFloat navigationControllerHeight = CGRectGetHeight(self.navigationController.view.frame);
+    self.noteDetailBrowserlView.frame = CGRectMake(0, -barHeight, CGRectGetWidth(self.view.frame), navigationControllerHeight);
 
+    //here show transition animation
+    [UIView animateWithDuration:.3 delay:.1 options:UIViewAnimationOptionCurveLinear animations:^{
+        prototypeImageView.frame = self.noteDetailBrowserlView.frame;
+    } completion:^(BOOL finished) {
+        [self.view bringSubviewToFront:self.noteDetailBrowserlView];
+        [prototypeImageView removeFromSuperview];
     }];
 }
 
@@ -160,6 +170,7 @@ MJPhotoViewDelegate
 }
 
 #pragma mark - setter && getter
+
 - (NoteDetailView *)noteDetailView
 {
     if (!_noteDetailView) {
@@ -183,7 +194,7 @@ MJPhotoViewDelegate
 - (NoteDetailMask *)noteDetailMask
 {
     if (!_noteDetailMask) {
-        _noteDetailMask = [[NoteDetailMask alloc] init];
+        _noteDetailMask = [NoteDetailMask mask];
         _noteDetailMask.delegate = self;
     }
     return _noteDetailMask;
