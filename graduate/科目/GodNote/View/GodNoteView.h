@@ -7,18 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GodNoteViewCell.h"
+#import "GodNoteMacro.h"
 
 @class GodNoteView, SubjectModel, SubjectNote;
-@protocol GodNoteViewDelete <NSObject>
-@required
-- (void)noteView:(GodNoteView *)noteView didSelectItem:(SubjectNote *)note;
-
-@end
-
 @interface GodNoteView : UIView
 
 @property (weak, nonatomic) id<GodNoteViewDelete> delegate;
 
-- (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel;
+- (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel
+                        completion:(dispatch_block_t)completion;
 
 @end

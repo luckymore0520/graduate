@@ -454,7 +454,6 @@ NSTimer *timer;
 //        [[[MQuesCountStatus alloc]init]load:self];
         [self.tableview reloadData];
     }
-   
 }
 
 
@@ -464,13 +463,17 @@ NSTimer *timer;
 
 
 - (IBAction)recommand:(id)sender {
-    if (self.subjects.count<4) {
-        [self showSubjectAlert];
-    } else {
-        [self performSegueWithIdentifier:@"recommand" sender:nil];
+//    if (self.subjects.count<4) {
+//        [self showSubjectAlert];
+//    } else {
+    
+        GodNoteViewController *godNote = [[GodNoteViewController alloc] init];
+        [self.navigationController pushViewController:godNote animated:YES];
+
+//        [self performSegueWithIdentifier:@"recommand" sender:nil];
         [ToolUtils setRecommandDay:[ToolUtils getCurrentDate]];
 
-    }
+//    }
 }
 
 - (IBAction)goToMyTraces:(id)sender {
@@ -499,12 +502,9 @@ NSTimer *timer;
 {
     
     if ([segue.identifier isEqualToString:@"recommand"]) {
-//        RecommandVC* vc = (RecommandVC*)[segue destinationViewController];
-//        vc.questionList = [NSMutableArray arrayWithArray:self.recommandList];
-        
-        GodNoteViewController *godNote = [[GodNoteViewController alloc] init];
-        [self.navigationController pushViewController:godNote animated:YES];
-    } 
+        RecommandVC* vc = (RecommandVC*)[segue destinationViewController];
+        vc.questionList = [NSMutableArray arrayWithArray:self.recommandList];
+    }
 }
 
 

@@ -9,6 +9,7 @@
 #import "GodNoteView.h"
 #import "SubjectModel.h"
 #import "GodNoteRequestManger.h"
+#import "GodNoteMacro.h"
 
 static NSString * const kGodNoteViewCellIdentifier = @"kGodNoteViewCellIdentifier";
 
@@ -16,7 +17,8 @@ static NSString * const kGodNoteViewCellIdentifier = @"kGodNoteViewCellIdentifie
 <
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout
+UICollectionViewDelegateFlowLayout,
+GodNoteViewDelete
 >
 
 @property (nonatomic) UICollectionView *collectionView;
@@ -30,67 +32,74 @@ UICollectionViewDelegateFlowLayout
 {
     self = [super initWithFrame:frame];
     if (self) {
-        //init collection view
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.minimumInteritemSpacing = 5;
-        layout.minimumLineSpacing = 5;
-        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        
-        self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kGodNoteViewCellIdentifier];
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
         [self addSubview:self.collectionView];
     }
     return self;
 }
 
-#pragma mark - actions
-- (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel;
+- (void)layoutSubviews
 {
-    if (subjectModel == self.subjectModel) {
-        return;
-    }
+    [super layoutSubviews];
     
-    self.subjectModel = subjectModel;
-    [self.collectionView reloadData];
+    self.collectionView.frame = self.bounds;
 }
 
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - actions
+- (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel completion:(dispatch_block_t)completion
 {
-    SubjectNote *model = self.subjectModel.subjectNotes[indexPath.section];
-    SubjectNote *chapter = model.allChapters[indexPath.row - 1];
+    if (!self.subjectModel.adModel) {
+        [[GodNoteRequestManger sharedManager] getAllNotesIn:subjectModel completion:completion failure:^(NSString *errorString) {
+            self.subjectModel = subjectModel;
+            [self.collectionView reloadData];
+        }];
+    }
+}
+
+#pragma mark - GodNoteViewDelegate
+- (void)noteView:(GodNoteView *)noteView didSelectItem:(BookModel *)note
+{
     if ([self.delegate respondsToSelector:@selector(noteView:didSelectItem:)]) {
-        [self.delegate noteView:self didSelectItem:chapter];
+        [self.delegate noteView:self didSelectItem:note];
     }
 }
 
 #pragma mark - UICollectionViewDatasource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kGodNoteViewCellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor purpleColor];
+    GodNoteViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kGodNoteViewCellIdentifier forIndexPath:indexPath];
+    
+    cell.contentView.backgroundColor = [UIColor purpleColor];
+    cell.delegate = self;
+    [cell configCellWithSubjectModel:self.subjectModel];
+    
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return CGSizeMake(32, 50);
-    }
-    return CGSizeMake(50, 50);
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 100);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    SubjectNote *model = self.subjectModel.subjectNotes[section];
-    return model.allChapters.count + 1;//1 is the title
+    return 10;//self.subjectModel.subjectBooks.count;
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+#pragma mark - getter && setter
+- (UICollectionView *)collectionView
 {
-    return self.subjectModel.subjectNotes.count;
+    if (!_collectionView) {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.minimumLineSpacing = 5;
+        layout.sectionInset = UIEdgeInsetsMake(5, 0, 0, 5);
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+        [_collectionView registerClass:[GodNoteViewCell class] forCellWithReuseIdentifier:kGodNoteViewCellIdentifier];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+    }
+    
+    return _collectionView;
 }
-
 @end

@@ -12,8 +12,9 @@
 @protocol GodNoteHeaderDelegate <NSObject>
 
 @required
-- (void)noteHeader:(GodNoteHeader *)header didSelectItem:(SubjectModel *)sModel;
+- (void)noteHeader:(GodNoteHeader *)header didSelectItem:(SubjectModel *)sModel atIndex:(NSInteger)itemIndex;
 - (void)noteHeader:(GodNoteHeader *)header didSelectAdvertisementWithURL:(NSString *)adURL;
+- (void)noteHeaderDidCloseAdvertisement:(GodNoteHeader *)header;
 
 @end
 
@@ -21,6 +22,7 @@
 
 @required
 - (void)adViewDidCloseAd:(AdView *)adView;
+- (void)adViewDidTapped:(AdView *)adView;
 
 @end
 
@@ -34,7 +36,7 @@
 
 @end
 
-@interface  SubjectTitleCell: UICollectionViewCell
+@interface SubjectTitleCell: UICollectionViewCell
 
 @property (nonatomic) UILabel *titleLabel;
 
