@@ -273,6 +273,7 @@ document.location=\"myweb:touch:end\";};";
     nav.transitioningDelegate = self;
     [self.navigationController presentViewController:nav animated:YES completion:^{
     }];
+//    [self dismissViewControllerAnimated:NO completion:^{}];
 //    [self.navigationController pushViewController:detail animated:YES];
 }
 

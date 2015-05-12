@@ -7,18 +7,22 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>9B802792-A540-46E7-9F11-42E64EABD1D6</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>graduate</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>08AA26015DE9FA5490994908CF86889160541677</key>
 		<string>https://github.com/wk121250151/graduate.git</string>
+		<key>7202546CC80653E70DCEA6A78D1D757A373450E0</key>
+		<string>https://github.com/StephenZhuang/MobileNJU.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>graduate.xcodeproj/project.xcworkspace</string>
+	<string>graduate.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>08AA26015DE9FA5490994908CF86889160541677</key>
 		<string>../..</string>
+		<key>7202546CC80653E70DCEA6A78D1D757A373450E0</key>
+		<string>../../../git/MobileNJU</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/wk121250151/graduate.git</string>
@@ -35,6 +39,14 @@
 			<string>08AA26015DE9FA5490994908CF86889160541677</string>
 			<key>IDESourceControlWCCName</key>
 			<string>graduate</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7202546CC80653E70DCEA6A78D1D757A373450E0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MobileNJU</string>
 		</dict>
 	</array>
 </dict>
