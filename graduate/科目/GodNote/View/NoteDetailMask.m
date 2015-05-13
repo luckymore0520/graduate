@@ -38,8 +38,21 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
+    if (self.viewStyle == NoteDetailViewThumbStyle && self.isPoppedView) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        [self performSelector:@selector(dismissPoppedView) withObject:nil afterDelay:.1];
+        return YES;
+    }
+    
     return CGRectContainsPoint(self.popView.frame, point)
             || CGRectContainsPoint(self.bottomBarView.frame, point);
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    self.popView.hidden = YES;
 }
 
 #pragma mark - response
@@ -84,6 +97,11 @@
     [UIView animateWithDuration:.25 animations:^{
         [self layoutIfNeeded];
     }];
+}
+
+- (void)transitionToViewStyle:(NoteDetailViewStyle)style
+{
+    //hide bottom unuse menus
 }
 
 #pragma mark - setter && getter

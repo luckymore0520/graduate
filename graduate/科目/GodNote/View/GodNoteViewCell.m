@@ -52,6 +52,10 @@ UICollectionViewDelegateFlowLayout
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        return;
+    }
+
 //    SubjectNote *model = self.subjectModel.subjectBooks[indexPath.section];
 //    BookModel *chapter = model.allBooks[indexPath.row - 1];
     if ([self.delegate respondsToSelector:@selector(noteView:didSelectItem:)]) {

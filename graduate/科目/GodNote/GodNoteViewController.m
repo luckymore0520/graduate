@@ -74,9 +74,9 @@ GodNoteHeaderDelegate
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
     //reload the first tab with data from server
     [self displayViewAtIndex:0];

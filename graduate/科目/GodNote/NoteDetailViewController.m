@@ -49,7 +49,9 @@ MJPhotoViewDelegate
     [self.view addSubview:self.noteDetailView];
     [self.view addSubview:self.noteDetailMask];
     
-    [self addObserver:self.noteDetailMask forKeyPath:@"viewStyle" options:NSKeyValueObservingOptionNew context:nil];
+    [self transitionToViewStyle:NoteDetailViewThumbStyle];
+    
+    [self.noteDetailMask addObserver:self forKeyPath:@"viewStyle" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewWillLayoutSubviews
@@ -66,6 +68,14 @@ MJPhotoViewDelegate
     [self removeObserver:self.noteDetailMask forKeyPath:@"viewStyle"];
 }
 
+#pragma mark - UINavigationItems
+- (void)transitionToViewStyle:(NoteDetailViewStyle)style
+{
+    //make right navigation items hide or show
+    NSArray *allItems = [self buildRightNaivgationBarItemsWithStyle:style];
+    [self.navigationItem setRightBarButtonItems:allItems animated:YES];
+}
+
 #pragma mark - action
 - (void)closeSelf
 {
@@ -73,6 +83,11 @@ MJPhotoViewDelegate
         //close big image browser
         self.noteDetailMask.viewStyle = NoteDetailViewThumbStyle;
         
+        if (self.noteDetailMask.isPoppedView) {
+            [self.noteDetailMask dismissPoppedView];
+            return;
+        }
+
         //scroll thumb view to current view
         [self.noteDetailView scrollToIndexVisiable:self.noteDetailBrowserlView.currentPageIndex animated:NO completion:^(CGRect endFrame, UIView *view) {
             
@@ -95,18 +110,9 @@ MJPhotoViewDelegate
 {
     if ([keyPath isEqualToString:@"viewStyle"]) {
         NoteDetailViewStyle style = [change[NSKeyValueChangeNewKey] integerValue];
-        //update navigation bar
-        switch (style) {
-            case NoteDetailViewThumbStyle:
-                
-                break;
-            case NoteDetailViewSingleStyle:
-
-                break;
-                
-            default:
-                break;
-        }
+        //transition navigation bar
+        [self transitionToViewStyle:style];
+        [self.noteDetailMask transitionToViewStyle:style];
     }
 }
 
@@ -194,6 +200,37 @@ MJPhotoViewDelegate
     
     [self.noteDetailMask setBottomBarHidden:self.navigationBarHidden];
     [self.navigationController setNavigationBarHidden:self.navigationBarHidden animated:YES];
+}
+
+- (NSArray *)buildRightNaivgationBarItemsWithStyle:(NoteDetailViewStyle)style
+{
+    NSMutableArray *array = [NSMutableArray array];
+    
+    UIBarButtonItem *(^getAButton)(NSString *imageName, NSString *title) = ^(NSString *imageName, NSString *title) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        [button setTitle:title forState:UIControlStateNormal];
+        [button setFrame:CGRectMake(0, 0, 60, 44)];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        return [[UIBarButtonItem alloc] initWithCustomView:button];
+    };
+    
+    switch (style) {
+        case NoteDetailViewThumbStyle: {
+            break;
+        }
+        case NoteDetailViewSingleStyle: {
+            [array addObject:getAButton(@"关于我们", @"")];
+            [array addObject:getAButton(@"关于我们", @"旋转")];
+            [array addObject:getAButton(@"关于我们", @"重点")];
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    
+    return array;
 }
 
 - (NoteDetailView *)noteDetailView

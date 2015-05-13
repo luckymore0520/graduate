@@ -42,4 +42,6 @@ typedef NS_ENUM(NSUInteger, NoteDetailViewStyle) {
 //底部栏动画
 - (void)setBottomBarHidden:(BOOL)hidden;
 
+- (void)transitionToViewStyle:(NoteDetailViewStyle)style;
+
 @end
