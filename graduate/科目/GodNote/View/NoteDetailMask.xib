@@ -14,23 +14,32 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qqh-Qu-ZWZ">
                     <rect key="frame" x="0.0" y="545" width="600" height="55"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dm-zf-z8J">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9dm-zf-z8J" customClass="NoteToolButton">
                             <rect key="frame" x="0.0" y="0.0" width="200" height="55"/>
-                            <state key="normal" title="爱心">
+                            <state key="normal" title="爱心" image="评论图标">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="didSelectAttentionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="vYo-0B-eOr"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocP-Ie-qRA">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocP-Ie-qRA" customClass="NoteToolButton">
                             <rect key="frame" x="400" y="0.0" width="200" height="55"/>
-                            <state key="normal" title="更多">
+                            <state key="normal" title="更多" image="评论图标">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="didSelectMoreButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="rp0-yM-hu4"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzO-hZ-iLn">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzO-hZ-iLn" customClass="NoteToolButton">
                             <rect key="frame" x="200" y="0.0" width="200" height="55"/>
-                            <state key="normal" title="评论">
+                            <state key="normal" title="评论" image="评论图标">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="didSelectCommentButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="eML-NF-9zz"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.82008120890000002" green="0.38823529410000002" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
@@ -70,16 +79,18 @@
                 <constraint firstAttribute="bottom" secondItem="qqh-Qu-ZWZ" secondAttribute="bottom" id="ZSI-r0-QkW"/>
                 <constraint firstItem="qqh-Qu-ZWZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="v8z-PH-2L9"/>
                 <constraint firstAttribute="trailing" secondItem="RUi-6v-ONk" secondAttribute="trailing" constant="30" id="w6h-VV-GbB"/>
-                <constraint firstItem="qqh-Qu-ZWZ" firstAttribute="top" secondItem="RUi-6v-ONk" secondAttribute="bottom" constant="55" id="y5A-fI-EZ1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="y5A-fI-EZ1"/>
-                </mask>
-            </variation>
+            <connections>
+                <outlet property="bottomBarToBottomMargin" destination="ZSI-r0-QkW" id="7P3-Rm-B77"/>
+                <outlet property="bottomBarView" destination="qqh-Qu-ZWZ" id="ioJ-D7-fdb"/>
+                <outlet property="popView" destination="RUi-6v-ONk" id="zgp-Kb-S9S"/>
+            </connections>
             <point key="canvasLocation" x="314" y="319"/>
         </view>
     </objects>
+    <resources>
+        <image name="评论图标" width="22" height="19"/>
+    </resources>
 </document>

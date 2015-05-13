@@ -27,7 +27,7 @@
     if (self = [super initWithFrame:frame]) {
         self.clipsToBounds = YES;
 		// 图片
-		_imageView = [[UIImageView alloc] init];
+		_imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
 		_imageView.contentMode = UIViewContentModeScaleAspectFit;
 		[self addSubview:_imageView];
         
@@ -55,6 +55,13 @@
         
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [self adjustFrame];
 }
 
 #pragma mark - photoSetter

@@ -16,6 +16,9 @@ MJPhotoViewDelegate
 
 @property (weak, nonatomic) id<MJPhotoViewDelegate> delegate;
 
+@property (readonly, nonatomic) NSInteger currentPageIndex;
+@property (readonly, nonatomic) MJPhotoView *currentPhotoView;
+
 - (void)startBrowsingFromPage:(NSInteger)page;
 
 @end

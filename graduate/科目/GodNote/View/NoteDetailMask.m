@@ -21,6 +21,12 @@
 @property (nonatomic) UIButton *commentButton;
 @property (nonatomic) UIButton *remarkButton;
 
+@property (nonatomic) BOOL isPoppedView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomBarToBottomMargin;
+@property (weak, nonatomic) IBOutlet UIView *popView;
+@property (weak, nonatomic) IBOutlet UIView *bottomBarView;
+
 @end
 
 @implementation NoteDetailMask
@@ -32,28 +38,58 @@
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    return NO;
+    return CGRectContainsPoint(self.popView.frame, point)
+            || CGRectContainsPoint(self.bottomBarView.frame, point);
 }
 
 #pragma mark - response
-- (void)didSelectAttentionButton:(id)sender
+- (IBAction)didSelectAttentionButton:(id)sender
 {
 
 }
 
-- (void)didSelectCommentButton:(id)sender
+- (IBAction)didSelectCommentButton:(id)sender
 {
     
 }
 
-- (void)didSelectRemarkButton:(id)sender
+- (IBAction)didSelectMoreButton:(id)sender
+{
+    self.popView.hidden = !self.popView.hidden;
+    self.isPoppedView = !self.popView.hidden;
+}
+
+
+- (IBAction)didSelectRemarkButton:(id)sender
 {
     
+}
+
+#pragma mark - view animtation
+- (void)dismissPoppedView
+{
+    self.popView.hidden = YES;
+    self.isPoppedView = NO;
+}
+
+- (void)showPopView
+{
+    self.popView.hidden = NO;
+    self.isPoppedView = YES;
+}
+
+- (void)setBottomBarHidden:(BOOL)hidden
+{
+    self.bottomBarToBottomMargin.constant = hidden ? -BottomBarHeight : 0;
+    [UIView animateWithDuration:.25 animations:^{
+        [self layoutIfNeeded];
+    }];
 }
 
 #pragma mark - setter && getter
 - (void)setViewStyle:(NoteDetailViewStyle)viewStyle
 {
+    _viewStyle = viewStyle;
     switch (viewStyle) {
         case NoteDetailViewThumbStyle:
             
@@ -91,8 +127,8 @@
 {
     [super layoutSubviews];
     
-    self.imageView.center = CGPointMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.imageView.bounds)/2);
-    self.titleLabel.center = CGPointMake(CGRectGetWidth(self.bounds)/2, (CGRectGetHeight(self.bounds) - CGRectGetHeight(self.imageView.bounds))/2);
+    self.imageView.center = CGPointMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds)/2 - 8);
+    self.titleLabel.center = CGPointMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds) - CGRectGetHeight(self.titleLabel.bounds)/2 - 3);
 }
 
 @end

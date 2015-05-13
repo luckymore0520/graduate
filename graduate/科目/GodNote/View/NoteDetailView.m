@@ -31,6 +31,13 @@ static CGFloat itemWidth = 94;
     return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.collectionView.frame = self.bounds;
+}
+
 - (void)reloadViewWithNotes:(NSArray *)notes completion:(dispatch_block_t)completion
 {
     self.notes = notes;

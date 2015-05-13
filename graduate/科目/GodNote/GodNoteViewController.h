@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseFuncVC.h"
 
-@interface GodNoteViewController : UIViewController
+@interface GodNoteViewController : BaseFuncVC
 
 @end

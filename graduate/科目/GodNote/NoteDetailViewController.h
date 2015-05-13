@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseFuncVC.h"
 
-@interface NoteDetailViewController : UIViewController
+@interface NoteDetailViewController : BaseFuncVC
 
 - (instancetype)initWithNoteID:(NSNumber *)noteID;
 

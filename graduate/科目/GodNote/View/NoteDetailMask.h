@@ -34,4 +34,12 @@ typedef NS_ENUM(NSUInteger, NoteDetailViewStyle) {
 
 + (instancetype)mask;
 
+//更多设置框
+- (BOOL)isPoppedView;
+- (void)dismissPoppedView;
+- (void)showPopView;
+
+//底部栏动画
+- (void)setBottomBarHidden:(BOOL)hidden;
+
 @end

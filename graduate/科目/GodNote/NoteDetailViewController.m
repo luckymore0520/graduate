@@ -22,6 +22,8 @@ MJPhotoViewDelegate
 
 @property (nonatomic) NSNumber *noteID;
 
+@property (nonatomic, getter=isNavigationBarHidden) BOOL navigationBarHidden;
+
 @property (nonatomic) NoteDetailView *noteDetailView;
 @property (nonatomic) NoteDetailBrowserView *noteDetailBrowserlView;
 @property (nonatomic) NoteDetailMask *noteDetailMask;
@@ -56,6 +58,7 @@ MJPhotoViewDelegate
     
     self.noteDetailView.frame = (CGRect){self.view.bounds.origin, {CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - BottomBarHeight}};
     self.noteDetailMask.frame = self.view.bounds;
+    self.noteDetailBrowserlView.frame = self.view.bounds;
 }
 
 - (void)dealloc
@@ -64,6 +67,28 @@ MJPhotoViewDelegate
 }
 
 #pragma mark - action
+- (void)closeSelf
+{
+    if (self.noteDetailMask.viewStyle == NoteDetailViewSingleStyle) {
+        //close big image browser
+        self.noteDetailMask.viewStyle = NoteDetailViewThumbStyle;
+        
+        //scroll thumb view to current view
+        [self.noteDetailView scrollToIndexVisiable:self.noteDetailBrowserlView.currentPageIndex animated:NO completion:^(CGRect endFrame, UIView *view) {
+            
+            //show transition animation
+            CGRect frameInSelf = [self.view convertRect:endFrame fromView:view];
+            [UIView animateWithDuration:.3 animations:^{
+                self.noteDetailBrowserlView.frame = frameInSelf;
+            } completion:^(BOOL finished) {
+                [self.view sendSubviewToBack:self.noteDetailBrowserlView];
+            }];
+        }];
+
+    }else{
+        [super closeSelf];
+    }
+}
 
 #pragma mark - observer
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -125,16 +150,17 @@ MJPhotoViewDelegate
     [prototypeImageView sd_setImageWithURL:[NSURL URLWithString:url]];
     prototypeImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:prototypeImageView];
+    [self.view bringSubviewToFront:self.noteDetailMask];
     
     CGFloat barHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
     CGFloat navigationControllerHeight = CGRectGetHeight(self.navigationController.view.frame);
-    self.noteDetailBrowserlView.frame = CGRectMake(0, -barHeight, CGRectGetWidth(self.view.frame), navigationControllerHeight);
 
     //here show transition animation
     [UIView animateWithDuration:.3 delay:.1 options:UIViewAnimationOptionCurveLinear animations:^{
-        prototypeImageView.frame = self.noteDetailBrowserlView.frame;
+        prototypeImageView.frame = CGRectMake(0, -barHeight, CGRectGetWidth(self.view.frame), navigationControllerHeight);
     } completion:^(BOOL finished) {
         [self.view bringSubviewToFront:self.noteDetailBrowserlView];
+        [self.view bringSubviewToFront:self.noteDetailMask];
         [prototypeImageView removeFromSuperview];
     }];
 }
@@ -147,21 +173,13 @@ MJPhotoViewDelegate
 
 - (void)photoViewSingleTap:(MJPhotoView *)photoView
 {
-    NSLog(@"hide or show bar");
-    self.noteDetailMask.viewStyle = NoteDetailViewThumbStyle;
+    if (self.noteDetailMask.isPoppedView) {
+        [self.noteDetailMask dismissPoppedView];
+        return;
+    }
     
-    //scroll thumb view to current view
-    [self.noteDetailView scrollToIndexVisiable:photoView.photo.index animated:NO completion:^(CGRect endFrame, UIView *view) {
-       
-        //show transition animation
-        CGRect frameInSelf = [self.view convertRect:endFrame fromView:view];
-        [UIView animateWithDuration:.3 animations:^{
-            self.noteDetailBrowserlView.frame = frameInSelf;
-        } completion:^(BOOL finished) {
-            [self.view sendSubviewToBack:self.noteDetailBrowserlView];
-        }];
-    }];
-
+    NSLog(@"hide or show bar");
+    self.navigationBarHidden = !self.isNavigationBarHidden;
 }
 
 - (void)photoViewDidEndZoom:(MJPhotoView *)photoView
@@ -170,6 +188,13 @@ MJPhotoViewDelegate
 }
 
 #pragma mark - setter && getter
+- (void)setNavigationBarHidden:(BOOL)navigationBarHidden
+{
+    _navigationBarHidden = navigationBarHidden;
+    
+    [self.noteDetailMask setBottomBarHidden:self.navigationBarHidden];
+    [self.navigationController setNavigationBarHidden:self.navigationBarHidden animated:YES];
+}
 
 - (NoteDetailView *)noteDetailView
 {

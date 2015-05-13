@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jsd-1m-36F">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jsd-1m-36F">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -115,6 +115,7 @@
                         <viewControllerLayoutGuide type="bottom" id="sUg-eL-Lqd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vlx-qw-uB2">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qDw-ny-rvD">
@@ -171,10 +172,10 @@
                                                     <exclude reference="J7c-jQ-my9"/>
                                                     <exclude reference="jO1-vq-KpS"/>
                                                     <exclude reference="zFE-R6-WMi"/>
-                                                    <exclude reference="Ksv-xT-w0Q"/>
-                                                    <exclude reference="Yfa-cF-2NO"/>
                                                     <exclude reference="jh8-uY-2a4"/>
                                                     <exclude reference="oks-iy-n4S"/>
+                                                    <exclude reference="Ksv-xT-w0Q"/>
+                                                    <exclude reference="Yfa-cF-2NO"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -187,10 +188,10 @@
                                                     <include reference="J7c-jQ-my9"/>
                                                     <include reference="jO1-vq-KpS"/>
                                                     <include reference="zFE-R6-WMi"/>
-                                                    <include reference="Ksv-xT-w0Q"/>
-                                                    <include reference="Yfa-cF-2NO"/>
                                                     <include reference="jh8-uY-2a4"/>
                                                     <include reference="oks-iy-n4S"/>
+                                                    <include reference="Ksv-xT-w0Q"/>
+                                                    <include reference="Yfa-cF-2NO"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -333,7 +334,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sck-L0-e7e">
@@ -378,10 +379,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1F58E96D-F1C4-444F-B404-CD4B7030E620" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="D92E4210-E690-4B30-AC7B-A4FC3E2AB29A" translatesAutoresizingMaskIntoConstraints="NO" id="aEk-lX-2ZA">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="主页-重点" translatesAutoresizingMaskIntoConstraints="NO" id="LnA-JP-EyH">
@@ -2627,7 +2628,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y3T-nD-Gtc">
@@ -7295,7 +7296,8 @@
     </scenes>
     <resources>
         <image name="1-返回键" width="10" height="19"/>
-        <image name="1F58E96D-F1C4-444F-B404-CD4B7030E620" width="166" height="165">
+        <image name="2-开始体验" width="180" height="40"/>
+        <image name="D92E4210-E690-4B30-AC7B-A4FC3E2AB29A" width="166" height="165">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9174,7 +9176,6 @@ AbXZAAG15gABtesAAbXtAAG17wABtfQAAbX8AAG1/wABtgQAAbYMAAG2DwABtiEAAbYkAAG2KQAAAAAA
 AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
 </mutableData>
         </image>
-        <image name="2-开始体验" width="180" height="40"/>
         <image name="不太熟" width="187" height="60"/>
         <image name="不太熟触发" width="187" height="60"/>
         <image name="个人中心" width="74" height="74"/>
@@ -9218,7 +9219,7 @@ AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
         <image name="数学无触发" width="105" height="40"/>
         <image name="文字引导图标" width="7" height="13"/>
         <image name="文字渐变蒙版" width="375" height="64"/>
-        <image name="旋转" width="77" height="32"/>
+        <image name="旋转" width="59" height="23"/>
         <image name="未选择" width="13" height="13"/>
         <image name="科目列表未选择" width="21" height="21"/>
         <image name="科目列表选中" width="21" height="21"/>
@@ -9231,7 +9232,7 @@ AAQBAAAAAAAAAEIAAAAAAAAAAAAAAAAAAbYrA
         <image name="转动条" width="104" height="104"/>
         <image name="转移到科目" width="105" height="40"/>
         <image name="选中" width="13" height="13"/>
-        <image name="重点" width="77" height="32"/>
+        <image name="重点" width="59" height="24"/>
         <image name="重点触发效果" width="77" height="32"/>
         <image name="错题-删除图标" width="19" height="18"/>
         <image name="首次登录背景图" width="375" height="568"/>

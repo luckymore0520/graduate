@@ -31,6 +31,8 @@ MJPhotoViewDelegate
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) NSArray *notes;
 
+@property (readwrite, nonatomic) NSInteger currentPageIndex;
+
 @end
 
 @implementation NoteDetailBrowserView
@@ -55,6 +57,24 @@ MJPhotoViewDelegate
 {
     self.notes = notes;
     [self.collectionView reloadData];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self updateCurrentPage];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [self updateCurrentPage];
+    }
+}
+
+- (void)updateCurrentPage
+{
+    self.currentPageIndex = lround(self.collectionView.contentOffset.x/self.collectionView.frame.size.width);
 }
 
 #pragma mark - MJPhotoViewDelegate
@@ -109,12 +129,19 @@ MJPhotoViewDelegate
 }
 
 #pragma mark - getter && setter
+- (MJPhotoView *)currentPhotoView
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:self.currentPageIndex];
+    NoteDetailBrowserViewCell *cell = (NoteDetailBrowserViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    return cell.photoView;
+}
+
 - (UICollectionView *)collectionView
 {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.minimumInteritemSpacing = 5;
-        layout.minimumLineSpacing = 5;
+        layout.minimumInteritemSpacing = 0;
+        layout.minimumLineSpacing = 0;
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
@@ -142,7 +169,7 @@ MJPhotoViewDelegate
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.photoView.frame = self.bounds;
+    self.photoView.frame = self.contentView.bounds;
 }
 
 #pragma mark - MJPhotoViewDelegate
