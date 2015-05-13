@@ -10,6 +10,7 @@
 #import "MEssenceDetail.h"
 #import "MEssenceCollect.h"
 #import "MEssence.h"
+#import "NewsListViewController.h"
 #define GESTURE_STATE_START 1
 #define GESTURE_STATE_END 2
 #define GESTURE_STATE_MOVE 3
@@ -264,13 +265,16 @@ document.location=\"myweb:touch:end\";};";
 
 -(void)showMoreNews
 {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
-    EssenceDetailWebViewController* detail = [storyboard instantiateViewControllerWithIdentifier:@"newsList"];
+//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Func" bundle:nil];
+    NewsListViewController* detail = [self.storyboard instantiateViewControllerWithIdentifier:@"newsList"];
 //    detail.url = [NSURL URLWithString:[n.url_ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//    detail.title = @"新闻列表";
-    //        [detail addRightButton:@"更多新闻" action:@selector(moreNews) img:nil];
-    //    [detail addRightButtonForNews];
-    [self.navigationController pushViewController:detail animated:YES];
+    [detail setTitle: @"新闻列表"];
+    WKNavigationViewController* nav = [[WKNavigationViewController alloc]initWithRootViewController:detail];
+    nav.transitioningDelegate = self;
+    [self.navigationController presentViewController:nav animated:YES completion:^{
+    }];
+//    [self dismissViewControllerAnimated:NO completion:^{}];
+//    [self.navigationController pushViewController:detail animated:YES];
 }
 
 #pragma mark -sharebuttons

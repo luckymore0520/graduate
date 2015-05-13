@@ -2048,7 +2048,7 @@
 				TargetAttributes = {
 					7D6A51861A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 9CM6MTZ24G;
+						DevelopmentTeam = KQ5836GK89;
 					};
 				};
 			};
@@ -2493,8 +2493,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: fei Zhou (8DE5AWXJ3Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: fei Zhou (8DE5AWXJ3Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

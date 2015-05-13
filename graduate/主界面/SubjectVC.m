@@ -97,8 +97,6 @@ NSTimer *timer;
     self.newsListScrollView.delegate = self;
     [self.newsListScrollView setPagingEnabled:YES];
     self.newsListScrollView.showsHorizontalScrollIndicator=NO;
-    //加载首页新闻
-    [self loadIndexNews];
     [self setTitle:@"主页"];
     [super viewDidLoad];
     [self.editView removeFromSuperview];
@@ -167,7 +165,8 @@ NSTimer *timer;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    //加载首页新闻
+    [self loadIndexNews];
     if (!self.subjects) {
         self.subjects =[NSMutableArray arrayWithArray:[[QuestionBook getInstance]getMySubjects]];
     }

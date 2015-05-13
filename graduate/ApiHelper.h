@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ToolUtils.h"
-#define BASEURL @"http://s4.smartjiangsu.com:8080/gs/mobile"
-//#define BASEURL @"http://192.168.1.110:8080/gs/mobile"
+//#define BASEURL @"http://s4.smartjiangsu.com:8080/gs/mobile"
+#define BASEURL @"http://121.40.157.14:8080/gs/mobile"
+//#define BASEURL @"http://192.168.1.103:8080/gs/mobile"
 @protocol ApiDelegate<NSObject>
 @required
 - (void)dispos:(NSDictionary*) data functionName:(NSString*)names;
