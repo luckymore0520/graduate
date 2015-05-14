@@ -21,6 +21,11 @@
 		317C555F1AEC9AB10063E524 /* GodNoteRequestManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C55591AEC9AB10063E524 /* GodNoteRequestManger.m */; };
 		317C55601AEC9AB10063E524 /* GodNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 317C555C1AEC9AB10063E524 /* GodNoteView.m */; };
 		318737091B017DB000BC6D24 /* NoteDetailMask.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318737081B017DB000BC6D24 /* NoteDetailMask.xib */; };
+		3187410C1B04357B00BC6D24 /* NoteIntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3187410B1B04357B00BC6D24 /* NoteIntroductionViewController.m */; };
+		3187410F1B04440800BC6D24 /* IntroductionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3187410E1B04440800BC6D24 /* IntroductionModel.m */; };
+		318741131B04823500BC6D24 /* AuthorReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 318741121B04823500BC6D24 /* AuthorReusableView.m */; };
+		318741151B04824A00BC6D24 /* AuthorReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318741141B04824A00BC6D24 /* AuthorReusableView.xib */; };
+		318741161B04885100BC6D24 /* text.txt in Resources */ = {isa = PBXBuildFile; fileRef = 318741101B047D8800BC6D24 /* text.txt */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
@@ -358,6 +363,14 @@
 		317C555B1AEC9AB10063E524 /* GodNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GodNoteView.h; sourceTree = "<group>"; };
 		317C555C1AEC9AB10063E524 /* GodNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GodNoteView.m; sourceTree = "<group>"; };
 		318737081B017DB000BC6D24 /* NoteDetailMask.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteDetailMask.xib; sourceTree = "<group>"; };
+		3187410A1B04357B00BC6D24 /* NoteIntroductionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteIntroductionViewController.h; sourceTree = "<group>"; };
+		3187410B1B04357B00BC6D24 /* NoteIntroductionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteIntroductionViewController.m; sourceTree = "<group>"; };
+		3187410D1B04440800BC6D24 /* IntroductionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroductionModel.h; sourceTree = "<group>"; };
+		3187410E1B04440800BC6D24 /* IntroductionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroductionModel.m; sourceTree = "<group>"; };
+		318741101B047D8800BC6D24 /* text.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = text.txt; sourceTree = "<group>"; };
+		318741111B04823500BC6D24 /* AuthorReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorReusableView.h; sourceTree = "<group>"; };
+		318741121B04823500BC6D24 /* AuthorReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorReusableView.m; sourceTree = "<group>"; };
+		318741141B04824A00BC6D24 /* AuthorReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorReusableView.xib; sourceTree = "<group>"; };
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
@@ -957,6 +970,8 @@
 				317C55541AEC9AB10063E524 /* GodNoteViewController.m */,
 				3168BF471AFF344E00D93AC5 /* NoteDetailViewController.h */,
 				3168BF481AFF344E00D93AC5 /* NoteDetailViewController.m */,
+				3187410A1B04357B00BC6D24 /* NoteIntroductionViewController.h */,
+				3187410B1B04357B00BC6D24 /* NoteIntroductionViewController.m */,
 				317C55551AEC9AB10063E524 /* Model */,
 				317C555A1AEC9AB10063E524 /* View */,
 			);
@@ -977,7 +992,10 @@
 				3168BF381AFB5DAE00D93AC5 /* AdModel.m */,
 				3168BF3A1AFC410300D93AC5 /* NoteDetail.h */,
 				3168BF3B1AFC410300D93AC5 /* NoteDetail.m */,
+				3187410D1B04440800BC6D24 /* IntroductionModel.h */,
+				3187410E1B04440800BC6D24 /* IntroductionModel.m */,
 				3168BF431AFE554F00D93AC5 /* GodNoteMacro.h */,
+				318741101B047D8800BC6D24 /* text.txt */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -998,6 +1016,9 @@
 				3168BF501AFF795D00D93AC5 /* NoteDetailMask.h */,
 				3168BF511AFF795D00D93AC5 /* NoteDetailMask.m */,
 				318737081B017DB000BC6D24 /* NoteDetailMask.xib */,
+				318741111B04823500BC6D24 /* AuthorReusableView.h */,
+				318741121B04823500BC6D24 /* AuthorReusableView.m */,
+				318741141B04824A00BC6D24 /* AuthorReusableView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2048,7 +2069,7 @@
 				TargetAttributes = {
 					7D6A51861A69610600355923 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = KQ5836GK89;
+						DevelopmentTeam = 9CM6MTZ24G;
 					};
 				};
 			};
@@ -2074,6 +2095,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				318741161B04885100BC6D24 /* text.txt in Resources */,
 				7D0A87FB1A85F4A5001A33F7 /* AvenirNextLTPro-UltLt.otf in Resources */,
 				7D2F92C01ABCA64000D4B18F /* loading_small@2x.gif in Resources */,
 				7D0A87FC1A85F4A5001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Resources */,
@@ -2086,6 +2108,7 @@
 				7D2432B01A7DD18F00C00F64 /* touch_focus@2x.png in Resources */,
 				7D2432AA1A7DD18F00C00F64 /* shot_h@2x.png in Resources */,
 				7D5DBB5E1A8356540078B99C /* MJRefresh.bundle in Resources */,
+				318741151B04824A00BC6D24 /* AuthorReusableView.xib in Resources */,
 				7D2F92B21AB743E000D4B18F /* MyCollectionRootView.xib in Resources */,
 				7D2432A51A7DD18F00C00F64 /* flashing_on.png in Resources */,
 				7D2432AE1A7DD18F00C00F64 /* switch_camera_h@2x.png in Resources */,
@@ -2174,6 +2197,7 @@
 				7DA994BE1A7878FE00A879CF /* MJIvar.m in Sources */,
 				7D44BC101A84EA4A00094D15 /* MRecommendKeys.m in Sources */,
 				7D5DBBAB1A8481300078B99C /* MEssenceDetail.m in Sources */,
+				3187410C1B04357B00BC6D24 /* NoteIntroductionViewController.m in Sources */,
 				7DBD867E1A727E6F00205576 /* SetPasswordViewController.m in Sources */,
 				7DA994E61A7A15E000A879CF /* MImgUpload.m in Sources */,
 				7D2432101A7B785500C00F64 /* ChatCenterVC.m in Sources */,
@@ -2189,6 +2213,7 @@
 				B162D7421AF79C9500FDBDBC /* NewsListViewController.m in Sources */,
 				7DF3C2421AA4BE980068812D /* WKUILabel.m in Sources */,
 				7D4E05E81A74EF7B001709DB /* MJPhotoBrowser.m in Sources */,
+				318741131B04823500BC6D24 /* AuthorReusableView.m in Sources */,
 				7DA994C11A7878FE00A879CF /* MJType.m in Sources */,
 				7D40333B1A9B39EB00BDD1D5 /* BackUpSettingViewController.m in Sources */,
 				7D4E05881A74B1DF001709DB /* OtherFuncVCViewController.m in Sources */,
@@ -2267,6 +2292,7 @@
 				7D24320D1A7B785500C00F64 /* EssencePostCell.m in Sources */,
 				7DDA295A1A7B66EA003F77C3 /* MPost.m in Sources */,
 				317C555E1AEC9AB10063E524 /* SubjectModel.m in Sources */,
+				3187410F1B04440800BC6D24 /* IntroductionModel.m in Sources */,
 				7D5DBB871A83898F0078B99C /* ChatCenterDetailViewController.m in Sources */,
 				7DDA29461A7B2144003F77C3 /* AFHTTPRequestOperation.m in Sources */,
 				B1AD83631AB3FDA200117C8C /* UIPlaceHolderTextView.m in Sources */,

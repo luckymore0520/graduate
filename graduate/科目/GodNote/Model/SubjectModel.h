@@ -30,7 +30,7 @@
 @property (nonatomic) NSMutableArray *allBooks;//BookModel array. currently max count is 3
 
 /**
- *  @param book 数据格式参考接口文档：获取笔记本列表(V2.1)
+ *  @param note 数据格式参考接口文档：获取笔记本列表(V2.1)
  "title_": "完型",
  "books_": [
  {
@@ -40,7 +40,7 @@
  ]
  }
  */
-+ (SubjectNote *)fromDictionary:(NSDictionary *)book;
++ (SubjectNote *)fromDictionary:(NSDictionary *)note;
 
 @end
 

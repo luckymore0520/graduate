@@ -7,7 +7,7 @@
 //
 
 #import "GodNoteViewController.h"
-#import "NoteDetailViewController.h"
+#import "NoteIntroductionViewController.h"
 #import "GodNoteView.h"
 #import "SubjectModel.h"
 #import "GodNoteRequestManger.h"
@@ -112,7 +112,7 @@ GodNoteHeaderDelegate
 #pragma mark - GodNoteViewDelete
 - (void)noteView:(GodNoteView *)noteView didSelectItem:(BookModel *)book
 {
-    NoteDetailViewController *detail = [[NoteDetailViewController alloc] initWithNoteID:book.bookID];
+    NoteIntroductionViewController *detail = [[NoteIntroductionViewController alloc] initWithNoteID:book.bookID];
     [self.navigationController pushViewController:detail animated:YES];
 }
 
