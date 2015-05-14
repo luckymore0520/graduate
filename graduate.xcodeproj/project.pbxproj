@@ -26,6 +26,10 @@
 		318741131B04823500BC6D24 /* AuthorReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 318741121B04823500BC6D24 /* AuthorReusableView.m */; };
 		318741151B04824A00BC6D24 /* AuthorReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318741141B04824A00BC6D24 /* AuthorReusableView.xib */; };
 		318741161B04885100BC6D24 /* text.txt in Resources */ = {isa = PBXBuildFile; fileRef = 318741101B047D8800BC6D24 /* text.txt */; };
+		3187411A1B049A2C00BC6D24 /* UserSayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 318741181B049A2C00BC6D24 /* UserSayCell.m */; };
+		3187411B1B049A2C00BC6D24 /* UserSayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318741191B049A2C00BC6D24 /* UserSayCell.xib */; };
+		3187411F1B049A4600BC6D24 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3187411D1B049A4600BC6D24 /* CommentCell.m */; };
+		318741201B049A4600BC6D24 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3187411E1B049A4600BC6D24 /* CommentCell.xib */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
@@ -371,6 +375,12 @@
 		318741111B04823500BC6D24 /* AuthorReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorReusableView.h; sourceTree = "<group>"; };
 		318741121B04823500BC6D24 /* AuthorReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorReusableView.m; sourceTree = "<group>"; };
 		318741141B04824A00BC6D24 /* AuthorReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorReusableView.xib; sourceTree = "<group>"; };
+		318741171B049A2C00BC6D24 /* UserSayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSayCell.h; sourceTree = "<group>"; };
+		318741181B049A2C00BC6D24 /* UserSayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSayCell.m; sourceTree = "<group>"; };
+		318741191B049A2C00BC6D24 /* UserSayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserSayCell.xib; sourceTree = "<group>"; };
+		3187411C1B049A4600BC6D24 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		3187411D1B049A4600BC6D24 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		3187411E1B049A4600BC6D24 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
@@ -1019,6 +1029,12 @@
 				318741111B04823500BC6D24 /* AuthorReusableView.h */,
 				318741121B04823500BC6D24 /* AuthorReusableView.m */,
 				318741141B04824A00BC6D24 /* AuthorReusableView.xib */,
+				318741171B049A2C00BC6D24 /* UserSayCell.h */,
+				318741181B049A2C00BC6D24 /* UserSayCell.m */,
+				318741191B049A2C00BC6D24 /* UserSayCell.xib */,
+				3187411C1B049A4600BC6D24 /* CommentCell.h */,
+				3187411D1B049A4600BC6D24 /* CommentCell.m */,
+				3187411E1B049A4600BC6D24 /* CommentCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2096,6 +2112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				318741161B04885100BC6D24 /* text.txt in Resources */,
+				318741201B049A4600BC6D24 /* CommentCell.xib in Resources */,
 				7D0A87FB1A85F4A5001A33F7 /* AvenirNextLTPro-UltLt.otf in Resources */,
 				7D2F92C01ABCA64000D4B18F /* loading_small@2x.gif in Resources */,
 				7D0A87FC1A85F4A5001A33F7 /* FZLanTingHeiS-EL-GB.ttf in Resources */,
@@ -2107,6 +2124,7 @@
 				7D2432A21A7DD18F00C00F64 /* flashing_auto@2x.png in Resources */,
 				7D2432B01A7DD18F00C00F64 /* touch_focus@2x.png in Resources */,
 				7D2432AA1A7DD18F00C00F64 /* shot_h@2x.png in Resources */,
+				3187411B1B049A2C00BC6D24 /* UserSayCell.xib in Resources */,
 				7D5DBB5E1A8356540078B99C /* MJRefresh.bundle in Resources */,
 				318741151B04824A00BC6D24 /* AuthorReusableView.xib in Resources */,
 				7D2F92B21AB743E000D4B18F /* MyCollectionRootView.xib in Resources */,
@@ -2208,6 +2226,7 @@
 				7D4E06141A7524C2001709DB /* ReviewVC.m in Sources */,
 				7D40333E1A9B3A0A00BDD1D5 /* BackUpSettingTableViewCell.m in Sources */,
 				7DD43AF61A9762C900A4FBA5 /* IQActionSheetViewController.m in Sources */,
+				3187411F1B049A4600BC6D24 /* CommentCell.m in Sources */,
 				7D5DBB1D1A80C2B00078B99C /* Trace.m in Sources */,
 				7D5DBBA81A847E2B0078B99C /* EssenceDetailViewController.m in Sources */,
 				B162D7421AF79C9500FDBDBC /* NewsListViewController.m in Sources */,
@@ -2353,6 +2372,7 @@
 				7D4E05801A749CE4001709DB /* MediaPlayController.m in Sources */,
 				B12588AF1AF51D6900C702FE /* MGetNewsList.m in Sources */,
 				7D4445331A91907100A4BE04 /* MPostReport.m in Sources */,
+				3187411A1B049A2C00BC6D24 /* UserSayCell.m in Sources */,
 				7D2432D61A7E453F00C00F64 /* SWUtilityButtonView.m in Sources */,
 				7D4E05EC1A74EF7B001709DB /* MJPhotoView.m in Sources */,
 				7D2432471A7CD8E900C00F64 /* SubjectCell.m in Sources */,

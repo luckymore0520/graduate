@@ -10,10 +10,22 @@
 #import "IntroductionModel.h"
 #import "AuthorReusableView.h"
 #import "NoteDetailViewController.h"
+#import "UserSayCell.h"
+#import "CommentCell.h"
+
+typedef NS_ENUM(NSUInteger, IntrodutionHeaderStye) {
+    IntrodutionHeaderStyleUserInfo = 0,
+    IntrodutionHeaderStyleMediaInfo,
+    IntrodutionHeaderStyleUserSay,
+    IntrodutionHeaderStyleCommmentList,
+};
 
 static NSString *const kAuthorReusableViewIdentifier = @"kAuthorReusableViewIdentifier";
 static NSString *const kMediaReusableViewIdentifier = @"kMediaReusableViewIdentifier";
 static NSString *const kUserSayReusableViewIdentifier = @"kUserSayReusableViewIdentifier";
+
+static NSString *const kUserSayCellIdentifier = @"kUserSayCellIdentifier";
+static NSString *const kCommentCellIdentifier = @"kCommentCellIdentifier";
 
 @interface NoteIntroductionViewController ()
 <
@@ -66,13 +78,13 @@ UICollectionViewDelegateFlowLayout
 #pragma mark - UICollectionViewDatasource
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.section == IntrodutionHeaderStyleUserInfo) {
         //author info
         return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == IntrodutionHeaderStyleMediaInfo){
         //video or image
         return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == IntrodutionHeaderStyleUserSay){
         //user say
         return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
     }else{
@@ -84,30 +96,35 @@ UICollectionViewDelegateFlowLayout
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [[UICollectionViewCell alloc] init];
-    
-    return cell;
+    if (indexPath.section == IntrodutionHeaderStyleUserSay) {
+        UserSayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kUserSayCellIdentifier forIndexPath:indexPath];
+        return cell;
+    }else if(indexPath.section == IntrodutionHeaderStyleCommmentList){
+        CommentCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCommentCellIdentifier forIndexPath:indexPath];
+        return cell;
+    }
+    return nil;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2) {
-        return CGSizeMake(CGRectGetWidth(collectionView.frame), 100);
+    if (indexPath.section == IntrodutionHeaderStyleUserSay) {
+        return CGSizeMake(CGRectGetWidth(collectionView.frame), 40);
+    }else if (indexPath.section == IntrodutionHeaderStyleCommmentList){
+        return CGSizeMake(CGRectGetWidth(collectionView.frame), 40);
     }
+    
     return CGSizeZero;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 0;
-    
-    if (section == 0 || section == 1) {
-        return 0;
-    }else if (section == 2){
+    if (section == IntrodutionHeaderStyleUserSay){
         return self.introductionModel.userSayInfo.userSayArray.count;
-    }else if (section == 4){
+    }else if (section == IntrodutionHeaderStyleCommmentList){
         return self.introductionModel.commentInfo.commentList.count;
     }
+    
     return 0;
 }
 
@@ -119,11 +136,11 @@ UICollectionViewDelegateFlowLayout
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == IntrodutionHeaderStyleUserInfo) {
         return CGSizeMake(CGRectGetWidth(self.view.bounds), 100);
-    }else if (section == 1){
+    }else if (section == IntrodutionHeaderStyleMediaInfo){
         return CGSizeMake(CGRectGetWidth(self.view.bounds), 100);
-    }else if (section == 2){
+    }else if (section == IntrodutionHeaderStyleUserSay){
         return CGSizeZero;
     }else{
         return CGSizeMake(CGRectGetWidth(self.view.bounds), 30);
@@ -145,6 +162,9 @@ UICollectionViewDelegateFlowLayout
         [_collectionView registerNib:[UINib nibWithNibName:@"AuthorReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMediaReusableViewIdentifier];
         [_collectionView registerNib:[UINib nibWithNibName:@"AuthorReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kUserSayReusableViewIdentifier];
         
+        [_collectionView registerNib:[UINib nibWithNibName:@"UserSayCell" bundle:nil] forCellWithReuseIdentifier:kUserSayCellIdentifier];
+        [_collectionView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellWithReuseIdentifier:kCommentCellIdentifier];
+
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.backgroundColor = [UIColor orangeColor];
