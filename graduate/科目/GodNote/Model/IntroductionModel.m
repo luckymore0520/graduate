@@ -35,7 +35,7 @@
         MediaImageModel *imageModel = [[MediaImageModel alloc] init];
         imageModel.imageID = obj[@"id_"];
         imageModel.userID = obj[@"userid_"];
-        imageModel.imgageURl = obj[@"img_"];
+        imageModel.imageURl = obj[@"img_"];
         imageModel.remark = obj[@"remark_"];
         imageModel.subject = obj[@"subject_"];
         imageModel.isHighlight = obj[@"isHighlight_"];

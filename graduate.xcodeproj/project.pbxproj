@@ -30,6 +30,11 @@
 		3187411B1B049A2C00BC6D24 /* UserSayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318741191B049A2C00BC6D24 /* UserSayCell.xib */; };
 		3187411F1B049A4600BC6D24 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3187411D1B049A4600BC6D24 /* CommentCell.m */; };
 		318741201B049A4600BC6D24 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3187411E1B049A4600BC6D24 /* CommentCell.xib */; };
+		318741241B04A19200BC6D24 /* VideoReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 318741221B04A19200BC6D24 /* VideoReusableView.m */; };
+		318741251B04A19200BC6D24 /* VideoReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318741231B04A19200BC6D24 /* VideoReusableView.xib */; };
+		318741291B04A1DF00BC6D24 /* CommentReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 318741271B04A1DF00BC6D24 /* CommentReusableView.m */; };
+		3187412A1B04A1DF00BC6D24 /* CommentReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 318741281B04A1DF00BC6D24 /* CommentReusableView.xib */; };
+		3187412D1B04A6A100BC6D24 /* ImagesReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3187412C1B04A6A100BC6D24 /* ImagesReusableView.m */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
@@ -381,6 +386,14 @@
 		3187411C1B049A4600BC6D24 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
 		3187411D1B049A4600BC6D24 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		3187411E1B049A4600BC6D24 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
+		318741211B04A19200BC6D24 /* VideoReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoReusableView.h; sourceTree = "<group>"; };
+		318741221B04A19200BC6D24 /* VideoReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoReusableView.m; sourceTree = "<group>"; };
+		318741231B04A19200BC6D24 /* VideoReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoReusableView.xib; sourceTree = "<group>"; };
+		318741261B04A1DF00BC6D24 /* CommentReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentReusableView.h; sourceTree = "<group>"; };
+		318741271B04A1DF00BC6D24 /* CommentReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentReusableView.m; sourceTree = "<group>"; };
+		318741281B04A1DF00BC6D24 /* CommentReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentReusableView.xib; sourceTree = "<group>"; };
+		3187412B1B04A6A100BC6D24 /* ImagesReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagesReusableView.h; sourceTree = "<group>"; };
+		3187412C1B04A6A100BC6D24 /* ImagesReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagesReusableView.m; sourceTree = "<group>"; };
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
@@ -1029,6 +1042,14 @@
 				318741111B04823500BC6D24 /* AuthorReusableView.h */,
 				318741121B04823500BC6D24 /* AuthorReusableView.m */,
 				318741141B04824A00BC6D24 /* AuthorReusableView.xib */,
+				318741211B04A19200BC6D24 /* VideoReusableView.h */,
+				318741221B04A19200BC6D24 /* VideoReusableView.m */,
+				318741231B04A19200BC6D24 /* VideoReusableView.xib */,
+				3187412B1B04A6A100BC6D24 /* ImagesReusableView.h */,
+				3187412C1B04A6A100BC6D24 /* ImagesReusableView.m */,
+				318741261B04A1DF00BC6D24 /* CommentReusableView.h */,
+				318741271B04A1DF00BC6D24 /* CommentReusableView.m */,
+				318741281B04A1DF00BC6D24 /* CommentReusableView.xib */,
 				318741171B049A2C00BC6D24 /* UserSayCell.h */,
 				318741181B049A2C00BC6D24 /* UserSayCell.m */,
 				318741191B049A2C00BC6D24 /* UserSayCell.xib */,
@@ -2124,6 +2145,7 @@
 				7D2432A21A7DD18F00C00F64 /* flashing_auto@2x.png in Resources */,
 				7D2432B01A7DD18F00C00F64 /* touch_focus@2x.png in Resources */,
 				7D2432AA1A7DD18F00C00F64 /* shot_h@2x.png in Resources */,
+				318741251B04A19200BC6D24 /* VideoReusableView.xib in Resources */,
 				3187411B1B049A2C00BC6D24 /* UserSayCell.xib in Resources */,
 				7D5DBB5E1A8356540078B99C /* MJRefresh.bundle in Resources */,
 				318741151B04824A00BC6D24 /* AuthorReusableView.xib in Resources */,
@@ -2167,6 +2189,7 @@
 				7D2432A01A7DD18F00C00F64 /* close_cha_h@2x.png in Resources */,
 				7D2F92D41ABD558800D4B18F /* loading.gif in Resources */,
 				7D24329F1A7DD18F00C00F64 /* close_cha_h.png in Resources */,
+				3187412A1B04A1DF00BC6D24 /* CommentReusableView.xib in Resources */,
 				7D2432AB1A7DD18F00C00F64 /* switch_camera.png in Resources */,
 				7D2432981A7DD18F00C00F64 /* meizi.jpg in Resources */,
 			);
@@ -2358,6 +2381,7 @@
 				7D4445391A94D1C300A4BE04 /* EssenceRootViewController.m in Sources */,
 				7D4E06111A751593001709DB /* MyQuestionVC.m in Sources */,
 				7D5DBB6C1A835BCE0078B99C /* MPostList.m in Sources */,
+				318741241B04A19200BC6D24 /* VideoReusableView.m in Sources */,
 				7D0A87F71A85D989001A33F7 /* WaitingView.m in Sources */,
 				7D2432D21A7E453F00C00F64 /* SWCellScrollView.m in Sources */,
 				7D5DBB3D1A83276E0078B99C /* SelfEditViewController.m in Sources */,
@@ -2373,10 +2397,12 @@
 				B12588AF1AF51D6900C702FE /* MGetNewsList.m in Sources */,
 				7D4445331A91907100A4BE04 /* MPostReport.m in Sources */,
 				3187411A1B049A2C00BC6D24 /* UserSayCell.m in Sources */,
+				3187412D1B04A6A100BC6D24 /* ImagesReusableView.m in Sources */,
 				7D2432D61A7E453F00C00F64 /* SWUtilityButtonView.m in Sources */,
 				7D4E05EC1A74EF7B001709DB /* MJPhotoView.m in Sources */,
 				7D2432471A7CD8E900C00F64 /* SubjectCell.m in Sources */,
 				7D4033411A9B435600BDD1D5 /* MQuesPrint.m in Sources */,
+				318741291B04A1DF00BC6D24 /* CommentReusableView.m in Sources */,
 				7DA994C31A7878FE00A879CF /* NSObject+MJCoding.m in Sources */,
 				7D4445301A90C17B00A4BE04 /* UIColor+Graduate.m in Sources */,
 				7D4E05EB1A74EF7B001709DB /* MJPhotoToolbar.m in Sources */,

@@ -10,6 +10,9 @@
 #import "IntroductionModel.h"
 #import "AuthorReusableView.h"
 #import "NoteDetailViewController.h"
+#import "VideoReusableView.h"
+#import "CommentReusableView.h"
+#import "ImagesReusableView.h"
 #import "UserSayCell.h"
 #import "CommentCell.h"
 
@@ -21,8 +24,9 @@ typedef NS_ENUM(NSUInteger, IntrodutionHeaderStye) {
 };
 
 static NSString *const kAuthorReusableViewIdentifier = @"kAuthorReusableViewIdentifier";
-static NSString *const kMediaReusableViewIdentifier = @"kMediaReusableViewIdentifier";
-static NSString *const kUserSayReusableViewIdentifier = @"kUserSayReusableViewIdentifier";
+static NSString *const kVideoReusableViewIdentifier = @"kVideoReusableViewIdentifier";
+static NSString *const kImageReusableViewIdentifier = @"kImageReusableViewIdentifier";
+static NSString *const kCommentReusableViewIdentifier = @"kUserSayReusableViewIdentifier";
 
 static NSString *const kUserSayCellIdentifier = @"kUserSayCellIdentifier";
 static NSString *const kCommentCellIdentifier = @"kCommentCellIdentifier";
@@ -83,12 +87,20 @@ UICollectionViewDelegateFlowLayout
         return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
     }else if (indexPath.section == IntrodutionHeaderStyleMediaInfo){
         //video or image
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
+        if (self.introductionModel.mediaInfo.mediaType == MediaTypeImages) {
+            ImagesReusableView *imagesReusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kImageReusableViewIdentifier forIndexPath:indexPath];
+            [imagesReusableView reloadViewWithArray:self.introductionModel.mediaInfo.imageList];
+            return imagesReusableView;
+        }else{
+            VideoReusableView *videoReusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kVideoReusableViewIdentifier forIndexPath:indexPath];
+            [videoReusableView loadVideoWithURL:[NSURL URLWithString:self.introductionModel.mediaInfo.videoUrl]];
+            return videoReusableView;
+        }
     }else if (indexPath.section == IntrodutionHeaderStyleUserSay){
         //user say
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
-    }else{
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
+        return nil;
+    }else if(indexPath.section == IntrodutionHeaderStyleCommmentList){
+        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kCommentReusableViewIdentifier forIndexPath:indexPath];
     }
     
     return nil;
@@ -137,13 +149,13 @@ UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     if (section == IntrodutionHeaderStyleUserInfo) {
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), 100);
+        return CGSizeMake(CGRectGetWidth(self.view.bounds), 107);
     }else if (section == IntrodutionHeaderStyleMediaInfo){
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), 100);
+        return CGSizeMake(CGRectGetWidth(self.view.bounds), 138);
     }else if (section == IntrodutionHeaderStyleUserSay){
         return CGSizeZero;
     }else{
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), 30);
+        return CGSizeMake(CGRectGetWidth(self.view.bounds), 35);
     }
 }
 
@@ -159,8 +171,11 @@ UICollectionViewDelegateFlowLayout
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
         
         [_collectionView registerNib:[UINib nibWithNibName:@"AuthorReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier];
-        [_collectionView registerNib:[UINib nibWithNibName:@"AuthorReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMediaReusableViewIdentifier];
-        [_collectionView registerNib:[UINib nibWithNibName:@"AuthorReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kUserSayReusableViewIdentifier];
+        [_collectionView registerNib:[UINib nibWithNibName:@"VideoReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kVideoReusableViewIdentifier];
+        [_collectionView registerClass:[ImagesReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kImageReusableViewIdentifier];
+        [_collectionView registerNib:[UINib nibWithNibName:@"CommentReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kCommentReusableViewIdentifier];
+        
+        
         
         [_collectionView registerNib:[UINib nibWithNibName:@"UserSayCell" bundle:nil] forCellWithReuseIdentifier:kUserSayCellIdentifier];
         [_collectionView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellWithReuseIdentifier:kCommentCellIdentifier];

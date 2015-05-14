@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, MediaType) {
 
 @property (nonatomic) NSNumber *imageID;
 @property (nonatomic) NSString *userID;
-@property (nonatomic) NSString *imgageURl;
+@property (nonatomic) NSString *imageURl;
 @property (nonatomic) NSString *remark;
 @property (nonatomic) NSString *subject;
 @property (nonatomic) BOOL isHighlight;
