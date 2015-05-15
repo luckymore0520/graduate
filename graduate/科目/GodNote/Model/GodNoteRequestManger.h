@@ -7,27 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AdModel.h"
-#import "ApiHelper.h"
-
-typedef void(^GetAllSubjectCompletion)(NSArray *subjectModels, AdModel *adModel);
-typedef void(^Failure)(NSString *errorString);
-typedef dispatch_block_t Success;
 
 @class SubjectModel;
 @interface GodNoteRequestManger : NSObject
-<
-ApiDelegate
->
-+ (instancetype)sharedManager;
 
 //requests
-- (void)getAllNotesIn:(SubjectModel *)model completion:(Success)completion failure:(Failure)failure;
-
-@end
-
-@interface GodNoteRequest : ApiHelper
-
-- (ApiHelper *)getAllSubject:(id<ApiDelegate>)delegate withType:(NSNumber *)type;
++ (void)getAllNotesIn:(SubjectModel *)model
+           completion:(dispatch_block_t)completion
+              failure:(void (^)(NSString *errorString))failure;
 
 @end

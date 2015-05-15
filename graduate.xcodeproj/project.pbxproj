@@ -37,6 +37,7 @@
 		3187412D1B04A6A100BC6D24 /* ImagesReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3187412C1B04A6A100BC6D24 /* ImagesReusableView.m */; };
 		31EDC2DC1B05C17300325FE0 /* NoteList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 31EDC2DB1B05C17300325FE0 /* NoteList.txt */; };
 		31EDC2DF1B05C28300325FE0 /* NoteBookModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EDC2DE1B05C28300325FE0 /* NoteBookModel.m */; };
+		31EDC2E31B05E39100325FE0 /* NetWorkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EDC2E21B05E39100325FE0 /* NetWorkEngine.m */; };
 		7D099E011ABDBA0F00504E42 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */; };
 		7D099E031ABDC77C00504E42 /* 454545.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E021ABDC77C00504E42 /* 454545.gif */; };
 		7D099E071ABEC66F00504E42 /* CompleteButtonAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D099E061ABEC66F00504E42 /* CompleteButtonAccessoryView.xib */; };
@@ -399,6 +400,8 @@
 		31EDC2DB1B05C17300325FE0 /* NoteList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NoteList.txt; sourceTree = "<group>"; };
 		31EDC2DD1B05C28300325FE0 /* NoteBookModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteBookModel.h; sourceTree = "<group>"; };
 		31EDC2DE1B05C28300325FE0 /* NoteBookModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteBookModel.m; sourceTree = "<group>"; };
+		31EDC2E11B05E39100325FE0 /* NetWorkEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorkEngine.h; sourceTree = "<group>"; };
+		31EDC2E21B05E39100325FE0 /* NetWorkEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorkEngine.m; sourceTree = "<group>"; };
 		7D099DFF1ABDBA0F00504E42 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "Tools/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		7D099E001ABDBA0F00504E42 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "Tools/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
 		7D099E021ABDC77C00504E42 /* 454545.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 454545.gif; sourceTree = "<group>"; };
@@ -994,6 +997,7 @@
 		317C55521AEC9AB10063E524 /* GodNote */ = {
 			isa = PBXGroup;
 			children = (
+				31EDC2E01B05E37200325FE0 /* NetWorkEngine */,
 				317C55531AEC9AB10063E524 /* GodNoteViewController.h */,
 				317C55541AEC9AB10063E524 /* GodNoteViewController.m */,
 				3168BF471AFF344E00D93AC5 /* NoteDetailViewController.h */,
@@ -1066,6 +1070,15 @@
 				3187411E1B049A4600BC6D24 /* CommentCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		31EDC2E01B05E37200325FE0 /* NetWorkEngine */ = {
+			isa = PBXGroup;
+			children = (
+				31EDC2E11B05E39100325FE0 /* NetWorkEngine.h */,
+				31EDC2E21B05E39100325FE0 /* NetWorkEngine.m */,
+			);
+			path = NetWorkEngine;
 			sourceTree = "<group>";
 		};
 		7D0A87FD1A872A0D001A33F7 /* ImageEffects */ = {
@@ -2328,6 +2341,7 @@
 				7DA994EC1A7A29C500A879CF /* MIndex.m in Sources */,
 				7D82A5ED1A9F79A30003F5A5 /* JTSlideShadowAnimation.m in Sources */,
 				7DA994DD1A7A040A00A879CF /* MUser.m in Sources */,
+				31EDC2E31B05E39100325FE0 /* NetWorkEngine.m in Sources */,
 				7DDA294E1A7B2144003F77C3 /* AFURLSessionManager.m in Sources */,
 				B1DC6DE21AB95F340046D9C2 /* ShareApiUtil.m in Sources */,
 				7DA994C21A7878FE00A879CF /* MJTypeEncoding.m in Sources */,

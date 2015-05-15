@@ -48,9 +48,19 @@ GodNoteViewDelete
 - (void)reloadViewWithSubjectModel:(SubjectModel *)subjectModel completion:(dispatch_block_t)completion
 {
     if (!self.subjectModel.adModel) {
-        [[GodNoteRequestManger sharedManager] getAllNotesIn:subjectModel completion:completion failure:^(NSString *errorString) {
+        dispatch_block_t updateViewCompletion = ^{
             self.subjectModel = subjectModel;
             [self.collectionView reloadData];
+            if (completion) {
+                completion();
+            }
+        };
+        [GodNoteRequestManger getAllNotesIn:subjectModel completion:updateViewCompletion failure:^(NSString *errorString){
+            [[[UIAlertView alloc] initWithTitle:errorString message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+            
+            if (completion) {
+                completion();
+            }
         }];
     }
 }
