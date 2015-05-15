@@ -19,6 +19,13 @@ MJPhotoViewDelegate
 @property (readonly, nonatomic) NSInteger currentPageIndex;
 @property (readonly, nonatomic) MJPhotoView *currentPhotoView;
 
+/**
+ *  load view with data source
+ *
+ *  @param notes      as same as the array in the NoteDetailView. they both contain same datasource
+ */
+- (void)reloadViewWithNoteBooks:(NSArray *)notes;
+
 - (void)startBrowsingFromPage:(NSInteger)page;
 
 @end

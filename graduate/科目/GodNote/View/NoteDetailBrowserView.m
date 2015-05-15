@@ -9,6 +9,8 @@
 #import "NoteDetailBrowserView.h"
 #import "UIImageView+WebCache.h"
 #import "MJPhoto.h"
+#import "NoteBookModel.h"
+#import "ToolUtils.h"
 
 static NSString * const kNoteDetailBrowserViewCellIdentifier = @"kNoteDetailBrowserViewCellIdentifier";
 
@@ -18,7 +20,6 @@ MJPhotoViewDelegate
 >
 @property (weak, nonatomic) id<MJPhotoViewDelegate> delegate;
 @property (nonatomic) MJPhotoView *photoView;
-
 @end
 
 @interface NoteDetailBrowserView ()
@@ -29,7 +30,7 @@ UICollectionViewDelegateFlowLayout,
 MJPhotoViewDelegate
 >
 @property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) NSArray *notes;
+@property (nonatomic) NSArray *noteBookList;
 
 @property (readwrite, nonatomic) NSInteger currentPageIndex;
 
@@ -53,10 +54,20 @@ MJPhotoViewDelegate
     self.collectionView.frame = self.bounds;
 }
 
-- (void)reloadViewWithNotes:(NSArray *)notes completion:(dispatch_block_t)completion
+- (void)reloadViewWithNoteBooks:(NSArray *)notes
 {
-    self.notes = notes;
+    self.noteBookList = notes;
     [self.collectionView reloadData];
+}
+
+- (void)startBrowsingFromPage:(NSInteger)page
+{
+    self.currentPageIndex = page;
+
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPageIndex inSection:0];
+    [self.collectionView scrollToItemAtIndexPath:indexPath
+                                atScrollPosition:UICollectionViewScrollPositionLeft
+                                        animated:NO];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -74,7 +85,9 @@ MJPhotoViewDelegate
 
 - (void)updateCurrentPage
 {
-    self.currentPageIndex = lround(self.collectionView.contentOffset.x/self.collectionView.frame.size.width);
+    NSInteger page = lround(self.collectionView.contentOffset.x/self.collectionView.frame.size.width);
+    NSLog(@"image browser to page: %@", @(page));
+    self.currentPageIndex = page;
 }
 
 #pragma mark - MJPhotoViewDelegate
@@ -105,14 +118,13 @@ MJPhotoViewDelegate
 {
     NoteDetailBrowserViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kNoteDetailBrowserViewCellIdentifier forIndexPath:indexPath];
     
-    NSString *url = @"http://pic.wenwen.soso.com/p/20090901/20090901103853-803999540.jpg";
+    NoteBookModel *model = self.noteBookList[indexPath.row];
+
     MJPhoto *photoModel = [[MJPhoto alloc] init];
-    photoModel.url = [NSURL URLWithString:url];
-    photoModel.index = indexPath.row;
-    
+    photoModel.url = [ToolUtils getImageUrlWtihString:model.imageURL width:cell.frame.size.width height:cell.frame.size.height];
+    cell.photoView.orientation = @(model.orientation);
     cell.photoView.photo = photoModel;
     cell.delegate = self;
-    cell.contentView.backgroundColor = [UIColor redColor];
     
     return cell;
 }
@@ -124,14 +136,13 @@ MJPhotoViewDelegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    //SubjectNote *model = self.subjectModel.subjectBooks[section];
-    return 10;//model.allBooks.count + 1;//1 is the title
+    return self.noteBookList.count;
 }
 
 #pragma mark - getter && setter
 - (MJPhotoView *)currentPhotoView
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:self.currentPageIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.currentPageIndex inSection:0];
     NoteDetailBrowserViewCell *cell = (NoteDetailBrowserViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     return cell.photoView;
 }
@@ -147,7 +158,6 @@ MJPhotoViewDelegate
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         [_collectionView registerClass:[NoteDetailBrowserViewCell class] forCellWithReuseIdentifier:kNoteDetailBrowserViewCellIdentifier];
         _collectionView.pagingEnabled = YES;
-        _collectionView.backgroundColor = [UIColor orangeColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
     }
@@ -197,7 +207,6 @@ MJPhotoViewDelegate
     if (!_photoView) {
         _photoView = [[MJPhotoView alloc] initWithFrame:self.bounds];
         _photoView.photoViewDelegate = self;
-        _photoView.imageView.backgroundColor = [UIColor yellowColor];
     }
     return _photoView;
 }

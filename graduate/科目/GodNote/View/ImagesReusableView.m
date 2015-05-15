@@ -54,8 +54,6 @@
     NSURL *url = [ToolUtils getImageUrlWtihString:model.imageURl width:cell.imageView.frame.size.width height:cell.imageView.frame.size.height];
     [cell.imageView sd_setImageWithURL:url];
     
-    cell.contentView.backgroundColor = [UIColor redColor];
-    
     return cell;
 }
 
@@ -82,7 +80,6 @@
         
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         [_collectionView registerClass:[NoteTitleCell class] forCellWithReuseIdentifier:kImageCellIdentifier];
-        _collectionView.backgroundColor = [UIColor redColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
     }

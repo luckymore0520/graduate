@@ -10,13 +10,15 @@
 #import "GodNoteViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "GodNoteViewCell.h"
+#import "NoteBookModel.h"
+#import "ToolUtils.h"
 
 static NSString * const kGodNoteDetailCellIdentifier = @"kGodNoteDetailCellIdentifier";
 static CGFloat itemWidth = 94;
 
 @interface NoteDetailView ()
 @property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) NSArray *notes;
+@property (nonatomic) NSArray *noteBookList;
 
 @end
 
@@ -38,29 +40,27 @@ static CGFloat itemWidth = 94;
     self.collectionView.frame = self.bounds;
 }
 
-- (void)reloadViewWithNotes:(NSArray *)notes completion:(dispatch_block_t)completion
+- (void)reloadViewWithNoteBooks:(NSArray *)notes
 {
-    self.notes = notes;
+    self.noteBookList = notes;
     [self.collectionView reloadData];
 }
 
-- (void)scrollToIndexVisiable:(NSInteger)startIndex animated:(BOOL)animated completion:(void (^)(CGRect endFrame, UIView *view))completion
+- (void)scrollToIndexVisiable:(NSInteger)startIndex animated:(BOOL)animated completion:(void (^)(UIImageView *imageView))completion
 {
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:startIndex inSection:0]];
+    NoteTitleCell *cell = (NoteTitleCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:startIndex inSection:0]];
     [self.collectionView scrollRectToVisible:cell.frame animated:animated];
     if (completion) {
-        completion([self convertRect:cell.frame fromView:cell.superview], self);
+        completion(cell.imageView);
     }
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.delegate respondsToSelector:@selector(noteDetailView:didSelectItem:fromRect:)]) {
-        UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-        CGRect frame = [self convertRect:cell.frame fromView:cell.superview];
-        
-        [self.delegate noteDetailView:self didSelectItem:self.notes[indexPath.row] fromRect:frame];
+    if ([self.delegate respondsToSelector:@selector(noteDetailView:didSelectItemAtIndex:imageView:)]) {
+        NoteTitleCell *cell = (NoteTitleCell *)[collectionView cellForItemAtIndexPath:indexPath];        
+        [self.delegate noteDetailView:self didSelectItemAtIndex:indexPath.row imageView:cell.imageView];
     }
 }
 
@@ -71,11 +71,10 @@ static CGFloat itemWidth = 94;
     cell.imageView.hidden = NO;
     cell.titleLabel.hidden = YES;
     
-    NSString *url = @"http://pic.wenwen.soso.com/p/20090901/20090901103853-803999540.jpg";
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:url]];
-    
-    cell.contentView.backgroundColor = [UIColor redColor];
-    
+    NoteBookModel *model = self.noteBookList[indexPath.row];
+    NSURL *url = [ToolUtils getImageUrlWtihString:model.imageURL width:cell.frame.size.width height:cell.frame.size.height];
+    [cell.imageView sd_setImageWithURL:url];
+        
     return cell;
 }
 
@@ -86,8 +85,7 @@ static CGFloat itemWidth = 94;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    //SubjectNote *model = self.subjectModel.subjectBooks[section];
-    return 20;//model.allBooks.count + 1;//1 is the title
+    return self.noteBookList.count;
 }
 
 #pragma mark - getter && setter

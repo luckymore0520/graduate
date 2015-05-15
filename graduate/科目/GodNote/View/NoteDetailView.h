@@ -11,7 +11,7 @@
 @class NoteDetailView;
 @protocol NoteDetailViewDelegate <NSObject>
 @required
-- (void)noteDetailView:(NoteDetailView *)noteDetailView didSelectItem:(id)item fromRect:(CGRect)frame;
+- (void)noteDetailView:(NoteDetailView *)noteDetailView didSelectItemAtIndex:(NSInteger)itemIndex imageView:(UIImageView *)imageView;
 
 @end
 
@@ -24,7 +24,7 @@ UICollectionViewDelegateFlowLayout
 
 @property (nonatomic) id<NoteDetailViewDelegate> delegate;
 
-- (void)reloadViewWithNotes:(NSArray *)notes completion:(dispatch_block_t)completion;
-- (void)scrollToIndexVisiable:(NSInteger)startIndex animated:(BOOL)animated completion:(void (^)(CGRect endFrame, UIView *view))completion;
+- (void)reloadViewWithNoteBooks:(NSArray *)notes;
+- (void)scrollToIndexVisiable:(NSInteger)startIndex animated:(BOOL)animated completion:(void (^)(UIImageView *imageView))completion;
 
 @end

@@ -12,6 +12,7 @@
 #import "MJPhoto.h"
 #import "NoteDetailMask.h"
 #import "UIImageView+WebCache.h"
+#import "NoteBookModel.h"
 
 @interface NoteDetailViewController ()
 <
@@ -27,6 +28,8 @@ MJPhotoViewDelegate
 @property (nonatomic) NoteDetailView *noteDetailView;
 @property (nonatomic) NoteDetailBrowserView *noteDetailBrowserlView;
 @property (nonatomic) NoteDetailMask *noteDetailMask;
+
+@property (nonatomic) NSArray *noteBookList;//datasource
 
 @end
 
@@ -52,6 +55,8 @@ MJPhotoViewDelegate
     [self transitionToViewStyle:NoteDetailViewThumbStyle];
     
     [self.noteDetailMask addObserver:self forKeyPath:@"viewStyle" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [self getAllNoteBooks];
 }
 
 - (void)viewWillLayoutSubviews
@@ -66,6 +71,36 @@ MJPhotoViewDelegate
 - (void)dealloc
 {
     [self removeObserver:self.noteDetailMask forKeyPath:@"viewStyle"];
+}
+
+#pragma mark - request
+- (void)getAllNoteBooks
+{
+    //you should get the data from server
+    
+    
+    //prepare demo text
+    //you should get it from server
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"NoteList" ofType:@"txt"];
+    NSString *textString = [[NSString alloc] initWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:nil];
+    NSData *textData = [textString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSError *error;
+    NSArray *allNotes = [NSJSONSerialization JSONObjectWithData:textData options:NSJSONReadingAllowFragments error:&error];
+    if (error) {
+        NSLog(@"parse %@", error);
+    }
+    
+    NSMutableArray *demoArray = [NSMutableArray array];
+    [allNotes enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+        [demoArray addObject:[NoteBookModel fromDictionary:obj]];
+    }];
+    
+    self.noteBookList = demoArray;
+    
+    //NOTE! they contain the same datasource
+    [self.noteDetailView reloadViewWithNoteBooks:self.noteBookList];
+    [self.noteDetailBrowserlView reloadViewWithNoteBooks:self.noteBookList];
 }
 
 #pragma mark - UINavigationItems
@@ -88,15 +123,31 @@ MJPhotoViewDelegate
             return;
         }
 
-        //scroll thumb view to current view
-        [self.noteDetailView scrollToIndexVisiable:self.noteDetailBrowserlView.currentPageIndex animated:NO completion:^(CGRect endFrame, UIView *view) {
+        //scroll thumb view cell to visiable area
+        [self.noteDetailView scrollToIndexVisiable:self.noteDetailBrowserlView.currentPageIndex animated:NO completion:^(UIImageView *imageView) {
             
             //show transition animation
-            CGRect frameInSelf = [self.view convertRect:endFrame fromView:view];
+            CGRect frameInSelf = [self.view convertRect:imageView.frame fromView:imageView.superview];
+            
+            UIImageView *imageViewInThumber = imageView;
+            UIView *imageViewSuperView = imageViewInThumber.superview;
+            CGRect originFrame = imageViewInThumber.frame;
+            
+            UIImageView *imageViewInSingle = [self.noteDetailBrowserlView currentPhotoView].imageView;
+            CGRect originFramesInSelf = [self.view convertRect:imageViewInSingle.frame fromView:imageViewInSingle.superview];
+            
+            [imageViewInThumber removeFromSuperview];
+            imageViewInThumber.frame = originFramesInSelf;
+            [self.view addSubview:imageViewInThumber];
+            
+            [self.view sendSubviewToBack:self.noteDetailBrowserlView];
+
             [UIView animateWithDuration:.3 animations:^{
-                self.noteDetailBrowserlView.frame = frameInSelf;
+                imageViewInThumber.frame = frameInSelf;
             } completion:^(BOOL finished) {
-                [self.view sendSubviewToBack:self.noteDetailBrowserlView];
+                [imageViewInThumber removeFromSuperview];
+                [imageViewSuperView addSubview:imageViewInThumber];
+                imageViewInThumber.frame = originFrame;
             }];
         }];
 
@@ -143,31 +194,35 @@ MJPhotoViewDelegate
 }
 
 #pragma mark - NoteDetailViewDelegate
-- (void)noteDetailView:(NoteDetailView *)noteDetailView didSelectItem:(id)item fromRect:(CGRect)frame
-{
-    CGRect frameInSelf = [self.view convertRect:frame fromView:noteDetailView];
-    NSLog(@" noteDetailView cell: %@", NSStringFromCGRect(frameInSelf));
+- (void)noteDetailView:(NoteDetailView *)noteDetailView didSelectItemAtIndex:(NSInteger)itemIndex imageView:(UIImageView *)imageView{
     
     self.noteDetailMask.viewStyle = NoteDetailViewSingleStyle;
     
-    //temp mask
-    NSString *url = @"http://pic.wenwen.soso.com/p/20090901/20090901103853-803999540.jpg";
-    UIImageView *prototypeImageView = [[UIImageView alloc] initWithFrame:frameInSelf];
-    [prototypeImageView sd_setImageWithURL:[NSURL URLWithString:url]];
-    prototypeImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:prototypeImageView];
+    //prepare new view
+    [self.noteDetailBrowserlView startBrowsingFromPage:itemIndex];
+
+    CGRect frameInSelf = [self.view convertRect:imageView.frame fromView:imageView.superview];
+    self.noteDetailBrowserlView.backgroundColor = [UIColor clearColor];
+    
+    UIImageView *imageViewInBrowser = self.noteDetailBrowserlView.currentPhotoView.imageView;
+    UIView *imageViewSuperView = imageViewInBrowser.superview;
+    CGRect originFrame = imageViewInBrowser.frame;
+    CGRect originFramesInSelf = [self.view convertRect:originFrame fromView:imageViewSuperView];
+    
+    [self.view bringSubviewToFront:self.noteDetailBrowserlView];
+
+    [imageViewInBrowser removeFromSuperview];
+    imageViewInBrowser.frame = frameInSelf;
+    [self.view addSubview:imageViewInBrowser];
+    
     [self.view bringSubviewToFront:self.noteDetailMask];
     
-    CGFloat barHeight = CGRectGetHeight(self.navigationController.navigationBar.frame);
-    CGFloat navigationControllerHeight = CGRectGetHeight(self.navigationController.view.frame);
-
-    //here show transition animation
-    [UIView animateWithDuration:.3 delay:.1 options:UIViewAnimationOptionCurveLinear animations:^{
-        prototypeImageView.frame = CGRectMake(0, -barHeight, CGRectGetWidth(self.view.frame), navigationControllerHeight);
+    [UIView animateWithDuration:.3 animations:^{
+        imageViewInBrowser.frame = originFramesInSelf;
     } completion:^(BOOL finished) {
-        [self.view bringSubviewToFront:self.noteDetailBrowserlView];
-        [self.view bringSubviewToFront:self.noteDetailMask];
-        [prototypeImageView removeFromSuperview];
+        [imageViewInBrowser removeFromSuperview];
+        [imageViewSuperView addSubview:imageViewInBrowser];
+        imageViewInBrowser.frame = originFrame;
     }];
 }
 
@@ -237,7 +292,6 @@ MJPhotoViewDelegate
 {
     if (!_noteDetailView) {
         _noteDetailView = [[NoteDetailView alloc] init];
-        _noteDetailView.backgroundColor = [UIColor yellowColor];
         _noteDetailView.delegate = self;
     }
     return _noteDetailView;
@@ -247,7 +301,7 @@ MJPhotoViewDelegate
 {
     if (!_noteDetailBrowserlView) {
         _noteDetailBrowserlView = [[NoteDetailBrowserView alloc] init];
-        _noteDetailBrowserlView.backgroundColor = [UIColor orangeColor];
+        _noteDetailBrowserlView.backgroundColor = [UIColor blackColor];
         _noteDetailBrowserlView.delegate = self;
     }
     return _noteDetailBrowserlView;
