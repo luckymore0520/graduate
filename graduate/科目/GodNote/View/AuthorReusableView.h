@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ImagesReusableView.h"
 
+@class AuthorInfo;
 @interface AuthorReusableView : UICollectionReusableView
+
+- (void)reloadViewWith:(AuthorInfo *)info;
+
+@end
+
+@interface PraiseHeadersView : ImagesReusableView
 
 @end

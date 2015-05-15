@@ -35,13 +35,16 @@ static NSString *const kCommentCellIdentifier = @"kCommentCellIdentifier";
 <
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout
+UICollectionViewDelegateFlowLayout,
+CommentReusableViewDelegate
 >
 
 @property (nonatomic) NSNumber *noteID;
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic, getter=getIntroductionModel) IntroductionModel *introductionModel;
+
+@property (nonatomic, getter=isCommentListExpand) BOOL commentListExpand;
 
 @end
 
@@ -79,12 +82,25 @@ UICollectionViewDelegateFlowLayout
     [self.navigationController pushViewController:note animated:YES];
 }
 
+#pragma mark - CommentReusableViewDelegate
+- (void)commentReusableView:(CommentReusableView *)view didTappedExpandButton:(UIButton *)button
+{
+    self.commentListExpand = !self.isCommentListExpand;
+
+    //change button image status
+    
+    //update status
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:IntrodutionHeaderStyleCommmentList]];
+}
+
 #pragma mark - UICollectionViewDatasource
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == IntrodutionHeaderStyleUserInfo) {
         //author info
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
+        AuthorReusableView *authorReusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kAuthorReusableViewIdentifier forIndexPath:indexPath];
+        [authorReusableView reloadViewWith:self.introductionModel.authorInfo];
+        return authorReusableView;
     }else if (indexPath.section == IntrodutionHeaderStyleMediaInfo){
         //video or image
         if (self.introductionModel.mediaInfo.mediaType == MediaTypeImages) {
@@ -100,7 +116,9 @@ UICollectionViewDelegateFlowLayout
         //user say
         return nil;
     }else if(indexPath.section == IntrodutionHeaderStyleCommmentList){
-        return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kCommentReusableViewIdentifier forIndexPath:indexPath];
+        CommentReusableView *commentReusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kCommentReusableViewIdentifier forIndexPath:indexPath];
+        commentReusableView.delegate = self;
+        return commentReusableView;
     }
     
     return nil;
@@ -134,7 +152,11 @@ UICollectionViewDelegateFlowLayout
     if (section == IntrodutionHeaderStyleUserSay){
         return self.introductionModel.userSayInfo.userSayArray.count;
     }else if (section == IntrodutionHeaderStyleCommmentList){
-        return self.introductionModel.commentInfo.commentList.count;
+        if (self.isCommentListExpand) {
+            return self.introductionModel.commentInfo.commentList.count;
+        }else{
+            return 0;
+        }
     }
     
     return 0;
@@ -155,7 +177,7 @@ UICollectionViewDelegateFlowLayout
     }else if (section == IntrodutionHeaderStyleUserSay){
         return CGSizeZero;
     }else{
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), 35);
+        return CGSizeMake(CGRectGetWidth(self.view.bounds), 44);
     }
 }
 
@@ -174,8 +196,6 @@ UICollectionViewDelegateFlowLayout
         [_collectionView registerNib:[UINib nibWithNibName:@"VideoReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kVideoReusableViewIdentifier];
         [_collectionView registerClass:[ImagesReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kImageReusableViewIdentifier];
         [_collectionView registerNib:[UINib nibWithNibName:@"CommentReusableView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kCommentReusableViewIdentifier];
-        
-        
         
         [_collectionView registerNib:[UINib nibWithNibName:@"UserSayCell" bundle:nil] forCellWithReuseIdentifier:kUserSayCellIdentifier];
         [_collectionView registerNib:[UINib nibWithNibName:@"CommentCell" bundle:nil] forCellWithReuseIdentifier:kCommentCellIdentifier];

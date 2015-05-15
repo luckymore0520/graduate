@@ -18,17 +18,19 @@
     AuthorInfo *authorInfo = [[AuthorInfo alloc] init];
     authorInfo.authorID = noteDetail[@"authorId_"];
     authorInfo.authorName = noteDetail[@"authorName_"];
+    authorInfo.authorImageUrl = noteDetail[@"authorImg_"];
     authorInfo.authorDesc = noteDetail[@"authorDesc_"];
     authorInfo.authorSex = noteDetail[@"authorSex_"];
     authorInfo.praiseCount = noteDetail[@"praiseCount_"];
-    authorInfo.cover = noteDetail[@"cover_"];
     authorInfo.subName = noteDetail[@"subName_"];
     authorInfo.subDetailName = noteDetail[@"subDetailName_"];
+    authorInfo.praiseImgs = noteDetail[@"praiseImgs_"];
     
     //-------播放相关信息:视频或图片列表------
     MediaInfo *mediaInfo = [[MediaInfo alloc] init];
     mediaInfo.mediaType = [noteDetail[@"authorType_"] integerValue];
     mediaInfo.videoUrl = noteDetail[@"authorVideo_"];
+    mediaInfo.cover = noteDetail[@"cover_"];
     NSMutableArray *imageList = [NSMutableArray array];
     mediaInfo.imageList = imageList;
     [noteDetail[@"list_"] enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {

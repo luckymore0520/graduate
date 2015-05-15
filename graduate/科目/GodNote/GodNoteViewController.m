@@ -67,11 +67,7 @@ GodNoteHeaderDelegate
 {
     [super viewWillLayoutSubviews];
     
-    CGFloat headerHeight = 60;
-    self.godNoteHeader.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), headerHeight);
-    for (UIView *view in self.allSubjectViews) {
-        view.frame = CGRectMake(0, headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - headerHeight);
-    }
+    [self updateSubViewWithHeaderHeight:self.godNoteHeader.isAdClosed ? 35 : 60];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -103,6 +99,14 @@ GodNoteHeaderDelegate
     }
 }
 
+- (void)updateSubViewWithHeaderHeight:(CGFloat)headerHeight
+{
+    self.godNoteHeader.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), headerHeight);
+    for (UIView *view in self.allSubjectViews) {
+        view.frame = CGRectMake(0, headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - headerHeight);
+    }
+}
+
 #pragma mark - response
 - (void)displayGodRanking
 {
@@ -130,7 +134,9 @@ GodNoteHeaderDelegate
 
 - (void)noteHeaderDidCloseAdvertisement:(GodNoteHeader *)header
 {
-
+    [UIView animateWithDuration:.3 animations:^{
+        [self updateSubViewWithHeaderHeight:35];
+    }];
 }
 
 #pragma mark - setter && getter

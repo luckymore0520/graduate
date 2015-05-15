@@ -37,12 +37,13 @@ typedef NS_ENUM(NSUInteger, MediaType) {
 
 @property (nonatomic) NSNumber *authorID;
 @property (nonatomic) NSString *authorName;
+@property (nonatomic) NSString *authorImageUrl;
 @property (nonatomic) NSString *authorDesc;
 @property (nonatomic) NSNumber *authorSex;
 @property (nonatomic) NSNumber *praiseCount;
-@property (nonatomic) NSString *cover;
 @property (nonatomic) NSString *subName;
 @property (nonatomic) NSString *subDetailName;
+@property (nonatomic) NSArray *praiseImgs;
 
 @end
 
@@ -52,6 +53,7 @@ typedef NS_ENUM(NSUInteger, MediaType) {
 @property (nonatomic) MediaType mediaType;
 @property (nonatomic) NSString *videoUrl;
 @property (nonatomic) NSArray *imageList;//MediaImageModel array
+@property (nonatomic) NSString *cover;
 
 @end
 

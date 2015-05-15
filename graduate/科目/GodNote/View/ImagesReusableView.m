@@ -12,18 +12,10 @@
 #import "UIImageView+WebCache.h"
 #import "ToolUtils.h"
 
-static NSString * const kImageCellIdentifier = @"kImageCellIdentifier";
-static CGFloat const padding = 5;
-
 @interface ImagesReusableView ()
-<
-UICollectionViewDataSource,
-UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout
->
 
-@property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) NSArray *imageList;
+@property (readwrite, nonatomic) UICollectionView *collectionView;
+@property (readwrite, nonatomic) NSArray *imageList;
 
 @end
 
@@ -74,7 +66,7 @@ UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = (CGRectGetHeight(self.frame) - 3*padding)/2;
+    CGFloat height = (CGRectGetHeight(self.frame) - 3*kPadding)/2;
     return CGSizeMake(height, height);
 }
 
@@ -83,13 +75,14 @@ UICollectionViewDelegateFlowLayout
 {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.minimumLineSpacing = padding;
-        layout.minimumInteritemSpacing = padding;
-        layout.sectionInset = UIEdgeInsetsMake(padding, padding, padding, padding);
+        layout.minimumLineSpacing = kPadding;
+        layout.minimumInteritemSpacing = kPadding;
+        layout.sectionInset = UIEdgeInsetsMake(kPadding, kPadding, kPadding, kPadding);
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         [_collectionView registerClass:[NoteTitleCell class] forCellWithReuseIdentifier:kImageCellIdentifier];
+        _collectionView.backgroundColor = [UIColor redColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
     }

@@ -156,6 +156,7 @@ UICollectionViewDelegateFlowLayout
 {
     if (!_imageView) {
         _imageView = [[UIImageView alloc] init];
+        _imageView.backgroundColor = [UIColor whiteColor];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _imageView;

@@ -12,6 +12,14 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.backgroundColor = [UIColor whiteColor];
+}
+
+- (IBAction)expandButtonClicked:(id)sender {
+    
+    if ([self.delegate respondsToSelector:@selector(commentReusableView:didTappedExpandButton:)]) {
+        [self.delegate commentReusableView:self didTappedExpandButton:sender];
+    }
 }
 
 @end

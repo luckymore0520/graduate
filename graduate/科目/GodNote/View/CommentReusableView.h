@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class CommentReusableView;
+@protocol CommentReusableViewDelegate <NSObject>
+
+@required
+- (void)commentReusableView:(CommentReusableView *)view didTappedExpandButton:(UIButton *)button;
+
+@end
+
 @interface CommentReusableView : UICollectionReusableView
+
+@property (weak, nonatomic) id<CommentReusableViewDelegate> delegate;
 
 @end

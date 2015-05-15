@@ -30,6 +30,7 @@
 
 @property (weak, nonatomic) id<GodNoteHeaderDelegate> delegate;
 @property (readonly, nonatomic) NSInteger currentSelectIndex;
+@property (readonly, nonatomic) BOOL isAdClosed;
 
 - (void)reloadViewWithAllSubjectModels:(NSArray *)subjectModels
                              andAdmdel:(AdModel *)model;

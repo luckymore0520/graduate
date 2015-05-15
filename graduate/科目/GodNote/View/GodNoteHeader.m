@@ -29,6 +29,8 @@ AdViewDelegate
 @property (nonatomic) AdModel *adModel;
 @property (readwrite, nonatomic) NSInteger currentSelectIndex;
 
+@property (readwrite, nonatomic) BOOL isAdClosed;
+
 @end
 
 @implementation GodNoteHeader
@@ -38,6 +40,8 @@ AdViewDelegate
     self = [super initWithFrame:frame];
     if (self) {
         //init view
+        self.clipsToBounds = YES;
+        
         [self addSubview:self.collectionView];
         [self addSubview:self.adView];
     }
@@ -69,6 +73,8 @@ AdViewDelegate
 #pragma mark - AdViewDelegate
 - (void)adViewDidCloseAd:(AdView *)adView
 {
+    self.isAdClosed = YES;
+    
     if ([self.delegate respondsToSelector:@selector(noteHeaderDidCloseAdvertisement:)]) {
         [self.delegate noteHeaderDidCloseAdvertisement:self];
     }
