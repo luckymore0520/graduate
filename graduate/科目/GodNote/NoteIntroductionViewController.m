@@ -64,6 +64,10 @@ CommentReusableViewDelegate
     self.title = @"笔记详情";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"查看笔记" style:UIBarButtonItemStylePlain target:self action:@selector(seeNoteDetail)];
     
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeFromRightToLeft)];
+    swipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:swipe];
+    
     [self getIntroductionModel];
     [self.view addSubview:self.collectionView];
 }
@@ -80,6 +84,11 @@ CommentReusableViewDelegate
 {
     NoteDetailViewController *note = [[NoteDetailViewController alloc] initWithNoteID:self.noteID];
     [self.navigationController pushViewController:note animated:YES];
+}
+
+- (void)swipeFromRightToLeft
+{
+    [self seeNoteDetail];
 }
 
 #pragma mark - CommentReusableViewDelegate
