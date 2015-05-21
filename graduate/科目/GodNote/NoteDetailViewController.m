@@ -200,30 +200,25 @@ MJPhotoViewDelegate
     
     //prepare new view
     [self.noteDetailBrowserlView startBrowsingFromPage:itemIndex];
-
-    CGRect frameInSelf = [self.view convertRect:imageView.frame fromView:imageView.superview];
-    self.noteDetailBrowserlView.backgroundColor = [UIColor clearColor];
     
-    UIImageView *imageViewInBrowser = self.noteDetailBrowserlView.currentPhotoView.imageView;
-    UIView *imageViewSuperView = imageViewInBrowser.superview;
-    CGRect originFrame = imageViewInBrowser.frame;
-    CGRect originFramesInSelf = [self.view convertRect:originFrame fromView:imageViewSuperView];
-    
-    [self.view bringSubviewToFront:self.noteDetailBrowserlView];
-
-    [imageViewInBrowser removeFromSuperview];
-    imageViewInBrowser.frame = frameInSelf;
-    [self.view addSubview:imageViewInBrowser];
-    
-    [self.view bringSubviewToFront:self.noteDetailMask];
-    
-    [UIView animateWithDuration:.3 animations:^{
-        imageViewInBrowser.frame = originFramesInSelf;
-    } completion:^(BOOL finished) {
-        [imageViewInBrowser removeFromSuperview];
-        [imageViewSuperView addSubview:imageViewInBrowser];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CGRect originFrame = [self.view convertRect:imageView.frame fromView:imageView.superview];
+        UIView *imageViewInBrowser = [self.noteDetailBrowserlView.currentPhotoView.imageView snapshotViewAfterScreenUpdates:YES];
         imageViewInBrowser.frame = originFrame;
-    }];
+        [self.view addSubview:imageViewInBrowser];
+        
+        CGRect destiFrame = self.noteDetailBrowserlView.frame;
+        
+        [self.view bringSubviewToFront:self.noteDetailMask];
+        
+        [UIView animateWithDuration:.3 animations:^{
+            imageViewInBrowser.frame = destiFrame;
+        } completion:^(BOOL finished) {
+            [imageViewInBrowser removeFromSuperview];
+            [self.view bringSubviewToFront:self.noteDetailBrowserlView];
+            [self.view bringSubviewToFront:self.noteDetailMask];
+        }];
+    });
 }
 
 #pragma mark - MJPhotoViewDelegate
